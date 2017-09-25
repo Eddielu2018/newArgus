@@ -1,0 +1,48 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<configuration>
+	<property resource="filters/local.properties" />
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%line - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="rollinginfoFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logDir}/argus.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logDir}/argus.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%line - %msg%n</pattern>
+		</encoder>
+		 
+	</appender>
+	
+	<appender name="stash"
+		class="net.logstash.logback.appender.LogstashSocketAppender">
+		<host>${logstash.host}</host>
+		<port>${logstash.port}</port>
+	</appender>
+	
+	<logger name="cn.htd" level="DEBUG" />
+	
+	<logger name="jdbc.sqltiming" level="DEBUG" />
+	
+	<root level="WARN">
+		<appender-ref ref="rollinginfoFile" />
+		<appender-ref ref="stash" />
+	</root>
+	
+	<!-- 下面配置一些第三方包的日志过滤级别，用于避免刷屏 -->
+	<!-- <logger name="org.hibernate" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="com.opensymphony" level="WARN" />
+	<logger name="org.apache" level="WARN" /> --> <!-- show parameters for hibernate sql 专为 Hibernate 定制 -->
+	<!-- <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
+	<logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" />
+	<logger name="org.hibernate.SQL" level="DEBUG" />
+	<logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />
+	<logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" /> -->
+	
+</configuration>
