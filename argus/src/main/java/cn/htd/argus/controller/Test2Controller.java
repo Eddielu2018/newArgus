@@ -7,28 +7,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 
 
-@RestController
-@RequestMapping("/test")
-public class AreaController {
-	Logger logger = LoggerFactory.getLogger(AreaController.class);
+@Controller
+@RequestMapping("/test2")
+public class Test2Controller {
+	Logger logger = LoggerFactory.getLogger(Test2Controller.class);
 
-	@RequestMapping("/test")
-	public String test1() {
-		
-		return "abc";
-	}
-	
 	@RequestMapping("/test2")
     public String handleRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		logger.debug("123231321");
-        return "213";
-
+        return "index2";
+    }
+	
+	@RequestMapping("/test3")
+    public String handleRequest2(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        return "index3";
     }
 }
