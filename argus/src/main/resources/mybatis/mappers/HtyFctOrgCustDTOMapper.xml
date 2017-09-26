@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.HtyFctOrgCustDTOMapper">
+  <resultMap id="BaseResultMap" type="dto.HtyFctOrgCustDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
+    <result column="MON_NEWCUSTNUM" jdbcType="INTEGER" property="monNewcustnum" />
+    <result column="LASTMON_NEWCUSTNUM" jdbcType="INTEGER" property="lastmonNewcustnum" />
+    <result column="YEAR_NEWCUSTNUM" jdbcType="INTEGER" property="yearNewcustnum" />
+    <result column="LASTYEAR_NEWCUSTNUM" jdbcType="INTEGER" property="lastyearNewcustnum" />
+    <result column="MON_TRANSCUSTNUM" jdbcType="INTEGER" property="monTranscustnum" />
+    <result column="YEAR_TRANSCUSTNUM" jdbcType="INTEGER" property="yearTranscustnum" />
+    <result column="ACT_CUSTNUM" jdbcType="INTEGER" property="actCustnum" />
+    <result column="MORRUNACT_CUSTNUM" jdbcType="INTEGER" property="morrunactCustnum" />
+    <result column="VIP_NUM" jdbcType="INTEGER" property="vipNum" />
+    <result column="EXPIRE30_VIP_NUM" jdbcType="INTEGER" property="expire30VipNum" />
+  </resultMap>
+  <insert id="insert" parameterType="dto.HtyFctOrgCustDTO">
+    insert into hty_fct_org_cust (ID, ORG_CODE, YEAR_MON, 
+      MON_NEWCUSTNUM, LASTMON_NEWCUSTNUM, YEAR_NEWCUSTNUM, 
+      LASTYEAR_NEWCUSTNUM, MON_TRANSCUSTNUM, YEAR_TRANSCUSTNUM, 
+      ACT_CUSTNUM, MORRUNACT_CUSTNUM, VIP_NUM, 
+      EXPIRE30_VIP_NUM)
+    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearMon,jdbcType=VARCHAR}, 
+      #{monNewcustnum,jdbcType=INTEGER}, #{lastmonNewcustnum,jdbcType=INTEGER}, #{yearNewcustnum,jdbcType=INTEGER}, 
+      #{lastyearNewcustnum,jdbcType=INTEGER}, #{monTranscustnum,jdbcType=INTEGER}, #{yearTranscustnum,jdbcType=INTEGER}, 
+      #{actCustnum,jdbcType=INTEGER}, #{morrunactCustnum,jdbcType=INTEGER}, #{vipNum,jdbcType=INTEGER}, 
+      #{expire30VipNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.HtyFctOrgCustDTO">
+    insert into hty_fct_org_cust
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="yearMon != null">
+        YEAR_MON,
+      </if>
+      <if test="monNewcustnum != null">
+        MON_NEWCUSTNUM,
+      </if>
+      <if test="lastmonNewcustnum != null">
+        LASTMON_NEWCUSTNUM,
+      </if>
+      <if test="yearNewcustnum != null">
+        YEAR_NEWCUSTNUM,
+      </if>
+      <if test="lastyearNewcustnum != null">
+        LASTYEAR_NEWCUSTNUM,
+      </if>
+      <if test="monTranscustnum != null">
+        MON_TRANSCUSTNUM,
+      </if>
+      <if test="yearTranscustnum != null">
+        YEAR_TRANSCUSTNUM,
+      </if>
+      <if test="actCustnum != null">
+        ACT_CUSTNUM,
+      </if>
+      <if test="morrunactCustnum != null">
+        MORRUNACT_CUSTNUM,
+      </if>
+      <if test="vipNum != null">
+        VIP_NUM,
+      </if>
+      <if test="expire30VipNum != null">
+        EXPIRE30_VIP_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="yearMon != null">
+        #{yearMon,jdbcType=VARCHAR},
+      </if>
+      <if test="monNewcustnum != null">
+        #{monNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="lastmonNewcustnum != null">
+        #{lastmonNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="yearNewcustnum != null">
+        #{yearNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="lastyearNewcustnum != null">
+        #{lastyearNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="monTranscustnum != null">
+        #{monTranscustnum,jdbcType=INTEGER},
+      </if>
+      <if test="yearTranscustnum != null">
+        #{yearTranscustnum,jdbcType=INTEGER},
+      </if>
+      <if test="actCustnum != null">
+        #{actCustnum,jdbcType=INTEGER},
+      </if>
+      <if test="morrunactCustnum != null">
+        #{morrunactCustnum,jdbcType=INTEGER},
+      </if>
+      <if test="vipNum != null">
+        #{vipNum,jdbcType=INTEGER},
+      </if>
+      <if test="expire30VipNum != null">
+        #{expire30VipNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="dto.HtyFctOrgCustDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
+    <result column="MON_NEWCUSTNUM" jdbcType="INTEGER" property="monNewcustnum" />
+    <result column="LASTMON_NEWCUSTNUM" jdbcType="INTEGER" property="lastmonNewcustnum" />
+    <result column="YEAR_NEWCUSTNUM" jdbcType="INTEGER" property="yearNewcustnum" />
+    <result column="LASTYEAR_NEWCUSTNUM" jdbcType="INTEGER" property="lastyearNewcustnum" />
+    <result column="MON_TRANSCUSTNUM" jdbcType="INTEGER" property="monTranscustnum" />
+    <result column="YEAR_TRANSCUSTNUM" jdbcType="INTEGER" property="yearTranscustnum" />
+    <result column="ACT_CUSTNUM" jdbcType="INTEGER" property="actCustnum" />
+    <result column="MORRUNACT_CUSTNUM" jdbcType="INTEGER" property="morrunactCustnum" />
+    <result column="VIP_NUM" jdbcType="INTEGER" property="vipNum" />
+    <result column="EXPIRE30_VIP_NUM" jdbcType="INTEGER" property="expire30VipNum" />
+  </resultMap>
+  <insert id="insert" parameterType="dto.HtyFctOrgCustDTO">
+    insert into hty_fct_org_cust (ID, ORG_CODE, YEAR_MON, 
+      MON_NEWCUSTNUM, LASTMON_NEWCUSTNUM, YEAR_NEWCUSTNUM, 
+      LASTYEAR_NEWCUSTNUM, MON_TRANSCUSTNUM, YEAR_TRANSCUSTNUM, 
+      ACT_CUSTNUM, MORRUNACT_CUSTNUM, VIP_NUM, 
+      EXPIRE30_VIP_NUM)
+    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearMon,jdbcType=VARCHAR}, 
+      #{monNewcustnum,jdbcType=INTEGER}, #{lastmonNewcustnum,jdbcType=INTEGER}, #{yearNewcustnum,jdbcType=INTEGER}, 
+      #{lastyearNewcustnum,jdbcType=INTEGER}, #{monTranscustnum,jdbcType=INTEGER}, #{yearTranscustnum,jdbcType=INTEGER}, 
+      #{actCustnum,jdbcType=INTEGER}, #{morrunactCustnum,jdbcType=INTEGER}, #{vipNum,jdbcType=INTEGER}, 
+      #{expire30VipNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.HtyFctOrgCustDTO">
+    insert into hty_fct_org_cust
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="yearMon != null">
+        YEAR_MON,
+      </if>
+      <if test="monNewcustnum != null">
+        MON_NEWCUSTNUM,
+      </if>
+      <if test="lastmonNewcustnum != null">
+        LASTMON_NEWCUSTNUM,
+      </if>
+      <if test="yearNewcustnum != null">
+        YEAR_NEWCUSTNUM,
+      </if>
+      <if test="lastyearNewcustnum != null">
+        LASTYEAR_NEWCUSTNUM,
+      </if>
+      <if test="monTranscustnum != null">
+        MON_TRANSCUSTNUM,
+      </if>
+      <if test="yearTranscustnum != null">
+        YEAR_TRANSCUSTNUM,
+      </if>
+      <if test="actCustnum != null">
+        ACT_CUSTNUM,
+      </if>
+      <if test="morrunactCustnum != null">
+        MORRUNACT_CUSTNUM,
+      </if>
+      <if test="vipNum != null">
+        VIP_NUM,
+      </if>
+      <if test="expire30VipNum != null">
+        EXPIRE30_VIP_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="yearMon != null">
+        #{yearMon,jdbcType=VARCHAR},
+      </if>
+      <if test="monNewcustnum != null">
+        #{monNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="lastmonNewcustnum != null">
+        #{lastmonNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="yearNewcustnum != null">
+        #{yearNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="lastyearNewcustnum != null">
+        #{lastyearNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="monTranscustnum != null">
+        #{monTranscustnum,jdbcType=INTEGER},
+      </if>
+      <if test="yearTranscustnum != null">
+        #{yearTranscustnum,jdbcType=INTEGER},
+      </if>
+      <if test="actCustnum != null">
+        #{actCustnum,jdbcType=INTEGER},
+      </if>
+      <if test="morrunactCustnum != null">
+        #{morrunactCustnum,jdbcType=INTEGER},
+      </if>
+      <if test="vipNum != null">
+        #{vipNum,jdbcType=INTEGER},
+      </if>
+      <if test="expire30VipNum != null">
+        #{expire30VipNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgCustDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
+    <result column="MON_NEWCUSTNUM" jdbcType="INTEGER" property="monNewcustnum" />
+    <result column="LASTMON_NEWCUSTNUM" jdbcType="INTEGER" property="lastmonNewcustnum" />
+    <result column="YEAR_NEWCUSTNUM" jdbcType="INTEGER" property="yearNewcustnum" />
+    <result column="LASTYEAR_NEWCUSTNUM" jdbcType="INTEGER" property="lastyearNewcustnum" />
+    <result column="MON_TRANSCUSTNUM" jdbcType="INTEGER" property="monTranscustnum" />
+    <result column="YEAR_TRANSCUSTNUM" jdbcType="INTEGER" property="yearTranscustnum" />
+    <result column="ACT_CUSTNUM" jdbcType="INTEGER" property="actCustnum" />
+    <result column="MORRUNACT_CUSTNUM" jdbcType="INTEGER" property="morrunactCustnum" />
+    <result column="VIP_NUM" jdbcType="INTEGER" property="vipNum" />
+    <result column="EXPIRE30_VIP_NUM" jdbcType="INTEGER" property="expire30VipNum" />
+  </resultMap>
+  <insert id="insert" parameterType="DTO.HtyFctOrgCustDTO">
+    insert into hty_fct_org_cust (ID, ORG_CODE, YEAR_MON, 
+      MON_NEWCUSTNUM, LASTMON_NEWCUSTNUM, YEAR_NEWCUSTNUM, 
+      LASTYEAR_NEWCUSTNUM, MON_TRANSCUSTNUM, YEAR_TRANSCUSTNUM, 
+      ACT_CUSTNUM, MORRUNACT_CUSTNUM, VIP_NUM, 
+      EXPIRE30_VIP_NUM)
+    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearMon,jdbcType=VARCHAR}, 
+      #{monNewcustnum,jdbcType=INTEGER}, #{lastmonNewcustnum,jdbcType=INTEGER}, #{yearNewcustnum,jdbcType=INTEGER}, 
+      #{lastyearNewcustnum,jdbcType=INTEGER}, #{monTranscustnum,jdbcType=INTEGER}, #{yearTranscustnum,jdbcType=INTEGER}, 
+      #{actCustnum,jdbcType=INTEGER}, #{morrunactCustnum,jdbcType=INTEGER}, #{vipNum,jdbcType=INTEGER}, 
+      #{expire30VipNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="DTO.HtyFctOrgCustDTO">
+    insert into hty_fct_org_cust
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="yearMon != null">
+        YEAR_MON,
+      </if>
+      <if test="monNewcustnum != null">
+        MON_NEWCUSTNUM,
+      </if>
+      <if test="lastmonNewcustnum != null">
+        LASTMON_NEWCUSTNUM,
+      </if>
+      <if test="yearNewcustnum != null">
+        YEAR_NEWCUSTNUM,
+      </if>
+      <if test="lastyearNewcustnum != null">
+        LASTYEAR_NEWCUSTNUM,
+      </if>
+      <if test="monTranscustnum != null">
+        MON_TRANSCUSTNUM,
+      </if>
+      <if test="yearTranscustnum != null">
+        YEAR_TRANSCUSTNUM,
+      </if>
+      <if test="actCustnum != null">
+        ACT_CUSTNUM,
+      </if>
+      <if test="morrunactCustnum != null">
+        MORRUNACT_CUSTNUM,
+      </if>
+      <if test="vipNum != null">
+        VIP_NUM,
+      </if>
+      <if test="expire30VipNum != null">
+        EXPIRE30_VIP_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="yearMon != null">
+        #{yearMon,jdbcType=VARCHAR},
+      </if>
+      <if test="monNewcustnum != null">
+        #{monNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="lastmonNewcustnum != null">
+        #{lastmonNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="yearNewcustnum != null">
+        #{yearNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="lastyearNewcustnum != null">
+        #{lastyearNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="monTranscustnum != null">
+        #{monTranscustnum,jdbcType=INTEGER},
+      </if>
+      <if test="yearTranscustnum != null">
+        #{yearTranscustnum,jdbcType=INTEGER},
+      </if>
+      <if test="actCustnum != null">
+        #{actCustnum,jdbcType=INTEGER},
+      </if>
+      <if test="morrunactCustnum != null">
+        #{morrunactCustnum,jdbcType=INTEGER},
+      </if>
+      <if test="vipNum != null">
+        #{vipNum,jdbcType=INTEGER},
+      </if>
+      <if test="expire30VipNum != null">
+        #{expire30VipNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgCustDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
+    <result column="MON_NEWCUSTNUM" jdbcType="INTEGER" property="monNewcustnum" />
+    <result column="LASTMON_NEWCUSTNUM" jdbcType="INTEGER" property="lastmonNewcustnum" />
+    <result column="YEAR_NEWCUSTNUM" jdbcType="INTEGER" property="yearNewcustnum" />
+    <result column="LASTYEAR_NEWCUSTNUM" jdbcType="INTEGER" property="lastyearNewcustnum" />
+    <result column="MON_TRANSCUSTNUM" jdbcType="INTEGER" property="monTranscustnum" />
+    <result column="YEAR_TRANSCUSTNUM" jdbcType="INTEGER" property="yearTranscustnum" />
+    <result column="ACT_CUSTNUM" jdbcType="INTEGER" property="actCustnum" />
+    <result column="MORRUNACT_CUSTNUM" jdbcType="INTEGER" property="morrunactCustnum" />
+    <result column="VIP_NUM" jdbcType="INTEGER" property="vipNum" />
+    <result column="EXPIRE30_VIP_NUM" jdbcType="INTEGER" property="expire30VipNum" />
+  </resultMap>
+  <insert id="insert" parameterType="DTO.HtyFctOrgCustDTO">
+    insert into hty_fct_org_cust (ID, ORG_CODE, YEAR_MON, 
+      MON_NEWCUSTNUM, LASTMON_NEWCUSTNUM, YEAR_NEWCUSTNUM, 
+      LASTYEAR_NEWCUSTNUM, MON_TRANSCUSTNUM, YEAR_TRANSCUSTNUM, 
+      ACT_CUSTNUM, MORRUNACT_CUSTNUM, VIP_NUM, 
+      EXPIRE30_VIP_NUM)
+    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearMon,jdbcType=VARCHAR}, 
+      #{monNewcustnum,jdbcType=INTEGER}, #{lastmonNewcustnum,jdbcType=INTEGER}, #{yearNewcustnum,jdbcType=INTEGER}, 
+      #{lastyearNewcustnum,jdbcType=INTEGER}, #{monTranscustnum,jdbcType=INTEGER}, #{yearTranscustnum,jdbcType=INTEGER}, 
+      #{actCustnum,jdbcType=INTEGER}, #{morrunactCustnum,jdbcType=INTEGER}, #{vipNum,jdbcType=INTEGER}, 
+      #{expire30VipNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="DTO.HtyFctOrgCustDTO">
+    insert into hty_fct_org_cust
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="yearMon != null">
+        YEAR_MON,
+      </if>
+      <if test="monNewcustnum != null">
+        MON_NEWCUSTNUM,
+      </if>
+      <if test="lastmonNewcustnum != null">
+        LASTMON_NEWCUSTNUM,
+      </if>
+      <if test="yearNewcustnum != null">
+        YEAR_NEWCUSTNUM,
+      </if>
+      <if test="lastyearNewcustnum != null">
+        LASTYEAR_NEWCUSTNUM,
+      </if>
+      <if test="monTranscustnum != null">
+        MON_TRANSCUSTNUM,
+      </if>
+      <if test="yearTranscustnum != null">
+        YEAR_TRANSCUSTNUM,
+      </if>
+      <if test="actCustnum != null">
+        ACT_CUSTNUM,
+      </if>
+      <if test="morrunactCustnum != null">
+        MORRUNACT_CUSTNUM,
+      </if>
+      <if test="vipNum != null">
+        VIP_NUM,
+      </if>
+      <if test="expire30VipNum != null">
+        EXPIRE30_VIP_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="yearMon != null">
+        #{yearMon,jdbcType=VARCHAR},
+      </if>
+      <if test="monNewcustnum != null">
+        #{monNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="lastmonNewcustnum != null">
+        #{lastmonNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="yearNewcustnum != null">
+        #{yearNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="lastyearNewcustnum != null">
+        #{lastyearNewcustnum,jdbcType=INTEGER},
+      </if>
+      <if test="monTranscustnum != null">
+        #{monTranscustnum,jdbcType=INTEGER},
+      </if>
+      <if test="yearTranscustnum != null">
+        #{yearTranscustnum,jdbcType=INTEGER},
+      </if>
+      <if test="actCustnum != null">
+        #{actCustnum,jdbcType=INTEGER},
+      </if>
+      <if test="morrunactCustnum != null">
+        #{morrunactCustnum,jdbcType=INTEGER},
+      </if>
+      <if test="vipNum != null">
+        #{vipNum,jdbcType=INTEGER},
+      </if>
+      <if test="expire30VipNum != null">
+        #{expire30VipNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

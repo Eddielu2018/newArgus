@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.HtyFctOrgIncomeDTOMapper">
+  <resultMap id="BaseResultMap" type="dto.HtyFctOrgIncomeDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="MON_BUSINCOME_AMT" jdbcType="DECIMAL" property="monBusincomeAmt" />
+    <result column="LAST_MON_BUSINCOME_AMT" jdbcType="DECIMAL" property="lastMonBusincomeAmt" />
+    <result column="YEAR_BUSINCOME_AMT" jdbcType="DECIMAL" property="yearBusincomeAmt" />
+    <result column="LASTYEAR_BUSINCOME_AMT" jdbcType="DECIMAL" property="lastyearBusincomeAmt" />
+    <result column="MON_INVOICING_AMT" jdbcType="DECIMAL" property="monInvoicingAmt" />
+    <result column="YEAR_INVOICING_AMT" jdbcType="DECIMAL" property="yearInvoicingAmt" />
+    <result column="LAST_MON_INVOICING_AMT" jdbcType="DECIMAL" property="lastMonInvoicingAmt" />
+    <result column="LAST_YEAR_INVOICING_AMT" jdbcType="DECIMAL" property="lastYearInvoicingAmt" />
+    <result column="MON_SERVICE_AMT" jdbcType="DECIMAL" property="monServiceAmt" />
+    <result column="YEAR_SERVICE_AMT" jdbcType="DECIMAL" property="yearServiceAmt" />
+    <result column="LAST_MON_SERVICE_AMT" jdbcType="DECIMAL" property="lastMonServiceAmt" />
+    <result column="LAST_YEAR_SERVICE_AMT" jdbcType="DECIMAL" property="lastYearServiceAmt" />
+    <result column="MON_FINANCE_AMT" jdbcType="DECIMAL" property="monFinanceAmt" />
+    <result column="YEAR_FINANCE_AMT" jdbcType="DECIMAL" property="yearFinanceAmt" />
+    <result column="LAST_MON_FINANCE_AMT" jdbcType="DECIMAL" property="lastMonFinanceAmt" />
+    <result column="LAST_YEAR_FINANCE_AMT" jdbcType="DECIMAL" property="lastYearFinanceAmt" />
+  </resultMap>
+  <insert id="insert" parameterType="dto.HtyFctOrgIncomeDTO">
+    insert into hty_fct_org_income (ID, YEAR_MON, ORG_CODE, 
+      MON_BUSINCOME_AMT, LAST_MON_BUSINCOME_AMT, YEAR_BUSINCOME_AMT, 
+      LASTYEAR_BUSINCOME_AMT, MON_INVOICING_AMT, 
+      YEAR_INVOICING_AMT, LAST_MON_INVOICING_AMT, 
+      LAST_YEAR_INVOICING_AMT, MON_SERVICE_AMT, YEAR_SERVICE_AMT, 
+      LAST_MON_SERVICE_AMT, LAST_YEAR_SERVICE_AMT, 
+      MON_FINANCE_AMT, YEAR_FINANCE_AMT, LAST_MON_FINANCE_AMT, 
+      LAST_YEAR_FINANCE_AMT)
+    values (#{id,jdbcType=BIGINT}, #{yearMon,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{monBusincomeAmt,jdbcType=DECIMAL}, #{lastMonBusincomeAmt,jdbcType=DECIMAL}, #{yearBusincomeAmt,jdbcType=DECIMAL}, 
+      #{lastyearBusincomeAmt,jdbcType=DECIMAL}, #{monInvoicingAmt,jdbcType=DECIMAL}, 
+      #{yearInvoicingAmt,jdbcType=DECIMAL}, #{lastMonInvoicingAmt,jdbcType=DECIMAL}, 
+      #{lastYearInvoicingAmt,jdbcType=DECIMAL}, #{monServiceAmt,jdbcType=DECIMAL}, #{yearServiceAmt,jdbcType=DECIMAL}, 
+      #{lastMonServiceAmt,jdbcType=DECIMAL}, #{lastYearServiceAmt,jdbcType=DECIMAL}, 
+      #{monFinanceAmt,jdbcType=DECIMAL}, #{yearFinanceAmt,jdbcType=DECIMAL}, #{lastMonFinanceAmt,jdbcType=DECIMAL}, 
+      #{lastYearFinanceAmt,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.HtyFctOrgIncomeDTO">
+    insert into hty_fct_org_income
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="yearMon != null">
+        YEAR_MON,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="monBusincomeAmt != null">
+        MON_BUSINCOME_AMT,
+      </if>
+      <if test="lastMonBusincomeAmt != null">
+        LAST_MON_BUSINCOME_AMT,
+      </if>
+      <if test="yearBusincomeAmt != null">
+        YEAR_BUSINCOME_AMT,
+      </if>
+      <if test="lastyearBusincomeAmt != null">
+        LASTYEAR_BUSINCOME_AMT,
+      </if>
+      <if test="monInvoicingAmt != null">
+        MON_INVOICING_AMT,
+      </if>
+      <if test="yearInvoicingAmt != null">
+        YEAR_INVOICING_AMT,
+      </if>
+      <if test="lastMonInvoicingAmt != null">
+        LAST_MON_INVOICING_AMT,
+      </if>
+      <if test="lastYearInvoicingAmt != null">
+        LAST_YEAR_INVOICING_AMT,
+      </if>
+      <if test="monServiceAmt != null">
+        MON_SERVICE_AMT,
+      </if>
+      <if test="yearServiceAmt != null">
+        YEAR_SERVICE_AMT,
+      </if>
+      <if test="lastMonServiceAmt != null">
+        LAST_MON_SERVICE_AMT,
+      </if>
+      <if test="lastYearServiceAmt != null">
+        LAST_YEAR_SERVICE_AMT,
+      </if>
+      <if test="monFinanceAmt != null">
+        MON_FINANCE_AMT,
+      </if>
+      <if test="yearFinanceAmt != null">
+        YEAR_FINANCE_AMT,
+      </if>
+      <if test="lastMonFinanceAmt != null">
+        LAST_MON_FINANCE_AMT,
+      </if>
+      <if test="lastYearFinanceAmt != null">
+        LAST_YEAR_FINANCE_AMT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="yearMon != null">
+        #{yearMon,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="monBusincomeAmt != null">
+        #{monBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonBusincomeAmt != null">
+        #{lastMonBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearBusincomeAmt != null">
+        #{yearBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastyearBusincomeAmt != null">
+        #{lastyearBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monInvoicingAmt != null">
+        #{monInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearInvoicingAmt != null">
+        #{yearInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonInvoicingAmt != null">
+        #{lastMonInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearInvoicingAmt != null">
+        #{lastYearInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monServiceAmt != null">
+        #{monServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearServiceAmt != null">
+        #{yearServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonServiceAmt != null">
+        #{lastMonServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearServiceAmt != null">
+        #{lastYearServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monFinanceAmt != null">
+        #{monFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearFinanceAmt != null">
+        #{yearFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonFinanceAmt != null">
+        #{lastMonFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearFinanceAmt != null">
+        #{lastYearFinanceAmt,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="dto.HtyFctOrgIncomeDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="MON_BUSINCOME_AMT" jdbcType="DECIMAL" property="monBusincomeAmt" />
+    <result column="LAST_MON_BUSINCOME_AMT" jdbcType="DECIMAL" property="lastMonBusincomeAmt" />
+    <result column="YEAR_BUSINCOME_AMT" jdbcType="DECIMAL" property="yearBusincomeAmt" />
+    <result column="LASTYEAR_BUSINCOME_AMT" jdbcType="DECIMAL" property="lastyearBusincomeAmt" />
+    <result column="MON_INVOICING_AMT" jdbcType="DECIMAL" property="monInvoicingAmt" />
+    <result column="YEAR_INVOICING_AMT" jdbcType="DECIMAL" property="yearInvoicingAmt" />
+    <result column="LAST_MON_INVOICING_AMT" jdbcType="DECIMAL" property="lastMonInvoicingAmt" />
+    <result column="LAST_YEAR_INVOICING_AMT" jdbcType="DECIMAL" property="lastYearInvoicingAmt" />
+    <result column="MON_SERVICE_AMT" jdbcType="DECIMAL" property="monServiceAmt" />
+    <result column="YEAR_SERVICE_AMT" jdbcType="DECIMAL" property="yearServiceAmt" />
+    <result column="LAST_MON_SERVICE_AMT" jdbcType="DECIMAL" property="lastMonServiceAmt" />
+    <result column="LAST_YEAR_SERVICE_AMT" jdbcType="DECIMAL" property="lastYearServiceAmt" />
+    <result column="MON_FINANCE_AMT" jdbcType="DECIMAL" property="monFinanceAmt" />
+    <result column="YEAR_FINANCE_AMT" jdbcType="DECIMAL" property="yearFinanceAmt" />
+    <result column="LAST_MON_FINANCE_AMT" jdbcType="DECIMAL" property="lastMonFinanceAmt" />
+    <result column="LAST_YEAR_FINANCE_AMT" jdbcType="DECIMAL" property="lastYearFinanceAmt" />
+  </resultMap>
+  <insert id="insert" parameterType="dto.HtyFctOrgIncomeDTO">
+    insert into hty_fct_org_income (ID, YEAR_MON, ORG_CODE, 
+      MON_BUSINCOME_AMT, LAST_MON_BUSINCOME_AMT, YEAR_BUSINCOME_AMT, 
+      LASTYEAR_BUSINCOME_AMT, MON_INVOICING_AMT, 
+      YEAR_INVOICING_AMT, LAST_MON_INVOICING_AMT, 
+      LAST_YEAR_INVOICING_AMT, MON_SERVICE_AMT, YEAR_SERVICE_AMT, 
+      LAST_MON_SERVICE_AMT, LAST_YEAR_SERVICE_AMT, 
+      MON_FINANCE_AMT, YEAR_FINANCE_AMT, LAST_MON_FINANCE_AMT, 
+      LAST_YEAR_FINANCE_AMT)
+    values (#{id,jdbcType=BIGINT}, #{yearMon,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{monBusincomeAmt,jdbcType=DECIMAL}, #{lastMonBusincomeAmt,jdbcType=DECIMAL}, #{yearBusincomeAmt,jdbcType=DECIMAL}, 
+      #{lastyearBusincomeAmt,jdbcType=DECIMAL}, #{monInvoicingAmt,jdbcType=DECIMAL}, 
+      #{yearInvoicingAmt,jdbcType=DECIMAL}, #{lastMonInvoicingAmt,jdbcType=DECIMAL}, 
+      #{lastYearInvoicingAmt,jdbcType=DECIMAL}, #{monServiceAmt,jdbcType=DECIMAL}, #{yearServiceAmt,jdbcType=DECIMAL}, 
+      #{lastMonServiceAmt,jdbcType=DECIMAL}, #{lastYearServiceAmt,jdbcType=DECIMAL}, 
+      #{monFinanceAmt,jdbcType=DECIMAL}, #{yearFinanceAmt,jdbcType=DECIMAL}, #{lastMonFinanceAmt,jdbcType=DECIMAL}, 
+      #{lastYearFinanceAmt,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.HtyFctOrgIncomeDTO">
+    insert into hty_fct_org_income
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="yearMon != null">
+        YEAR_MON,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="monBusincomeAmt != null">
+        MON_BUSINCOME_AMT,
+      </if>
+      <if test="lastMonBusincomeAmt != null">
+        LAST_MON_BUSINCOME_AMT,
+      </if>
+      <if test="yearBusincomeAmt != null">
+        YEAR_BUSINCOME_AMT,
+      </if>
+      <if test="lastyearBusincomeAmt != null">
+        LASTYEAR_BUSINCOME_AMT,
+      </if>
+      <if test="monInvoicingAmt != null">
+        MON_INVOICING_AMT,
+      </if>
+      <if test="yearInvoicingAmt != null">
+        YEAR_INVOICING_AMT,
+      </if>
+      <if test="lastMonInvoicingAmt != null">
+        LAST_MON_INVOICING_AMT,
+      </if>
+      <if test="lastYearInvoicingAmt != null">
+        LAST_YEAR_INVOICING_AMT,
+      </if>
+      <if test="monServiceAmt != null">
+        MON_SERVICE_AMT,
+      </if>
+      <if test="yearServiceAmt != null">
+        YEAR_SERVICE_AMT,
+      </if>
+      <if test="lastMonServiceAmt != null">
+        LAST_MON_SERVICE_AMT,
+      </if>
+      <if test="lastYearServiceAmt != null">
+        LAST_YEAR_SERVICE_AMT,
+      </if>
+      <if test="monFinanceAmt != null">
+        MON_FINANCE_AMT,
+      </if>
+      <if test="yearFinanceAmt != null">
+        YEAR_FINANCE_AMT,
+      </if>
+      <if test="lastMonFinanceAmt != null">
+        LAST_MON_FINANCE_AMT,
+      </if>
+      <if test="lastYearFinanceAmt != null">
+        LAST_YEAR_FINANCE_AMT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="yearMon != null">
+        #{yearMon,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="monBusincomeAmt != null">
+        #{monBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonBusincomeAmt != null">
+        #{lastMonBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearBusincomeAmt != null">
+        #{yearBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastyearBusincomeAmt != null">
+        #{lastyearBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monInvoicingAmt != null">
+        #{monInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearInvoicingAmt != null">
+        #{yearInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonInvoicingAmt != null">
+        #{lastMonInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearInvoicingAmt != null">
+        #{lastYearInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monServiceAmt != null">
+        #{monServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearServiceAmt != null">
+        #{yearServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonServiceAmt != null">
+        #{lastMonServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearServiceAmt != null">
+        #{lastYearServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monFinanceAmt != null">
+        #{monFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearFinanceAmt != null">
+        #{yearFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonFinanceAmt != null">
+        #{lastMonFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearFinanceAmt != null">
+        #{lastYearFinanceAmt,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgIncomeDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="MON_BUSINCOME_AMT" jdbcType="DECIMAL" property="monBusincomeAmt" />
+    <result column="LAST_MON_BUSINCOME_AMT" jdbcType="DECIMAL" property="lastMonBusincomeAmt" />
+    <result column="YEAR_BUSINCOME_AMT" jdbcType="DECIMAL" property="yearBusincomeAmt" />
+    <result column="LASTYEAR_BUSINCOME_AMT" jdbcType="DECIMAL" property="lastyearBusincomeAmt" />
+    <result column="MON_INVOICING_AMT" jdbcType="DECIMAL" property="monInvoicingAmt" />
+    <result column="YEAR_INVOICING_AMT" jdbcType="DECIMAL" property="yearInvoicingAmt" />
+    <result column="LAST_MON_INVOICING_AMT" jdbcType="DECIMAL" property="lastMonInvoicingAmt" />
+    <result column="LAST_YEAR_INVOICING_AMT" jdbcType="DECIMAL" property="lastYearInvoicingAmt" />
+    <result column="MON_SERVICE_AMT" jdbcType="DECIMAL" property="monServiceAmt" />
+    <result column="YEAR_SERVICE_AMT" jdbcType="DECIMAL" property="yearServiceAmt" />
+    <result column="LAST_MON_SERVICE_AMT" jdbcType="DECIMAL" property="lastMonServiceAmt" />
+    <result column="LAST_YEAR_SERVICE_AMT" jdbcType="DECIMAL" property="lastYearServiceAmt" />
+    <result column="MON_FINANCE_AMT" jdbcType="DECIMAL" property="monFinanceAmt" />
+    <result column="YEAR_FINANCE_AMT" jdbcType="DECIMAL" property="yearFinanceAmt" />
+    <result column="LAST_MON_FINANCE_AMT" jdbcType="DECIMAL" property="lastMonFinanceAmt" />
+    <result column="LAST_YEAR_FINANCE_AMT" jdbcType="DECIMAL" property="lastYearFinanceAmt" />
+  </resultMap>
+  <insert id="insert" parameterType="DTO.HtyFctOrgIncomeDTO">
+    insert into hty_fct_org_income (ID, YEAR_MON, ORG_CODE, 
+      MON_BUSINCOME_AMT, LAST_MON_BUSINCOME_AMT, YEAR_BUSINCOME_AMT, 
+      LASTYEAR_BUSINCOME_AMT, MON_INVOICING_AMT, 
+      YEAR_INVOICING_AMT, LAST_MON_INVOICING_AMT, 
+      LAST_YEAR_INVOICING_AMT, MON_SERVICE_AMT, YEAR_SERVICE_AMT, 
+      LAST_MON_SERVICE_AMT, LAST_YEAR_SERVICE_AMT, 
+      MON_FINANCE_AMT, YEAR_FINANCE_AMT, LAST_MON_FINANCE_AMT, 
+      LAST_YEAR_FINANCE_AMT)
+    values (#{id,jdbcType=BIGINT}, #{yearMon,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{monBusincomeAmt,jdbcType=DECIMAL}, #{lastMonBusincomeAmt,jdbcType=DECIMAL}, #{yearBusincomeAmt,jdbcType=DECIMAL}, 
+      #{lastyearBusincomeAmt,jdbcType=DECIMAL}, #{monInvoicingAmt,jdbcType=DECIMAL}, 
+      #{yearInvoicingAmt,jdbcType=DECIMAL}, #{lastMonInvoicingAmt,jdbcType=DECIMAL}, 
+      #{lastYearInvoicingAmt,jdbcType=DECIMAL}, #{monServiceAmt,jdbcType=DECIMAL}, #{yearServiceAmt,jdbcType=DECIMAL}, 
+      #{lastMonServiceAmt,jdbcType=DECIMAL}, #{lastYearServiceAmt,jdbcType=DECIMAL}, 
+      #{monFinanceAmt,jdbcType=DECIMAL}, #{yearFinanceAmt,jdbcType=DECIMAL}, #{lastMonFinanceAmt,jdbcType=DECIMAL}, 
+      #{lastYearFinanceAmt,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="DTO.HtyFctOrgIncomeDTO">
+    insert into hty_fct_org_income
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="yearMon != null">
+        YEAR_MON,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="monBusincomeAmt != null">
+        MON_BUSINCOME_AMT,
+      </if>
+      <if test="lastMonBusincomeAmt != null">
+        LAST_MON_BUSINCOME_AMT,
+      </if>
+      <if test="yearBusincomeAmt != null">
+        YEAR_BUSINCOME_AMT,
+      </if>
+      <if test="lastyearBusincomeAmt != null">
+        LASTYEAR_BUSINCOME_AMT,
+      </if>
+      <if test="monInvoicingAmt != null">
+        MON_INVOICING_AMT,
+      </if>
+      <if test="yearInvoicingAmt != null">
+        YEAR_INVOICING_AMT,
+      </if>
+      <if test="lastMonInvoicingAmt != null">
+        LAST_MON_INVOICING_AMT,
+      </if>
+      <if test="lastYearInvoicingAmt != null">
+        LAST_YEAR_INVOICING_AMT,
+      </if>
+      <if test="monServiceAmt != null">
+        MON_SERVICE_AMT,
+      </if>
+      <if test="yearServiceAmt != null">
+        YEAR_SERVICE_AMT,
+      </if>
+      <if test="lastMonServiceAmt != null">
+        LAST_MON_SERVICE_AMT,
+      </if>
+      <if test="lastYearServiceAmt != null">
+        LAST_YEAR_SERVICE_AMT,
+      </if>
+      <if test="monFinanceAmt != null">
+        MON_FINANCE_AMT,
+      </if>
+      <if test="yearFinanceAmt != null">
+        YEAR_FINANCE_AMT,
+      </if>
+      <if test="lastMonFinanceAmt != null">
+        LAST_MON_FINANCE_AMT,
+      </if>
+      <if test="lastYearFinanceAmt != null">
+        LAST_YEAR_FINANCE_AMT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="yearMon != null">
+        #{yearMon,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="monBusincomeAmt != null">
+        #{monBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonBusincomeAmt != null">
+        #{lastMonBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearBusincomeAmt != null">
+        #{yearBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastyearBusincomeAmt != null">
+        #{lastyearBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monInvoicingAmt != null">
+        #{monInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearInvoicingAmt != null">
+        #{yearInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonInvoicingAmt != null">
+        #{lastMonInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearInvoicingAmt != null">
+        #{lastYearInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monServiceAmt != null">
+        #{monServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearServiceAmt != null">
+        #{yearServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonServiceAmt != null">
+        #{lastMonServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearServiceAmt != null">
+        #{lastYearServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monFinanceAmt != null">
+        #{monFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearFinanceAmt != null">
+        #{yearFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonFinanceAmt != null">
+        #{lastMonFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearFinanceAmt != null">
+        #{lastYearFinanceAmt,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgIncomeDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="MON_BUSINCOME_AMT" jdbcType="DECIMAL" property="monBusincomeAmt" />
+    <result column="LAST_MON_BUSINCOME_AMT" jdbcType="DECIMAL" property="lastMonBusincomeAmt" />
+    <result column="YEAR_BUSINCOME_AMT" jdbcType="DECIMAL" property="yearBusincomeAmt" />
+    <result column="LASTYEAR_BUSINCOME_AMT" jdbcType="DECIMAL" property="lastyearBusincomeAmt" />
+    <result column="MON_INVOICING_AMT" jdbcType="DECIMAL" property="monInvoicingAmt" />
+    <result column="YEAR_INVOICING_AMT" jdbcType="DECIMAL" property="yearInvoicingAmt" />
+    <result column="LAST_MON_INVOICING_AMT" jdbcType="DECIMAL" property="lastMonInvoicingAmt" />
+    <result column="LAST_YEAR_INVOICING_AMT" jdbcType="DECIMAL" property="lastYearInvoicingAmt" />
+    <result column="MON_SERVICE_AMT" jdbcType="DECIMAL" property="monServiceAmt" />
+    <result column="YEAR_SERVICE_AMT" jdbcType="DECIMAL" property="yearServiceAmt" />
+    <result column="LAST_MON_SERVICE_AMT" jdbcType="DECIMAL" property="lastMonServiceAmt" />
+    <result column="LAST_YEAR_SERVICE_AMT" jdbcType="DECIMAL" property="lastYearServiceAmt" />
+    <result column="MON_FINANCE_AMT" jdbcType="DECIMAL" property="monFinanceAmt" />
+    <result column="YEAR_FINANCE_AMT" jdbcType="DECIMAL" property="yearFinanceAmt" />
+    <result column="LAST_MON_FINANCE_AMT" jdbcType="DECIMAL" property="lastMonFinanceAmt" />
+    <result column="LAST_YEAR_FINANCE_AMT" jdbcType="DECIMAL" property="lastYearFinanceAmt" />
+  </resultMap>
+  <insert id="insert" parameterType="DTO.HtyFctOrgIncomeDTO">
+    insert into hty_fct_org_income (ID, YEAR_MON, ORG_CODE, 
+      MON_BUSINCOME_AMT, LAST_MON_BUSINCOME_AMT, YEAR_BUSINCOME_AMT, 
+      LASTYEAR_BUSINCOME_AMT, MON_INVOICING_AMT, 
+      YEAR_INVOICING_AMT, LAST_MON_INVOICING_AMT, 
+      LAST_YEAR_INVOICING_AMT, MON_SERVICE_AMT, YEAR_SERVICE_AMT, 
+      LAST_MON_SERVICE_AMT, LAST_YEAR_SERVICE_AMT, 
+      MON_FINANCE_AMT, YEAR_FINANCE_AMT, LAST_MON_FINANCE_AMT, 
+      LAST_YEAR_FINANCE_AMT)
+    values (#{id,jdbcType=BIGINT}, #{yearMon,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{monBusincomeAmt,jdbcType=DECIMAL}, #{lastMonBusincomeAmt,jdbcType=DECIMAL}, #{yearBusincomeAmt,jdbcType=DECIMAL}, 
+      #{lastyearBusincomeAmt,jdbcType=DECIMAL}, #{monInvoicingAmt,jdbcType=DECIMAL}, 
+      #{yearInvoicingAmt,jdbcType=DECIMAL}, #{lastMonInvoicingAmt,jdbcType=DECIMAL}, 
+      #{lastYearInvoicingAmt,jdbcType=DECIMAL}, #{monServiceAmt,jdbcType=DECIMAL}, #{yearServiceAmt,jdbcType=DECIMAL}, 
+      #{lastMonServiceAmt,jdbcType=DECIMAL}, #{lastYearServiceAmt,jdbcType=DECIMAL}, 
+      #{monFinanceAmt,jdbcType=DECIMAL}, #{yearFinanceAmt,jdbcType=DECIMAL}, #{lastMonFinanceAmt,jdbcType=DECIMAL}, 
+      #{lastYearFinanceAmt,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="DTO.HtyFctOrgIncomeDTO">
+    insert into hty_fct_org_income
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="yearMon != null">
+        YEAR_MON,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="monBusincomeAmt != null">
+        MON_BUSINCOME_AMT,
+      </if>
+      <if test="lastMonBusincomeAmt != null">
+        LAST_MON_BUSINCOME_AMT,
+      </if>
+      <if test="yearBusincomeAmt != null">
+        YEAR_BUSINCOME_AMT,
+      </if>
+      <if test="lastyearBusincomeAmt != null">
+        LASTYEAR_BUSINCOME_AMT,
+      </if>
+      <if test="monInvoicingAmt != null">
+        MON_INVOICING_AMT,
+      </if>
+      <if test="yearInvoicingAmt != null">
+        YEAR_INVOICING_AMT,
+      </if>
+      <if test="lastMonInvoicingAmt != null">
+        LAST_MON_INVOICING_AMT,
+      </if>
+      <if test="lastYearInvoicingAmt != null">
+        LAST_YEAR_INVOICING_AMT,
+      </if>
+      <if test="monServiceAmt != null">
+        MON_SERVICE_AMT,
+      </if>
+      <if test="yearServiceAmt != null">
+        YEAR_SERVICE_AMT,
+      </if>
+      <if test="lastMonServiceAmt != null">
+        LAST_MON_SERVICE_AMT,
+      </if>
+      <if test="lastYearServiceAmt != null">
+        LAST_YEAR_SERVICE_AMT,
+      </if>
+      <if test="monFinanceAmt != null">
+        MON_FINANCE_AMT,
+      </if>
+      <if test="yearFinanceAmt != null">
+        YEAR_FINANCE_AMT,
+      </if>
+      <if test="lastMonFinanceAmt != null">
+        LAST_MON_FINANCE_AMT,
+      </if>
+      <if test="lastYearFinanceAmt != null">
+        LAST_YEAR_FINANCE_AMT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="yearMon != null">
+        #{yearMon,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="monBusincomeAmt != null">
+        #{monBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonBusincomeAmt != null">
+        #{lastMonBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearBusincomeAmt != null">
+        #{yearBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastyearBusincomeAmt != null">
+        #{lastyearBusincomeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monInvoicingAmt != null">
+        #{monInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearInvoicingAmt != null">
+        #{yearInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonInvoicingAmt != null">
+        #{lastMonInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearInvoicingAmt != null">
+        #{lastYearInvoicingAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monServiceAmt != null">
+        #{monServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearServiceAmt != null">
+        #{yearServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonServiceAmt != null">
+        #{lastMonServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearServiceAmt != null">
+        #{lastYearServiceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monFinanceAmt != null">
+        #{monFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="yearFinanceAmt != null">
+        #{yearFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastMonFinanceAmt != null">
+        #{lastMonFinanceAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lastYearFinanceAmt != null">
+        #{lastYearFinanceAmt,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

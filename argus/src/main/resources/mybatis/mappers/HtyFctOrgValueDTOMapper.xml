@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.HtyFctOrgValueDTOMapper">
+  <resultMap id="BaseResultMap" type="dto.HtyFctOrgValueDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="YEARMON" jdbcType="VARCHAR" property="yearmon" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="PTGZ" jdbcType="INTEGER" property="ptgz" />
+    <result column="PSGZ" jdbcType="DECIMAL" property="psgz" />
+    <result column="PEGZ" jdbcType="DECIMAL" property="pegz" />
+    <result column="PBGZ" jdbcType="DECIMAL" property="pbgz" />
+    <result column="CVMGZ" jdbcType="DECIMAL" property="cvmgz" />
+    <result column="ZHNL" jdbcType="DECIMAL" property="zhnl" />
+    <result column="FBPM" jdbcType="INTEGER" property="fbpm" />
+    <result column="ZTPM" jdbcType="INTEGER" property="ztpm" />
+  </resultMap>
+  <insert id="insert" parameterType="dto.HtyFctOrgValueDTO">
+    insert into hty_fct_org_value (ID, YEARMON, ORG_CODE, 
+      PTGZ, PSGZ, PEGZ, PBGZ, 
+      CVMGZ, ZHNL, FBPM, 
+      ZTPM)
+    values (#{id,jdbcType=BIGINT}, #{yearmon,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{ptgz,jdbcType=INTEGER}, #{psgz,jdbcType=DECIMAL}, #{pegz,jdbcType=DECIMAL}, #{pbgz,jdbcType=DECIMAL}, 
+      #{cvmgz,jdbcType=DECIMAL}, #{zhnl,jdbcType=DECIMAL}, #{fbpm,jdbcType=INTEGER}, 
+      #{ztpm,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.HtyFctOrgValueDTO">
+    insert into hty_fct_org_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="yearmon != null">
+        YEARMON,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="ptgz != null">
+        PTGZ,
+      </if>
+      <if test="psgz != null">
+        PSGZ,
+      </if>
+      <if test="pegz != null">
+        PEGZ,
+      </if>
+      <if test="pbgz != null">
+        PBGZ,
+      </if>
+      <if test="cvmgz != null">
+        CVMGZ,
+      </if>
+      <if test="zhnl != null">
+        ZHNL,
+      </if>
+      <if test="fbpm != null">
+        FBPM,
+      </if>
+      <if test="ztpm != null">
+        ZTPM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="yearmon != null">
+        #{yearmon,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ptgz != null">
+        #{ptgz,jdbcType=INTEGER},
+      </if>
+      <if test="psgz != null">
+        #{psgz,jdbcType=DECIMAL},
+      </if>
+      <if test="pegz != null">
+        #{pegz,jdbcType=DECIMAL},
+      </if>
+      <if test="pbgz != null">
+        #{pbgz,jdbcType=DECIMAL},
+      </if>
+      <if test="cvmgz != null">
+        #{cvmgz,jdbcType=DECIMAL},
+      </if>
+      <if test="zhnl != null">
+        #{zhnl,jdbcType=DECIMAL},
+      </if>
+      <if test="fbpm != null">
+        #{fbpm,jdbcType=INTEGER},
+      </if>
+      <if test="ztpm != null">
+        #{ztpm,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="dto.HtyFctOrgValueDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="YEARMON" jdbcType="VARCHAR" property="yearmon" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="PTGZ" jdbcType="INTEGER" property="ptgz" />
+    <result column="PSGZ" jdbcType="DECIMAL" property="psgz" />
+    <result column="PEGZ" jdbcType="DECIMAL" property="pegz" />
+    <result column="PBGZ" jdbcType="DECIMAL" property="pbgz" />
+    <result column="CVMGZ" jdbcType="DECIMAL" property="cvmgz" />
+    <result column="ZHNL" jdbcType="DECIMAL" property="zhnl" />
+    <result column="FBPM" jdbcType="INTEGER" property="fbpm" />
+    <result column="ZTPM" jdbcType="INTEGER" property="ztpm" />
+  </resultMap>
+  <insert id="insert" parameterType="dto.HtyFctOrgValueDTO">
+    insert into hty_fct_org_value (ID, YEARMON, ORG_CODE, 
+      PTGZ, PSGZ, PEGZ, PBGZ, 
+      CVMGZ, ZHNL, FBPM, 
+      ZTPM)
+    values (#{id,jdbcType=BIGINT}, #{yearmon,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{ptgz,jdbcType=INTEGER}, #{psgz,jdbcType=DECIMAL}, #{pegz,jdbcType=DECIMAL}, #{pbgz,jdbcType=DECIMAL}, 
+      #{cvmgz,jdbcType=DECIMAL}, #{zhnl,jdbcType=DECIMAL}, #{fbpm,jdbcType=INTEGER}, 
+      #{ztpm,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.HtyFctOrgValueDTO">
+    insert into hty_fct_org_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="yearmon != null">
+        YEARMON,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="ptgz != null">
+        PTGZ,
+      </if>
+      <if test="psgz != null">
+        PSGZ,
+      </if>
+      <if test="pegz != null">
+        PEGZ,
+      </if>
+      <if test="pbgz != null">
+        PBGZ,
+      </if>
+      <if test="cvmgz != null">
+        CVMGZ,
+      </if>
+      <if test="zhnl != null">
+        ZHNL,
+      </if>
+      <if test="fbpm != null">
+        FBPM,
+      </if>
+      <if test="ztpm != null">
+        ZTPM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="yearmon != null">
+        #{yearmon,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ptgz != null">
+        #{ptgz,jdbcType=INTEGER},
+      </if>
+      <if test="psgz != null">
+        #{psgz,jdbcType=DECIMAL},
+      </if>
+      <if test="pegz != null">
+        #{pegz,jdbcType=DECIMAL},
+      </if>
+      <if test="pbgz != null">
+        #{pbgz,jdbcType=DECIMAL},
+      </if>
+      <if test="cvmgz != null">
+        #{cvmgz,jdbcType=DECIMAL},
+      </if>
+      <if test="zhnl != null">
+        #{zhnl,jdbcType=DECIMAL},
+      </if>
+      <if test="fbpm != null">
+        #{fbpm,jdbcType=INTEGER},
+      </if>
+      <if test="ztpm != null">
+        #{ztpm,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgValueDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="YEARMON" jdbcType="VARCHAR" property="yearmon" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="PTGZ" jdbcType="INTEGER" property="ptgz" />
+    <result column="PSGZ" jdbcType="DECIMAL" property="psgz" />
+    <result column="PEGZ" jdbcType="DECIMAL" property="pegz" />
+    <result column="PBGZ" jdbcType="DECIMAL" property="pbgz" />
+    <result column="CVMGZ" jdbcType="DECIMAL" property="cvmgz" />
+    <result column="ZHNL" jdbcType="DECIMAL" property="zhnl" />
+    <result column="FBPM" jdbcType="INTEGER" property="fbpm" />
+    <result column="ZTPM" jdbcType="INTEGER" property="ztpm" />
+  </resultMap>
+  <insert id="insert" parameterType="DTO.HtyFctOrgValueDTO">
+    insert into hty_fct_org_value (ID, YEARMON, ORG_CODE, 
+      PTGZ, PSGZ, PEGZ, PBGZ, 
+      CVMGZ, ZHNL, FBPM, 
+      ZTPM)
+    values (#{id,jdbcType=BIGINT}, #{yearmon,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{ptgz,jdbcType=INTEGER}, #{psgz,jdbcType=DECIMAL}, #{pegz,jdbcType=DECIMAL}, #{pbgz,jdbcType=DECIMAL}, 
+      #{cvmgz,jdbcType=DECIMAL}, #{zhnl,jdbcType=DECIMAL}, #{fbpm,jdbcType=INTEGER}, 
+      #{ztpm,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="DTO.HtyFctOrgValueDTO">
+    insert into hty_fct_org_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="yearmon != null">
+        YEARMON,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="ptgz != null">
+        PTGZ,
+      </if>
+      <if test="psgz != null">
+        PSGZ,
+      </if>
+      <if test="pegz != null">
+        PEGZ,
+      </if>
+      <if test="pbgz != null">
+        PBGZ,
+      </if>
+      <if test="cvmgz != null">
+        CVMGZ,
+      </if>
+      <if test="zhnl != null">
+        ZHNL,
+      </if>
+      <if test="fbpm != null">
+        FBPM,
+      </if>
+      <if test="ztpm != null">
+        ZTPM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="yearmon != null">
+        #{yearmon,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ptgz != null">
+        #{ptgz,jdbcType=INTEGER},
+      </if>
+      <if test="psgz != null">
+        #{psgz,jdbcType=DECIMAL},
+      </if>
+      <if test="pegz != null">
+        #{pegz,jdbcType=DECIMAL},
+      </if>
+      <if test="pbgz != null">
+        #{pbgz,jdbcType=DECIMAL},
+      </if>
+      <if test="cvmgz != null">
+        #{cvmgz,jdbcType=DECIMAL},
+      </if>
+      <if test="zhnl != null">
+        #{zhnl,jdbcType=DECIMAL},
+      </if>
+      <if test="fbpm != null">
+        #{fbpm,jdbcType=INTEGER},
+      </if>
+      <if test="ztpm != null">
+        #{ztpm,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgValueDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="YEARMON" jdbcType="VARCHAR" property="yearmon" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="PTGZ" jdbcType="INTEGER" property="ptgz" />
+    <result column="PSGZ" jdbcType="DECIMAL" property="psgz" />
+    <result column="PEGZ" jdbcType="DECIMAL" property="pegz" />
+    <result column="PBGZ" jdbcType="DECIMAL" property="pbgz" />
+    <result column="CVMGZ" jdbcType="DECIMAL" property="cvmgz" />
+    <result column="ZHNL" jdbcType="DECIMAL" property="zhnl" />
+    <result column="FBPM" jdbcType="INTEGER" property="fbpm" />
+    <result column="ZTPM" jdbcType="INTEGER" property="ztpm" />
+  </resultMap>
+  <insert id="insert" parameterType="DTO.HtyFctOrgValueDTO">
+    insert into hty_fct_org_value (ID, YEARMON, ORG_CODE, 
+      PTGZ, PSGZ, PEGZ, PBGZ, 
+      CVMGZ, ZHNL, FBPM, 
+      ZTPM)
+    values (#{id,jdbcType=BIGINT}, #{yearmon,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{ptgz,jdbcType=INTEGER}, #{psgz,jdbcType=DECIMAL}, #{pegz,jdbcType=DECIMAL}, #{pbgz,jdbcType=DECIMAL}, 
+      #{cvmgz,jdbcType=DECIMAL}, #{zhnl,jdbcType=DECIMAL}, #{fbpm,jdbcType=INTEGER}, 
+      #{ztpm,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="DTO.HtyFctOrgValueDTO">
+    insert into hty_fct_org_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="yearmon != null">
+        YEARMON,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="ptgz != null">
+        PTGZ,
+      </if>
+      <if test="psgz != null">
+        PSGZ,
+      </if>
+      <if test="pegz != null">
+        PEGZ,
+      </if>
+      <if test="pbgz != null">
+        PBGZ,
+      </if>
+      <if test="cvmgz != null">
+        CVMGZ,
+      </if>
+      <if test="zhnl != null">
+        ZHNL,
+      </if>
+      <if test="fbpm != null">
+        FBPM,
+      </if>
+      <if test="ztpm != null">
+        ZTPM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="yearmon != null">
+        #{yearmon,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ptgz != null">
+        #{ptgz,jdbcType=INTEGER},
+      </if>
+      <if test="psgz != null">
+        #{psgz,jdbcType=DECIMAL},
+      </if>
+      <if test="pegz != null">
+        #{pegz,jdbcType=DECIMAL},
+      </if>
+      <if test="pbgz != null">
+        #{pbgz,jdbcType=DECIMAL},
+      </if>
+      <if test="cvmgz != null">
+        #{cvmgz,jdbcType=DECIMAL},
+      </if>
+      <if test="zhnl != null">
+        #{zhnl,jdbcType=DECIMAL},
+      </if>
+      <if test="fbpm != null">
+        #{fbpm,jdbcType=INTEGER},
+      </if>
+      <if test="ztpm != null">
+        #{ztpm,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
