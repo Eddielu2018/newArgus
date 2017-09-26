@@ -7,5 +7,11 @@
     http://www.springframework.org/schema/context/spring-context.xsd">
 	
 	<context:component-scan base-package="cn.htd"></context:component-scan>
-	
+
+	<bean id="dciDimOrgDTOService" class="cn.htd.argus.service.impl.DciDimOrgDTOServiceImpl"/>
+	<bean id="htyFctOrgCustDTOService" class="cn.htd.argus.service.impl.HtyFctOrgCustDTOServiceImpl"/>
+	<bean id="htyFctOrgCustIncomeSaleDTOService" class="cn.htd.argus.service.impl.HtyFctOrgCustIncomeSaleDTOServiceImpl"/>
+	<bean id="htyFctOrgIncomeDTOService" class="cn.htd.argus.service.impl.HtyFctOrgIncomeDTOServiceImpl"/>
+	<bean id="htyFctOrgSaleDTOService" class="cn.htd.argus.service.impl.HtyFctOrgSaleDTOServiceImpl"/>
+	<bean id="htyFctOrgValueDTOService" class="cn.htd.argus.service.impl.HtyFctOrgValueDTOServiceImpl"/>
 </beans>
