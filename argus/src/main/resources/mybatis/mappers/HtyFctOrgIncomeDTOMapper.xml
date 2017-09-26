@@ -28,12 +28,79 @@
     LAST_YEAR_INVOICING_AMT, MON_SERVICE_AMT, YEAR_SERVICE_AMT, LAST_MON_SERVICE_AMT, 
     LAST_YEAR_SERVICE_AMT, MON_FINANCE_AMT, YEAR_FINANCE_AMT, LAST_MON_FINANCE_AMT, LAST_YEAR_FINANCE_AMT
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from hty_fct_org_income
     where ID = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgIncomeDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_income
+    <where>
+      <if test="id != null">
+        and ID = #{id}
+      </if>
+      <if test="yearMon != null">
+        and YEAR_MON = #{yearMon}
+      </if>
+      <if test="orgCode != null">
+        and ORG_CODE = #{orgCode}
+      </if>
+      <if test="monBusincomeAmt != null">
+        and MON_BUSINCOME_AMT = #{monBusincomeAmt}
+      </if>
+      <if test="lastMonBusincomeAmt != null">
+        and LAST_MON_BUSINCOME_AMT = #{lastMonBusincomeAmt}
+      </if>
+      <if test="yearBusincomeAmt != null">
+        and YEAR_BUSINCOME_AMT = #{yearBusincomeAmt}
+      </if>
+      <if test="lastyearBusincomeAmt != null">
+        and LASTYEAR_BUSINCOME_AMT = #{lastyearBusincomeAmt}
+      </if>
+      <if test="monInvoicingAmt != null">
+        and MON_INVOICING_AMT = #{monInvoicingAmt}
+      </if>
+      <if test="yearInvoicingAmt != null">
+        and YEAR_INVOICING_AMT = #{yearInvoicingAmt}
+      </if>
+      <if test="lastMonInvoicingAmt != null">
+        and LAST_MON_INVOICING_AMT = #{lastMonInvoicingAmt}
+      </if>
+      <if test="lastYearInvoicingAmt != null">
+        and LAST_YEAR_INVOICING_AMT = #{lastYearInvoicingAmt}
+      </if>
+      <if test="monServiceAmt != null">
+        and MON_SERVICE_AMT = #{monServiceAmt}
+      </if>
+      <if test="yearServiceAmt != null">
+        and YEAR_SERVICE_AMT = #{yearServiceAmt}
+      </if>
+      <if test="lastMonServiceAmt != null">
+        and LAST_MON_SERVICE_AMT = #{lastMonServiceAmt}
+      </if>
+      <if test="lastYearServiceAmt != null">
+        and LAST_YEAR_SERVICE_AMT = #{lastYearServiceAmt}
+      </if>
+      <if test="monFinanceAmt != null">
+        and MON_FINANCE_AMT = #{monFinanceAmt}
+      </if>
+      <if test="yearFinanceAmt != null">
+        and YEAR_FINANCE_AMT = #{yearFinanceAmt}
+      </if>
+      <if test="lastMonFinanceAmt != null">
+        and LAST_MON_FINANCE_AMT = #{lastMonFinanceAmt}
+      </if>
+      <if test="lastYearFinanceAmt != null">
+        and LAST_YEAR_FINANCE_AMT = #{lastYearFinanceAmt}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from hty_fct_org_income
     where ID = #{id,jdbcType=BIGINT}

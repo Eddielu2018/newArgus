@@ -19,6 +19,36 @@
     from dci_dim_org
     where ID = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.DciDimOrgDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from dci_dim_org
+    <where>
+      <if test="id != null">
+        and ID = #{id}
+      </if>
+      <if test="orgCode != null">
+        and ORG_CODE = #{orgCode}
+      </if>
+      <if test="orgSname != null">
+        and ORG_SNAME = #{orgSname}
+      </if>
+      <if test="orgPcode != null">
+        and ORG_PCODE = #{orgPcode}
+      </if>
+      <if test="orgPsname != null">
+        and ORG_PSNAME = #{orgPsname}
+      </if>
+      <if test="orgXzcode != null">
+        and ORG_XZCODE = #{orgXzcode}
+      </if>
+      <if test="orgXz != null">
+        and ORG_XZ = #{orgXz}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from dci_dim_org
     where ID = #{id,jdbcType=BIGINT}

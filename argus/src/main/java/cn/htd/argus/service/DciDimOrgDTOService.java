@@ -8,4 +8,6 @@ import cn.htd.argus.dto.DciDimOrgDTO;
 public interface DciDimOrgDTOService {
 
     DciDimOrgDTO selectByPrimaryKey(Long id);
+
+    DciDimOrgDTO select(DciDimOrgDTO dto);
 }

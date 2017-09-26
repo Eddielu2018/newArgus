@@ -20,12 +20,61 @@
     ID, ORG_CODE, YEAR_MON, MON_NEWCUSTNUM, LASTMON_NEWCUSTNUM, YEAR_NEWCUSTNUM, LASTYEAR_NEWCUSTNUM, 
     MON_TRANSCUSTNUM, YEAR_TRANSCUSTNUM, ACT_CUSTNUM, MORRUNACT_CUSTNUM, VIP_NUM, EXPIRE30_VIP_NUM
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from hty_fct_org_cust
     where ID = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgCustDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_cust
+    <where>
+      <if test="id != null">
+        and ID = #{id}
+      </if>
+      <if test="orgCode != null">
+        and ORG_CODE = #{orgCode}
+      </if>
+      <if test="yearMon != null">
+        and ORG_CODE = #{yearMon}
+      </if>
+      <if test="monNewcustnum != null">
+        and MON_NEWCUSTNUM = #{monNewcustnum}
+      </if>
+      <if test="lastmonNewcustnum != null">
+        and LASTMON_NEWCUSTNUM = #{lastmonNewcustnum}
+      </if>
+      <if test="yearNewcustnum != null">
+        and YEAR_NEWCUSTNUM = #{yearNewcustnum}
+      </if>
+      <if test="lastyearNewcustnum != null">
+        and LASTYEAR_NEWCUSTNUM = #{lastyearNewcustnum}
+      </if>
+      <if test="monTranscustnum != null">
+        and MON_TRANSCUSTNUM = #{monTranscustnum}
+      </if>
+      <if test="yearTranscustnum != null">
+        and YEAR_TRANSCUSTNUM = #{yearTranscustnum}
+      </if>
+      <if test="actCustnum != null">
+        and ACT_CUSTNUM = #{actCustnum}
+      </if>
+      <if test="morrunactCustnum != null">
+        and MORRUNACT_CUSTNUM = #{morrunactCustnum}
+      </if>
+      <if test="vipNum != null">
+        and VIP_NUM = #{vipNum}
+      </if>
+      <if test="expire30VipNum != null">
+        and EXPIRE30_VIP_NUM = #{expire30VipNum}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from hty_fct_org_cust
     where ID = #{id,jdbcType=BIGINT}

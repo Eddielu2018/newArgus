@@ -2,6 +2,8 @@ package cn.htd.argus.dao;
 
 import cn.htd.argus.dto.HtyFctOrgIncomeDTO;
 
+import java.util.List;
+
 public interface HtyFctOrgIncomeDTOMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface HtyFctOrgIncomeDTOMapper {
     int updateByPrimaryKeySelective(HtyFctOrgIncomeDTO record);
 
     int updateByPrimaryKey(HtyFctOrgIncomeDTO record);
+
+    List<HtyFctOrgIncomeDTO> select(HtyFctOrgIncomeDTO model);
 }

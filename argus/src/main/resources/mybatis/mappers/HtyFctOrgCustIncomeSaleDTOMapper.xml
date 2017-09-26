@@ -23,12 +23,67 @@
     INVOICING_AMT, SERVICE_AMT, FINANCE_AMT, SALE_AMT, ONLINE_SALEAMT, PROD_SALEAMT, 
     NONPROD_SALEAMT
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from hty_fct_org_cust_income_sale
     where ID = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgCustIncomeSaleDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_cust_income_sale
+    <where>
+      <if test="id != null">
+        and ID = #{id}
+      </if>
+      <if test="orgCode != null">
+        and ORG_CODE = #{orgCode}
+      </if>
+      <if test="yearDate != null">
+        and YEAR_DATE = #{yearDate}
+      </if>
+      <if test="custnum != null">
+        and CUSTNUM = #{custnum}
+      </if>
+      <if test="transcustnum != null">
+        and TRANSCUSTNUM = #{transcustnum}
+      </if>
+      <if test="actCustnum != null">
+        and ACT_CUSTNUM = #{actCustnum}
+      </if>
+      <if test="vipNum != null">
+        and VIP_NUM = #{vipNum}
+      </if>
+      <if test="busincomeAmt != null">
+        and BUSINCOME_AMT = #{busincomeAmt}
+      </if>
+      <if test="invoicingAmt != null">
+        and INVOICING_AMT = #{invoicingAmt}
+      </if>
+      <if test="serviceAmt != null">
+        and SERVICE_AMT = #{serviceAmt}
+      </if>
+      <if test="financeAmt != null">
+        and FINANCE_AMT = #{financeAmt}
+      </if>
+      <if test="saleAmt != null">
+        and SALE_AMT = #{saleAmt}
+      </if>
+      <if test="onlineSaleamt != null">
+        and ONLINE_SALEAMT = #{onlineSaleamt}
+      </if>
+      <if test="prodSaleamt != null">
+        and PROD_SALEAMT = #{prodSaleamt}
+      </if>
+      <if test="nonprodSaleamt != null">
+        and NONPROD_SALEAMT = #{nonprodSaleamt}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from hty_fct_org_cust_income_sale
     where ID = #{id,jdbcType=BIGINT}

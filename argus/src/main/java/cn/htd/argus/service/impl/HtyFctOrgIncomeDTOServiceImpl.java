@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * Created by wangtp on 2017/9/26.
  */
@@ -23,5 +25,15 @@ public class HtyFctOrgIncomeDTOServiceImpl implements HtyFctOrgIncomeDTOService{
             throw new IllegalArgumentException("userId id is null");
         }
         return dao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public HtyFctOrgIncomeDTO select(HtyFctOrgIncomeDTO dto) {
+        List<HtyFctOrgIncomeDTO> result = dao.select(dto);
+
+        if (result == null || result.isEmpty()) {
+            return null;
+        }
+        return result.get(0);
     }
 }

@@ -20,12 +20,61 @@
     ID, ORG_CODE, YEAR_MON, MON_AMT, LASTMON_AMT, YEAR_AMT, LASTYEAR_AMT, MON_ONLINE_SALEAMT, 
     YEAR_ONLINE_SALEAMT, MON_WAIT_SALEAMT, YEAR_WAIT_SALEAMT, MON_SP_SALEAMT, YEAR_SP_SALEAMT
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from hty_fct_org_sale
     where ID = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_sale
+    <where>
+      <if test="id != null">
+        and ID = #{id}
+      </if>
+      <if test="orgCode != null" >
+        and ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+      </if>
+      <if test="yearMon != null" >
+        and YEAR_MON = #{yearMon,jdbcType=VARCHAR}
+      </if>
+      <if test="monAmt != null" >
+        and MON_AMT = #{monAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastmonAmt != null" >
+        and LASTMON_AMT = #{lastmonAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="yearAmt != null" >
+        and YEAR_AMT = #{yearAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastyearAmt != null" >
+        and LASTYEAR_AMT = #{lastyearAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="monOnlineSaleamt != null" >
+        and MON_ONLINE_SALEAMT = #{monOnlineSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="yearOnlineSaleamt != null" >
+        and YEAR_ONLINE_SALEAMT = #{yearOnlineSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="monWaitSaleamt != null" >
+        and MON_WAIT_SALEAMT = #{monWaitSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="yearWaitSaleamt != null" >
+        and YEAR_WAIT_SALEAMT = #{yearWaitSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="monSpSaleamt != null" >
+        and MON_SP_SALEAMT = #{monSpSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="yearSpSaleamt != null" >
+        and YEAR_SP_SALEAMT = #{yearSpSaleamt,jdbcType=DECIMAL}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from hty_fct_org_sale
     where ID = #{id,jdbcType=BIGINT}
