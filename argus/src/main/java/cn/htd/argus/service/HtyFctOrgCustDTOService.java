@@ -10,4 +10,6 @@ public interface HtyFctOrgCustDTOService {
     HtyFctOrgCustDTO selectByPrimaryKey(Long id);
 
     HtyFctOrgCustDTO select(HtyFctOrgCustDTO dto);
+    
+    HtyFctOrgCustDTO selectByOrgCode(Long userId);
 }
