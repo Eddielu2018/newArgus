@@ -19,7 +19,9 @@ public class Test2Controller {
 
 	@RequestMapping("/test2")
     public String handleRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        return "index";
+        
+		req.setAttribute("te","sb"); 
+		return "index";
     }
 	
 }

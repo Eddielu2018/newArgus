@@ -10,4 +10,6 @@ public interface HtyFctOrgSaleDTOService {
     HtyFctOrgSaleDTO selectByPrimaryKey(Long id);
 
     HtyFctOrgSaleDTO select(HtyFctOrgSaleDTO dto);
+    
+    HtyFctOrgSaleDTO selectByOrgCode(Long userId);
 }

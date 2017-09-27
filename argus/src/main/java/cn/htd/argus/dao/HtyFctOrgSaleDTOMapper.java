@@ -5,17 +5,10 @@ import cn.htd.argus.dto.HtyFctOrgSaleDTO;
 import java.util.List;
 
 public interface HtyFctOrgSaleDTOMapper {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(HtyFctOrgSaleDTO record);
-
-    int insertSelective(HtyFctOrgSaleDTO record);
 
     HtyFctOrgSaleDTO selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(HtyFctOrgSaleDTO record);
-
-    int updateByPrimaryKey(HtyFctOrgSaleDTO record);
-
     List<HtyFctOrgSaleDTO> select(HtyFctOrgSaleDTO model);
+    
+    HtyFctOrgSaleDTO selectByOrgCode(Long orgCode);
 }

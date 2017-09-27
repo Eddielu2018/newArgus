@@ -35,4 +35,12 @@ public class HtyFctOrgSaleDTOServiceImpl implements HtyFctOrgSaleDTOService{
         }
         return result.get(0);
     }
+
+	@Override
+	public HtyFctOrgSaleDTO selectByOrgCode(Long userId) {
+		if (userId == null) {
+            throw new IllegalArgumentException("userId id is null");
+        }
+        return dao.selectByOrgCode(userId);
+	}
 }

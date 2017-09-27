@@ -5,17 +5,8 @@ import cn.htd.argus.dto.DciDimOrgDTO;
 import java.util.List;
 
 public interface DciDimOrgDTOMapper {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(DciDimOrgDTO record);
-
-    int insertSelective(DciDimOrgDTO record);
 
     DciDimOrgDTO selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(DciDimOrgDTO record);
-
-    int updateByPrimaryKey(DciDimOrgDTO record);
 
     List<DciDimOrgDTO> select(DciDimOrgDTO model);
 }
