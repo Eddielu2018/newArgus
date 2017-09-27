@@ -20,7 +20,7 @@
     where ID = #{id,jdbcType=BIGINT}
   </select>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.DciDimOrgDTO" >
+  <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.DciDimOrgDTO" >
     select
     <include refid="Base_Column_List" />
     from dci_dim_org
