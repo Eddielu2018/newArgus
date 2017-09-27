@@ -18,4 +18,6 @@ public interface HtyFctOrgValueDTOMapper {
     int updateByPrimaryKey(HtyFctOrgValueDTO record);
 
     List<HtyFctOrgValueDTO> select(HtyFctOrgValueDTO model);
+
+    HtyFctOrgValueDTO selectByOrgCode(Long orgCode);
 }

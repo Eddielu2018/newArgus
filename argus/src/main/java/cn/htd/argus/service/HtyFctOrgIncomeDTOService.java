@@ -10,4 +10,6 @@ public interface HtyFctOrgIncomeDTOService {
     HtyFctOrgIncomeDTO selectByPrimaryKey(Long id);
 
     HtyFctOrgIncomeDTO select(HtyFctOrgIncomeDTO dto);
+
+    HtyFctOrgIncomeDTO selectByOrgCode(Long userId);
 }

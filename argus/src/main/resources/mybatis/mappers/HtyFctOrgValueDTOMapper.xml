@@ -25,6 +25,13 @@
     where ID = #{id,jdbcType=BIGINT}
   </select>
 
+  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_value
+    where ORG_CODE = #{orgCode,jdbcType=BIGINT}
+  </select>
+
   <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
     select
     <include refid="Base_Column_List" />

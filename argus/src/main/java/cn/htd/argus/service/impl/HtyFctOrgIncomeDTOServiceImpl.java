@@ -36,4 +36,12 @@ public class HtyFctOrgIncomeDTOServiceImpl implements HtyFctOrgIncomeDTOService{
         }
         return result.get(0);
     }
+
+    @Override
+    public HtyFctOrgIncomeDTO selectByOrgCode(Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("userId id is null");
+        }
+        return dao.selectByOrgCode(userId);
+    }
 }

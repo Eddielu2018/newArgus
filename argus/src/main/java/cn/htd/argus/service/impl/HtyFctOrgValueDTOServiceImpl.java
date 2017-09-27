@@ -20,7 +20,7 @@ public class HtyFctOrgValueDTOServiceImpl implements HtyFctOrgValueDTOService{
     @Override
     public HtyFctOrgValueDTO selectByPrimaryKey(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("userId id is null");
+            throw new IllegalArgumentException("Id id is null");
         }
         return dao.selectByPrimaryKey(id);
     }
@@ -33,5 +33,13 @@ public class HtyFctOrgValueDTOServiceImpl implements HtyFctOrgValueDTOService{
             return null;
         }
         return result.get(0);
+    }
+
+    @Override
+    public HtyFctOrgValueDTO selectByOrgCode(Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("userId id is null");
+        }
+        return dao.selectByOrgCode(userId);
     }
 }

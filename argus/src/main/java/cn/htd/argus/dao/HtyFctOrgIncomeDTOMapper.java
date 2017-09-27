@@ -18,4 +18,6 @@ public interface HtyFctOrgIncomeDTOMapper {
     int updateByPrimaryKey(HtyFctOrgIncomeDTO record);
 
     List<HtyFctOrgIncomeDTO> select(HtyFctOrgIncomeDTO model);
+
+    HtyFctOrgIncomeDTO selectByOrgCode(Long orgCode);
 }
