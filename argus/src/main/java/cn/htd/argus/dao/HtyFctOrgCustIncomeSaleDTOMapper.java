@@ -9,4 +9,6 @@ public interface HtyFctOrgCustIncomeSaleDTOMapper {
     HtyFctOrgCustIncomeSaleDTO selectByPrimaryKey(Long id);
 
     List<HtyFctOrgCustIncomeSaleDTO> select(HtyFctOrgCustIncomeSaleDTO model);
+    
+    List<HtyFctOrgCustIncomeSaleDTO> selectMonth(HtyFctOrgCustIncomeSaleDTO model);
 }

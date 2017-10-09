@@ -1,5 +1,9 @@
 package cn.htd.argus.service;
 
+import java.util.List;
+
+import cn.htd.argus.bean.CompanySortDTO;
+import cn.htd.argus.bean.HtyFctOrgSortDTO;
 import cn.htd.argus.dto.HtyFctOrgCustDTO;
 
 /**
@@ -11,5 +15,17 @@ public interface HtyFctOrgCustDTOService {
 
     HtyFctOrgCustDTO select(HtyFctOrgCustDTO dto);
     
-    HtyFctOrgCustDTO selectByOrgCode(Long userId);
+    HtyFctOrgCustDTO selectByOrgCode(String userId);
+    
+    List<HtyFctOrgCustDTO> selectYear(String userId,String yearMon);
+    
+    HtyFctOrgSortDTO selectSort(String userId,String yearMon);
+    
+    int selectAvgHead(String yearMon);
+    
+    int selectAvgBrach(String userId,String yearMon);
+    
+    List<CompanySortDTO> selectCompanySortHead(String yearMon);
+    
+    List<CompanySortDTO> selectCompanySortBrach(String userId,String yearMon);
 }

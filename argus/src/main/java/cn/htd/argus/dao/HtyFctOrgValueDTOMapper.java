@@ -9,5 +9,9 @@ public interface HtyFctOrgValueDTOMapper {
 
     List<HtyFctOrgValueDTO> select(HtyFctOrgValueDTO model);
 
-    HtyFctOrgValueDTO selectByOrgCode(Long orgCode);
+    HtyFctOrgValueDTO selectByOrgCode(HtyFctOrgValueDTO model);
+    
+    int selectSortNumForHead(HtyFctOrgValueDTO model);
+    
+    int selectSortNumForBranch(HtyFctOrgValueDTO model);
 }

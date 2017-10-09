@@ -183,10 +183,10 @@ public class DateUtil {
 	 * @param days
 	 * @return
 	 */
-	public static String getAfterDate(Date date, int days) {
+	public static String getAfterDate(Date date, int days,String type) {
 		String result = null;
 		try {
-			SimpleDateFormat df = new SimpleDateFormat(FORMAT_DD);// "yyyy-MM-dd"
+			SimpleDateFormat df = new SimpleDateFormat(type);// "yyyy-MM-dd"
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
 			calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + days);

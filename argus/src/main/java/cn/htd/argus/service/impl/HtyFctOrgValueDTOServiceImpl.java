@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.htd.argus.bean.HtyFctOrgSortDTO;
 import cn.htd.argus.dao.HtyFctOrgValueDTOMapper;
 import cn.htd.argus.dto.HtyFctOrgValueDTO;
 import cn.htd.argus.service.HtyFctOrgValueDTOService;
@@ -36,10 +37,29 @@ public class HtyFctOrgValueDTOServiceImpl implements HtyFctOrgValueDTOService{
     }
 
     @Override
-    public HtyFctOrgValueDTO selectByOrgCode(Long userId) {
+    public HtyFctOrgValueDTO selectByOrgCode(String userId) {
         if (userId == null) {
             throw new IllegalArgumentException("userId id is null");
         }
-        return dao.selectByOrgCode(userId);
+        HtyFctOrgValueDTO dto = new HtyFctOrgValueDTO();
+        dto.setOrgCode(userId);
+        return dao.selectByOrgCode(dto);
     }
+
+	@Override
+	public HtyFctOrgSortDTO selectSort(String userId, String yearMon) {
+		if (userId == null) {
+            throw new IllegalArgumentException("userId id is null");
+        }
+		if (yearMon == null) {
+            throw new IllegalArgumentException("yearMon id is null");
+        }
+		HtyFctOrgValueDTO fdto = new HtyFctOrgValueDTO();
+		fdto.setOrgCode(userId);
+		fdto.setYearmon(yearMon);
+		HtyFctOrgSortDTO dto = new HtyFctOrgSortDTO();
+		dto.setValueHead(dao.selectSortNumForHead(fdto));
+		dto.setValueBranch(dao.selectSortNumForBranch(fdto));
+		return dto;
+	}
 }
