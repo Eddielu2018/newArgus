@@ -83,4 +83,10 @@
       </if>
     </where>
   </select>
+  <select id="selectMonth" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgCustIncomeSaleDTO" >
+    select 
+    <include refid="Base_Column_List" />
+    from hty_fct_org_cust_income_sale
+    where YEAR_DATE like CONCAT(#{yearDate},'%') and ORG_CODE = #{orgCode} order by YEAR_DATE ASC
+  </select>
 </mapper>

@@ -1,5 +1,6 @@
 package cn.htd.argus.service;
 
+import cn.htd.argus.bean.HtyFctOrgSortDTO;
 import cn.htd.argus.dto.HtyFctOrgValueDTO;
 
 /**
@@ -11,5 +12,7 @@ public interface HtyFctOrgValueDTOService {
 
     HtyFctOrgValueDTO select(HtyFctOrgValueDTO dto);
 
-    HtyFctOrgValueDTO selectByOrgCode(Long userId);
+    HtyFctOrgValueDTO selectByOrgCode(String userId);
+    
+    HtyFctOrgSortDTO selectSort(String userId,String yearMon);
 }

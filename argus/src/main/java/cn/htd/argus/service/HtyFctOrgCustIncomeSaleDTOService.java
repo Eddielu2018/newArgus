@@ -1,5 +1,7 @@
 package cn.htd.argus.service;
 
+import java.util.List;
+
 import cn.htd.argus.dto.HtyFctOrgCustIncomeSaleDTO;
 
 /**
@@ -10,4 +12,6 @@ public interface HtyFctOrgCustIncomeSaleDTOService {
     HtyFctOrgCustIncomeSaleDTO selectByPrimaryKey(Long id);
 
     HtyFctOrgCustIncomeSaleDTO select(HtyFctOrgCustIncomeSaleDTO dto);
+    
+    List<HtyFctOrgCustIncomeSaleDTO> selectMonth(String yearDate,String userId);
 }

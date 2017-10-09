@@ -35,4 +35,18 @@ public class HtyFctOrgCustIncomeSaleDTOServiceImpl implements HtyFctOrgCustIncom
         }
         return result.get(0);
     }
+
+	@Override
+	public List<HtyFctOrgCustIncomeSaleDTO> selectMonth(String yearDate,String userId) {
+		if (yearDate == null) {
+            throw new IllegalArgumentException("yearDate id is null");
+        }
+		if (userId == null) {
+            throw new IllegalArgumentException("userId id is null");
+        }
+		HtyFctOrgCustIncomeSaleDTO dto = new HtyFctOrgCustIncomeSaleDTO();
+		dto.setYearDate(yearDate);
+		dto.setOrgCode(userId);
+		return dao.selectMonth(dto);
+	}
 }

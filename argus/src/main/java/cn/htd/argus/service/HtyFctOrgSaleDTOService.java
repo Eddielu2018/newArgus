@@ -1,5 +1,10 @@
 package cn.htd.argus.service;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import cn.htd.argus.bean.CompanySortDTO;
+import cn.htd.argus.bean.HtyFctOrgSortDTO;
 import cn.htd.argus.dto.HtyFctOrgSaleDTO;
 
 /**
@@ -11,5 +16,17 @@ public interface HtyFctOrgSaleDTOService {
 
     HtyFctOrgSaleDTO select(HtyFctOrgSaleDTO dto);
     
-    HtyFctOrgSaleDTO selectByOrgCode(Long userId);
+    HtyFctOrgSaleDTO selectByOrgCode(String userId);
+    
+    List<HtyFctOrgSaleDTO> selectYear(String userId,String yearMon);
+    
+    HtyFctOrgSortDTO selectSort(String userId,String yearMon);
+    
+    BigDecimal selectAvgHead(String yearMon);
+    
+    BigDecimal selectAvgBrach(String userId,String yearMon);
+    
+    List<CompanySortDTO> selectCompanySortHead(String yearMon);
+    
+    List<CompanySortDTO> selectCompanySortBrach(String userId,String yearMon);
 }

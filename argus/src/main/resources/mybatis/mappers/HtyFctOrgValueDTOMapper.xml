@@ -25,11 +25,11 @@
     where ID = #{id,jdbcType=BIGINT}
   </select>
 
-  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
     select
     <include refid="Base_Column_List" />
     from hty_fct_org_value
-    where ORG_CODE = #{orgCode,jdbcType=BIGINT}
+    where ORG_CODE = #{orgCode} order by YEARMON desc limit 1
   </select>
 
   <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
@@ -71,5 +71,25 @@
         and ZTPM = #{ztpm,jdbcType=INTEGER}
       </if>
     </where>
+  </select>
+  
+  <select id="selectSortNumForHead" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
+    select u.rowNo from (  
+	select ORG_CODE,PTGZ,YEARMON,(@rowNum:=@rowNum+1) as rowNo  
+	from hty_fct_org_value,  
+	(select (@rowNum :=0) ) b  where YEARMON = #{yearmon} 
+	order by hty_fct_org_value.PTGZ desc ) u where u.ORG_CODE = #{orgCode}
+  </select>
+  
+  <select id="selectSortNumForBranch" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
+   select u.rowNo from (  
+	select t.ORG_CODE,t.PTGZ,t.YEARMON,(@rowNum:=@rowNum+1) as rowNo from (  
+	select ORG_CODE,PTGZ,YEARMON 
+	from hty_fct_org_value  
+	where YEARMON = #{yearmon} and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode}))
+	order by hty_fct_org_value.PTGZ desc ) t,(select (@rowNum :=0) ) b 
+	) u where u.ORG_CODE = #{orgCode}
   </select>
 </mapper>

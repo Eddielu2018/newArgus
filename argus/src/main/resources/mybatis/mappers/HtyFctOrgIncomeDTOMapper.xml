@@ -36,11 +36,11 @@
     where ID = #{id,jdbcType=BIGINT}
   </select>
 
-  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgIncomeDTO" >
     select
     <include refid="Base_Column_List" />
     from hty_fct_org_income
-    where ORG_CODE = #{orgCode,jdbcType=BIGINT}
+    where ORG_CODE = #{orgCode} order by YEAR_MON desc limit 1
   </select>
 
   <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgIncomeDTO" >
@@ -106,5 +106,55 @@
         and LAST_YEAR_FINANCE_AMT = #{lastYearFinanceAmt}
       </if>
     </where>
+  </select>
+    
+  <select id="selectYear" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgIncomeDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_income
+    where YEAR_MON like CONCAT(#{yearMon},'%') and ORG_CODE = #{orgCode} order by YEAR_MON ASC
+  </select>
+  
+  <select id="selectSortNumForHead" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgIncomeDTO" >
+    select u.rowNo from (  
+	select ORG_CODE,YEAR_BUSINCOME_AMT,YEAR_MON,(@rowNum:=@rowNum+1) as rowNo  
+	from hty_fct_org_income,  
+	(select (@rowNum :=0) ) b  where YEAR_MON = #{yearMon} 
+	order by hty_fct_org_income.YEAR_BUSINCOME_AMT desc ) u where u.ORG_CODE = #{orgCode}
+  </select>
+  
+  <select id="selectSortNumForBranch" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgIncomeDTO" >
+   select u.rowNo from (  
+	select t.ORG_CODE,t.YEAR_BUSINCOME_AMT,t.YEAR_MON,(@rowNum:=@rowNum+1) as rowNo from (  
+	select ORG_CODE,YEAR_BUSINCOME_AMT,YEAR_MON 
+	from hty_fct_org_income  
+	where YEAR_MON = #{yearMon} and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode}))
+	order by hty_fct_org_income.YEAR_BUSINCOME_AMT desc ) t,(select (@rowNum :=0) ) b 
+	) u where u.ORG_CODE = #{orgCode}
+  </select>
+  
+  <select id="selectAvgHead" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+   SELECT cast(avg(YEAR_BUSINCOME_AMT) as decimal(20,2)) as avgNum FROM hty_fct_org_income where YEAR_MON=#{yearMon}
+  </select>
+  
+  <select id="selectAvgBrach" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+   SELECT cast(avg(YEAR_BUSINCOME_AMT) as decimal(20,2)) as avgNum FROM hty_fct_org_income where YEAR_MON=#{yearMon} 
+   and ORG_CODE in (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE=#{orgCode}))
+  </select>
+  
+  <select id="selectCompanySortHead" resultType="String" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+   SELECT org.ORG_SNAME FROM hty_fct_org_income sale,DCI_DIM_ORG org where sale.YEAR_MON=#{yearMon} 
+   and org.ORG_CODE=sale.ORG_CODE ORDER BY sale.YEAR_BUSINCOME_AMT DESC LIMIT 0,10
+  </select>
+  
+  <select id="selectCompanySortBrach" resultType="String" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+   SELECT org.ORG_SNAME FROM hty_fct_org_income sale,DCI_DIM_ORG org where sale.YEAR_MON=#{yearMon} 
+   and org.ORG_CODE=sale.ORG_CODE and sale.ORG_CODE in 
+   (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode})) 
+   ORDER BY sale.YEAR_BUSINCOME_AMT DESC LIMIT 0,10
   </select>
 </mapper>
