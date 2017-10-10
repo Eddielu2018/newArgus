@@ -35,4 +35,9 @@ public class DciDimOrgDTOServiceImpl implements DciDimOrgDTOService{
         }
         return result.get(0);
     }
+
+	@Override
+	public int selectAllNum() {
+		return dao.selectAllNum();
+	}
 }

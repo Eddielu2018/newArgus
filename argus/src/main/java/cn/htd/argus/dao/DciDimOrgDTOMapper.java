@@ -9,4 +9,6 @@ public interface DciDimOrgDTOMapper {
     DciDimOrgDTO selectByPrimaryKey(Long id);
 
     List<DciDimOrgDTO> select(DciDimOrgDTO model);
+    
+    int selectAllNum();
 }
