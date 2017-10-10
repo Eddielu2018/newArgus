@@ -1,5 +1,9 @@
 package cn.htd.argus.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.htd.argus.bean.HtyFctOrgAvgDTO;
 import cn.htd.argus.bean.HtyFctOrgBusinessAvgDTO;
 import cn.htd.argus.bean.HtyFctOrgMemberAvgDTO;
 import cn.htd.argus.bean.HtyFctOrgSaleAvgDTO;
@@ -20,6 +25,7 @@ import cn.htd.argus.dto.HtyFctOrgIncomeDTO;
 import cn.htd.argus.dto.HtyFctOrgSaleDTO;
 import cn.htd.argus.dto.HtyFctOrgValueDTO;
 import cn.htd.argus.emuns.ResultCodeEnum;
+import cn.htd.argus.service.DciDimOrgDTOService;
 import cn.htd.argus.service.HtyFctOrgCustDTOService;
 import cn.htd.argus.service.HtyFctOrgCustIncomeSaleDTOService;
 import cn.htd.argus.service.HtyFctOrgIncomeDTOService;
@@ -46,6 +52,8 @@ public class HtyPctOrgController {
     private HtyFctOrgCustDTOService htyFctOrgCustDTOService;
     @Autowired
     private HtyFctOrgCustIncomeSaleDTOService htyFctOrgCustIncomeSaleDTOService;
+    @Autowired
+    private DciDimOrgDTOService dciDimOrgDTOService;
     /**
      * 首页页头估值
      * @param userId
@@ -58,6 +66,36 @@ public class HtyPctOrgController {
         try {
             HtyFctOrgValueDTO htyFctOrgValueDTO = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
             if(htyFctOrgValueDTO != null){
+            	DecimalFormat df = (DecimalFormat)NumberFormat.getInstance();
+            	//可以设置精确几位小数  
+                df.setMaximumFractionDigits(2);  
+                //模式 例如四舍五入  
+                df.setRoundingMode(RoundingMode.HALF_UP);  
+            	int allNum = dciDimOrgDTOService.selectAllNum();
+            	double sort = Double.valueOf(df.format(htyFctOrgValueDTO.getZtpm()/allNum*100));
+            	if(htyFctOrgValueDTO.getZtpm() >= 1 && htyFctOrgValueDTO.getZtpm() <=10){
+            		htyFctOrgValueDTO.setStarNum(new BigDecimal(4.5));
+            	}else if(htyFctOrgValueDTO.getZtpm() >=11){
+            		if(10 >= sort){
+            			htyFctOrgValueDTO.setStarNum(new BigDecimal(4));
+            		}else if(10 < sort && 25 >= sort){
+            			htyFctOrgValueDTO.setStarNum(new BigDecimal(3.5));
+            		}else if(25 < sort && 40 >= sort){
+            			htyFctOrgValueDTO.setStarNum(new BigDecimal(3));
+            		}else if(40 < sort && 50>= sort){
+            			htyFctOrgValueDTO.setStarNum(new BigDecimal(2.5));
+            		}else if(50 < sort && 75 >= sort){
+            			htyFctOrgValueDTO.setStarNum(new BigDecimal(2));
+            		}else if(75 < sort && 90 >= sort){
+            			htyFctOrgValueDTO.setStarNum(new BigDecimal(1.5));
+            		}else{
+            			htyFctOrgValueDTO.setStarNum(new BigDecimal(1));
+            		}
+            	}else{
+            		result.setCode(ResultCodeEnum.FAIL.getCode());
+                    result.setMsg(ResultCodeEnum.FAIL.getMsg());
+                    return result;
+            	}
                 result.setData(htyFctOrgValueDTO);
                 result.setCode(ResultCodeEnum.SUCCESS.getCode());
                 result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
@@ -295,9 +333,8 @@ public class HtyPctOrgController {
         	HtyFctOrgSortDTO allDto = new HtyFctOrgSortDTO();
         	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
         	String yearDate = dto.getYearmon();
-        	HtyFctOrgSortDTO vdto = this.htyFctOrgValueDTOService.selectSort(userId, yearDate);
-        	allDto.setValueHead(vdto.getValueHead());
-        	allDto.setValueBranch(vdto.getValueBranch());
+        	allDto.setValueHead(dto.getZtpm());
+        	allDto.setValueBranch(dto.getFbpm());
         	HtyFctOrgSortDTO idto = this.htyFctOrgIncomeDTOService.selectSort(userId, yearDate);
         	allDto.setIncomeHead(idto.getIncomeHead());
         	allDto.setIncomeBrach(idto.getIncomeBrach());
@@ -312,6 +349,70 @@ public class HtyPctOrgController {
             result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
         } catch (Exception e) {
             logger.error("首页最新排序错误" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+        }
+        return result;
+    }
+    
+    /**
+     * 首页弹框
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/index/box")
+    public RestResult indexForBox(@RequestParam(value = "userId", required = true) String userId,@RequestParam(value = "type", required = true) int type) {
+        RestResult result = new RestResult();
+        logger.info("调用(HtyPctOrgController.indexForBox)首页弹框获取入参，userId="+userId);
+        try {
+        	HtyFctOrgAvgDTO allDto = new HtyFctOrgAvgDTO();
+        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
+        	String yearDate = dto.getYearmon();
+        	if(1 == type || 2 == type){
+        		HtyFctOrgIncomeDTO htyFctOrgIncomeDTO = this.htyFctOrgIncomeDTOService.selectByOrgCode(userId);
+            	allDto.setCompanyNow(htyFctOrgIncomeDTO.getYearBusincomeAmt());
+            	HtyFctOrgSortDTO sdto = this.htyFctOrgIncomeDTOService.selectSort(userId, yearDate);
+            	allDto.setHeadAvg(this.htyFctOrgIncomeDTOService.selectAvgHead(yearDate));
+            	allDto.setBrachAvg(this.htyFctOrgIncomeDTOService.selectAvgBrach(userId, yearDate));
+            	if(1 == type){
+            		allDto.setSortNum(sdto.getSaleBrach());
+            		allDto.setCompanyList(this.htyFctOrgIncomeDTOService.selectCompanySortBrach(userId, yearDate));
+            	}else{
+            		allDto.setSortNum(sdto.getSaleHead());
+            		allDto.setCompanyList(this.htyFctOrgIncomeDTOService.selectCompanySortHead(yearDate));
+            	}
+        	}else if(3 == type || 4 == type){
+        		HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId);
+            	allDto.setCompanyNow(htyFctOrgSaleDTO.getYearAmt());
+            	HtyFctOrgSortDTO sdto = this.htyFctOrgSaleDTOService.selectSort(userId, yearDate);
+            	allDto.setHeadAvg(this.htyFctOrgSaleDTOService.selectAvgHead(yearDate));
+            	allDto.setBrachAvg(this.htyFctOrgSaleDTOService.selectAvgBrach(userId, yearDate));
+            	if(3 == type){
+            		allDto.setSortNum(sdto.getSaleBrach());
+            		allDto.setCompanyList(this.htyFctOrgSaleDTOService.selectCompanySortBrach(userId, yearDate));
+            	}else{
+            		allDto.setSortNum(sdto.getSaleHead());
+            		allDto.setCompanyList(this.htyFctOrgSaleDTOService.selectCompanySortHead(yearDate));
+            	}
+        	}else if(5 == type || 6 == type){
+        		HtyFctOrgCustDTO htyFctOrgIncomeDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId);
+            	allDto.setCompanyNow(new BigDecimal(htyFctOrgIncomeDTO.getYearNewcustnum()));
+            	HtyFctOrgSortDTO sdto = this.htyFctOrgCustDTOService.selectSort(userId, yearDate);
+            	allDto.setHeadAvg(new BigDecimal(this.htyFctOrgCustDTOService.selectAvgHead(yearDate)));
+            	allDto.setBrachAvg(new BigDecimal(this.htyFctOrgCustDTOService.selectAvgBrach(userId, yearDate)));
+            	if(5 == type){
+            		allDto.setSortNum(sdto.getSaleBrach());
+            		allDto.setCompanyList(this.htyFctOrgCustDTOService.selectCompanySortBrach(userId, yearDate));
+            	}else{
+            		allDto.setSortNum(sdto.getSaleHead());
+            		allDto.setCompanyList(this.htyFctOrgCustDTOService.selectCompanySortHead(yearDate));
+            	}
+        	}
+            result.setData(allDto);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+            logger.error("首页弹框错误" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
             result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
         }

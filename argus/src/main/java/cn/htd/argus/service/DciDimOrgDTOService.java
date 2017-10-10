@@ -10,4 +10,6 @@ public interface DciDimOrgDTOService {
     DciDimOrgDTO selectByPrimaryKey(Long id);
 
     DciDimOrgDTO select(DciDimOrgDTO dto);
+    
+    int selectAllNum();
 }

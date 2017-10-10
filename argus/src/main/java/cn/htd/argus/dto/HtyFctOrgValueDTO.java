@@ -25,6 +25,7 @@ public class HtyFctOrgValueDTO {
 
     private Integer ztpm;
 
+    private BigDecimal starNum;
     public Long getId() {
         return id;
     }
@@ -112,4 +113,12 @@ public class HtyFctOrgValueDTO {
     public void setZtpm(Integer ztpm) {
         this.ztpm = ztpm;
     }
+
+	public BigDecimal getStarNum() {
+		return starNum;
+	}
+
+	public void setStarNum(BigDecimal starNum) {
+		this.starNum = starNum;
+	}
 }
