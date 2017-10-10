@@ -14,4 +14,10 @@
 	<bean id="htyFctOrgIncomeDTOService" class="cn.htd.argus.service.impl.HtyFctOrgIncomeDTOServiceImpl"/>
 	<bean id="htyFctOrgSaleDTOService" class="cn.htd.argus.service.impl.HtyFctOrgSaleDTOServiceImpl"/>
 	<bean id="htyFctOrgValueDTOService" class="cn.htd.argus.service.impl.HtyFctOrgValueDTOServiceImpl"/>
+
+	<bean id="htyFctSaleOrgAllDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgAllDTOServiceImpl"/>
+	<bean id="htyFctSaleOrgDetailDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgDetailDTOServiceImpl"/>
+	<bean id="htyFctSaleOrgProdDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgProdDTOServiceImpl"/>
+	<bean id="htyFctSaleOrgXzDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgXzDTOServiceImpl"/>
+	<bean id="htyFctSaleXzHotDTOService" class="cn.htd.argus.service.impl.HtyFctSaleXzHotDTOServiceImpl"/>
 </beans>

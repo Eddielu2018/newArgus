@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.dao.HtyFctSaleOrgAllDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctSaleOrgAllDTO" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="DATE_KEY" property="dateKey" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="XS_AMT" property="xsAmt" jdbcType="DECIMAL" />
+    <result column="XS_QTY" property="xsQty" jdbcType="INTEGER" />
+    <result column="XS_ZH_ML" property="xsZhMl" jdbcType="DECIMAL" />
+    <result column="XS_ZY_SR" property="xsZySr" jdbcType="DECIMAL" />
+    <result column="XS_ML" property="xsMl" jdbcType="DECIMAL" />
+    <result column="XS_LR" property="xsLr" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, DATE_KEY, ORG_CODE, XS_AMT, XS_QTY, XS_ZH_ML, XS_ZY_SR, XS_ML, XS_LR
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_all
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctSaleOrgAllDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_all
+    where ORG_CODE = #{orgCode} order by YEAR_MON desc limit 1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from hty_fct_sale_org_all
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctSaleOrgAllDTO" >
+    insert into hty_fct_sale_org_all (ID, DATE_KEY, ORG_CODE, 
+      XS_AMT, XS_QTY, XS_ZH_ML, 
+      XS_ZY_SR, XS_ML, XS_LR)
+    values (#{id,jdbcType=BIGINT}, #{dateKey,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{xsAmt,jdbcType=DECIMAL}, #{xsQty,jdbcType=INTEGER}, #{xsZhMl,jdbcType=DECIMAL}, 
+      #{xsZySr,jdbcType=DECIMAL}, #{xsMl,jdbcType=DECIMAL}, #{xsLr,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.htd.argus.dto.HtyFctSaleOrgAllDTO" >
+    insert into hty_fct_sale_org_all
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="dateKey != null" >
+        DATE_KEY,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="xsAmt != null" >
+        XS_AMT,
+      </if>
+      <if test="xsQty != null" >
+        XS_QTY,
+      </if>
+      <if test="xsZhMl != null" >
+        XS_ZH_ML,
+      </if>
+      <if test="xsZySr != null" >
+        XS_ZY_SR,
+      </if>
+      <if test="xsMl != null" >
+        XS_ML,
+      </if>
+      <if test="xsLr != null" >
+        XS_LR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="dateKey != null" >
+        #{dateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xsAmt != null" >
+        #{xsAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQty != null" >
+        #{xsQty,jdbcType=INTEGER},
+      </if>
+      <if test="xsZhMl != null" >
+        #{xsZhMl,jdbcType=DECIMAL},
+      </if>
+      <if test="xsZySr != null" >
+        #{xsZySr,jdbcType=DECIMAL},
+      </if>
+      <if test="xsMl != null" >
+        #{xsMl,jdbcType=DECIMAL},
+      </if>
+      <if test="xsLr != null" >
+        #{xsLr,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.htd.argus.dto.HtyFctSaleOrgAllDTO" >
+    update hty_fct_sale_org_all
+    <set >
+      <if test="dateKey != null" >
+        DATE_KEY = #{dateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xsAmt != null" >
+        XS_AMT = #{xsAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQty != null" >
+        XS_QTY = #{xsQty,jdbcType=INTEGER},
+      </if>
+      <if test="xsZhMl != null" >
+        XS_ZH_ML = #{xsZhMl,jdbcType=DECIMAL},
+      </if>
+      <if test="xsZySr != null" >
+        XS_ZY_SR = #{xsZySr,jdbcType=DECIMAL},
+      </if>
+      <if test="xsMl != null" >
+        XS_ML = #{xsMl,jdbcType=DECIMAL},
+      </if>
+      <if test="xsLr != null" >
+        XS_LR = #{xsLr,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.htd.argus.dto.HtyFctSaleOrgAllDTO" >
+    update hty_fct_sale_org_all
+    set DATE_KEY = #{dateKey,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      XS_AMT = #{xsAmt,jdbcType=DECIMAL},
+      XS_QTY = #{xsQty,jdbcType=INTEGER},
+      XS_ZH_ML = #{xsZhMl,jdbcType=DECIMAL},
+      XS_ZY_SR = #{xsZySr,jdbcType=DECIMAL},
+      XS_ML = #{xsMl,jdbcType=DECIMAL},
+      XS_LR = #{xsLr,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
