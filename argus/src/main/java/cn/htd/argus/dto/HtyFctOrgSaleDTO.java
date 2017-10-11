@@ -28,6 +28,18 @@ public class HtyFctOrgSaleDTO {
     private BigDecimal monSpSaleamt;
 
     private BigDecimal yearSpSaleamt;
+    
+    private BigDecimal lastmonOnlineSaleamt;
+    
+    private BigDecimal lastyearOnlineSaleamt;
+    
+    private BigDecimal lastmonWaitSaleamt;
+    
+    private BigDecimal lastyearWaitSaleamt;
+    
+    private BigDecimal lastmonSpSaleamt;
+    
+    private BigDecimal lastyearSpSaleamt;
 
     public Long getId() {
         return id;
@@ -132,4 +144,53 @@ public class HtyFctOrgSaleDTO {
     public void setYearSpSaleamt(BigDecimal yearSpSaleamt) {
         this.yearSpSaleamt = yearSpSaleamt;
     }
+
+	public BigDecimal getLastmonOnlineSaleamt() {
+		return lastmonOnlineSaleamt;
+	}
+
+	public void setLastmonOnlineSaleamt(BigDecimal lastmonOnlineSaleamt) {
+		this.lastmonOnlineSaleamt = lastmonOnlineSaleamt;
+	}
+
+	public BigDecimal getLastyearOnlineSaleamt() {
+		return lastyearOnlineSaleamt;
+	}
+
+	public void setLastyearOnlineSaleamt(BigDecimal lastyearOnlineSaleamt) {
+		this.lastyearOnlineSaleamt = lastyearOnlineSaleamt;
+	}
+
+	public BigDecimal getLastmonWaitSaleamt() {
+		return lastmonWaitSaleamt;
+	}
+
+	public void setLastmonWaitSaleamt(BigDecimal lastmonWaitSaleamt) {
+		this.lastmonWaitSaleamt = lastmonWaitSaleamt;
+	}
+
+	public BigDecimal getLastyearWaitSaleamt() {
+		return lastyearWaitSaleamt;
+	}
+
+	public void setLastyearWaitSaleamt(BigDecimal lastyearWaitSaleamt) {
+		this.lastyearWaitSaleamt = lastyearWaitSaleamt;
+	}
+
+	public BigDecimal getLastmonSpSaleamt() {
+		return lastmonSpSaleamt;
+	}
+
+	public void setLastmonSpSaleamt(BigDecimal lastmonSpSaleamt) {
+		this.lastmonSpSaleamt = lastmonSpSaleamt;
+	}
+
+	public BigDecimal getLastyearSpSaleamt() {
+		return lastyearSpSaleamt;
+	}
+
+	public void setLastyearSpSaleamt(BigDecimal lastyearSpSaleamt) {
+		this.lastyearSpSaleamt = lastyearSpSaleamt;
+	}
+    
 }
