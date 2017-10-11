@@ -44,9 +44,9 @@ import cn.htd.argus.util.RestResult;
  * Created by wangtp on 2017/9/27.
  */
 @RestController
-@RequestMapping("/htypctorg")
-public class HtyPctOrgController {
-    Logger logger = LoggerFactory.getLogger(HtyPctOrgController.class);
+@RequestMapping("/htyfctorg")
+public class HtyFctOrgController {
+    Logger logger = LoggerFactory.getLogger(HtyFctOrgController.class);
 
     @Autowired
     private HtyFctOrgValueDTOService htyFctOrgValueDTOService;
