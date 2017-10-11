@@ -10,15 +10,23 @@
     <result column="YEAR_AMT" property="yearAmt" jdbcType="DECIMAL" />
     <result column="LASTYEAR_AMT" property="lastyearAmt" jdbcType="DECIMAL" />
     <result column="MON_ONLINE_SALEAMT" property="monOnlineSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_MON_ONLINE_SALEAMT" property="lastmonOnlineSaleamt" jdbcType="DECIMAL" />
     <result column="YEAR_ONLINE_SALEAMT" property="yearOnlineSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_YEAR_ONLINE_SALEAMT" property="lastyearOnlineSaleamt" jdbcType="DECIMAL" />
     <result column="MON_WAIT_SALEAMT" property="monWaitSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_MON_WAIT_SALEAMT" property="lastmonWaitSaleamt" jdbcType="DECIMAL" />
     <result column="YEAR_WAIT_SALEAMT" property="yearWaitSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_YEAR_WAIT_SALEAMT" property="lastyearWaitSaleamt" jdbcType="DECIMAL" />
     <result column="MON_SP_SALEAMT" property="monSpSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_MON_SP_SALEAMT" property="lastmonSpSaleamt" jdbcType="DECIMAL" />
     <result column="YEAR_SP_SALEAMT" property="yearSpSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_YEAR_SP_SALEAMT" property="lastyearSpSaleamt" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, ORG_CODE, YEAR_MON, MON_AMT, LASTMON_AMT, YEAR_AMT, LASTYEAR_AMT, MON_ONLINE_SALEAMT, 
-    YEAR_ONLINE_SALEAMT, MON_WAIT_SALEAMT, YEAR_WAIT_SALEAMT, MON_SP_SALEAMT, YEAR_SP_SALEAMT
+    LAST_MON_ONLINE_SALEAMT,YEAR_ONLINE_SALEAMT,LAST_YEAR_ONLINE_SALEAMT, MON_WAIT_SALEAMT, 
+    LAST_MON_WAIT_SALEAMT, YEAR_WAIT_SALEAMT, LAST_YEAR_WAIT_SALEAMT, MON_SP_SALEAMT, LAST_MON_SP_SALEAMT,
+     YEAR_SP_SALEAMT, LAST_YEAR_SP_SALEAMT
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -64,20 +72,38 @@
       <if test="monOnlineSaleamt != null" >
         and MON_ONLINE_SALEAMT = #{monOnlineSaleamt,jdbcType=DECIMAL}
       </if>
+      <if test="lastmonOnlineSaleamt != null" >
+        and LAST_MON_ONLINE_SALEAMT = #{lastmonOnlineSaleamt,jdbcType=DECIMAL}
+      </if>
       <if test="yearOnlineSaleamt != null" >
         and YEAR_ONLINE_SALEAMT = #{yearOnlineSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastyearOnlineSaleamt != null" >
+        and LAST_YEAR_ONLINE_SALEAMT = #{lastyearOnlineSaleamt,jdbcType=DECIMAL}
       </if>
       <if test="monWaitSaleamt != null" >
         and MON_WAIT_SALEAMT = #{monWaitSaleamt,jdbcType=DECIMAL}
       </if>
+      <if test="lastmonWaitSaleamt != null" >
+        and LAST_MON_WAIT_SALEAMT = #{lastmonWaitSaleamt,jdbcType=DECIMAL}
+      </if>
       <if test="yearWaitSaleamt != null" >
         and YEAR_WAIT_SALEAMT = #{yearWaitSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastyearWaitSaleamt != null" >
+        and LAST_YEAR_WAIT_SALEAMT = #{lastyearWaitSaleamt,jdbcType=DECIMAL}
       </if>
       <if test="monSpSaleamt != null" >
         and MON_SP_SALEAMT = #{monSpSaleamt,jdbcType=DECIMAL}
       </if>
+      <if test="lastmonSpSaleamt != null" >
+        and LAST_MON_SP_SALEAMT = #{lastmonSpSaleamt,jdbcType=DECIMAL}
+      </if>
       <if test="yearSpSaleamt != null" >
         and YEAR_SP_SALEAMT = #{yearSpSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastyearSpSaleamt != null" >
+        and LAST_YEAR_SP_SALEAMT = #{lastyearSpSaleamt,jdbcType=DECIMAL}
       </if>
     </where>
   </select>
