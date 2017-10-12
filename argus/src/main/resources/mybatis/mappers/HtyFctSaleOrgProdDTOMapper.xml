@@ -20,6 +20,48 @@
     ID, DATE_KEY, ORG_CODE, PL_CODE, PL_NAME, PP_CODE, PP_NAME, XS_AMT, XS_QTY, XS_AMT_ALL, 
     XS_QTY_ALL, XS_CB, XS_SR
   </sql>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.startTime != null and searchDTO.startTime != ''">
+        <![CDATA[ and DATE_KEY >= #{searchDTO.startTime} ]]>
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
+        <![CDATA[ and DATE_KEY <= #{searchDTO.endTime} ]]>
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryBrandPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_prod
+    <include refid="where"/>
+    ORDER BY PP_CODE,PL_CODE
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryCategoryPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_prod
+    <include refid="where"/>
+    ORDER BY PL_CODE,PP_CODE
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryPageCount" resultType="long">
+    SELECT COUNT(*) FROM (SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    hty_fct_sale_org_prod
+    <include refid="where"/>) a
+
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
