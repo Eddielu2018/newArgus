@@ -1,6 +1,10 @@
 package cn.htd.argus.dao;
 
+import cn.htd.argus.bean.HtyFctSaleSearchDTO;
 import cn.htd.argus.dto.HtyFctSaleOrgXzDTO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface HtyFctSaleOrgXzDTOMapper {
     int deleteByPrimaryKey(Long id);
@@ -16,4 +20,6 @@ public interface HtyFctSaleOrgXzDTOMapper {
     int updateByPrimaryKey(HtyFctSaleOrgXzDTO record);
 
     HtyFctSaleOrgXzDTO selectByOrgCode(HtyFctSaleOrgXzDTO model);
+
+    List<HtyFctSaleOrgXzDTO> selectBySearchDTO(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
 }

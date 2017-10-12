@@ -22,6 +22,26 @@
     ID, DATE_KEY, ORG_CODE, ORG_XZCODE, XS_AMT, XS_QTY, XS_ZH_ML, XS_ZY_SR, XS_AMT_XZ, 
     XS_QTY_XZ, XS_ZH_ML_XZ, XS_ZY_SR_XZ, ORG_NUM, CNT, CNT_XZ
   </sql>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
+        and DATE_KEY like CONCAT(#{searchDTO.endTime},'%')
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryBrandPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_xz
+    <include refid="where"/>
+    order by DATE_KEY ASC
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

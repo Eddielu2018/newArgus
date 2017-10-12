@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -84,9 +85,49 @@ public class HtyFctSaleOrgController {
         logger.info("调用(HtyFctSaleOrgController.saleProdList)品牌品类销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",sort="+sort);
         RestResult result = new RestResult();
         try {
-            SaleXzDTO dto = new SaleXzDTO();
-            endTime = DateUtil.conversionDate(endTime);
+            SaleXzListDTO dto = new SaleXzListDTO();
 
+            HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
+            endTime = DateUtil.conversionDate(endTime);
+            if(StringUtils.isNotEmpty(userId)){
+                searchDTO.setUserId(userId);
+            }
+            if(StringUtils.isNotEmpty(endTime)){
+                searchDTO.setEndTime(endTime);
+            }
+            List<SaleXzDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectBySearchDTO(searchDTO);
+
+            List<String> wholeBottomDate = new ArrayList<String>();
+            List<String> wholeBottom = new ArrayList<String>();
+            List<String> wholeBottomPair = new ArrayList<String>();
+            if(saleXzDTOs != null){
+                if("1".equals(sort)){
+                    for(SaleXzDTO i:saleXzDTOs){
+                        wholeBottomDate.add(i.getDateKey());
+                        wholeBottom.add(i.getXsAmt().toString());
+                        wholeBottomPair.add(i.getXsAmtXz().toString());
+                    }
+                }else if("2".equals(sort)){
+                    for(SaleXzDTO i:saleXzDTOs){
+                        wholeBottomDate.add(i.getDateKey());
+                        wholeBottom.add(i.getCnt().toString());
+                        wholeBottomPair.add(i.getCntXz().toString());
+                    }
+                }else if("3".equals(sort)){
+                    for(SaleXzDTO i:saleXzDTOs){
+                        wholeBottomDate.add(i.getDateKey());
+                        wholeBottom.add(i.getRate().toString());
+                        wholeBottomPair.add(i.getRateXz().toString());
+                    }
+                }
+                dto.setXzBottom(wholeBottom);
+                dto.setXzBottomDate(wholeBottomDate);
+                dto.setXzBottomPair(wholeBottomPair);
+            }else{
+                result.setCode(ResultCodeEnum.FAIL.getCode());
+                result.setMsg(ResultCodeEnum.FAIL.getMsg());
+                return result;
+            }
             result.setData(dto);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
             result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
@@ -128,7 +169,7 @@ public class HtyFctSaleOrgController {
             startTime = DateUtil.conversionDate(startTime);
             endTime = DateUtil.conversionDate(endTime);
             List<SaleProdDTO> list = htyFctSaleOrgProdDTOService.queryPage(userId, sort, startTime, endTime, pager);
-            Long count = htyFctSaleOrgProdDTOService.queryPageCount(userId,startTime,endTime);
+            Long count = htyFctSaleOrgProdDTOService.queryPageCount(userId, startTime, endTime);
             saleProdListDTO.setSaleProdDTOList(list);
             saleProdListDTO.setSaleProdnum(count);
 
@@ -182,22 +223,22 @@ public class HtyFctSaleOrgController {
                 searchDTO.setStartTime(startTime);
             }
             if(StringUtils.isNotEmpty(endTime)){
-                searchDTO.setStartTime(endTime);
+                searchDTO.setEndTime(endTime);
             }
             if(StringUtils.isNotEmpty(userId)){
-                searchDTO.setStartTime(userId);
+                searchDTO.setUserId(userId);
             }
             if(StringUtils.isNotEmpty(sort)){
-                searchDTO.setStartTime(sort);
+                searchDTO.setXsAmt(sort);
             }
             if(StringUtils.isNotEmpty(prodName)){
-                searchDTO.setStartTime(prodName);
+                searchDTO.setProdName(prodName);
             }
             if(StringUtils.isNotEmpty(plCode)){
-                searchDTO.setStartTime(plCode);
+                searchDTO.setPlCode(plCode);
             }
             if(StringUtils.isNotEmpty(ppCode)){
-                searchDTO.setStartTime(ppCode);
+                searchDTO.setPpCode(ppCode);
             }
             List<SaleDetailDTO> list = htyFctSaleOrgDetailDTOService.queryPage(searchDTO, pager);
             Long count = htyFctSaleOrgDetailDTOService.queryPageCount(searchDTO);
@@ -250,13 +291,13 @@ public class HtyFctSaleOrgController {
                 searchDTO.setStartTime(startTime);
             }
             if(StringUtils.isNotEmpty(endTime)){
-                searchDTO.setStartTime(endTime);
+                searchDTO.setEndTime(endTime);
             }
             if(StringUtils.isNotEmpty(plCode)){
-                searchDTO.setStartTime(plCode);
+                searchDTO.setPlCode(plCode);
             }
             if(StringUtils.isNotEmpty(ppCode)){
-                searchDTO.setStartTime(ppCode);
+                searchDTO.setPpCode(ppCode);
             }
             List<SaleHotDTO> list = htyFctSaleXzHotDTOService.queryPage(searchDTO, pager);
             Long count = htyFctSaleXzHotDTOService.queryPageCount(searchDTO);
