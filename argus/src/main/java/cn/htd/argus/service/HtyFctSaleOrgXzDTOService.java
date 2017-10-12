@@ -1,7 +1,7 @@
 package cn.htd.argus.service;
 
 import cn.htd.argus.bean.HtyFctSaleSearchDTO;
-import cn.htd.argus.bean.SaleXzDTO;
+import cn.htd.argus.bean.SaleXzsDTO;
 import cn.htd.argus.dto.HtyFctSaleOrgXzDTO;
 
 import java.util.List;
@@ -12,5 +12,5 @@ import java.util.List;
 public interface HtyFctSaleOrgXzDTOService {
     HtyFctSaleOrgXzDTO selectByOrgCode(String userId);
 
-    List<SaleXzDTO> selectBySearchDTO(HtyFctSaleSearchDTO searchDTO);
+    List<SaleXzsDTO> selectBySearchDTO(HtyFctSaleSearchDTO searchDTO);
 }

@@ -1,7 +1,7 @@
 package cn.htd.argus.service.impl;
 
 import cn.htd.argus.bean.HtyFctSaleSearchDTO;
-import cn.htd.argus.bean.SaleXzDTO;
+import cn.htd.argus.bean.SaleXzsDTO;
 import cn.htd.argus.dao.HtyFctSaleOrgXzDTOMapper;
 import cn.htd.argus.dto.HtyFctSaleOrgXzDTO;
 import cn.htd.argus.service.HtyFctSaleOrgXzDTOService;
@@ -31,12 +31,12 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
     }
 
     @Override
-    public List<SaleXzDTO> selectBySearchDTO(HtyFctSaleSearchDTO searchDTO) {
+    public List<SaleXzsDTO> selectBySearchDTO(HtyFctSaleSearchDTO searchDTO) {
         List<HtyFctSaleOrgXzDTO> list = dao.selectBySearchDTO(searchDTO);
-        List<SaleXzDTO> dtos = new ArrayList<SaleXzDTO>();
+        List<SaleXzsDTO> dtos = new ArrayList<SaleXzsDTO>();
         if(list != null){
             for(HtyFctSaleOrgXzDTO i:list){
-                SaleXzDTO dto = new SaleXzDTO();
+                SaleXzsDTO dto = new SaleXzsDTO();
                 dto.setDateKey(i.getDateKey());
                 //1销售额
                 dto.setXsAmt(i.getXsAmt());

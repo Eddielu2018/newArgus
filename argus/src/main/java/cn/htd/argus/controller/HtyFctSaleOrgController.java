@@ -95,26 +95,26 @@ public class HtyFctSaleOrgController {
             if(StringUtils.isNotEmpty(endTime)){
                 searchDTO.setEndTime(endTime);
             }
-            List<SaleXzDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectBySearchDTO(searchDTO);
+            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectBySearchDTO(searchDTO);
 
             List<String> wholeBottomDate = new ArrayList<String>();
             List<String> wholeBottom = new ArrayList<String>();
             List<String> wholeBottomPair = new ArrayList<String>();
             if(saleXzDTOs != null){
                 if("1".equals(sort)){
-                    for(SaleXzDTO i:saleXzDTOs){
+                    for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
                         wholeBottom.add(i.getXsAmt().toString());
                         wholeBottomPair.add(i.getXsAmtXz().toString());
                     }
                 }else if("2".equals(sort)){
-                    for(SaleXzDTO i:saleXzDTOs){
+                    for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
                         wholeBottom.add(i.getCnt().toString());
                         wholeBottomPair.add(i.getCntXz().toString());
                     }
                 }else if("3".equals(sort)){
-                    for(SaleXzDTO i:saleXzDTOs){
+                    for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
                         wholeBottom.add(i.getRate().toString());
                         wholeBottomPair.add(i.getRateXz().toString());
