@@ -5,6 +5,7 @@ import cn.htd.argus.dto.HtyFctSaleOrgAllDTO;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
 import cn.htd.argus.util.ArithUtil;
+import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.RestResult;
 import cn.htd.common.Pager;
 import com.alibaba.dubbo.common.utils.StringUtils;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
@@ -69,6 +69,37 @@ public class HtyFctSaleOrgController {
     }
 
     /**
+     * 行业销售趋势
+     * @param userId
+     * @param startTime
+     * @param endTime
+     * @param sort
+     * @return
+     */
+    @RequestMapping("/sale/xz/list")
+    public RestResult saleXzList(@RequestParam(value = "userId", required = true) String userId,
+                                   @RequestParam(value = "startTime", required = false) String startTime,
+                                   @RequestParam(value = "endTime", required = false) String endTime,
+                                   @RequestParam(value = "sort", required = true) String sort) {
+        logger.info("调用(HtyFctSaleOrgController.saleProdList)品牌品类销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",sort="+sort);
+        RestResult result = new RestResult();
+        try {
+            SaleXzDTO dto = new SaleXzDTO();
+            endTime = DateUtil.conversionDate(endTime);
+
+            result.setData(dto);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+            logger.error("获取品牌品类销售分析" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+        }
+        return result;
+    }
+
+
+    /**
      * 品牌品类销售分析
      * @param userId
      * @param page
@@ -85,6 +116,7 @@ public class HtyFctSaleOrgController {
                                  @RequestParam(value = "startTime", required = false) String startTime,
                                  @RequestParam(value = "endTime", required = false) String endTime,
                                  @RequestParam(value = "sort", required = true) String sort) {
+        logger.info("调用(HtyFctSaleOrgController.saleProdList)品牌品类销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",sort="+sort);
         RestResult result = new RestResult();
         try {
             SaleProdListDTO saleProdListDTO = new SaleProdListDTO();
@@ -93,8 +125,8 @@ public class HtyFctSaleOrgController {
                 pager.setRows(rows);
                 pager.setPage(page);
             }
-            startTime = dateUtil(startTime);
-            endTime = dateUtil(endTime);
+            startTime = DateUtil.conversionDate(startTime);
+            endTime = DateUtil.conversionDate(endTime);
             List<SaleProdDTO> list = htyFctSaleOrgProdDTOService.queryPage(userId, sort, startTime, endTime, pager);
             Long count = htyFctSaleOrgProdDTOService.queryPageCount(userId,startTime,endTime);
             saleProdListDTO.setSaleProdDTOList(list);
@@ -120,8 +152,8 @@ public class HtyFctSaleOrgController {
      * @param endTime
      * @param sort 0：爆款 1：滞款
      * @param prodName
-     * @param plName
-     * @param ppName
+     * @param plCode
+     * @param ppCode
      * @return
      */
     @RequestMapping("/sale/detail/list")
@@ -132,8 +164,9 @@ public class HtyFctSaleOrgController {
                                    @RequestParam(value = "endTime", required = false) String endTime,
                                    @RequestParam(value = "sort", required = true) String sort,
                                    @RequestParam(value = "prodName", required = false) String prodName,
-                                   @RequestParam(value = "endTime", required = false) String plName,
-                                   @RequestParam(value = "endTime", required = false) String ppName) {
+                                   @RequestParam(value = "plCode", required = false) String plCode,
+                                   @RequestParam(value = "ppCode", required = false) String ppCode) {
+        logger.info("调用(HtyFctSaleOrgController.saleProdList)商品销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",sort="+sort);
         RestResult result = new RestResult();
         try {
             SaleDetailListDTO saleDetailListDTO = new SaleDetailListDTO();
@@ -143,13 +176,94 @@ public class HtyFctSaleOrgController {
                 pager.setRows(rows);
                 pager.setPage(page);
             }
-            startTime = dateUtil(startTime);
-            endTime = dateUtil(endTime);
+            startTime = DateUtil.conversionDate(startTime);
+            endTime = DateUtil.conversionDate(endTime);
+            if(StringUtils.isNotEmpty(startTime)){
+                searchDTO.setStartTime(startTime);
+            }
+            if(StringUtils.isNotEmpty(endTime)){
+                searchDTO.setStartTime(endTime);
+            }
+            if(StringUtils.isNotEmpty(userId)){
+                searchDTO.setStartTime(userId);
+            }
+            if(StringUtils.isNotEmpty(sort)){
+                searchDTO.setStartTime(sort);
+            }
+            if(StringUtils.isNotEmpty(prodName)){
+                searchDTO.setStartTime(prodName);
+            }
+            if(StringUtils.isNotEmpty(plCode)){
+                searchDTO.setStartTime(plCode);
+            }
+            if(StringUtils.isNotEmpty(ppCode)){
+                searchDTO.setStartTime(ppCode);
+            }
             List<SaleDetailDTO> list = htyFctSaleOrgDetailDTOService.queryPage(searchDTO, pager);
             Long count = htyFctSaleOrgDetailDTOService.queryPageCount(searchDTO);
             saleDetailListDTO.setDetainum(count);
             saleDetailListDTO.setSaleDetailDTOList(list);
+
             result.setData(saleDetailListDTO);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+            logger.error("获取品牌品类销售分析" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+        }
+        return result;
+    }
+
+    /**
+     * 爆款销售分析
+     * @param page
+     * @param rows
+     * @param startTime
+     * @param endTime
+     * @param plCode
+     * @param ppCode
+     * @return
+     */
+    @RequestMapping("/sale/hot/list")
+    public RestResult salehotList(@RequestParam(value = "page", required = false) Integer page,
+                                   @RequestParam(value = "rows", required = false) Integer rows,
+                                   @RequestParam(value = "startTime", required = false) String startTime,
+                                   @RequestParam(value = "endTime", required = false) String endTime,
+                                   @RequestParam(value = "plCode", required = false) String plCode,
+                                   @RequestParam(value = "ppCode", required = false) String ppCode) {
+        logger.info("调用(HtyFctSaleOrgController.saleProdList)爆款销售分析入参，plCode="+plCode+",startTime="+startTime+",endTime="+endTime+",ppCode="+ppCode);
+        RestResult result = new RestResult();
+        try {
+            SaleHotListDTO saleHotListDTO = new SaleHotListDTO();
+            HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
+
+            Pager pager = new Pager();
+            if(page != null && rows != null){
+                pager.setRows(rows);
+                pager.setPage(page);
+            }
+
+            startTime = DateUtil.conversionDate(startTime);
+            endTime = DateUtil.conversionDate(endTime);
+            if(StringUtils.isNotEmpty(startTime)){
+                searchDTO.setStartTime(startTime);
+            }
+            if(StringUtils.isNotEmpty(endTime)){
+                searchDTO.setStartTime(endTime);
+            }
+            if(StringUtils.isNotEmpty(plCode)){
+                searchDTO.setStartTime(plCode);
+            }
+            if(StringUtils.isNotEmpty(ppCode)){
+                searchDTO.setStartTime(ppCode);
+            }
+            List<SaleHotDTO> list = htyFctSaleXzHotDTOService.queryPage(searchDTO, pager);
+            Long count = htyFctSaleXzHotDTOService.queryPageCount(searchDTO);
+            saleHotListDTO.setSaleHostnum(count);
+            saleHotListDTO.setSaleHotDTOList(list);
+
+            result.setData(saleHotListDTO);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
             result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
         } catch (Exception e) {
@@ -223,23 +337,4 @@ public class HtyFctSaleOrgController {
         return result;
     }
 
-    /**
-     * 时间转换
-     * @param time
-     */
-    public String dateUtil(String time){
-        try {
-            if(StringUtils.isNotEmpty(time)){
-                time = time.substring(0, 10);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date start = sdf.parse(time);
-                SimpleDateFormat sdfs = new SimpleDateFormat("yyyyMMdd");
-                time = sdfs.format(start);
-                return time;
-            }
-        } catch (Exception e) {
-            logger.error("时间转换错误" + e);
-        }
-        return time;
-    }
 }

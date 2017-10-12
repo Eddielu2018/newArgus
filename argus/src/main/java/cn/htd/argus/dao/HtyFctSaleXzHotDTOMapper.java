@@ -1,6 +1,11 @@
 package cn.htd.argus.dao;
 
+import cn.htd.argus.bean.HtyFctSaleSearchDTO;
 import cn.htd.argus.dto.HtyFctSaleXzHotDTO;
+import cn.htd.common.Pager;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface HtyFctSaleXzHotDTOMapper {
     int deleteByPrimaryKey(Long id);
@@ -16,4 +21,8 @@ public interface HtyFctSaleXzHotDTOMapper {
     int updateByPrimaryKey(HtyFctSaleXzHotDTO record);
 
     HtyFctSaleXzHotDTO selectByOrgCode(HtyFctSaleXzHotDTO model);
+
+    Long queryPageCount(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
+
+    List<HtyFctSaleXzHotDTO> queryPage(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO, @Param("pager") Pager pager);
 }

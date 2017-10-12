@@ -20,6 +20,41 @@
     ID, DATE_KEY, ORG_XZCODE, PL_CODE, PL_NAME, PP_CODE, PP_NAME, PROD_CODE, PROD_NAME, 
     XS_AMT, XS_QTY, MAX_XS_AMT, MIN_XS_AMT
   </sql>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.plCode != null and searchDTO.plCode != '' ">
+        and  PL_CODE = #{searchDTO.plCode}
+      </if>
+      <if test="searchDTO.ppCode != null and searchDTO.ppCode != '' ">
+        and  PP_CODE = #{searchDTO.ppCode}
+      </if>
+      <if test="searchDTO.startTime != null and searchDTO.startTime != ''">
+        <![CDATA[ and DATE_KEY >= #{startTime} ]]>
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
+        <![CDATA[ and DATE_KEY <= #{endTime} ]]>
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_xz_hot
+    <include refid="where"/>
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryPageCount" resultType="long">
+    SELECT COUNT(*) FROM (SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    hty_fct_sale_xz_hot
+    <include refid="where"/>) a
+
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

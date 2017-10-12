@@ -2,7 +2,6 @@ package cn.htd.argus.dao;
 
 import cn.htd.argus.bean.HtyFctSaleSearchDTO;
 import cn.htd.argus.dto.HtyFctSaleOrgDetailDTO;
-import cn.htd.argus.dto.HtyFctSaleOrgProdDTO;
 import cn.htd.common.Pager;
 import org.apache.ibatis.annotations.Param;
 

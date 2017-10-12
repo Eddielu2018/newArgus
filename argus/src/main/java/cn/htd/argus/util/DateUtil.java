@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,28 @@ public class DateUtil {
 	public static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
 	public static final String FORMAT_SS = "yyyy-MM-dd HH:mm:ss";
 	public static final String FORMAT_DD = "yyyy-MM-dd";
+
+	/**
+	 * 把yyyy-MM-dd格式时间转换成yyyyMMdd
+	 *
+	 * @param pattern
+	 */
+	public static String conversionDate(String pattern){
+		try {
+			if(StringUtils.isNotEmpty(pattern)){
+				pattern = pattern.substring(0, 10);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date start = sdf.parse(pattern);
+				SimpleDateFormat sdfs = new SimpleDateFormat("yyyyMMdd");
+				pattern = sdfs.format(start);
+				return pattern;
+			}
+		} catch (Exception e) {
+			logger.error("Method getCurDateStr arises the error,parameters ---> pattern=" + pattern);
+			logger.error(e.toString(), e);
+		}
+		return pattern;
+	}
 
 	/**
 	 * 获取当前时间
