@@ -44,7 +44,7 @@ import cn.htd.argus.util.RestResult;
  * Created by wangtp on 2017/9/27.
  */
 @RestController
-@RequestMapping("/htyfctorg")
+@RequestMapping("/htypctorg")
 public class HtyFctOrgController {
     Logger logger = LoggerFactory.getLogger(HtyFctOrgController.class);
 
@@ -135,65 +135,80 @@ public class HtyFctOrgController {
         	allDto.setWholeLeft(getLeft(htyFctOrgIncomeDTO,htyFctOrgSaleDTO,htyFctOrgCustDTO,date));
         	//顶部
         	allDto.setWholeTop(getTop(htyFctOrgIncomeDTO,htyFctOrgSaleDTO,htyFctOrgCustDTO,date,type));
-        	List<String> wholeNameList = new ArrayList<String>();
+        	List<Map<String,String>> wholeNameList = new ArrayList<Map<String,String>>();
         	List<Map<String,String>> wholePiclist = new ArrayList<Map<String,String>>();
         	Map<String,String> map1 = new HashMap<String,String>();
     		Map<String,String> map2 = new HashMap<String,String>();
     		Map<String,String> map3 = new HashMap<String,String>();
     		Map<String,String> map4 = new HashMap<String,String>();
+    		Map<String,String> nameMap1 = new HashMap<String,String>();
+    		Map<String,String> nameMap2 = new HashMap<String,String>();
+    		Map<String,String> nameMap3 = new HashMap<String,String>();
+    		Map<String,String> nameMap4 = new HashMap<String,String>();
+    		nameMap1.put("value", "0");
+    		nameMap2.put("value", "1");
+    		nameMap3.put("value", "2");
+    		nameMap4.put("value", "3");
         	if(type == 0){
         		//营业
-        		wholeNameList.add("总营业收入");
-        		wholeNameList.add("进销存营业收入");
-        		wholeNameList.add("服务营业收入");
-        		wholeNameList.add("金融营业收入");
+        		nameMap1.put("label", "总营业收入");
+        		nameMap2.put("label", "进销存营业收入");
+        		nameMap3.put("label", "服务营业收入");
+        		nameMap4.put("label", "金融营业收入");
         		//顶部展示
         		map1.put("name", "进销存营业收入");
         		map2.put("name", "服务营业收入");
         		map3.put("name", "金融营业收入");
-        		map1.put("num", allDto.getWholeTop().get(0).getNum().toString());
-        		map2.put("num", allDto.getWholeTop().get(1).getNum().toString());
-        		map3.put("num", allDto.getWholeTop().get(2).getNum().toString());
+        		map1.put("value", allDto.getWholeTop().get(0).getNum().toString());
+        		map2.put("value", allDto.getWholeTop().get(1).getNum().toString());
+        		map3.put("value", allDto.getWholeTop().get(2).getNum().toString());
         		wholePiclist.add(map1);
         		wholePiclist.add(map2);
         		wholePiclist.add(map3);
         	}else if(type == 1){
         		//金额
-        		wholeNameList.add("总销售金额");
-        		wholeNameList.add("线上交易金额");
-        		wholeNameList.add("未支付金额");
-        		wholeNameList.add("商品+销售金额");
+        		nameMap1.put("label", "总销售金额");
+        		nameMap2.put("label", "线上交易金额");
+        		nameMap3.put("label", "未支付金额");
+        		nameMap4.put("label", "商品+销售金额");
         		//顶部展示
         		map1.put("name", "线上交易金额");
         		map2.put("name", "非线上交易金额");
-        		map1.put("num", allDto.getWholeTop().get(0).getNum().toString());
-        		map2.put("num", ""+(allDto.getWholeTop().get(1).getNum().doubleValue()+allDto.getWholeTop().get(2).getNum().doubleValue()));
+        		map1.put("value", allDto.getWholeTop().get(0).getNum().toString());
+        		map2.put("value", ""+(allDto.getWholeTop().get(1).getNum().doubleValue()+allDto.getWholeTop().get(2).getNum().doubleValue()));
         		wholePiclist.add(map1);
         		wholePiclist.add(map2);
         	}else if(type == 2){
         		//会员
-        		wholeNameList.add("新增会员店总数");
-        		wholeNameList.add("交易会员店数");
-        		wholeNameList.add("活跃会员店数");
-        		wholeNameList.add("VIP会员店数");
+        		nameMap1.put("label", "新增会员店总数");
+        		nameMap2.put("label", "交易会员店数");
+        		nameMap3.put("label", "活跃会员店数");
+        		nameMap4.put("label", "VIP会员店数");
         		//顶部展示
         		map1.put("name", "会员店总数");
         		map2.put("name", "交易会员店数");
         		map3.put("name", "活跃会员店数");
         		map4.put("name", "VIP会员店数");
-        		map1.put("num", allDto.getWholeLeft().get(2).getNum().toString());
-        		map2.put("num", allDto.getWholeTop().get(0).getNum().toString());
-        		map3.put("num", allDto.getWholeTop().get(1).getNum().toString());
-        		map4.put("num", allDto.getWholeTop().get(2).getNum().toString());
+        		map1.put("value", allDto.getWholeLeft().get(2).getNum().toString());
+        		map2.put("value", allDto.getWholeTop().get(0).getNum().toString());
+        		map3.put("value", allDto.getWholeTop().get(1).getNum().toString());
+        		map4.put("value", allDto.getWholeTop().get(2).getNum().toString());
         		wholePiclist.add(map1);
         		wholePiclist.add(map2);
         		wholePiclist.add(map3);
         		wholePiclist.add(map4);
         	}
+        	wholeNameList.add(nameMap1);
+    		wholeNameList.add(nameMap2);
+    		wholeNameList.add(nameMap3);
+    		wholeNameList.add(nameMap4);
         	allDto.setWholeName(wholeNameList);
         	allDto.setWholePic(wholePiclist);
         	//底部列表
         	List<Map<String,String>> wholeBottomList = new ArrayList<Map<String,String>>();
+        	List<String> wholeBottomDate = new ArrayList<String>();
+        	List<String> wholeBottom = new ArrayList<String>();
+        	List<String> wholeBottomPair = new ArrayList<String>();
         	String yearWithDate = DateUtil.getCurDateStr1("yyyyMM");
         	String yearDate = DateUtil.getCurDateStr1("yyyy");
         	if("01".equals(yearWithDate.substring(yearWithDate.length()-2, yearWithDate.length()))){
@@ -225,7 +240,16 @@ public class HtyFctOrgController {
         			wholeBottomList = getYearCust(custList, kind);
         		}
         	}
-        	allDto.setWholeBottom(wholeBottomList);
+        	for(Map<String,String> btMap : wholeBottomList){
+        		wholeBottomDate.add(btMap.get("date"));
+        		wholeBottom.add(btMap.get("value"));
+        		if(btMap.containsKey("pair")){
+        			wholeBottomPair.add(btMap.get("pair"));
+        		}
+        	}
+        	allDto.setWholeBottom(wholeBottom);
+        	allDto.setWholeBottomDate(wholeBottomDate);
+        	allDto.setWholeBottomPair(wholeBottomPair);
         	result.setData(allDto);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
             result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
@@ -364,7 +388,7 @@ public class HtyFctOrgController {
     	List<BaseNumDTO> allBase = new ArrayList<BaseNumDTO>();
     	//营业
     	BaseNumDTO baseIncome = new BaseNumDTO();
-    	baseIncome.setName("总营业收入（万元）");
+    	baseIncome.setName("总营业收入");
     	if(date == 0){
     		//按月
     		baseIncome = getBaseNum(baseIncome,htyFctOrgIncomeDTO.getMonBusincomeAmt(),htyFctOrgIncomeDTO.getLastMonBusincomeAmt());
@@ -375,7 +399,7 @@ public class HtyFctOrgController {
     	allBase.add(baseIncome);
     	//金额
     	BaseNumDTO basePrice = new BaseNumDTO();
-    	basePrice.setName("总销售金额（万元）");
+    	basePrice.setName("总销售金额");
     	if(date == 0){
     		//按月
     		basePrice = getBaseNum(basePrice,htyFctOrgSaleDTO.getMonAmt(),htyFctOrgSaleDTO.getLastmonAmt());
@@ -386,7 +410,7 @@ public class HtyFctOrgController {
     	allBase.add(basePrice);
     	//会员
     	BaseNumDTO baseMember = new BaseNumDTO();
-    	baseMember.setName("新增会员店总数（家）");
+    	baseMember.setName("新增会员店总数");
     	if(date == 0){
     		//按月
     		baseMember = getBaseNum(baseMember,new BigDecimal(htyFctOrgCustDTO.getMonNewcustnum()),new BigDecimal(htyFctOrgCustDTO.getLastmonNewcustnum()));
