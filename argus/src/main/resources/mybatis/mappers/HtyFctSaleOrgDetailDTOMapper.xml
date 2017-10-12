@@ -22,6 +22,57 @@
     ID, DATE_KEY, ORG_CODE, PL_CODE, PL_NAME, PP_CODE, PP_NAME, PROD_CODE, PROD_NAME, 
     XS_AMT, XS_QTY, MAX_XS_AMT, MIN_XS_AMT, XS_DD, M_JC_QTY
   </sql>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.prodName != null and searchDTO.prodName != '' ">
+        and PROD_NAME like CONCAT('%',#{searchDTO.prodName},'%')
+      </if>
+      <if test="searchDTO.plCode != null and searchDTO.plCode != '' ">
+        and  PL_CODE = #{searchDTO.plCode}
+      </if>
+      <if test="searchDTO.ppCode != null and searchDTO.ppCode != '' ">
+        and  PP_CODE = #{searchDTO.ppCode}
+      </if>
+      <if test="htyFctSaleSearchDTO.startTime != null and htyFctSaleSearchDTO.startTime != ''">
+        <![CDATA[ and DATE_KEY >= #{startTime} ]]>
+      </if>
+      <if test="expressModel.endTime != null and htyFctSaleSearchDTO.endTime != ''">
+        <![CDATA[ and DATE_KEY <= #{endTime} ]]>
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryBurstPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_detail
+    <include refid="where"/>
+    ORDER BY XS_AMT DESC
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryStopPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_detail
+    <include refid="where"/>
+    ORDER BY XS_AMT ASC
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryPageCount" resultType="long">
+    SELECT COUNT(*) FROM (SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    hty_fct_sale_org_detail
+    <include refid="where"/>) a
+
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

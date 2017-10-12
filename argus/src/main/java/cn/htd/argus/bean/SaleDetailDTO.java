@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 public class SaleDetailDTO {
     private String prodName;
 
+    private String ppName;
+
     private String plName;
 
     private String sort;
@@ -20,9 +22,11 @@ public class SaleDetailDTO {
 
     private BigDecimal xsQty;
 
-    private BigDecimal M_JC_QTY;
+    private BigDecimal mJcQty;
 
     private BigDecimal xsAmt;
+
+    private BigDecimal xsDd;
 
     private BigDecimal salesRing;
 
@@ -82,12 +86,12 @@ public class SaleDetailDTO {
         this.xsQty = xsQty;
     }
 
-    public BigDecimal getM_JC_QTY() {
-        return M_JC_QTY;
+    public BigDecimal getmJcQty() {
+        return mJcQty;
     }
 
-    public void setM_JC_QTY(BigDecimal m_JC_QTY) {
-        M_JC_QTY = m_JC_QTY;
+    public void setmJcQty(BigDecimal mJcQty) {
+        this.mJcQty = mJcQty;
     }
 
     public BigDecimal getXsAmt() {
@@ -104,5 +108,21 @@ public class SaleDetailDTO {
 
     public void setSalesRing(BigDecimal salesRing) {
         this.salesRing = salesRing;
+    }
+
+    public String getPpName() {
+        return ppName;
+    }
+
+    public void setPpName(String ppName) {
+        this.ppName = ppName;
+    }
+
+    public BigDecimal getXsDd() {
+        return xsDd;
+    }
+
+    public void setXsDd(BigDecimal xsDd) {
+        this.xsDd = xsDd;
     }
 }

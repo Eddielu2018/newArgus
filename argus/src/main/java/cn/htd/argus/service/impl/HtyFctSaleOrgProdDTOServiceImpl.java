@@ -69,39 +69,34 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
         }
         List<HtyFctSaleOrgProdDTO> list = new ArrayList<HtyFctSaleOrgProdDTO>();
         List<SaleProdDTO> dtos = new ArrayList<SaleProdDTO>();
-        try {
-            HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
-            searchDTO.setUserId(userId);
-            if(StringUtils.isNotEmpty(startTime)){
-                searchDTO.setStartTime(startTime);
+        HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
+        searchDTO.setUserId(userId);
+        if(StringUtils.isNotEmpty(startTime)){
+            searchDTO.setStartTime(startTime);
+        }
+        if(StringUtils.isNotEmpty(endTime)){
+            searchDTO.setEndTime(endTime);
+        }
+        if("0".equals(sort)){
+            list = dao.queryBrandPage(searchDTO, pager);
+        }else if("1".equals(sort)){
+            list = dao.queryCategoryPage(searchDTO, pager);
+        }
+        if(list != null){
+            for(HtyFctSaleOrgProdDTO i:list){
+                SaleProdDTO dto = new SaleProdDTO();
+                dto.setPlName(i.getPlName());
+                dto.setPpName(i.getPpName());
+                dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 2));
+                dto.setXsQty(i.getXsQty());
+                dto.setXsAmt(i.getXsAmt());
+                dto.setXsRatio(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsAmtAll().doubleValue(), 2));
+                dto.setXsAvg(ArithUtil.sub(i.getXsSr().doubleValue(), i.getXsCb().doubleValue()));
+                dto.setXsAvgRatio(ArithUtil.div(dto.getXsAvg().doubleValue(), i.getXsSr().doubleValue(), 2));
+                dtos.add(dto);
             }
-            if(StringUtils.isNotEmpty(endTime)){
-                searchDTO.setEndTime(endTime);
-            }
-            if("0".equals(sort)){
-                list = dao.queryBrandPage(searchDTO, pager);
-            }else if("1".equals(sort)){
-                list = dao.queryCategoryPage(searchDTO, pager);
-            }
-            if(list != null){
-                for(HtyFctSaleOrgProdDTO i:list){
-                    SaleProdDTO dto = new SaleProdDTO();
-                    dto.setPlName(i.getPlName());
-                    dto.setPpName(i.getPpName());
-                    dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 0));
-                    dto.setXsQty(i.getXsQty());
-                    dto.setXsAmt(i.getXsAmt());
-                    dto.setXsRatio(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsAmtAll().doubleValue(), 0));
-                    dto.setXsAvg(ArithUtil.sub(i.getXsSr().doubleValue(), i.getXsCb().doubleValue()));
-                    dto.setXsAvgRatio(ArithUtil.div(dto.getXsAvg().doubleValue(), i.getXsSr().doubleValue(), 0));
-                    dtos.add(dto);
-                }
-            }else{
-                return  null;
-            }
-
-        } catch (Exception e) {
-            logger.error("HtyFctSaleOrgProdDTOServiceImpl.queryPage:获取品牌品类销售列表错误" + e);
+        }else{
+            return  null;
         }
         return dtos;
     }

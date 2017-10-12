@@ -10,8 +10,8 @@ public class HtyFctSaleSearchDTO {
     private String startTime;
     private String endTime;
     private String prodName;
-    private String plName;
-    private String ppName;
+    private String plCode;
+    private String ppCode;
     private String xsAmt;
 
     public String getUserId() {
@@ -54,19 +54,19 @@ public class HtyFctSaleSearchDTO {
         this.endTime = endTime;
     }
 
-    public String getPlName() {
-        return plName;
+    public String getPlCode() {
+        return plCode;
     }
 
-    public void setPlName(String plName) {
-        this.plName = plName;
+    public void setPlCode(String plCode) {
+        this.plCode = plCode;
     }
 
-    public String getPpName() {
-        return ppName;
+    public String getPpCode() {
+        return ppCode;
     }
 
-    public void setPpName(String ppName) {
-        this.ppName = ppName;
+    public void setPpCode(String ppCode) {
+        this.ppCode = ppCode;
     }
 }
