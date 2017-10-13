@@ -1,5 +1,6 @@
 package cn.htd.argus.service;
 
+import cn.htd.argus.bean.BrandSortDTO;
 import cn.htd.argus.bean.HtyFctSaleSearchDTO;
 import cn.htd.argus.bean.SaleHotDTO;
 import cn.htd.argus.dto.HtyFctSaleXzHotDTO;
@@ -16,4 +17,8 @@ public interface HtyFctSaleXzHotDTOService {
     Long queryPageCount(HtyFctSaleSearchDTO searchDTO);
 
     List<SaleHotDTO> queryPage(HtyFctSaleSearchDTO searchDTO,Pager pager);
+
+    List<BrandSortDTO> queryBrand();
+
+    List<BrandSortDTO> queryCategory();
 }

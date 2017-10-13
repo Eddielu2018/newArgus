@@ -1,5 +1,6 @@
 package cn.htd.argus.service.impl;
 
+import cn.htd.argus.bean.BrandSortDTO;
 import cn.htd.argus.bean.HtyFctSaleSearchDTO;
 import cn.htd.argus.bean.SaleHotDTO;
 import cn.htd.argus.dao.HtyFctSaleXzHotDTOMapper;
@@ -53,5 +54,39 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
            return null;
        }
         return dtos;
+    }
+
+    @Override
+    public List<BrandSortDTO> queryBrand() {
+        List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
+        List<HtyFctSaleXzHotDTO> list1 = dao.queryBrand();
+        if(list1 != null){
+            for(HtyFctSaleXzHotDTO i:list1){
+                BrandSortDTO dto = new BrandSortDTO();
+                dto.setBrandName(i.getPpName());
+                dto.setSortNum(i.getPpCode());
+                list.add(dto);
+            }
+        }else{
+            return null;
+        }
+        return list;
+    }
+
+    @Override
+    public List<BrandSortDTO> queryCategory() {
+        List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
+        List<HtyFctSaleXzHotDTO> list1 = dao.queryCategory();
+        if(list1 != null){
+            for(HtyFctSaleXzHotDTO i:list1){
+                BrandSortDTO dto = new BrandSortDTO();
+                dto.setBrandName(i.getPlName());
+                dto.setSortNum(i.getPlCode());
+                list.add(dto);
+            }
+        }else{
+            return null;
+        }
+        return list;
     }
 }

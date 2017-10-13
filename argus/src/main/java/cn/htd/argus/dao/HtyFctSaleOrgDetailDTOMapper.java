@@ -27,4 +27,8 @@ public interface HtyFctSaleOrgDetailDTOMapper {
     List<HtyFctSaleOrgDetailDTO> queryBurstPage(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO, @Param("pager") Pager pager);
 
     List<HtyFctSaleOrgDetailDTO> queryStopPage(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO, @Param("pager") Pager pager);
+
+    List<HtyFctSaleOrgDetailDTO> queryBrand();
+
+    List<HtyFctSaleOrgDetailDTO> queryCategory();
 }

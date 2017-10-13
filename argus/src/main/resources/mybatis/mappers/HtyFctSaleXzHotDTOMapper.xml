@@ -55,6 +55,28 @@
 
   </select>
 
+  <!-- 查询所有品牌-->
+  <select id="queryBrand" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    PP_CODE,
+    PP_NAME
+    FROM
+    hty_fct_sale_xz_hot
+    ORDER BY
+    PP_CODE
+  </select>
+
+  <!-- 查询所有品类-->
+  <select id="queryCategory" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    PL_CODE,
+    PL_NAME
+    FROM
+    hty_fct_sale_xz_hot
+    ORDER BY
+    PL_CODE
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
