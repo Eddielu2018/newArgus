@@ -46,6 +46,8 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
             list = dao.queryStopPage(searchDTO, pager);
         }
         if(list != null){
+
+
             for(HtyFctSaleOrgDetailDTO i:list){
                 SaleDetailDTO dto = new SaleDetailDTO();
                 dto.setProdName(i.getProdName());

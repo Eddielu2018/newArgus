@@ -64,9 +64,6 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
         if (userId == null) {
             throw new IllegalArgumentException("userId id is null");
         }
-        if (sort == null) {
-            throw new IllegalArgumentException("userId id is null");
-        }
         List<HtyFctSaleOrgProdDTO> list = new ArrayList<HtyFctSaleOrgProdDTO>();
         List<SaleProdDTO> dtos = new ArrayList<SaleProdDTO>();
         HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
@@ -77,10 +74,10 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
         if(StringUtils.isNotEmpty(endTime)){
             searchDTO.setEndTime(endTime);
         }
-        if("0".equals(sort)){
-            list = dao.queryBrandPage(searchDTO, pager);
-        }else if("1".equals(sort)){
+        if("1".equals(sort)){
             list = dao.queryCategoryPage(searchDTO, pager);
+        }else{
+            list = dao.queryBrandPage(searchDTO, pager);
         }
         if(list != null){
             for(HtyFctSaleOrgProdDTO i:list){

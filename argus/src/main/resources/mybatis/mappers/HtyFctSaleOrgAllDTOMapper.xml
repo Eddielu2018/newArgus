@@ -15,18 +15,19 @@
   <sql id="Base_Column_List" >
     ID, DATE_KEY, ORG_CODE, XS_AMT, XS_QTY, XS_ZH_ML, XS_ZY_SR, XS_ML, XS_LR
   </sql>
+
+  <select id="selectByOrgCode" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_all
+    where ORG_CODE = #{searchDTO.orgCode}
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from hty_fct_sale_org_all
     where ID = #{id,jdbcType=BIGINT}
-  </select>
-
-  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctSaleOrgAllDTO" >
-    select
-    <include refid="Base_Column_List" />
-    from hty_fct_sale_org_all
-    where ORG_CODE = #{orgCode} order by YEAR_MON desc limit 1
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

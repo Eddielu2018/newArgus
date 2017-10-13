@@ -34,7 +34,7 @@
     </where>
   </sql>
 
-  <select id="queryBrandPage" resultMap="BaseResultMap">
+  <select id="selectBySearchDTO" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from hty_fct_sale_org_xz

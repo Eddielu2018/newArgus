@@ -92,4 +92,21 @@ public class HtyFctSaleOrgAllDTO {
     public void setXsLr(BigDecimal xsLr) {
         this.xsLr = xsLr;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HtyFctSaleOrgAllDTO that = (HtyFctSaleOrgAllDTO) o;
+
+        if (orgCode != null ? !orgCode.equals(that.orgCode) : that.orgCode != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return orgCode != null ? orgCode.hashCode() : 0;
+    }
 }
