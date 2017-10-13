@@ -40,29 +40,134 @@ public class HtyFctSaleOrgController {
     private HtyFctSaleXzHotDTOService htyFctSaleXzHotDTOService;
 
 
+    /**
+     *  全页刷新
+     * @param userId 公司Code
+     * @param page 分页
+     * @param rows 分页
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param xzSort 行业趋势 类型1：销量 2：订单数 3：毛利率
+     * @param prodSort 品牌品类排序 排序0：品牌 1：品类
+     * @param detailSort 商品销售排序
+     * @param prodName 商品名称
+     * @param plCode 品类Code
+     * @param ppCode 品牌Code
+     * @return
+     */
     @RequestMapping("/sale/all")
-    public RestResult saleAll(@RequestParam(value = "userId", required = true) String userId) {
+    public RestResult saleAll(@RequestParam(value = "userId", required = true) String userId,
+                              @RequestParam(value = "page", required = false) Integer page,
+                              @RequestParam(value = "rows", required = false) Integer rows,
+                              @RequestParam(value = "startTime", required = false) String startTime,
+                              @RequestParam(value = "endTime", required = false) String endTime,
+                              @RequestParam(value = "xzSort", required = false) String xzSort,
+                              @RequestParam(value = "prodSort", required = false) String prodSort,
+                              @RequestParam(value = "prodSort", required = false) String detailSort,
+                              @RequestParam(value = "prodName", required = false) String prodName,
+                              @RequestParam(value = "plCode", required = false) String plCode,
+                              @RequestParam(value = "ppCode", required = false) String ppCode) {
         RestResult result = new RestResult();
         logger.info("调用(HtyFctSaleOrgController.saleAll)首页页头估值获得入参，userId="+userId);
         try {
-            HtyFctSaleOrgAllDTO htyFctSaleOrgAllDTO = this.htyFctSaleOrgAllDTOService.selectByOrgCode(userId);
-            if(htyFctSaleOrgAllDTO != null){
-                htyFctSaleOrgAllDTO.setXsAmt(ArithUtil.div(htyFctSaleOrgAllDTO.getXsAmt().doubleValue(),10000,0));
-                htyFctSaleOrgAllDTO.setXsLr(ArithUtil.div(htyFctSaleOrgAllDTO.getXsLr().doubleValue(),10000,0));
-                result.setData(htyFctSaleOrgAllDTO);
-                result.setCode(ResultCodeEnum.SUCCESS.getCode());
-                result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
-            }else{
-                result.setCode(ResultCodeEnum.FAIL.getCode());
-                result.setMsg(ResultCodeEnum.FAIL.getMsg());
+            SaleAllDTO dto = new SaleAllDTO();
+            HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
+            endTime = DateUtil.conversionDate(endTime);
+            startTime = DateUtil.conversionDate(startTime);
+            if(StringUtils.isNotEmpty(startTime)){
+                searchDTO.setStartTime(startTime);
+            }
+            if(StringUtils.isNotEmpty(endTime)){
+                searchDTO.setEndTime(endTime);
+            }
+            if(StringUtils.isNotEmpty(userId)){
+                searchDTO.setUserId(userId);
+            }
+            if(StringUtils.isNotEmpty(prodName)){
+                searchDTO.setProdName(prodName);
+            }
+            if(StringUtils.isNotEmpty(plCode)){
+                searchDTO.setPlCode(plCode);
+            }
+            if(StringUtils.isNotEmpty(ppCode)){
+                searchDTO.setPpCode(ppCode);
             }
 
-            List<BrandSortDTO> detailBrand = this.htyFctSaleOrgDetailDTOService.queryBrand();
-            List<BrandSortDTO> detailCategory = this.htyFctSaleOrgDetailDTOService.queryCategory();
 
+            //1.销售商品品牌品类
+            List<BrandSortDTO> detailCategory = this.htyFctSaleOrgDetailDTOService.queryCategory();
+            List<BrandSortDTO> detailBrand = this.htyFctSaleOrgDetailDTOService.queryBrand();
+
+            dto.setDetailBrand(detailBrand);
+            dto.setDetailCategory(detailCategory);
+
+
+            //2:销售爆款品牌品来
             List<BrandSortDTO> hotBrand = this.htyFctSaleXzHotDTOService.queryBrand();
             List<BrandSortDTO> hotCategory = this.htyFctSaleXzHotDTOService.queryCategory();
+            dto.setHotBrand(hotBrand);
+            dto.setHotCategory(hotCategory);
 
+
+            //3.上部统计
+            HtyFctSaleOrgAllDTO htyFctSaleOrgAllDTO = this.htyFctSaleOrgAllDTOService.selectByOrgCode(userId);
+            if(htyFctSaleOrgAllDTO != null){
+                htyFctSaleOrgAllDTO.setXsAmt(ArithUtil.div(htyFctSaleOrgAllDTO.getXsAmt().doubleValue(), 10000, 4));
+                htyFctSaleOrgAllDTO.setXsLr(ArithUtil.div(htyFctSaleOrgAllDTO.getXsLr().doubleValue(), 10000, 4));
+            }
+            dto.setHtyFctSaleOrgAllDTO(htyFctSaleOrgAllDTO);
+
+
+            //4.中部趋势图
+            SaleXzListDTO saleXzListDTO = new SaleXzListDTO();
+            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectBySearchDTO(searchDTO);
+            List<String> wholeBottomDate = new ArrayList<String>();
+            List<String> wholeBottom = new ArrayList<String>();
+            List<String> wholeBottomPair = new ArrayList<String>();
+            if(saleXzDTOs != null){
+                if("1".equals(xzSort)){
+                    for(SaleXzsDTO i:saleXzDTOs){
+                        wholeBottomDate.add(i.getDateKey());
+                        wholeBottom.add(i.getXsAmt().toString());
+                        wholeBottomPair.add(i.getXsAmtXz().toString());
+                    }
+                }else if("2".equals(xzSort)){
+                    for(SaleXzsDTO i:saleXzDTOs){
+                        wholeBottomDate.add(i.getDateKey());
+                        wholeBottom.add(i.getCnt().toString());
+                        wholeBottomPair.add(i.getCntXz().toString());
+                    }
+                }else if("3".equals(xzSort)){
+                    for(SaleXzsDTO i:saleXzDTOs){
+                        wholeBottomDate.add(i.getDateKey());
+                        wholeBottom.add(i.getRate().toString());
+                        wholeBottomPair.add(i.getRateXz().toString());
+                    }
+                }
+                saleXzListDTO.setXzBottom(wholeBottom);
+                saleXzListDTO.setXzBottomDate(wholeBottomDate);
+                saleXzListDTO.setXzBottomPair(wholeBottomPair);
+            }
+            dto.setSaleXzListDTO(saleXzListDTO);
+
+
+            //5.品牌品类
+            SaleProdListDTO saleProdListDTO = new SaleProdListDTO();
+            Pager pager = new Pager();
+            if(page != null && rows != null){
+                pager.setRows(rows);
+                pager.setPage(page);
+            }
+            List<SaleProdDTO> list = htyFctSaleOrgProdDTOService.queryPage(userId, prodSort, startTime, endTime, pager);
+            Long count = htyFctSaleOrgProdDTOService.queryPageCount(userId, startTime, endTime);
+            saleProdListDTO.setSaleProdDTOList(list);
+            saleProdListDTO.setSaleProdnum(count);
+            dto.setSaleProdListDTO(saleProdListDTO);
+
+
+            result.setData(dto);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
         } catch (Exception e) {
             logger.error("获取页头估值错误" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
