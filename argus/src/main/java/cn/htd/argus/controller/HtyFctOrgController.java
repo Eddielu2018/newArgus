@@ -481,7 +481,7 @@ public class HtyFctOrgController {
 			baseSencond.setPair("次日失活:"+htyFctOrgCustDTO.getMorrunactCustnum());
 			baseThird.setName("VIP会员店数");
 			baseThird.setNum(new BigDecimal(htyFctOrgCustDTO.getVipNum()));
-			baseThird.setPair("30天内套餐过期数:"+htyFctOrgCustDTO.getExpire30VipNum());
+			baseThird.setPair("30天内过期数:"+htyFctOrgCustDTO.getExpire30VipNum());
     	}
     	allBase.add(baseFirst);
     	allBase.add(baseSencond);
