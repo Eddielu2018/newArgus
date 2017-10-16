@@ -18,7 +18,7 @@ public class SaleAllDTO {
     List<BrandSortDTO> hotCategory;
 
     //上部统计
-    HtyFctSaleOrgAllDTO htyFctSaleOrgAllDTO;
+    SaleCompareDTO saleCompareDTO;
 
     //中部趋势图
     SaleXzListDTO saleXzListDTO;
@@ -58,12 +58,12 @@ public class SaleAllDTO {
         this.hotCategory = hotCategory;
     }
 
-    public HtyFctSaleOrgAllDTO getHtyFctSaleOrgAllDTO() {
-        return htyFctSaleOrgAllDTO;
+    public SaleCompareDTO getSaleCompareDTO() {
+        return saleCompareDTO;
     }
 
-    public void setHtyFctSaleOrgAllDTO(HtyFctSaleOrgAllDTO htyFctSaleOrgAllDTO) {
-        this.htyFctSaleOrgAllDTO = htyFctSaleOrgAllDTO;
+    public void setSaleCompareDTO(SaleCompareDTO saleCompareDTO) {
+        this.saleCompareDTO = saleCompareDTO;
     }
 
     public SaleXzListDTO getSaleXzListDTO() {
