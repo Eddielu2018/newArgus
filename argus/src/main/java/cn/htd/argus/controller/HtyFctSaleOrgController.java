@@ -60,7 +60,7 @@ public class HtyFctSaleOrgController {
                               @RequestParam(value = "page", required = false) Integer page,
                               @RequestParam(value = "rows", required = false) Integer rows,
                               @RequestParam(value = "startTime", required = false) String startTime,
-                              @RequestParam(value = "endTime", required = false) String endTime,
+                              @RequestParam(value = "endTime", required = true) String endTime,
                               @RequestParam(value = "xzSort", required = false) String xzSort,
                               @RequestParam(value = "prodSort", required = false) String prodSort,
                               @RequestParam(value = "prodSort", required = false) String detailSort,
@@ -110,12 +110,12 @@ public class HtyFctSaleOrgController {
 
 
             //3.上部统计
-            HtyFctSaleOrgAllDTO htyFctSaleOrgAllDTO = this.htyFctSaleOrgAllDTOService.selectByOrgCode(userId);
-            if(htyFctSaleOrgAllDTO != null){
-                htyFctSaleOrgAllDTO.setXsAmt(ArithUtil.div(htyFctSaleOrgAllDTO.getXsAmt().doubleValue(), 10000, 4));
-                htyFctSaleOrgAllDTO.setXsLr(ArithUtil.div(htyFctSaleOrgAllDTO.getXsLr().doubleValue(), 10000, 4));
+            SaleCompareDTO saleCompareDTO = this.htyFctSaleOrgAllDTOService.selectCompareByOrgCode(userId);
+            if(saleCompareDTO != null){
+                saleCompareDTO.setXsAmt(ArithUtil.div(saleCompareDTO.getXsAmt().doubleValue(), 10000, 4));
+                saleCompareDTO.setXsLr(ArithUtil.div(saleCompareDTO.getXsLr().doubleValue(), 10000, 4));
             }
-            dto.setHtyFctSaleOrgAllDTO(htyFctSaleOrgAllDTO);
+            dto.setSaleCompareDTO(saleCompareDTO);
 
 
             //4.中部趋势图
