@@ -1,6 +1,5 @@
 package cn.htd.argus.bean;
 
-import cn.htd.argus.dto.HtyFctSaleOrgAllDTO;
 
 import java.util.List;
 
@@ -25,6 +24,12 @@ public class SaleAllDTO {
 
     //品牌品类
     SaleProdListDTO saleProdListDTO;
+
+    //商品销售
+    SaleDetailListDTO saleDetailListDTO;
+
+    //爆款
+    SaleHotListDTO saleHotListDTO;
 
     public List<BrandSortDTO> getDetailBrand() {
         return detailBrand;
@@ -80,5 +85,21 @@ public class SaleAllDTO {
 
     public void setSaleProdListDTO(SaleProdListDTO saleProdListDTO) {
         this.saleProdListDTO = saleProdListDTO;
+    }
+
+    public SaleDetailListDTO getSaleDetailListDTO() {
+        return saleDetailListDTO;
+    }
+
+    public void setSaleDetailListDTO(SaleDetailListDTO saleDetailListDTO) {
+        this.saleDetailListDTO = saleDetailListDTO;
+    }
+
+    public SaleHotListDTO getSaleHotListDTO() {
+        return saleHotListDTO;
+    }
+
+    public void setSaleHotListDTO(SaleHotListDTO saleHotListDTO) {
+        this.saleHotListDTO = saleHotListDTO;
     }
 }

@@ -60,6 +60,28 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
     }
 
     @Override
+    public Long queryPageSumCount(String userId, String startTime, String endTime) {
+        if (userId == null) {
+            throw new IllegalArgumentException("userId id is null");
+        }
+        Long count = 0L;
+        try {
+            HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
+            searchDTO.setUserId(userId);
+            if(StringUtils.isNotEmpty(startTime)){
+                searchDTO.setStartTime(startTime);
+            }
+            if(StringUtils.isNotEmpty(endTime)){
+                searchDTO.setStartTime(endTime);
+            }
+            count = dao.queryPageSumCount(searchDTO);
+        } catch (Exception e) {
+            logger.error("HtyFctSaleOrgProdDTOServiceImpl.queryPageCount:获取品牌品类销售数量错误" + e);
+        }
+        return count;
+    }
+
+    @Override
     public List<SaleProdDTO> queryPage(String userId, String sort, String startTime, String endTime, Pager pager) {
         if (userId == null) {
             throw new IllegalArgumentException("userId id is null");
@@ -75,9 +97,9 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
             searchDTO.setEndTime(endTime);
         }
         if("1".equals(sort)){
-            list = dao.queryCategoryPage(searchDTO, pager);
+            list = dao.queryCategorySumPage(searchDTO, pager);
         }else{
-            list = dao.queryBrandPage(searchDTO, pager);
+            list = dao.queryBrandSumPage(searchDTO, pager);
         }
         if(list != null){
             for(HtyFctSaleOrgProdDTO i:list){

@@ -13,4 +13,6 @@ public interface HtyFctSaleOrgXzDTOService {
     HtyFctSaleOrgXzDTO selectByOrgCode(String userId);
 
     List<SaleXzsDTO> selectBySearchDTO(HtyFctSaleSearchDTO searchDTO);
+
+    List<SaleXzsDTO> selectByMonthDTO(String userId, String endTime);
 }

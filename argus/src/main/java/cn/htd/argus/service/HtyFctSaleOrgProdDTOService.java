@@ -15,5 +15,7 @@ public interface HtyFctSaleOrgProdDTOService {
 
     Long queryPageCount(String userId, String startTime, String endTime);
 
+    Long queryPageSumCount(String userId, String startTime, String endTime);
+
     List<SaleProdDTO> queryPage(String userId, String sort, String startTime, String endTime,Pager pager);
 }

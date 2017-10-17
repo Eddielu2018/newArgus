@@ -35,6 +35,61 @@
     </where>
   </sql>
 
+  <select id="queryBrandSumPage" resultMap="BaseResultMap">
+    SELECT
+    PP_NAME,
+    PL_NAME,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    SUM(XS_AMT_ALL) AS XS_AMT_ALL,
+    SUM(XS_SR) AS XS_SR,
+    SUM(XS_CB) AS XS_CB
+    FROM
+    hty_fct_sale_org_prod
+    <include refid="where"/>
+    GROUP BY
+    ORG_CODE,
+    PP_CODE,
+    PL_CODE
+    ORDER BY
+    PP_CODE,
+    PL_CODE
+  </select>
+
+  <select id="queryCategorySumPage" resultMap="BaseResultMap">
+    SELECT
+    PP_NAME,
+    PL_NAME,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    SUM(XS_AMT_ALL) AS XS_AMT_ALL,
+    SUM(XS_SR) AS XS_SR,
+    SUM(XS_CB) AS XS_CB
+    FROM
+    hty_fct_sale_org_prod
+    <include refid="where"/>
+    GROUP BY
+    ORG_CODE,
+    PP_CODE,
+    PL_CODE
+    ORDER BY
+    PL_CODE,
+    PP_CODE
+  </select>
+
+  <select id="queryPageSumCount" resultType="long">
+    SELECT COUNT(*) FROM (SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    hty_fct_sale_org_prod
+    <include refid="where"/>
+    GROUP BY
+    ORG_CODE,
+    PP_CODE,
+    PL_CODE) a
+
+  </select>
+
   <select id="queryBrandPage" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

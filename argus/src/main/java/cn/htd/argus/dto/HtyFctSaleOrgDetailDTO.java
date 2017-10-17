@@ -160,13 +160,13 @@ public class HtyFctSaleOrgDetailDTO {
 
         HtyFctSaleOrgDetailDTO detailDTO = (HtyFctSaleOrgDetailDTO) o;
 
-        if (!prodCode.equals(detailDTO.prodCode)) return false;
+        if (prodCode != null ? !prodCode.equals(detailDTO.prodCode) : detailDTO.prodCode != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return prodCode.hashCode();
+        return prodCode != null ? prodCode.hashCode() : 0;
     }
 }

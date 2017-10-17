@@ -1,7 +1,6 @@
 package cn.htd.argus.controller;
 
 import cn.htd.argus.bean.*;
-import cn.htd.argus.dto.HtyFctSaleOrgAllDTO;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
 import cn.htd.argus.util.ArithUtil;
@@ -47,9 +46,10 @@ public class HtyFctSaleOrgController {
      * @param rows 分页
      * @param startTime 开始时间
      * @param endTime 结束时间
-     * @param xzSort 行业趋势 类型1：销量 2：订单数 3：毛利率
+     * @param xzSort 行业趋势 类型0：销量 1：订单数 2：毛利率
      * @param prodSort 品牌品类排序 排序0：品牌 1：品类
      * @param detailSort 商品销售排序
+     * @param listSort 列表类型 0：品牌 1：商品 2：爆款
      * @param prodName 商品名称
      * @param plCode 品类Code
      * @param ppCode 品牌Code
@@ -60,10 +60,11 @@ public class HtyFctSaleOrgController {
                               @RequestParam(value = "page", required = false) Integer page,
                               @RequestParam(value = "rows", required = false) Integer rows,
                               @RequestParam(value = "startTime", required = false) String startTime,
-                              @RequestParam(value = "endTime", required = true) String endTime,
-                              @RequestParam(value = "xzSort", required = false) String xzSort,
+                              @RequestParam(value = "endTime", required = false) String endTime,
+                              @RequestParam(value = "xzSort", required = true) String xzSort,
                               @RequestParam(value = "prodSort", required = false) String prodSort,
-                              @RequestParam(value = "prodSort", required = false) String detailSort,
+                              @RequestParam(value = "detailSort", required = false) String detailSort,
+                              @RequestParam(value = "listSort", required = true) String listSort,
                               @RequestParam(value = "prodName", required = false) String prodName,
                               @RequestParam(value = "plCode", required = false) String plCode,
                               @RequestParam(value = "ppCode", required = false) String ppCode) {
@@ -72,8 +73,8 @@ public class HtyFctSaleOrgController {
         try {
             SaleAllDTO dto = new SaleAllDTO();
             HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
-            endTime = DateUtil.conversionDate(endTime);
-            startTime = DateUtil.conversionDate(startTime);
+            //endTime = DateUtil.conversionDate(endTime);
+            //startTime = DateUtil.conversionDate(startTime);
             if(StringUtils.isNotEmpty(startTime)){
                 searchDTO.setStartTime(startTime);
             }
@@ -120,24 +121,24 @@ public class HtyFctSaleOrgController {
 
             //4.中部趋势图
             SaleXzListDTO saleXzListDTO = new SaleXzListDTO();
-            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectBySearchDTO(searchDTO);
+            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId, endTime);
             List<String> wholeBottomDate = new ArrayList<String>();
             List<String> wholeBottom = new ArrayList<String>();
             List<String> wholeBottomPair = new ArrayList<String>();
             if(saleXzDTOs != null){
-                if("1".equals(xzSort)){
+                if("0".equals(xzSort)){
                     for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
                         wholeBottom.add(i.getXsAmt().toString());
                         wholeBottomPair.add(i.getXsAmtXz().toString());
                     }
-                }else if("2".equals(xzSort)){
+                }else if("1".equals(xzSort)){
                     for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
                         wholeBottom.add(i.getCnt().toString());
                         wholeBottomPair.add(i.getCntXz().toString());
                     }
-                }else if("3".equals(xzSort)){
+                }else if("2".equals(xzSort)){
                     for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
                         wholeBottom.add(i.getRate().toString());
@@ -150,20 +151,40 @@ public class HtyFctSaleOrgController {
             }
             dto.setSaleXzListDTO(saleXzListDTO);
 
-
-            //5.品牌品类
-            SaleProdListDTO saleProdListDTO = new SaleProdListDTO();
+            //5.下部列表页
             Pager pager = new Pager();
             if(page != null && rows != null){
                 pager.setRows(rows);
                 pager.setPage(page);
             }
-            List<SaleProdDTO> list = htyFctSaleOrgProdDTOService.queryPage(userId, prodSort, startTime, endTime, pager);
-            Long count = htyFctSaleOrgProdDTOService.queryPageCount(userId, startTime, endTime);
-            saleProdListDTO.setSaleProdDTOList(list);
-            saleProdListDTO.setSaleProdnum(count);
-            dto.setSaleProdListDTO(saleProdListDTO);
-
+            if("0".equals(listSort)){
+                //5.1品牌品类list
+                SaleProdListDTO saleProdListDTO = new SaleProdListDTO();
+                List<SaleProdDTO> list = htyFctSaleOrgProdDTOService.queryPage(userId, prodSort, startTime, endTime, pager);
+                Long count = htyFctSaleOrgProdDTOService.queryPageSumCount(userId, startTime, endTime);
+                saleProdListDTO.setSaleProdDTOList(list);
+                saleProdListDTO.setSaleProdnum(count);
+                dto.setSaleProdListDTO(saleProdListDTO);
+            }else if("1".equals(listSort)){
+                //5.2商品销售list
+                if(StringUtils.isNotEmpty(detailSort)){
+                    searchDTO.setXsAmt(detailSort);
+                }
+                SaleDetailListDTO saleDetailListDTO = new SaleDetailListDTO();
+                List<SaleDetailDTO> list = htyFctSaleOrgDetailDTOService.queryPage(searchDTO, pager);
+                Long count = htyFctSaleOrgDetailDTOService.queryPageCount(searchDTO);
+                saleDetailListDTO.setDetainum(count);
+                saleDetailListDTO.setSaleDetailDTOList(list);
+                dto.setSaleDetailListDTO(saleDetailListDTO);
+            }else if("2".equals(listSort)){
+                //5.3爆款
+                SaleHotListDTO saleHotListDTO = new SaleHotListDTO();
+                List<SaleHotDTO> list = htyFctSaleXzHotDTOService.queryPage(searchDTO, pager);
+                Long count = htyFctSaleXzHotDTOService.queryPageCount(searchDTO);
+                saleHotListDTO.setSaleHostnum(count);
+                saleHotListDTO.setSaleHotDTOList(list);
+                dto.setSaleHotListDTO(saleHotListDTO);
+            }
 
             result.setData(dto);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
@@ -179,48 +200,37 @@ public class HtyFctSaleOrgController {
     /**
      * 行业销售趋势
      * @param userId
-     * @param startTime
      * @param endTime
-     * @param sort 类型1：销量 2：订单数 3：毛利率
+     * @param xzSort 类型0：销量 1：订单数 2：毛利率
      * @return
      */
     @RequestMapping("/sale/xz/list")
     public RestResult saleXzList(@RequestParam(value = "userId", required = true) String userId,
-                                   @RequestParam(value = "startTime", required = false) String startTime,
                                    @RequestParam(value = "endTime", required = false) String endTime,
-                                   @RequestParam(value = "sort", required = true) String sort) {
-        logger.info("调用(HtyFctSaleOrgController.saleXzList)行业销售趋势入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",sort="+sort);
+                                   @RequestParam(value = "xzSort", required = true) String xzSort) {
+        logger.info("调用(HtyFctSaleOrgController.saleXzList)行业销售趋势入参，userId="+userId+",endTime="+endTime+",xzSort="+xzSort);
         RestResult result = new RestResult();
         try {
             SaleXzListDTO dto = new SaleXzListDTO();
-
-            HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
-            endTime = DateUtil.conversionDate(endTime);
-            if(StringUtils.isNotEmpty(userId)){
-                searchDTO.setUserId(userId);
-            }
-            if(StringUtils.isNotEmpty(endTime)){
-                searchDTO.setEndTime(endTime);
-            }
-            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectBySearchDTO(searchDTO);
+            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId,endTime);
 
             List<String> wholeBottomDate = new ArrayList<String>();
             List<String> wholeBottom = new ArrayList<String>();
             List<String> wholeBottomPair = new ArrayList<String>();
             if(saleXzDTOs != null){
-                if("1".equals(sort)){
+                if("0".equals(xzSort)){
                     for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
                         wholeBottom.add(i.getXsAmt().toString());
                         wholeBottomPair.add(i.getXsAmtXz().toString());
                     }
-                }else if("2".equals(sort)){
+                }else if("1".equals(xzSort)){
                     for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
                         wholeBottom.add(i.getCnt().toString());
                         wholeBottomPair.add(i.getCntXz().toString());
                     }
-                }else if("3".equals(sort)){
+                }else if("2".equals(xzSort)){
                     for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
                         wholeBottom.add(i.getRate().toString());
@@ -254,7 +264,7 @@ public class HtyFctSaleOrgController {
      * @param rows
      * @param startTime
      * @param endTime
-     * @param sort 排序0：品牌 1：品类
+     * @param prodSort 排序0：品牌 1：品类
      * @return
      */
     @RequestMapping("/sale/prod/list")
@@ -263,8 +273,8 @@ public class HtyFctSaleOrgController {
                                  @RequestParam(value = "rows", required = false) Integer rows,
                                  @RequestParam(value = "startTime", required = false) String startTime,
                                  @RequestParam(value = "endTime", required = false) String endTime,
-                                 @RequestParam(value = "sort", required = true) String sort) {
-        logger.info("调用(HtyFctSaleOrgController.saleProdList)品牌品类销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",sort="+sort);
+                                 @RequestParam(value = "prodSort", required = true) String prodSort) {
+        logger.info("调用(HtyFctSaleOrgController.saleProdList)品牌品类销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",prodSort="+prodSort);
         RestResult result = new RestResult();
         try {
             SaleProdListDTO saleProdListDTO = new SaleProdListDTO();
@@ -273,10 +283,10 @@ public class HtyFctSaleOrgController {
                 pager.setRows(rows);
                 pager.setPage(page);
             }
-            startTime = DateUtil.conversionDate(startTime);
-            endTime = DateUtil.conversionDate(endTime);
-            List<SaleProdDTO> list = htyFctSaleOrgProdDTOService.queryPage(userId, sort, startTime, endTime, pager);
-            Long count = htyFctSaleOrgProdDTOService.queryPageCount(userId, startTime, endTime);
+            //startTime = DateUtil.conversionDate(startTime);
+            //endTime = DateUtil.conversionDate(endTime);
+            List<SaleProdDTO> list = htyFctSaleOrgProdDTOService.queryPage(userId, prodSort, startTime, endTime, pager);
+            Long count = htyFctSaleOrgProdDTOService.queryPageSumCount(userId, startTime, endTime);
             saleProdListDTO.setSaleProdDTOList(list);
             saleProdListDTO.setSaleProdnum(count);
 
@@ -298,7 +308,7 @@ public class HtyFctSaleOrgController {
      * @param rows
      * @param startTime
      * @param endTime
-     * @param sort 排序 0：爆款 1：滞款
+     * @param detailSort 排序 0：爆款 1：滞款
      * @param prodName
      * @param plCode
      * @param ppCode
@@ -310,11 +320,11 @@ public class HtyFctSaleOrgController {
                                    @RequestParam(value = "rows", required = false) Integer rows,
                                    @RequestParam(value = "startTime", required = false) String startTime,
                                    @RequestParam(value = "endTime", required = false) String endTime,
-                                   @RequestParam(value = "sort", required = true) String sort,
+                                   @RequestParam(value = "detailSort", required = true) String detailSort,
                                    @RequestParam(value = "prodName", required = false) String prodName,
                                    @RequestParam(value = "plCode", required = false) String plCode,
                                    @RequestParam(value = "ppCode", required = false) String ppCode) {
-        logger.info("调用(HtyFctSaleOrgController.saleProdList)商品销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",sort="+sort);
+        logger.info("调用(HtyFctSaleOrgController.saleProdList)商品销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",detailSort="+detailSort);
         RestResult result = new RestResult();
         try {
             SaleDetailListDTO saleDetailListDTO = new SaleDetailListDTO();
@@ -324,8 +334,8 @@ public class HtyFctSaleOrgController {
                 pager.setRows(rows);
                 pager.setPage(page);
             }
-            startTime = DateUtil.conversionDate(startTime);
-            endTime = DateUtil.conversionDate(endTime);
+            //startTime = DateUtil.conversionDate(startTime);
+            //endTime = DateUtil.conversionDate(endTime);
             if(StringUtils.isNotEmpty(startTime)){
                 searchDTO.setStartTime(startTime);
             }
@@ -335,8 +345,8 @@ public class HtyFctSaleOrgController {
             if(StringUtils.isNotEmpty(userId)){
                 searchDTO.setUserId(userId);
             }
-            if(StringUtils.isNotEmpty(sort)){
-                searchDTO.setXsAmt(sort);
+            if(StringUtils.isNotEmpty(detailSort)){
+                searchDTO.setXsAmt(detailSort);
             }
             if(StringUtils.isNotEmpty(prodName)){
                 searchDTO.setProdName(prodName);
@@ -392,8 +402,8 @@ public class HtyFctSaleOrgController {
                 pager.setPage(page);
             }
 
-            startTime = DateUtil.conversionDate(startTime);
-            endTime = DateUtil.conversionDate(endTime);
+            //startTime = DateUtil.conversionDate(startTime);
+            //endTime = DateUtil.conversionDate(endTime);
             if(StringUtils.isNotEmpty(startTime)){
                 searchDTO.setStartTime(startTime);
             }
