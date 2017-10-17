@@ -1,5 +1,6 @@
 package cn.htd.argus.dao;
 
+import cn.htd.argus.bean.HtyFctSaleSearchDTO;
 import cn.htd.argus.dto.HtyFctSaleOrgAllDTO;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,4 +20,6 @@ public interface HtyFctSaleOrgAllDTOMapper {
     int updateByPrimaryKey(HtyFctSaleOrgAllDTO record);
 
     List<HtyFctSaleOrgAllDTO> selectByOrgCode(@Param("searchDTO")HtyFctSaleOrgAllDTO model);
+
+    HtyFctSaleOrgAllDTO selectByOrgSearchDTO(@Param("searchDTO")HtyFctSaleSearchDTO htyFctSaleSearchDTO);
 }

@@ -110,11 +110,7 @@ public class HtyFctSaleOrgController {
 
 
             //3.上部统计
-            SaleCompareDTO saleCompareDTO = this.htyFctSaleOrgAllDTOService.selectCompareByOrgCode(userId);
-            if(saleCompareDTO != null){
-                saleCompareDTO.setXsAmt(ArithUtil.div(saleCompareDTO.getXsAmt().doubleValue(), 10000, 4));
-                saleCompareDTO.setXsLr(ArithUtil.div(saleCompareDTO.getXsLr().doubleValue(), 10000, 4));
-            }
+            SaleCompareDTO saleCompareDTO = this.htyFctSaleOrgAllDTOService.selectCompareByOrgCode(userId, startTime, endTime);
             dto.setSaleCompareDTO(saleCompareDTO);
 
 

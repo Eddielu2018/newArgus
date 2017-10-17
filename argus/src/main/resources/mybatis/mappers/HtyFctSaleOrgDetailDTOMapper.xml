@@ -38,10 +38,10 @@
         and  PP_CODE = #{searchDTO.ppCode}
       </if>
       <if test="searchDTO.startTime != null and searchDTO.startTime != ''">
-        <![CDATA[ and DATE_KEY >= #{startTime} ]]>
+        <![CDATA[ and DATE_KEY >= #{searchDTO.startTime} ]]>
       </if>
       <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
-        <![CDATA[ and DATE_KEY <= #{endTime} ]]>
+        <![CDATA[ and DATE_KEY <= #{searchDTO.endTime} ]]>
       </if>
     </where>
   </sql>

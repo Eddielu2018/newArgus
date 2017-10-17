@@ -21,6 +21,8 @@ public class HtyFctSaleOrgAllDTO {
 
     private BigDecimal xsLr;
 
+    private String ranking;
+
     public Long getId() {
         return id;
     }
@@ -93,20 +95,11 @@ public class HtyFctSaleOrgAllDTO {
         this.xsLr = xsLr;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        HtyFctSaleOrgAllDTO that = (HtyFctSaleOrgAllDTO) o;
-
-        if (orgCode != null ? !orgCode.equals(that.orgCode) : that.orgCode != null) return false;
-
-        return true;
+    public String getRanking() {
+        return ranking;
     }
 
-    @Override
-    public int hashCode() {
-        return orgCode != null ? orgCode.hashCode() : 0;
+    public void setRanking(String ranking) {
+        this.ranking = ranking;
     }
 }

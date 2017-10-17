@@ -9,5 +9,5 @@ import cn.htd.argus.dto.HtyFctSaleOrgAllDTO;
 public interface HtyFctSaleOrgAllDTOService {
     HtyFctSaleOrgAllDTO selectByOrgCode(String userId);
 
-    SaleCompareDTO selectCompareByOrgCode(String userId);
+    SaleCompareDTO selectCompareByOrgCode(String userId, String startTime, String endTime);
 }
