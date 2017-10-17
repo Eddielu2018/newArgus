@@ -16,6 +16,8 @@ public interface HtyFctSaleXzHotDTOService {
 
     Long queryPageCount(HtyFctSaleSearchDTO searchDTO);
 
+    Long queryPageSumCount(HtyFctSaleSearchDTO searchDTO);
+
     List<SaleHotDTO> queryPage(HtyFctSaleSearchDTO searchDTO,Pager pager);
 
     List<BrandSortDTO> queryBrand();

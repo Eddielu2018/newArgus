@@ -4,7 +4,6 @@ import cn.htd.argus.bean.*;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
 import cn.htd.argus.util.ArithUtil;
-import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.RestResult;
 import cn.htd.common.Pager;
 import com.alibaba.dubbo.common.utils.StringUtils;
@@ -180,7 +179,7 @@ public class HtyFctSaleOrgController {
                 //5.3爆款
                 SaleHotListDTO saleHotListDTO = new SaleHotListDTO();
                 List<SaleHotDTO> list = htyFctSaleXzHotDTOService.queryPage(searchDTO, pager);
-                Long count = htyFctSaleXzHotDTOService.queryPageCount(searchDTO);
+                Long count = htyFctSaleXzHotDTOService.queryPageSumCount(searchDTO);
                 saleHotListDTO.setSaleHostnum(count);
                 saleHotListDTO.setSaleHotDTOList(list);
                 dto.setSaleHotListDTO(saleHotListDTO);
@@ -212,7 +211,7 @@ public class HtyFctSaleOrgController {
         RestResult result = new RestResult();
         try {
             SaleXzListDTO dto = new SaleXzListDTO();
-            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId,endTime);
+            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId, endTime);
 
             List<String> wholeBottomDate = new ArrayList<String>();
             List<String> wholeBottom = new ArrayList<String>();
@@ -417,7 +416,7 @@ public class HtyFctSaleOrgController {
                 searchDTO.setPpCode(ppCode);
             }
             List<SaleHotDTO> list = htyFctSaleXzHotDTOService.queryPage(searchDTO, pager);
-            Long count = htyFctSaleXzHotDTOService.queryPageCount(searchDTO);
+            Long count = htyFctSaleXzHotDTOService.queryPageSumCount(searchDTO);
             saleHotListDTO.setSaleHostnum(count);
             saleHotListDTO.setSaleHotDTOList(list);
 
