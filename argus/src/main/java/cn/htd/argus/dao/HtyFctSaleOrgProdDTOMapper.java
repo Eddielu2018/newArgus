@@ -27,4 +27,10 @@ public interface HtyFctSaleOrgProdDTOMapper {
     List<HtyFctSaleOrgProdDTO> queryBrandPage(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO, @Param("pager") Pager pager);
 
     List<HtyFctSaleOrgProdDTO> queryCategoryPage(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO, @Param("pager") Pager pager);
+
+    Long queryPageSumCount(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
+
+    List<HtyFctSaleOrgProdDTO> queryBrandSumPage(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO, @Param("pager") Pager pager);
+
+    List<HtyFctSaleOrgProdDTO> queryCategorySumPage(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO, @Param("pager") Pager pager);
 }

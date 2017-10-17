@@ -21,17 +21,89 @@ public class DateUtil {
 	public static final String FORMAT_DD = "yyyy-MM-dd";
 
 	/**
-	 * 把yyyy-MM-dd格式时间转换成yyyyMMdd
+	 * 计算2个月份之间的跨度
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 */
+	public static Integer monthRangeDate(String startTime, String endTime){
+		Integer j = 0;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+			Calendar bef = Calendar.getInstance();
+			Calendar aft = Calendar.getInstance();
+			try {
+				bef.setTime(sdf.parse(startTime));
+				aft.setTime(sdf.parse(endTime));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			Integer result = aft.get(Calendar.MONTH) - bef.get(Calendar.MONTH);
+			Integer month = (aft.get(Calendar.YEAR) - bef.get(Calendar.YEAR)) * 12;
+
+			 j = result+month+1;
+		} catch (Exception e) {
+			logger.error("Method getCurDateStr arises the error,parameters ---> startTime=" + startTime+",endTime="+endTime);
+			logger.error(e.toString(), e);
+		}
+		return j;
+	}
+
+	/***
+	 * 日期月份减月份
+	 * @param datetime
+	 * @param month
+	 * @return
+	 */
+	public static String dateFormat(String datetime, Integer month) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		Date date = null;
+		try {
+			date = sdf.parse(datetime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar cl = Calendar.getInstance();
+		cl.setTime(date);
+		cl.add(Calendar.MONTH, -month);
+		date = cl.getTime();
+		return sdf.format(date);
+	}
+
+	/**
+	 * 把yyyy-MM格式时间转换成yyyyMM
 	 *
 	 * @param pattern
 	 */
 	public static String conversionDate(String pattern){
 		try {
 			if(StringUtils.isNotEmpty(pattern)){
-				pattern = pattern.substring(0, 10);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				Date start = sdf.parse(pattern);
 				SimpleDateFormat sdfs = new SimpleDateFormat("yyyyMMdd");
+				pattern = sdfs.format(start);
+				return pattern;
+			}
+		} catch (Exception e) {
+			logger.error("Method getCurDateStr arises the error,parameters ---> pattern=" + pattern);
+			logger.error(e.toString(), e);
+		}
+		return pattern;
+	}
+
+	/**
+	 * 把yyyy-MM格式时间转换成yyyyMM
+	 *
+	 * @param pattern
+	 */
+	public static String conversionMonthDate(String pattern){
+		try {
+			if(StringUtils.isNotEmpty(pattern)){
+				pattern = pattern.substring(0, 6);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+				Date start = sdf.parse(pattern);
+				SimpleDateFormat sdfs = new SimpleDateFormat("yyyyMM");
 				pattern = sdfs.format(start);
 				return pattern;
 			}

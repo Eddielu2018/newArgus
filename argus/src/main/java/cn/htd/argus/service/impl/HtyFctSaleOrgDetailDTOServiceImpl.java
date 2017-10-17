@@ -39,14 +39,29 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
     @Override
     public List<SaleDetailDTO> queryPage(HtyFctSaleSearchDTO searchDTO, Pager pager) {
         List<HtyFctSaleOrgDetailDTO> list = new ArrayList<HtyFctSaleOrgDetailDTO>();
+        List<HtyFctSaleOrgDetailDTO> list1 = new ArrayList<HtyFctSaleOrgDetailDTO>();
         List<SaleDetailDTO> dtos = new ArrayList<SaleDetailDTO>();
         if("0".equals(searchDTO.getXsAmt())){
             list = dao.queryBurstPage(searchDTO, pager);
         }else if("1".equals(searchDTO.getXsAmt())){
             list = dao.queryStopPage(searchDTO, pager);
         }
+        List<String> strings = new ArrayList<String>();
         if(list != null){
+            list1.add(list.get(0));
+            for(HtyFctSaleOrgDetailDTO i:list){
 
+                for(HtyFctSaleOrgDetailDTO j:list1){
+                    if(i.equals(j)){
+                        j.setXsAmt(ArithUtil.add(i.getXsAmt().doubleValue(),j.getXsAmt().doubleValue()));
+                        j.setXsQty(ArithUtil.add(j.getXsQty().doubleValue(), i.getXsQty().doubleValue()));
+                        j.setMinXsAmt(i.getMinXsAmt().compareTo(j.getMinXsAmt())>0 ? i.getMinXsAmt() : j.getMinXsAmt());
+                        j.setMaxXsAmt(i.getMaxXsAmt().compareTo(j.getMaxXsAmt())>0 ? j.getMaxXsAmt(): i.getMaxXsAmt());
+                    }else{
+                        list1.add(i);
+                    }
+                }
+            }
 
             for(HtyFctSaleOrgDetailDTO i:list){
                 SaleDetailDTO dto = new SaleDetailDTO();
@@ -63,6 +78,7 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                 dto.setXsDd(i.getXsDd());
                 dtos.add(dto);
             }
+
         }else{
             return null;
         }

@@ -37,10 +37,10 @@
       <if test="searchDTO.ppCode != null and searchDTO.ppCode != '' ">
         and  PP_CODE = #{searchDTO.ppCode}
       </if>
-      <if test="htyFctSaleSearchDTO.startTime != null and htyFctSaleSearchDTO.startTime != ''">
+      <if test="searchDTO.startTime != null and searchDTO.startTime != ''">
         <![CDATA[ and DATE_KEY >= #{startTime} ]]>
       </if>
-      <if test="expressModel.endTime != null and htyFctSaleSearchDTO.endTime != ''">
+      <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
         <![CDATA[ and DATE_KEY <= #{endTime} ]]>
       </if>
     </where>
