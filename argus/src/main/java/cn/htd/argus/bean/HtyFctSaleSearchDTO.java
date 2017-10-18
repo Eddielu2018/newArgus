@@ -13,6 +13,7 @@ public class HtyFctSaleSearchDTO {
     private String plCode;
     private String ppCode;
     private String xsAmt;
+    private String prodCode;
 
     public String getUserId() {
         return userId;
@@ -68,5 +69,13 @@ public class HtyFctSaleSearchDTO {
 
     public void setPpCode(String ppCode) {
         this.ppCode = ppCode;
+    }
+
+    public String getProdCode() {
+        return prodCode;
+    }
+
+    public void setProdCode(String prodCode) {
+        this.prodCode = prodCode;
     }
 }

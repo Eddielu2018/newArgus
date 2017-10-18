@@ -66,11 +66,23 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
         }
         //当前时间段
         HtyFctSaleOrgAllDTO htyFctSaleOrgAllDTO1 = dao.selectByOrgSearchDTO(searchDTO);
-        dto.setXsRanking(htyFctSaleOrgAllDTO1.getRanking());
-        dto.setXsLr(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsLr().doubleValue(),10000,4));
-        dto.setXsMl(htyFctSaleOrgAllDTO1.getXsMl());
-        dto.setXsAmt(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsAmt().doubleValue(),10000,4));
-        dto.setXsQty(htyFctSaleOrgAllDTO1.getXsQty());
+        if(htyFctSaleOrgAllDTO1 != null){
+            if(StringUtils.isNotEmpty(htyFctSaleOrgAllDTO1.getRanking())){
+                dto.setXsRanking(htyFctSaleOrgAllDTO1.getRanking());
+            }
+            if(htyFctSaleOrgAllDTO1.getXsLr() != null){
+                dto.setXsLr(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsLr().doubleValue(),10000,4));
+            }
+            if(htyFctSaleOrgAllDTO1.getXsMl() != null){
+                dto.setXsMl(htyFctSaleOrgAllDTO1.getXsMl());
+            }
+            if(htyFctSaleOrgAllDTO1.getXsAmt() != null){
+                dto.setXsAmt(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsAmt().doubleValue(),10000,4));
+            }
+            if(htyFctSaleOrgAllDTO1.getXsQty() != null){
+                dto.setXsQty(htyFctSaleOrgAllDTO1.getXsQty());
+            }
+        }
 
         if(StringUtils.isNotEmpty(startTime)&&StringUtils.isNotEmpty(endTime)){
             Integer i = DateUtil.monthRangeDate(startTime,endTime);
@@ -113,7 +125,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
                 dto.setXsQtySort(dto.getXsQty().intValue() > dto.getUpperXsQty().intValue() ? "1":"0");
             }
 
-            if(dto.getUpperXsMl() != null && dto.getUpperXsMl() != null){
+            if(dto.getXsMl() != null && dto.getUpperXsMl() != null){
                 BigDecimal xsMl = ArithUtil.sub(dto.getXsMl().doubleValue(),dto.getUpperXsMl().doubleValue());
                 xsMl = ArithUtil.div(xsMl.doubleValue(),dto.getUpperXsMl().doubleValue(),4);
                 dto.setXsMlAn(xsMl);

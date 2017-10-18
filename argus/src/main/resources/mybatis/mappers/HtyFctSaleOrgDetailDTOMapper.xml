@@ -17,6 +17,7 @@
     <result column="MIN_XS_AMT" property="minXsAmt" jdbcType="DECIMAL" />
     <result column="XS_DD" property="xsDd" jdbcType="DECIMAL" />
     <result column="M_JC_QTY" property="mJcQty" jdbcType="DECIMAL" />
+    <result column="rowNo" property="rowNo" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, DATE_KEY, ORG_CODE, PL_CODE, PL_NAME, PP_CODE, PP_NAME, PROD_CODE, PROD_NAME, 
@@ -45,6 +46,112 @@
       </if>
     </where>
   </sql>
+
+  <select id="queryBurstSumPage" resultMap="BaseResultMap">
+    SELECT
+    PROD_NAME,
+    PROD_CODE,
+    PP_NAME,
+    PL_NAME,
+    M_JC_QTY,
+    XS_AMT,
+    XS_QTY,
+    MAX_XS_AMT,
+    MIN_XS_AMT,
+    XS_DD,
+    (@rowNum :=@rowNum + 1) AS rowNo
+    FROM
+    (
+    SELECT
+    PROD_NAME,
+    PROD_CODE,
+    PP_NAME,
+    PL_NAME,
+    M_JC_QTY,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    MAX(MAX_XS_AMT) AS MAX_XS_AMT,
+    MIN(MIN_XS_AMT) AS MIN_XS_AMT,
+    SUM(XS_DD) AS XS_DD
+    FROM
+    hty_fct_sale_org_detail
+    <include refid="where"/>
+    GROUP BY
+    PROD_CODE
+    ORDER BY
+    XS_AMT DESC
+    limit #{pager.pageOffset},#{pager.rows}
+    ) b,
+    (SELECT(@rowNum := 0)) c
+  </select>
+
+  <select id="queryStopSumPage" resultMap="BaseResultMap">
+    SELECT
+    PROD_NAME,
+    PROD_CODE,
+    PP_NAME,
+    PL_NAME,
+    M_JC_QTY,
+    XS_AMT,
+    XS_QTY,
+    MAX_XS_AMT,
+    MIN_XS_AMT,
+    XS_DD,
+    (@rowNum :=@rowNum + 1) AS rowNo
+    FROM
+    (
+    SELECT
+    PROD_NAME,
+    PROD_CODE,
+    PP_NAME,
+    PL_NAME,
+    M_JC_QTY,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    MAX(MAX_XS_AMT) AS MAX_XS_AMT,
+    MIN(MIN_XS_AMT) AS MIN_XS_AMT,
+    SUM(XS_DD) AS XS_DD
+    FROM
+    hty_fct_sale_org_detail
+    <include refid="where"/>
+    GROUP BY
+    PROD_CODE
+    ORDER BY
+    XS_AMT ASC
+    limit #{pager.pageOffset},#{pager.rows}
+    ) b,
+    (SELECT(@rowNum := 0)) c
+  </select>
+
+  <select id="queryPageSumCount" resultType="long">
+    SELECT COUNT(*) FROM (SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    hty_fct_sale_org_detail
+    <include refid="where"/>
+    GROUP BY
+    PROD_CODE) a
+
+  </select>
+
+  <select id="selectByProdCode" resultMap="BaseResultMap">
+    SELECT
+    PROD_NAME,
+    PROD_CODE,
+    PP_NAME,
+    PL_NAME,
+    M_JC_QTY,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    MAX(MAX_XS_AMT) AS MAX_XS_AMT,
+    MIN(MIN_XS_AMT) AS MIN_XS_AMT,
+    SUM(XS_DD) AS XS_DD
+    FROM
+    hty_fct_sale_org_detail
+    <include refid="where"/>
+    GROUP BY
+    PROD_CODE
+  </select>
 
   <select id="queryBurstPage" resultMap="BaseResultMap">
     select
