@@ -10,6 +10,7 @@ import cn.htd.argus.util.ArithUtil;
 import cn.htd.common.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,38 +38,29 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
     }
 
     @Override
+    public Long queryPageSumCount(HtyFctSaleSearchDTO searchDTO) {
+        return dao.queryPageSumCount(searchDTO);
+    }
+
+    @Override
     public List<SaleDetailDTO> queryPage(HtyFctSaleSearchDTO searchDTO, Pager pager) {
         List<HtyFctSaleOrgDetailDTO> list = new ArrayList<HtyFctSaleOrgDetailDTO>();
-        List<HtyFctSaleOrgDetailDTO> list1 = new ArrayList<HtyFctSaleOrgDetailDTO>();
         List<SaleDetailDTO> dtos = new ArrayList<SaleDetailDTO>();
+        Pager pager1 = new Pager();
         if("0".equals(searchDTO.getXsAmt())){
-            list = dao.queryBurstPage(searchDTO, pager);
+            list = dao.queryBurstSumPage(searchDTO, pager);
         }else if("1".equals(searchDTO.getXsAmt())){
-            list = dao.queryStopPage(searchDTO, pager);
+            list = dao.queryStopSumPage(searchDTO, pager);
         }
-        List<String> strings = new ArrayList<String>();
+        List<HtyFctSaleOrgDetailDTO> burstList = dao.queryBurstSumPage(searchDTO, pager1);
+        List<HtyFctSaleOrgDetailDTO> stopList = dao.queryStopSumPage(searchDTO, pager1);
         if(list != null){
-            list1.add(list.get(0));
-            for(HtyFctSaleOrgDetailDTO i:list){
-
-                for(HtyFctSaleOrgDetailDTO j:list1){
-                    if(i.equals(j)){
-                        j.setXsAmt(ArithUtil.add(i.getXsAmt().doubleValue(),j.getXsAmt().doubleValue()));
-                        j.setXsQty(ArithUtil.add(j.getXsQty().doubleValue(), i.getXsQty().doubleValue()));
-                        j.setMinXsAmt(i.getMinXsAmt().compareTo(j.getMinXsAmt())>0 ? i.getMinXsAmt() : j.getMinXsAmt());
-                        j.setMaxXsAmt(i.getMaxXsAmt().compareTo(j.getMaxXsAmt())>0 ? j.getMaxXsAmt(): i.getMaxXsAmt());
-                    }else{
-                        list1.add(i);
-                    }
-                }
-            }
 
             for(HtyFctSaleOrgDetailDTO i:list){
                 SaleDetailDTO dto = new SaleDetailDTO();
                 dto.setProdName(i.getProdName());
                 dto.setPpName(i.getPpName());
                 dto.setPlName(i.getPlName());
-                dto.setSort("");
                 dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 2));
                 dto.setMaxXsAmt(i.getMaxXsAmt());
                 dto.setMinXsAmt(i.getMinXsAmt());
@@ -76,6 +68,24 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                 dto.setmJcQty(i.getmJcQty());
                 dto.setXsAmt(i.getXsAmt());
                 dto.setXsDd(i.getXsDd());
+
+                searchDTO.setProdCode(i.getProdCode());
+                HtyFctSaleOrgDetailDTO htyFctSaleOrgDetailDTO = dao.selectByProdCode(searchDTO);
+                if(htyFctSaleOrgDetailDTO != null){
+                    BigDecimal salesRing = ArithUtil.sub(i.getXsAmt().doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue());
+                    dto.setSalesRing(ArithUtil.div(salesRing.doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue(),4));
+                }
+
+                for(HtyFctSaleOrgDetailDTO z:stopList){
+                    if(z.getProdCode() == i.getProdCode()){
+                        dto.setSort("1");
+                    }
+                }
+                for(HtyFctSaleOrgDetailDTO x:burstList){
+                    if(x.getProdCode() == i.getProdCode()){
+                        dto.setSort("0");
+                    }
+                }
                 dtos.add(dto);
             }
 

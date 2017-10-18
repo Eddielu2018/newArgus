@@ -30,10 +30,10 @@
         and  PP_CODE = #{searchDTO.ppCode}
       </if>
       <if test="searchDTO.startTime != null and searchDTO.startTime != ''">
-        <![CDATA[ and DATE_KEY >= #{startTime} ]]>
+        <![CDATA[ and DATE_KEY >= #{searchDTO.startTime} ]]>
       </if>
       <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
-        <![CDATA[ and DATE_KEY <= #{endTime} ]]>
+        <![CDATA[ and DATE_KEY <= #{searchDTO.endTime} ]]>
       </if>
     </where>
   </sql>
@@ -53,6 +53,37 @@
     hty_fct_sale_xz_hot
     <include refid="where"/>) a
 
+  </select>
+
+  <select id="querySumPage" resultMap="BaseResultMap">
+    SELECT
+    PROD_CODE,
+    PROD_NAME,
+    PP_CODE,
+    PP_NAME,
+    PL_CODE,
+    PL_NAME,
+    SUM(XS_QTY) AS XS_QTY,
+    MAX(MAX_XS_AMT) AS MAX_XS_AMT,
+    MIN(MIN_XS_AMT) AS MIN_XS_AMT
+    FROM
+    hty_fct_sale_xz_hot
+    <include refid="where"/>
+    GROUP BY
+    PROD_CODE
+    ORDER BY
+    DATE_KEY
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryPageSumCount" resultType="long">
+    SELECT COUNT(*) FROM (SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    hty_fct_sale_xz_hot
+    <include refid="where"/>
+    GROUP BY
+    PROD_CODE) a
   </select>
 
   <!-- 查询所有品牌-->

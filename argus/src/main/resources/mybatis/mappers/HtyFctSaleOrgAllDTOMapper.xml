@@ -11,10 +11,52 @@
     <result column="XS_ZY_SR" property="xsZySr" jdbcType="DECIMAL" />
     <result column="XS_ML" property="xsMl" jdbcType="DECIMAL" />
     <result column="XS_LR" property="xsLr" jdbcType="DECIMAL" />
+    <result column="rowNo" property="ranking" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, DATE_KEY, ORG_CODE, XS_AMT, XS_QTY, XS_ZH_ML, XS_ZY_SR, XS_ML, XS_LR
   </sql>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.startTime != null and searchDTO.startTime != ''">
+        <![CDATA[ and DATE_KEY >= #{searchDTO.startTime} ]]>
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
+        <![CDATA[ and DATE_KEY <= #{searchDTO.endTime} ]]>
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByOrgSearchDTO" resultMap="BaseResultMap">
+    SELECT
+	u.ORG_CODE,
+	u.XS_AMT,
+	u.XS_QTY,
+	u.XS_ML,
+	u.XS_LR,
+	u.rowNo
+    FROM
+	(
+		SELECT
+			ORG_CODE,
+			SUM(XS_AMT) AS XS_AMT,
+			SUM(XS_QTY) AS XS_QTY,
+			SUM(XS_ML) AS XS_ML,
+			SUM(XS_LR) AS XS_LR,
+			(@rowNum :=@rowNum + 1) AS rowNo
+		FROM
+			hty_fct_sale_org_all,
+			(SELECT(@rowNum := 0)) b
+        <include refid="where"/>
+		GROUP BY
+			ORG_CODE
+		ORDER BY
+			XS_AMT
+	) u
+    WHERE
+	ORG_CODE = #{searchDTO.userId}
+  </select>
 
   <select id="selectByOrgCode" resultMap="BaseResultMap">
     select

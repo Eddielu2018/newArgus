@@ -54,6 +54,7 @@
     ORDER BY
     PP_CODE,
     PL_CODE
+    limit #{pager.pageOffset},#{pager.rows}
   </select>
 
   <select id="queryCategorySumPage" resultMap="BaseResultMap">
@@ -75,6 +76,7 @@
     ORDER BY
     PL_CODE,
     PP_CODE
+    limit #{pager.pageOffset},#{pager.rows}
   </select>
 
   <select id="queryPageSumCount" resultType="long">

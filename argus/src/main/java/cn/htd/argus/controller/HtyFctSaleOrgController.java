@@ -3,8 +3,6 @@ package cn.htd.argus.controller;
 import cn.htd.argus.bean.*;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
-import cn.htd.argus.util.ArithUtil;
-import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.RestResult;
 import cn.htd.common.Pager;
 import com.alibaba.dubbo.common.utils.StringUtils;
@@ -65,6 +63,7 @@ public class HtyFctSaleOrgController {
                               @RequestParam(value = "prodSort", required = false) String prodSort,
                               @RequestParam(value = "detailSort", required = false) String detailSort,
                               @RequestParam(value = "listSort", required = true) String listSort,
+                              @RequestParam(value = "dateType", required = false) String dateType,
                               @RequestParam(value = "prodName", required = false) String prodName,
                               @RequestParam(value = "plCode", required = false) String plCode,
                               @RequestParam(value = "ppCode", required = false) String ppCode) {
@@ -111,17 +110,13 @@ public class HtyFctSaleOrgController {
 
 
             //3.上部统计
-            SaleCompareDTO saleCompareDTO = this.htyFctSaleOrgAllDTOService.selectCompareByOrgCode(userId);
-            if(saleCompareDTO != null){
-                saleCompareDTO.setXsAmt(ArithUtil.div(saleCompareDTO.getXsAmt().doubleValue(), 10000, 4));
-                saleCompareDTO.setXsLr(ArithUtil.div(saleCompareDTO.getXsLr().doubleValue(), 10000, 4));
-            }
+            SaleCompareDTO saleCompareDTO = this.htyFctSaleOrgAllDTOService.selectCompareByOrgCode(userId, startTime, endTime);
             dto.setSaleCompareDTO(saleCompareDTO);
 
 
             //4.中部趋势图
             SaleXzListDTO saleXzListDTO = new SaleXzListDTO();
-            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId, endTime);
+            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId, endTime, dateType);
             List<String> wholeBottomDate = new ArrayList<String>();
             List<String> wholeBottom = new ArrayList<String>();
             List<String> wholeBottomPair = new ArrayList<String>();
@@ -172,7 +167,7 @@ public class HtyFctSaleOrgController {
                 }
                 SaleDetailListDTO saleDetailListDTO = new SaleDetailListDTO();
                 List<SaleDetailDTO> list = htyFctSaleOrgDetailDTOService.queryPage(searchDTO, pager);
-                Long count = htyFctSaleOrgDetailDTOService.queryPageCount(searchDTO);
+                Long count = htyFctSaleOrgDetailDTOService.queryPageSumCount(searchDTO);
                 saleDetailListDTO.setDetainum(count);
                 saleDetailListDTO.setSaleDetailDTOList(list);
                 dto.setSaleDetailListDTO(saleDetailListDTO);
@@ -180,7 +175,7 @@ public class HtyFctSaleOrgController {
                 //5.3爆款
                 SaleHotListDTO saleHotListDTO = new SaleHotListDTO();
                 List<SaleHotDTO> list = htyFctSaleXzHotDTOService.queryPage(searchDTO, pager);
-                Long count = htyFctSaleXzHotDTOService.queryPageCount(searchDTO);
+                Long count = htyFctSaleXzHotDTOService.queryPageSumCount(searchDTO);
                 saleHotListDTO.setSaleHostnum(count);
                 saleHotListDTO.setSaleHotDTOList(list);
                 dto.setSaleHotListDTO(saleHotListDTO);
@@ -207,12 +202,13 @@ public class HtyFctSaleOrgController {
     @RequestMapping("/sale/xz/list")
     public RestResult saleXzList(@RequestParam(value = "userId", required = true) String userId,
                                    @RequestParam(value = "endTime", required = false) String endTime,
+                                   @RequestParam(value = "dateType", required = false) String dateType,
                                    @RequestParam(value = "xzSort", required = true) String xzSort) {
         logger.info("调用(HtyFctSaleOrgController.saleXzList)行业销售趋势入参，userId="+userId+",endTime="+endTime+",xzSort="+xzSort);
         RestResult result = new RestResult();
         try {
             SaleXzListDTO dto = new SaleXzListDTO();
-            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId,endTime);
+            List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId, endTime, dateType);
 
             List<String> wholeBottomDate = new ArrayList<String>();
             List<String> wholeBottom = new ArrayList<String>();
@@ -358,7 +354,7 @@ public class HtyFctSaleOrgController {
                 searchDTO.setPpCode(ppCode);
             }
             List<SaleDetailDTO> list = htyFctSaleOrgDetailDTOService.queryPage(searchDTO, pager);
-            Long count = htyFctSaleOrgDetailDTOService.queryPageCount(searchDTO);
+            Long count = htyFctSaleOrgDetailDTOService.queryPageSumCount(searchDTO);
             saleDetailListDTO.setDetainum(count);
             saleDetailListDTO.setSaleDetailDTOList(list);
 
@@ -417,7 +413,7 @@ public class HtyFctSaleOrgController {
                 searchDTO.setPpCode(ppCode);
             }
             List<SaleHotDTO> list = htyFctSaleXzHotDTOService.queryPage(searchDTO, pager);
-            Long count = htyFctSaleXzHotDTOService.queryPageCount(searchDTO);
+            Long count = htyFctSaleXzHotDTOService.queryPageSumCount(searchDTO);
             saleHotListDTO.setSaleHostnum(count);
             saleHotListDTO.setSaleHotDTOList(list);
 

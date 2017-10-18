@@ -35,9 +35,14 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
     }
 
     @Override
+    public Long queryPageSumCount(HtyFctSaleSearchDTO searchDTO) {
+        return dao.queryPageSumCount(searchDTO);
+    }
+
+    @Override
     public List<SaleHotDTO> queryPage(HtyFctSaleSearchDTO searchDTO, Pager pager) {
         List<SaleHotDTO> dtos = new ArrayList<SaleHotDTO>();
-        List<HtyFctSaleXzHotDTO> list = dao.queryPage(searchDTO, pager);
+        List<HtyFctSaleXzHotDTO> list = dao.querySumPage(searchDTO, pager);
        if(list != null){
            for(HtyFctSaleXzHotDTO i: list){
                SaleHotDTO dto = new SaleHotDTO();

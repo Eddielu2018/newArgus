@@ -33,6 +33,8 @@ public class HtyFctSaleOrgDetailDTO {
 
     private BigDecimal mJcQty;
 
+    private String rowNo;
+
     public Long getId() {
         return id;
     }
@@ -153,20 +155,11 @@ public class HtyFctSaleOrgDetailDTO {
         this.mJcQty = mJcQty;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        HtyFctSaleOrgDetailDTO detailDTO = (HtyFctSaleOrgDetailDTO) o;
-
-        if (prodCode != null ? !prodCode.equals(detailDTO.prodCode) : detailDTO.prodCode != null) return false;
-
-        return true;
+    public String getRowNo() {
+        return rowNo;
     }
 
-    @Override
-    public int hashCode() {
-        return prodCode != null ? prodCode.hashCode() : 0;
+    public void setRowNo(String rowNo) {
+        this.rowNo = rowNo;
     }
 }

@@ -29,7 +29,8 @@ public class DateUtil {
 	public static Integer monthRangeDate(String startTime, String endTime){
 		Integer j = 0;
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			Calendar bef = Calendar.getInstance();
 			Calendar aft = Calendar.getInstance();
 			try {
@@ -38,7 +39,6 @@ public class DateUtil {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-
 			Integer result = aft.get(Calendar.MONTH) - bef.get(Calendar.MONTH);
 			Integer month = (aft.get(Calendar.YEAR) - bef.get(Calendar.YEAR)) * 12;
 
@@ -57,7 +57,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String dateFormat(String datetime, Integer month) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Date date = null;
 		try {
 			date = sdf.parse(datetime);
