@@ -52,7 +52,9 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
         }else if("1".equals(searchDTO.getXsAmt())){
             list = dao.queryStopSumPage(searchDTO, pager);
         }
+        //前十的爆款
         List<HtyFctSaleOrgDetailDTO> burstList = dao.queryBurstSumPage(searchDTO, pager1);
+        //后十的滞销款
         List<HtyFctSaleOrgDetailDTO> stopList = dao.queryStopSumPage(searchDTO, pager1);
         if(list != null){
 
@@ -61,7 +63,11 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                 dto.setProdName(i.getProdName());
                 dto.setPpName(i.getPpName());
                 dto.setPlName(i.getPlName());
-                dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 2));
+                if(i.getXsQty().intValue() >0){
+                    dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 2));
+                }else{
+                    dto.setXsPrice(null);
+                }
                 dto.setMaxXsAmt(i.getMaxXsAmt());
                 dto.setMinXsAmt(i.getMinXsAmt());
                 dto.setXsQty(i.getXsQty());
@@ -69,20 +75,26 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                 dto.setXsAmt(i.getXsAmt());
                 dto.setXsDd(i.getXsDd());
 
+                //轮比
                 searchDTO.setProdCode(i.getProdCode());
                 HtyFctSaleOrgDetailDTO htyFctSaleOrgDetailDTO = dao.selectByProdCode(searchDTO);
                 if(htyFctSaleOrgDetailDTO != null){
-                    BigDecimal salesRing = ArithUtil.sub(i.getXsAmt().doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue());
-                    dto.setSalesRing(ArithUtil.div(salesRing.doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue(),4));
+                    if(htyFctSaleOrgDetailDTO.getXsAmt().intValue() >0){
+                        BigDecimal salesRing = ArithUtil.sub(i.getXsAmt().doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue());
+                        dto.setSalesRing(ArithUtil.div(salesRing.doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue(),4));
+                    }else{
+                        dto.setSalesRing(null);
+                    }
                 }
-
+                //滞销
                 for(HtyFctSaleOrgDetailDTO z:stopList){
-                    if(z.getProdCode() == i.getProdCode()){
+                    if(z.getProdCode().equals(i.getProdCode())){
                         dto.setSort("1");
                     }
                 }
+                //爆款
                 for(HtyFctSaleOrgDetailDTO x:burstList){
-                    if(x.getProdCode() == i.getProdCode()){
+                    if(x.getProdCode().equals(i.getProdCode())){
                         dto.setSort("0");
                     }
                 }

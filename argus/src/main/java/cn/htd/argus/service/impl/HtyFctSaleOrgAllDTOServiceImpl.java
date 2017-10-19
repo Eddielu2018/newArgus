@@ -101,38 +101,54 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
                 dto.setUpperXsLr(ArithUtil.div(htyFctSaleOrgAllDTO2.getXsLr().doubleValue(), 10000, 4));
             }
 
+            //销售金额同比，排序
             if(dto.getUpperXsAmt() != null && dto.getXsAmt() != null){
                 BigDecimal xsAmt =ArithUtil.sub(dto.getUpperXsAmt().doubleValue(),dto.getXsAmt().doubleValue());
-                xsAmt = ArithUtil.div(xsAmt.doubleValue(),dto.getUpperXsAmt().doubleValue(),4);
-                dto.setXsAmtAn(xsAmt);
-
+                if(dto.getUpperXsAmt().intValue() >0){
+                    xsAmt = ArithUtil.div(xsAmt.doubleValue(),dto.getUpperXsAmt().doubleValue(),4);
+                    dto.setXsAmtAn(xsAmt);
+                }else{
+                    dto.setXsAmtAn(null);
+                }
                 dto.setXsAmtSort(dto.getXsAmt().compareTo(dto.getUpperXsAmt())>0 ? "1":"0");
             }
 
+            //销售净利润同比，排序
             if(dto.getXsLr() != null && dto.getUpperXsLr() != null){
                 BigDecimal xsLr = ArithUtil.sub(dto.getXsLr().doubleValue(),dto.getUpperXsLr().doubleValue());
-                xsLr = ArithUtil.div(xsLr.doubleValue(),dto.getUpperXsLr().doubleValue(),4);
-                dto.setXsLrAn(xsLr);
-
+                if(dto.getUpperXsLr().intValue() >0){
+                    xsLr = ArithUtil.div(xsLr.doubleValue(),dto.getUpperXsLr().doubleValue(),4);
+                    dto.setXsLrAn(xsLr);
+                }else{
+                    dto.setXsLrAn(null);
+                }
                 dto.setXsLrSort(dto.getXsLr().compareTo(dto.getUpperXsLr())>0 ? "1":"0");
             }
 
+            //销售数量同比，排序
             if(dto.getXsQty() != null && dto.getUpperXsQty() != null){
                 BigDecimal xsQty = ArithUtil.sub(dto.getXsQty().doubleValue(), dto.getUpperXsQty());
-                xsQty = ArithUtil.div(xsQty.doubleValue(),dto.getUpperXsQty() , 4);
-                dto.setXsQtyAn(xsQty);
 
+                if(dto.getUpperXsQty().intValue() >0){
+                    xsQty = ArithUtil.div(xsQty.doubleValue(),dto.getUpperXsQty() , 4);
+                    dto.setXsQtyAn(xsQty);
+                }
                 dto.setXsQtySort(dto.getXsQty().intValue() > dto.getUpperXsQty().intValue() ? "1":"0");
             }
 
+            //毛利率同比，排序
             if(dto.getXsMl() != null && dto.getUpperXsMl() != null){
                 BigDecimal xsMl = ArithUtil.sub(dto.getXsMl().doubleValue(),dto.getUpperXsMl().doubleValue());
-                xsMl = ArithUtil.div(xsMl.doubleValue(),dto.getUpperXsMl().doubleValue(),4);
-                dto.setXsMlAn(xsMl);
+                if(dto.getUpperXsMl().intValue() >0){
+                    xsMl = ArithUtil.div(xsMl.doubleValue(),dto.getUpperXsMl().doubleValue(),4);
 
+                }else{
+                    dto.setXsMlAn(xsMl);
+                }
                 dto.setXsMlSort(dto.getXsMl().compareTo(dto.getUpperXsMl()) >0 ? "1":"0");
             }
 
+            //排名排序
             if(dto.getXsRanking() != null && dto.getUpperXsRanking() != null){
                 dto.setXsRankingSort(dto.getXsRanking().compareTo(dto.getUpperXsRanking())>0 ? "1":"0");
             }

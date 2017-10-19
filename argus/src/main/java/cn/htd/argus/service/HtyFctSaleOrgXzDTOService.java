@@ -14,5 +14,5 @@ public interface HtyFctSaleOrgXzDTOService {
 
     List<SaleXzsDTO> selectBySearchDTO(HtyFctSaleSearchDTO searchDTO);
 
-    List<SaleXzsDTO> selectByMonthDTO(String userId, String endTime);
+    List<SaleXzsDTO> selectByMonthDTO(String userId, String endTime, String dateType);
 }

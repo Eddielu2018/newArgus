@@ -29,6 +29,9 @@
       <if test="searchDTO.userId != null and searchDTO.userId != '' ">
         and  ORG_CODE = #{searchDTO.userId}
       </if>
+      <if test="searchDTO.prodCode != null and searchDTO.prodCode != '' ">
+        and  PROD_CODE = #{searchDTO.prodCode}
+      </if>
       <if test="searchDTO.prodName != null and searchDTO.prodName != '' ">
         and PROD_NAME like CONCAT('%',#{searchDTO.prodName},'%')
       </if>

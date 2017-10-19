@@ -21,5 +21,7 @@ public interface HtyFctSaleOrgXzDTOMapper {
 
     HtyFctSaleOrgXzDTO selectByOrgCode(HtyFctSaleOrgXzDTO model);
 
-    List<HtyFctSaleOrgXzDTO> selectBySearchDTO(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
+    List<HtyFctSaleOrgXzDTO> selectByMonthSearchDTO(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
+
+    HtyFctSaleOrgXzDTO selectByYearSearchDTO(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
 }

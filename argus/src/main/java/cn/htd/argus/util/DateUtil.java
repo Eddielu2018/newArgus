@@ -20,6 +20,39 @@ public class DateUtil {
 	public static final String FORMAT_SS = "yyyy-MM-dd HH:mm:ss";
 	public static final String FORMAT_DD = "yyyy-MM-dd";
 
+
+	/***
+	 * 获取当月第一天
+	 * @return
+	 */
+	public static String getCurFirstDay() {
+		Calendar cale = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String firstday;
+		// 获取前月的第一天
+		cale = Calendar.getInstance();
+		cale.add(Calendar.MONTH, 0);
+		cale.set(Calendar.DAY_OF_MONTH, 1);
+		firstday = format.format(cale.getTime());
+		return firstday;
+	}
+
+	/***
+	 * 获取当月最后一天
+	 * @return
+	 */
+	public static String getCurLastDay() {
+		Calendar cale = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String lastday;
+		// 获取前月的第一天
+		cale = Calendar.getInstance();
+		cale.add(Calendar.MONTH, 1);
+		cale.set(Calendar.DAY_OF_MONTH, 0);
+		lastday = format.format(cale.getTime());
+		return lastday;
+	}
+
 	/**
 	 * 计算2个月份之间的跨度
 	 * @param startTime
