@@ -97,8 +97,10 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
             searchDTO.setEndTime(endTime);
         }
         if("1".equals(sort)){
+            //品类排序
             list = dao.queryCategorySumPage(searchDTO, pager);
         }else{
+            //品牌排序
             list = dao.queryBrandSumPage(searchDTO, pager);
         }
         if(list != null){
@@ -106,12 +108,28 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
                 SaleProdDTO dto = new SaleProdDTO();
                 dto.setPlName(i.getPlName());
                 dto.setPpName(i.getPpName());
-                dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 2));
+                //销售单价 XS_AMT/XS_QTY
+                if(i.getXsQty().intValue() >0){
+                    dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 2));
+                }else{
+                    dto.setXsPrice(null);
+                }
                 dto.setXsQty(i.getXsQty());
                 dto.setXsAmt(i.getXsAmt());
-                dto.setXsRatio(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsAmtAll().doubleValue(), 2));
+                //销售金额占比XS_AMT/XS_AMT_ALL
+                if(i.getXsAmtAll().intValue() >0){
+                    dto.setXsRatio(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsAmtAll().doubleValue(), 2));
+                }else {
+                    dto.setXsRatio(null);
+                }
+                //平均毛利XS_SR-XS_CB
                 dto.setXsAvg(ArithUtil.sub(i.getXsSr().doubleValue(), i.getXsCb().doubleValue()));
-                dto.setXsAvgRatio(ArithUtil.div(dto.getXsAvg().doubleValue(), i.getXsSr().doubleValue(), 2));
+                //平均毛利率（XS_SR-XS_CB）/XS_SR
+                if(i.getXsSr().intValue() >0){
+                    dto.setXsAvgRatio(ArithUtil.div(dto.getXsAvg().doubleValue(), i.getXsSr().doubleValue(), 2));
+                }else{
+                    dto.setXsAvgRatio(null);
+                }
                 dtos.add(dto);
             }
         }else{

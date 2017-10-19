@@ -29,12 +29,30 @@
         and  ORG_CODE = #{searchDTO.userId}
       </if>
       <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
-        and DATE_KEY like CONCAT(#{searchDTO.endTime},'%')
+        and DATE_KEY like CONCAT(#{searchDTO.endTime},'__')
       </if>
     </where>
   </sql>
 
-  <select id="selectBySearchDTO" resultMap="BaseResultMap">
+  <select id="selectByYearSearchDTO" resultMap="BaseResultMap">
+    SELECT
+    SUM(xs_amt) AS XS_AMT,
+    SUM(xs_amt_xz) AS XS_AMT_XZ,
+    org_num,
+    SUM(cnt) AS CNT,
+    SUM(cnt_xz) AS CNT_XZ,
+    SUM(xs_zh_ml) AS XS_ZH_ML,
+    SUM(xs_zy_sr) AS XS_ZY_SR,
+    SUM(xs_zh_ml_xz) AS XS_ZH_ML_XZ,
+    SUM(xs_zy_sr_xz) AS XS_ZY_SR_XZ
+    FROM
+    hty_fct_sale_org_xz
+    <include refid="where"/>
+    GROUP BY
+    org_code
+  </select>
+
+  <select id="selectByMonthSearchDTO" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from hty_fct_sale_org_xz

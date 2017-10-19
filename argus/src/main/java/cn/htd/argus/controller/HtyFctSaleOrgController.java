@@ -44,10 +44,11 @@ public class HtyFctSaleOrgController {
      * @param rows 分页
      * @param startTime 开始时间
      * @param endTime 结束时间
-     * @param xzSort 行业趋势 类型0：销量 1：订单数 2：毛利率
-     * @param prodSort 品牌品类排序 排序0：品牌 1：品类
-     * @param detailSort 商品销售排序
-     * @param listSort 列表类型 0：品牌 1：商品 2：爆款
+     * @param xzSort 行业趋势 类型 0：销量  1：订单数  2：毛利率
+     * @param prodSort 品牌品类排序 排序 0：品牌  1：品类
+     * @param detailSort 商品销售排序 0:爆款  1：滞销款
+     * @param listSort 列表类型 0：品牌  1：商品  2：爆款
+     * @param dateType 查询的时间类型 0：月  1：年
      * @param prodName 商品名称
      * @param plCode 品类Code
      * @param ppCode 品牌Code
@@ -60,10 +61,10 @@ public class HtyFctSaleOrgController {
                               @RequestParam(value = "startTime", required = false) String startTime,
                               @RequestParam(value = "endTime", required = false) String endTime,
                               @RequestParam(value = "xzSort", required = true) String xzSort,
-                              @RequestParam(value = "prodSort", required = false) String prodSort,
-                              @RequestParam(value = "detailSort", required = false) String detailSort,
+                              @RequestParam(value = "prodSort", required = true) String prodSort,
+                              @RequestParam(value = "detailSort", required = true) String detailSort,
                               @RequestParam(value = "listSort", required = true) String listSort,
-                              @RequestParam(value = "dateType", required = false) String dateType,
+                              @RequestParam(value = "dateType", required = true) String dateType,
                               @RequestParam(value = "prodName", required = false) String prodName,
                               @RequestParam(value = "plCode", required = false) String plCode,
                               @RequestParam(value = "ppCode", required = false) String ppCode) {
@@ -207,6 +208,7 @@ public class HtyFctSaleOrgController {
         logger.info("调用(HtyFctSaleOrgController.saleXzList)行业销售趋势入参，userId="+userId+",endTime="+endTime+",xzSort="+xzSort);
         RestResult result = new RestResult();
         try {
+
             SaleXzListDTO dto = new SaleXzListDTO();
             List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId, endTime, dateType);
 
@@ -364,7 +366,7 @@ public class HtyFctSaleOrgController {
         } catch (Exception e) {
             logger.error("获取品牌品类销售分析" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
-            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
         }
         return result;
     }
