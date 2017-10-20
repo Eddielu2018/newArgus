@@ -1,9 +1,29 @@
-package dao;
+package cn.htd.argus.dao;
 
-import dto.HtyFctOrgIncomeDTO;
+import cn.htd.argus.dto.HtyFctOrgIncomeDTO;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface HtyFctOrgIncomeDTOMapper {
-    int insert(HtyFctOrgIncomeDTO record);
 
-    int insertSelective(HtyFctOrgIncomeDTO record);
+    HtyFctOrgIncomeDTO selectByPrimaryKey(Long id);
+
+    List<HtyFctOrgIncomeDTO> select(HtyFctOrgIncomeDTO model);
+
+    HtyFctOrgIncomeDTO selectByOrgCode(HtyFctOrgIncomeDTO model);
+    
+    List<HtyFctOrgIncomeDTO> selectYear(HtyFctOrgIncomeDTO model);
+    
+    int selectSortNumForHead(HtyFctOrgIncomeDTO model);
+    
+    int selectSortNumForBranch(HtyFctOrgIncomeDTO model);
+    
+    BigDecimal selectAvgHead(HtyFctOrgIncomeDTO model);
+    
+    BigDecimal selectAvgBrach(HtyFctOrgIncomeDTO model);
+    
+    List<String> selectCompanySortHead(HtyFctOrgIncomeDTO model);
+    
+    List<String> selectCompanySortBrach(HtyFctOrgIncomeDTO model);
 }

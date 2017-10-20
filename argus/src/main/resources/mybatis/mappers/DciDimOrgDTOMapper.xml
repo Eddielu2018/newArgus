@@ -1,268 +1,54 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.DciDimOrgDTOMapper">
-  <resultMap id="BaseResultMap" type="dto.DciDimOrgDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="ORG_SNAME" jdbcType="VARCHAR" property="orgSname" />
-    <result column="ORG_PCODE" jdbcType="VARCHAR" property="orgPcode" />
-    <result column="ORG_PSNAME" jdbcType="VARCHAR" property="orgPsname" />
-    <result column="ORG_XZCODE" jdbcType="VARCHAR" property="orgXzcode" />
-    <result column="ORG_XZ" jdbcType="VARCHAR" property="orgXz" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.dao.DciDimOrgDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.DciDimOrgDTO" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_SNAME" property="orgSname" jdbcType="VARCHAR" />
+    <result column="ORG_PCODE" property="orgPcode" jdbcType="VARCHAR" />
+    <result column="ORG_PSNAME" property="orgPsname" jdbcType="VARCHAR" />
+    <result column="ORG_XZCODE" property="orgXzcode" jdbcType="VARCHAR" />
+    <result column="ORG_XZ" property="orgXz" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="insert" parameterType="dto.DciDimOrgDTO">
-    insert into dci_dim_org (ID, ORG_CODE, ORG_SNAME, 
-      ORG_PCODE, ORG_PSNAME, ORG_XZCODE, 
-      ORG_XZ)
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{orgSname,jdbcType=VARCHAR}, 
-      #{orgPcode,jdbcType=VARCHAR}, #{orgPsname,jdbcType=VARCHAR}, #{orgXzcode,jdbcType=VARCHAR}, 
-      #{orgXz,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="dto.DciDimOrgDTO">
-    insert into dci_dim_org
-    <trim prefix="(" suffix=")" suffixOverrides=",">
+  <sql id="Base_Column_List" >
+    ID, ORG_CODE, ORG_SNAME, ORG_PCODE, ORG_PSNAME, ORG_XZCODE, ORG_XZ
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dci_dim_org
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.DciDimOrgDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from dci_dim_org
+    <where>
       <if test="id != null">
-        ID,
+        and ID = #{id}
       </if>
       <if test="orgCode != null">
-        ORG_CODE,
+        and ORG_CODE = #{orgCode}
       </if>
       <if test="orgSname != null">
-        ORG_SNAME,
+        and ORG_SNAME = #{orgSname}
       </if>
       <if test="orgPcode != null">
-        ORG_PCODE,
+        and ORG_PCODE = #{orgPcode}
       </if>
       <if test="orgPsname != null">
-        ORG_PSNAME,
+        and ORG_PSNAME = #{orgPsname}
       </if>
       <if test="orgXzcode != null">
-        ORG_XZCODE,
+        and ORG_XZCODE = #{orgXzcode}
       </if>
       <if test="orgXz != null">
-        ORG_XZ,
+        and ORG_XZ = #{orgXz}
       </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgSname != null">
-        #{orgSname,jdbcType=VARCHAR},
-      </if>
-      <if test="orgPcode != null">
-        #{orgPcode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgPsname != null">
-        #{orgPsname,jdbcType=VARCHAR},
-      </if>
-      <if test="orgXzcode != null">
-        #{orgXzcode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgXz != null">
-        #{orgXz,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="dto.DciDimOrgDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="ORG_SNAME" jdbcType="VARCHAR" property="orgSname" />
-    <result column="ORG_PCODE" jdbcType="VARCHAR" property="orgPcode" />
-    <result column="ORG_PSNAME" jdbcType="VARCHAR" property="orgPsname" />
-    <result column="ORG_XZCODE" jdbcType="VARCHAR" property="orgXzcode" />
-    <result column="ORG_XZ" jdbcType="VARCHAR" property="orgXz" />
-  </resultMap>
-  <insert id="insert" parameterType="dto.DciDimOrgDTO">
-    insert into dci_dim_org (ID, ORG_CODE, ORG_SNAME, 
-      ORG_PCODE, ORG_PSNAME, ORG_XZCODE, 
-      ORG_XZ)
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{orgSname,jdbcType=VARCHAR}, 
-      #{orgPcode,jdbcType=VARCHAR}, #{orgPsname,jdbcType=VARCHAR}, #{orgXzcode,jdbcType=VARCHAR}, 
-      #{orgXz,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="dto.DciDimOrgDTO">
-    insert into dci_dim_org
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="orgSname != null">
-        ORG_SNAME,
-      </if>
-      <if test="orgPcode != null">
-        ORG_PCODE,
-      </if>
-      <if test="orgPsname != null">
-        ORG_PSNAME,
-      </if>
-      <if test="orgXzcode != null">
-        ORG_XZCODE,
-      </if>
-      <if test="orgXz != null">
-        ORG_XZ,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgSname != null">
-        #{orgSname,jdbcType=VARCHAR},
-      </if>
-      <if test="orgPcode != null">
-        #{orgPcode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgPsname != null">
-        #{orgPsname,jdbcType=VARCHAR},
-      </if>
-      <if test="orgXzcode != null">
-        #{orgXzcode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgXz != null">
-        #{orgXz,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="DTO.DciDimOrgDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="ORG_SNAME" jdbcType="VARCHAR" property="orgSname" />
-    <result column="ORG_PCODE" jdbcType="VARCHAR" property="orgPcode" />
-    <result column="ORG_PSNAME" jdbcType="VARCHAR" property="orgPsname" />
-    <result column="ORG_XZCODE" jdbcType="VARCHAR" property="orgXzcode" />
-    <result column="ORG_XZ" jdbcType="VARCHAR" property="orgXz" />
-  </resultMap>
-  <insert id="insert" parameterType="DTO.DciDimOrgDTO">
-    insert into dci_dim_org (ID, ORG_CODE, ORG_SNAME, 
-      ORG_PCODE, ORG_PSNAME, ORG_XZCODE, 
-      ORG_XZ)
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{orgSname,jdbcType=VARCHAR}, 
-      #{orgPcode,jdbcType=VARCHAR}, #{orgPsname,jdbcType=VARCHAR}, #{orgXzcode,jdbcType=VARCHAR}, 
-      #{orgXz,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="DTO.DciDimOrgDTO">
-    insert into dci_dim_org
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="orgSname != null">
-        ORG_SNAME,
-      </if>
-      <if test="orgPcode != null">
-        ORG_PCODE,
-      </if>
-      <if test="orgPsname != null">
-        ORG_PSNAME,
-      </if>
-      <if test="orgXzcode != null">
-        ORG_XZCODE,
-      </if>
-      <if test="orgXz != null">
-        ORG_XZ,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgSname != null">
-        #{orgSname,jdbcType=VARCHAR},
-      </if>
-      <if test="orgPcode != null">
-        #{orgPcode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgPsname != null">
-        #{orgPsname,jdbcType=VARCHAR},
-      </if>
-      <if test="orgXzcode != null">
-        #{orgXzcode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgXz != null">
-        #{orgXz,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="DTO.DciDimOrgDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="ORG_SNAME" jdbcType="VARCHAR" property="orgSname" />
-    <result column="ORG_PCODE" jdbcType="VARCHAR" property="orgPcode" />
-    <result column="ORG_PSNAME" jdbcType="VARCHAR" property="orgPsname" />
-    <result column="ORG_XZCODE" jdbcType="VARCHAR" property="orgXzcode" />
-    <result column="ORG_XZ" jdbcType="VARCHAR" property="orgXz" />
-  </resultMap>
-  <insert id="insert" parameterType="DTO.DciDimOrgDTO">
-    insert into dci_dim_org (ID, ORG_CODE, ORG_SNAME, 
-      ORG_PCODE, ORG_PSNAME, ORG_XZCODE, 
-      ORG_XZ)
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{orgSname,jdbcType=VARCHAR}, 
-      #{orgPcode,jdbcType=VARCHAR}, #{orgPsname,jdbcType=VARCHAR}, #{orgXzcode,jdbcType=VARCHAR}, 
-      #{orgXz,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="DTO.DciDimOrgDTO">
-    insert into dci_dim_org
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="orgSname != null">
-        ORG_SNAME,
-      </if>
-      <if test="orgPcode != null">
-        ORG_PCODE,
-      </if>
-      <if test="orgPsname != null">
-        ORG_PSNAME,
-      </if>
-      <if test="orgXzcode != null">
-        ORG_XZCODE,
-      </if>
-      <if test="orgXz != null">
-        ORG_XZ,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgSname != null">
-        #{orgSname,jdbcType=VARCHAR},
-      </if>
-      <if test="orgPcode != null">
-        #{orgPcode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgPsname != null">
-        #{orgPsname,jdbcType=VARCHAR},
-      </if>
-      <if test="orgXzcode != null">
-        #{orgXzcode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgXz != null">
-        #{orgXz,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+    </where>
+  </select>
+  <select id="selectAllNum" resultType="int" >
+    select count(1) from dci_dim_org
+  </select>
 </mapper>

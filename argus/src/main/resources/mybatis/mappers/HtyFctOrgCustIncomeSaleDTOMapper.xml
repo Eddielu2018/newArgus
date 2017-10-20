@@ -1,516 +1,92 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.HtyFctOrgCustIncomeSaleDTOMapper">
-  <resultMap id="BaseResultMap" type="dto.HtyFctOrgCustIncomeSaleDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="YEAR_DATE" jdbcType="VARCHAR" property="yearDate" />
-    <result column="CUSTNUM" jdbcType="INTEGER" property="custnum" />
-    <result column="TRANSCUSTNUM" jdbcType="INTEGER" property="transcustnum" />
-    <result column="ACT_CUSTNUM" jdbcType="INTEGER" property="actCustnum" />
-    <result column="VIP_NUM" jdbcType="INTEGER" property="vipNum" />
-    <result column="BUSINCOME_AMT" jdbcType="DECIMAL" property="busincomeAmt" />
-    <result column="INVOICING_AMT" jdbcType="DECIMAL" property="invoicingAmt" />
-    <result column="SERVICE_AMT" jdbcType="DECIMAL" property="serviceAmt" />
-    <result column="FINANCE_AMT" jdbcType="DECIMAL" property="financeAmt" />
-    <result column="SALE_AMT" jdbcType="DECIMAL" property="saleAmt" />
-    <result column="ONLINE_SALEAMT" jdbcType="DECIMAL" property="onlineSaleamt" />
-    <result column="PROD_SALEAMT" jdbcType="DECIMAL" property="prodSaleamt" />
-    <result column="NONPROD_SALEAMT" jdbcType="DECIMAL" property="nonprodSaleamt" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.dao.HtyFctOrgCustIncomeSaleDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctOrgCustIncomeSaleDTO" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="YEAR_DATE" property="yearDate" jdbcType="VARCHAR" />
+    <result column="CUSTNUM" property="custnum" jdbcType="INTEGER" />
+    <result column="TRANSCUSTNUM" property="transcustnum" jdbcType="INTEGER" />
+    <result column="ACT_CUSTNUM" property="actCustnum" jdbcType="INTEGER" />
+    <result column="VIP_NUM" property="vipNum" jdbcType="INTEGER" />
+    <result column="BUSINCOME_AMT" property="busincomeAmt" jdbcType="DECIMAL" />
+    <result column="INVOICING_AMT" property="invoicingAmt" jdbcType="DECIMAL" />
+    <result column="SERVICE_AMT" property="serviceAmt" jdbcType="DECIMAL" />
+    <result column="FINANCE_AMT" property="financeAmt" jdbcType="DECIMAL" />
+    <result column="SALE_AMT" property="saleAmt" jdbcType="DECIMAL" />
+    <result column="ONLINE_SALEAMT" property="onlineSaleamt" jdbcType="DECIMAL" />
+    <result column="PROD_SALEAMT" property="prodSaleamt" jdbcType="DECIMAL" />
+    <result column="NONPROD_SALEAMT" property="nonprodSaleamt" jdbcType="DECIMAL" />
   </resultMap>
-  <insert id="insert" parameterType="dto.HtyFctOrgCustIncomeSaleDTO">
-    insert into hty_fct_org_cust_income_sale (ID, ORG_CODE, YEAR_DATE, 
-      CUSTNUM, TRANSCUSTNUM, ACT_CUSTNUM, 
-      VIP_NUM, BUSINCOME_AMT, INVOICING_AMT, 
-      SERVICE_AMT, FINANCE_AMT, SALE_AMT, 
-      ONLINE_SALEAMT, PROD_SALEAMT, NONPROD_SALEAMT
-      )
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearDate,jdbcType=VARCHAR}, 
-      #{custnum,jdbcType=INTEGER}, #{transcustnum,jdbcType=INTEGER}, #{actCustnum,jdbcType=INTEGER}, 
-      #{vipNum,jdbcType=INTEGER}, #{busincomeAmt,jdbcType=DECIMAL}, #{invoicingAmt,jdbcType=DECIMAL}, 
-      #{serviceAmt,jdbcType=DECIMAL}, #{financeAmt,jdbcType=DECIMAL}, #{saleAmt,jdbcType=DECIMAL}, 
-      #{onlineSaleamt,jdbcType=DECIMAL}, #{prodSaleamt,jdbcType=DECIMAL}, #{nonprodSaleamt,jdbcType=DECIMAL}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="dto.HtyFctOrgCustIncomeSaleDTO">
-    insert into hty_fct_org_cust_income_sale
-    <trim prefix="(" suffix=")" suffixOverrides=",">
+  <sql id="Base_Column_List" >
+    ID, ORG_CODE, YEAR_DATE, CUSTNUM, TRANSCUSTNUM, ACT_CUSTNUM, VIP_NUM, BUSINCOME_AMT, 
+    INVOICING_AMT, SERVICE_AMT, FINANCE_AMT, SALE_AMT, ONLINE_SALEAMT, PROD_SALEAMT, 
+    NONPROD_SALEAMT
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hty_fct_org_cust_income_sale
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgCustIncomeSaleDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_cust_income_sale
+    <where>
       <if test="id != null">
-        ID,
+        and ID = #{id}
       </if>
       <if test="orgCode != null">
-        ORG_CODE,
+        and ORG_CODE = #{orgCode}
       </if>
       <if test="yearDate != null">
-        YEAR_DATE,
+        and YEAR_DATE = #{yearDate}
       </if>
       <if test="custnum != null">
-        CUSTNUM,
+        and CUSTNUM = #{custnum}
       </if>
       <if test="transcustnum != null">
-        TRANSCUSTNUM,
+        and TRANSCUSTNUM = #{transcustnum}
       </if>
       <if test="actCustnum != null">
-        ACT_CUSTNUM,
+        and ACT_CUSTNUM = #{actCustnum}
       </if>
       <if test="vipNum != null">
-        VIP_NUM,
+        and VIP_NUM = #{vipNum}
       </if>
       <if test="busincomeAmt != null">
-        BUSINCOME_AMT,
+        and BUSINCOME_AMT = #{busincomeAmt}
       </if>
       <if test="invoicingAmt != null">
-        INVOICING_AMT,
+        and INVOICING_AMT = #{invoicingAmt}
       </if>
       <if test="serviceAmt != null">
-        SERVICE_AMT,
+        and SERVICE_AMT = #{serviceAmt}
       </if>
       <if test="financeAmt != null">
-        FINANCE_AMT,
+        and FINANCE_AMT = #{financeAmt}
       </if>
       <if test="saleAmt != null">
-        SALE_AMT,
+        and SALE_AMT = #{saleAmt}
       </if>
       <if test="onlineSaleamt != null">
-        ONLINE_SALEAMT,
+        and ONLINE_SALEAMT = #{onlineSaleamt}
       </if>
       <if test="prodSaleamt != null">
-        PROD_SALEAMT,
+        and PROD_SALEAMT = #{prodSaleamt}
       </if>
       <if test="nonprodSaleamt != null">
-        NONPROD_SALEAMT,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="yearDate != null">
-        #{yearDate,jdbcType=VARCHAR},
-      </if>
-      <if test="custnum != null">
-        #{custnum,jdbcType=INTEGER},
-      </if>
-      <if test="transcustnum != null">
-        #{transcustnum,jdbcType=INTEGER},
-      </if>
-      <if test="actCustnum != null">
-        #{actCustnum,jdbcType=INTEGER},
-      </if>
-      <if test="vipNum != null">
-        #{vipNum,jdbcType=INTEGER},
-      </if>
-      <if test="busincomeAmt != null">
-        #{busincomeAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="invoicingAmt != null">
-        #{invoicingAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="serviceAmt != null">
-        #{serviceAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="financeAmt != null">
-        #{financeAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="saleAmt != null">
-        #{saleAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="onlineSaleamt != null">
-        #{onlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="prodSaleamt != null">
-        #{prodSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="nonprodSaleamt != null">
-        #{nonprodSaleamt,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="dto.HtyFctOrgCustIncomeSaleDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="YEAR_DATE" jdbcType="VARCHAR" property="yearDate" />
-    <result column="CUSTNUM" jdbcType="INTEGER" property="custnum" />
-    <result column="TRANSCUSTNUM" jdbcType="INTEGER" property="transcustnum" />
-    <result column="ACT_CUSTNUM" jdbcType="INTEGER" property="actCustnum" />
-    <result column="VIP_NUM" jdbcType="INTEGER" property="vipNum" />
-    <result column="BUSINCOME_AMT" jdbcType="DECIMAL" property="busincomeAmt" />
-    <result column="INVOICING_AMT" jdbcType="DECIMAL" property="invoicingAmt" />
-    <result column="SERVICE_AMT" jdbcType="DECIMAL" property="serviceAmt" />
-    <result column="FINANCE_AMT" jdbcType="DECIMAL" property="financeAmt" />
-    <result column="SALE_AMT" jdbcType="DECIMAL" property="saleAmt" />
-    <result column="ONLINE_SALEAMT" jdbcType="DECIMAL" property="onlineSaleamt" />
-    <result column="PROD_SALEAMT" jdbcType="DECIMAL" property="prodSaleamt" />
-    <result column="NONPROD_SALEAMT" jdbcType="DECIMAL" property="nonprodSaleamt" />
-  </resultMap>
-  <insert id="insert" parameterType="dto.HtyFctOrgCustIncomeSaleDTO">
-    insert into hty_fct_org_cust_income_sale (ID, ORG_CODE, YEAR_DATE, 
-      CUSTNUM, TRANSCUSTNUM, ACT_CUSTNUM, 
-      VIP_NUM, BUSINCOME_AMT, INVOICING_AMT, 
-      SERVICE_AMT, FINANCE_AMT, SALE_AMT, 
-      ONLINE_SALEAMT, PROD_SALEAMT, NONPROD_SALEAMT
-      )
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearDate,jdbcType=VARCHAR}, 
-      #{custnum,jdbcType=INTEGER}, #{transcustnum,jdbcType=INTEGER}, #{actCustnum,jdbcType=INTEGER}, 
-      #{vipNum,jdbcType=INTEGER}, #{busincomeAmt,jdbcType=DECIMAL}, #{invoicingAmt,jdbcType=DECIMAL}, 
-      #{serviceAmt,jdbcType=DECIMAL}, #{financeAmt,jdbcType=DECIMAL}, #{saleAmt,jdbcType=DECIMAL}, 
-      #{onlineSaleamt,jdbcType=DECIMAL}, #{prodSaleamt,jdbcType=DECIMAL}, #{nonprodSaleamt,jdbcType=DECIMAL}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="dto.HtyFctOrgCustIncomeSaleDTO">
-    insert into hty_fct_org_cust_income_sale
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="yearDate != null">
-        YEAR_DATE,
-      </if>
-      <if test="custnum != null">
-        CUSTNUM,
-      </if>
-      <if test="transcustnum != null">
-        TRANSCUSTNUM,
-      </if>
-      <if test="actCustnum != null">
-        ACT_CUSTNUM,
-      </if>
-      <if test="vipNum != null">
-        VIP_NUM,
-      </if>
-      <if test="busincomeAmt != null">
-        BUSINCOME_AMT,
-      </if>
-      <if test="invoicingAmt != null">
-        INVOICING_AMT,
-      </if>
-      <if test="serviceAmt != null">
-        SERVICE_AMT,
-      </if>
-      <if test="financeAmt != null">
-        FINANCE_AMT,
-      </if>
-      <if test="saleAmt != null">
-        SALE_AMT,
-      </if>
-      <if test="onlineSaleamt != null">
-        ONLINE_SALEAMT,
-      </if>
-      <if test="prodSaleamt != null">
-        PROD_SALEAMT,
-      </if>
-      <if test="nonprodSaleamt != null">
-        NONPROD_SALEAMT,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="yearDate != null">
-        #{yearDate,jdbcType=VARCHAR},
-      </if>
-      <if test="custnum != null">
-        #{custnum,jdbcType=INTEGER},
-      </if>
-      <if test="transcustnum != null">
-        #{transcustnum,jdbcType=INTEGER},
-      </if>
-      <if test="actCustnum != null">
-        #{actCustnum,jdbcType=INTEGER},
-      </if>
-      <if test="vipNum != null">
-        #{vipNum,jdbcType=INTEGER},
-      </if>
-      <if test="busincomeAmt != null">
-        #{busincomeAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="invoicingAmt != null">
-        #{invoicingAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="serviceAmt != null">
-        #{serviceAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="financeAmt != null">
-        #{financeAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="saleAmt != null">
-        #{saleAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="onlineSaleamt != null">
-        #{onlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="prodSaleamt != null">
-        #{prodSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="nonprodSaleamt != null">
-        #{nonprodSaleamt,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgCustIncomeSaleDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="YEAR_DATE" jdbcType="VARCHAR" property="yearDate" />
-    <result column="CUSTNUM" jdbcType="INTEGER" property="custnum" />
-    <result column="TRANSCUSTNUM" jdbcType="INTEGER" property="transcustnum" />
-    <result column="ACT_CUSTNUM" jdbcType="INTEGER" property="actCustnum" />
-    <result column="VIP_NUM" jdbcType="INTEGER" property="vipNum" />
-    <result column="BUSINCOME_AMT" jdbcType="DECIMAL" property="busincomeAmt" />
-    <result column="INVOICING_AMT" jdbcType="DECIMAL" property="invoicingAmt" />
-    <result column="SERVICE_AMT" jdbcType="DECIMAL" property="serviceAmt" />
-    <result column="FINANCE_AMT" jdbcType="DECIMAL" property="financeAmt" />
-    <result column="SALE_AMT" jdbcType="DECIMAL" property="saleAmt" />
-    <result column="ONLINE_SALEAMT" jdbcType="DECIMAL" property="onlineSaleamt" />
-    <result column="PROD_SALEAMT" jdbcType="DECIMAL" property="prodSaleamt" />
-    <result column="NONPROD_SALEAMT" jdbcType="DECIMAL" property="nonprodSaleamt" />
-  </resultMap>
-  <insert id="insert" parameterType="DTO.HtyFctOrgCustIncomeSaleDTO">
-    insert into hty_fct_org_cust_income_sale (ID, ORG_CODE, YEAR_DATE, 
-      CUSTNUM, TRANSCUSTNUM, ACT_CUSTNUM, 
-      VIP_NUM, BUSINCOME_AMT, INVOICING_AMT, 
-      SERVICE_AMT, FINANCE_AMT, SALE_AMT, 
-      ONLINE_SALEAMT, PROD_SALEAMT, NONPROD_SALEAMT
-      )
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearDate,jdbcType=VARCHAR}, 
-      #{custnum,jdbcType=INTEGER}, #{transcustnum,jdbcType=INTEGER}, #{actCustnum,jdbcType=INTEGER}, 
-      #{vipNum,jdbcType=INTEGER}, #{busincomeAmt,jdbcType=DECIMAL}, #{invoicingAmt,jdbcType=DECIMAL}, 
-      #{serviceAmt,jdbcType=DECIMAL}, #{financeAmt,jdbcType=DECIMAL}, #{saleAmt,jdbcType=DECIMAL}, 
-      #{onlineSaleamt,jdbcType=DECIMAL}, #{prodSaleamt,jdbcType=DECIMAL}, #{nonprodSaleamt,jdbcType=DECIMAL}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="DTO.HtyFctOrgCustIncomeSaleDTO">
-    insert into hty_fct_org_cust_income_sale
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="yearDate != null">
-        YEAR_DATE,
-      </if>
-      <if test="custnum != null">
-        CUSTNUM,
-      </if>
-      <if test="transcustnum != null">
-        TRANSCUSTNUM,
-      </if>
-      <if test="actCustnum != null">
-        ACT_CUSTNUM,
-      </if>
-      <if test="vipNum != null">
-        VIP_NUM,
-      </if>
-      <if test="busincomeAmt != null">
-        BUSINCOME_AMT,
-      </if>
-      <if test="invoicingAmt != null">
-        INVOICING_AMT,
-      </if>
-      <if test="serviceAmt != null">
-        SERVICE_AMT,
-      </if>
-      <if test="financeAmt != null">
-        FINANCE_AMT,
-      </if>
-      <if test="saleAmt != null">
-        SALE_AMT,
-      </if>
-      <if test="onlineSaleamt != null">
-        ONLINE_SALEAMT,
-      </if>
-      <if test="prodSaleamt != null">
-        PROD_SALEAMT,
-      </if>
-      <if test="nonprodSaleamt != null">
-        NONPROD_SALEAMT,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="yearDate != null">
-        #{yearDate,jdbcType=VARCHAR},
-      </if>
-      <if test="custnum != null">
-        #{custnum,jdbcType=INTEGER},
-      </if>
-      <if test="transcustnum != null">
-        #{transcustnum,jdbcType=INTEGER},
-      </if>
-      <if test="actCustnum != null">
-        #{actCustnum,jdbcType=INTEGER},
-      </if>
-      <if test="vipNum != null">
-        #{vipNum,jdbcType=INTEGER},
-      </if>
-      <if test="busincomeAmt != null">
-        #{busincomeAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="invoicingAmt != null">
-        #{invoicingAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="serviceAmt != null">
-        #{serviceAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="financeAmt != null">
-        #{financeAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="saleAmt != null">
-        #{saleAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="onlineSaleamt != null">
-        #{onlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="prodSaleamt != null">
-        #{prodSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="nonprodSaleamt != null">
-        #{nonprodSaleamt,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgCustIncomeSaleDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="YEAR_DATE" jdbcType="VARCHAR" property="yearDate" />
-    <result column="CUSTNUM" jdbcType="INTEGER" property="custnum" />
-    <result column="TRANSCUSTNUM" jdbcType="INTEGER" property="transcustnum" />
-    <result column="ACT_CUSTNUM" jdbcType="INTEGER" property="actCustnum" />
-    <result column="VIP_NUM" jdbcType="INTEGER" property="vipNum" />
-    <result column="BUSINCOME_AMT" jdbcType="DECIMAL" property="busincomeAmt" />
-    <result column="INVOICING_AMT" jdbcType="DECIMAL" property="invoicingAmt" />
-    <result column="SERVICE_AMT" jdbcType="DECIMAL" property="serviceAmt" />
-    <result column="FINANCE_AMT" jdbcType="DECIMAL" property="financeAmt" />
-    <result column="SALE_AMT" jdbcType="DECIMAL" property="saleAmt" />
-    <result column="ONLINE_SALEAMT" jdbcType="DECIMAL" property="onlineSaleamt" />
-    <result column="PROD_SALEAMT" jdbcType="DECIMAL" property="prodSaleamt" />
-    <result column="NONPROD_SALEAMT" jdbcType="DECIMAL" property="nonprodSaleamt" />
-  </resultMap>
-  <insert id="insert" parameterType="DTO.HtyFctOrgCustIncomeSaleDTO">
-    insert into hty_fct_org_cust_income_sale (ID, ORG_CODE, YEAR_DATE, 
-      CUSTNUM, TRANSCUSTNUM, ACT_CUSTNUM, 
-      VIP_NUM, BUSINCOME_AMT, INVOICING_AMT, 
-      SERVICE_AMT, FINANCE_AMT, SALE_AMT, 
-      ONLINE_SALEAMT, PROD_SALEAMT, NONPROD_SALEAMT
-      )
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearDate,jdbcType=VARCHAR}, 
-      #{custnum,jdbcType=INTEGER}, #{transcustnum,jdbcType=INTEGER}, #{actCustnum,jdbcType=INTEGER}, 
-      #{vipNum,jdbcType=INTEGER}, #{busincomeAmt,jdbcType=DECIMAL}, #{invoicingAmt,jdbcType=DECIMAL}, 
-      #{serviceAmt,jdbcType=DECIMAL}, #{financeAmt,jdbcType=DECIMAL}, #{saleAmt,jdbcType=DECIMAL}, 
-      #{onlineSaleamt,jdbcType=DECIMAL}, #{prodSaleamt,jdbcType=DECIMAL}, #{nonprodSaleamt,jdbcType=DECIMAL}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="DTO.HtyFctOrgCustIncomeSaleDTO">
-    insert into hty_fct_org_cust_income_sale
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="yearDate != null">
-        YEAR_DATE,
-      </if>
-      <if test="custnum != null">
-        CUSTNUM,
-      </if>
-      <if test="transcustnum != null">
-        TRANSCUSTNUM,
-      </if>
-      <if test="actCustnum != null">
-        ACT_CUSTNUM,
-      </if>
-      <if test="vipNum != null">
-        VIP_NUM,
-      </if>
-      <if test="busincomeAmt != null">
-        BUSINCOME_AMT,
-      </if>
-      <if test="invoicingAmt != null">
-        INVOICING_AMT,
-      </if>
-      <if test="serviceAmt != null">
-        SERVICE_AMT,
-      </if>
-      <if test="financeAmt != null">
-        FINANCE_AMT,
-      </if>
-      <if test="saleAmt != null">
-        SALE_AMT,
-      </if>
-      <if test="onlineSaleamt != null">
-        ONLINE_SALEAMT,
-      </if>
-      <if test="prodSaleamt != null">
-        PROD_SALEAMT,
-      </if>
-      <if test="nonprodSaleamt != null">
-        NONPROD_SALEAMT,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="yearDate != null">
-        #{yearDate,jdbcType=VARCHAR},
-      </if>
-      <if test="custnum != null">
-        #{custnum,jdbcType=INTEGER},
-      </if>
-      <if test="transcustnum != null">
-        #{transcustnum,jdbcType=INTEGER},
-      </if>
-      <if test="actCustnum != null">
-        #{actCustnum,jdbcType=INTEGER},
-      </if>
-      <if test="vipNum != null">
-        #{vipNum,jdbcType=INTEGER},
-      </if>
-      <if test="busincomeAmt != null">
-        #{busincomeAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="invoicingAmt != null">
-        #{invoicingAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="serviceAmt != null">
-        #{serviceAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="financeAmt != null">
-        #{financeAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="saleAmt != null">
-        #{saleAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="onlineSaleamt != null">
-        #{onlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="prodSaleamt != null">
-        #{prodSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="nonprodSaleamt != null">
-        #{nonprodSaleamt,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
+        and NONPROD_SALEAMT = #{nonprodSaleamt}
+      </if>
+    </where>
+  </select>
+  <select id="selectMonth" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgCustIncomeSaleDTO" >
+    select 
+    <include refid="Base_Column_List" />
+    from hty_fct_org_cust_income_sale
+    where YEAR_DATE like CONCAT(#{yearDate},'%') and ORG_CODE = #{orgCode} order by YEAR_DATE ASC
+  </select>
 </mapper>

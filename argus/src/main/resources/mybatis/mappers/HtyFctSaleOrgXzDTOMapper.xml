@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.dao.HtyFctSaleOrgXzDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctSaleOrgXzDTO" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="DATE_KEY" property="dateKey" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_XZCODE" property="orgXzcode" jdbcType="VARCHAR" />
+    <result column="XS_AMT" property="xsAmt" jdbcType="DECIMAL" />
+    <result column="XS_QTY" property="xsQty" jdbcType="INTEGER" />
+    <result column="XS_ZH_ML" property="xsZhMl" jdbcType="DECIMAL" />
+    <result column="XS_ZY_SR" property="xsZySr" jdbcType="DECIMAL" />
+    <result column="XS_AMT_XZ" property="xsAmtXz" jdbcType="DECIMAL" />
+    <result column="XS_QTY_XZ" property="xsQtyXz" jdbcType="INTEGER" />
+    <result column="XS_ZH_ML_XZ" property="xsZhMlXz" jdbcType="DECIMAL" />
+    <result column="XS_ZY_SR_XZ" property="xsZySrXz" jdbcType="DECIMAL" />
+    <result column="ORG_NUM" property="orgNum" jdbcType="INTEGER" />
+    <result column="CNT" property="cnt" jdbcType="INTEGER" />
+    <result column="CNT_XZ" property="cntXz" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, DATE_KEY, ORG_CODE, ORG_XZCODE, XS_AMT, XS_QTY, XS_ZH_ML, XS_ZY_SR, XS_AMT_XZ, 
+    XS_QTY_XZ, XS_ZH_ML_XZ, XS_ZY_SR_XZ, ORG_NUM, CNT, CNT_XZ
+  </sql>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
+        and DATE_KEY like CONCAT(#{searchDTO.endTime},'__')
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByYearSearchDTO" resultMap="BaseResultMap">
+    SELECT
+    SUM(xs_amt) AS XS_AMT,
+    SUM(xs_amt_xz) AS XS_AMT_XZ,
+    org_num,
+    SUM(cnt) AS CNT,
+    SUM(cnt_xz) AS CNT_XZ,
+    SUM(xs_zh_ml) AS XS_ZH_ML,
+    SUM(xs_zy_sr) AS XS_ZY_SR,
+    SUM(xs_zh_ml_xz) AS XS_ZH_ML_XZ,
+    SUM(xs_zy_sr_xz) AS XS_ZY_SR_XZ
+    FROM
+    hty_fct_sale_org_xz
+    <include refid="where"/>
+    GROUP BY
+    org_code
+  </select>
+
+  <select id="selectByMonthSearchDTO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_xz
+    <include refid="where"/>
+    order by DATE_KEY ASC
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_xz
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctSaleOrgXzDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_xz
+    where ORG_CODE = #{orgCode} order by YEAR_MON desc limit 1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from hty_fct_sale_org_xz
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctSaleOrgXzDTO" >
+    insert into hty_fct_sale_org_xz (ID, DATE_KEY, ORG_CODE, 
+      ORG_XZCODE, XS_AMT, XS_QTY, 
+      XS_ZH_ML, XS_ZY_SR, XS_AMT_XZ, 
+      XS_QTY_XZ, XS_ZH_ML_XZ, XS_ZY_SR_XZ, 
+      ORG_NUM, CNT, CNT_XZ)
+    values (#{id,jdbcType=BIGINT}, #{dateKey,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{orgXzcode,jdbcType=VARCHAR}, #{xsAmt,jdbcType=DECIMAL}, #{xsQty,jdbcType=INTEGER}, 
+      #{xsZhMl,jdbcType=DECIMAL}, #{xsZySr,jdbcType=DECIMAL}, #{xsAmtXz,jdbcType=DECIMAL}, 
+      #{xsQtyXz,jdbcType=INTEGER}, #{xsZhMlXz,jdbcType=DECIMAL}, #{xsZySrXz,jdbcType=DECIMAL}, 
+      #{orgNum,jdbcType=INTEGER}, #{cnt,jdbcType=INTEGER}, #{cntXz,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.htd.argus.dto.HtyFctSaleOrgXzDTO" >
+    insert into hty_fct_sale_org_xz
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="dateKey != null" >
+        DATE_KEY,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="orgXzcode != null" >
+        ORG_XZCODE,
+      </if>
+      <if test="xsAmt != null" >
+        XS_AMT,
+      </if>
+      <if test="xsQty != null" >
+        XS_QTY,
+      </if>
+      <if test="xsZhMl != null" >
+        XS_ZH_ML,
+      </if>
+      <if test="xsZySr != null" >
+        XS_ZY_SR,
+      </if>
+      <if test="xsAmtXz != null" >
+        XS_AMT_XZ,
+      </if>
+      <if test="xsQtyXz != null" >
+        XS_QTY_XZ,
+      </if>
+      <if test="xsZhMlXz != null" >
+        XS_ZH_ML_XZ,
+      </if>
+      <if test="xsZySrXz != null" >
+        XS_ZY_SR_XZ,
+      </if>
+      <if test="orgNum != null" >
+        ORG_NUM,
+      </if>
+      <if test="cnt != null" >
+        CNT,
+      </if>
+      <if test="cntXz != null" >
+        CNT_XZ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="dateKey != null" >
+        #{dateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgXzcode != null" >
+        #{orgXzcode,jdbcType=VARCHAR},
+      </if>
+      <if test="xsAmt != null" >
+        #{xsAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQty != null" >
+        #{xsQty,jdbcType=INTEGER},
+      </if>
+      <if test="xsZhMl != null" >
+        #{xsZhMl,jdbcType=DECIMAL},
+      </if>
+      <if test="xsZySr != null" >
+        #{xsZySr,jdbcType=DECIMAL},
+      </if>
+      <if test="xsAmtXz != null" >
+        #{xsAmtXz,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQtyXz != null" >
+        #{xsQtyXz,jdbcType=INTEGER},
+      </if>
+      <if test="xsZhMlXz != null" >
+        #{xsZhMlXz,jdbcType=DECIMAL},
+      </if>
+      <if test="xsZySrXz != null" >
+        #{xsZySrXz,jdbcType=DECIMAL},
+      </if>
+      <if test="orgNum != null" >
+        #{orgNum,jdbcType=INTEGER},
+      </if>
+      <if test="cnt != null" >
+        #{cnt,jdbcType=INTEGER},
+      </if>
+      <if test="cntXz != null" >
+        #{cntXz,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.htd.argus.dto.HtyFctSaleOrgXzDTO" >
+    update hty_fct_sale_org_xz
+    <set >
+      <if test="dateKey != null" >
+        DATE_KEY = #{dateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgXzcode != null" >
+        ORG_XZCODE = #{orgXzcode,jdbcType=VARCHAR},
+      </if>
+      <if test="xsAmt != null" >
+        XS_AMT = #{xsAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQty != null" >
+        XS_QTY = #{xsQty,jdbcType=INTEGER},
+      </if>
+      <if test="xsZhMl != null" >
+        XS_ZH_ML = #{xsZhMl,jdbcType=DECIMAL},
+      </if>
+      <if test="xsZySr != null" >
+        XS_ZY_SR = #{xsZySr,jdbcType=DECIMAL},
+      </if>
+      <if test="xsAmtXz != null" >
+        XS_AMT_XZ = #{xsAmtXz,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQtyXz != null" >
+        XS_QTY_XZ = #{xsQtyXz,jdbcType=INTEGER},
+      </if>
+      <if test="xsZhMlXz != null" >
+        XS_ZH_ML_XZ = #{xsZhMlXz,jdbcType=DECIMAL},
+      </if>
+      <if test="xsZySrXz != null" >
+        XS_ZY_SR_XZ = #{xsZySrXz,jdbcType=DECIMAL},
+      </if>
+      <if test="orgNum != null" >
+        ORG_NUM = #{orgNum,jdbcType=INTEGER},
+      </if>
+      <if test="cnt != null" >
+        CNT = #{cnt,jdbcType=INTEGER},
+      </if>
+      <if test="cntXz != null" >
+        CNT_XZ = #{cntXz,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.htd.argus.dto.HtyFctSaleOrgXzDTO" >
+    update hty_fct_sale_org_xz
+    set DATE_KEY = #{dateKey,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      ORG_XZCODE = #{orgXzcode,jdbcType=VARCHAR},
+      XS_AMT = #{xsAmt,jdbcType=DECIMAL},
+      XS_QTY = #{xsQty,jdbcType=INTEGER},
+      XS_ZH_ML = #{xsZhMl,jdbcType=DECIMAL},
+      XS_ZY_SR = #{xsZySr,jdbcType=DECIMAL},
+      XS_AMT_XZ = #{xsAmtXz,jdbcType=DECIMAL},
+      XS_QTY_XZ = #{xsQtyXz,jdbcType=INTEGER},
+      XS_ZH_ML_XZ = #{xsZhMlXz,jdbcType=DECIMAL},
+      XS_ZY_SR_XZ = #{xsZySrXz,jdbcType=DECIMAL},
+      ORG_NUM = #{orgNum,jdbcType=INTEGER},
+      CNT = #{cnt,jdbcType=INTEGER},
+      CNT_XZ = #{cntXz,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,4 +1,4 @@
-package dto;
+package cn.htd.argus.dto;
 
 public class DciDimOrgDTO {
     private Long id;

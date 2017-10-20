@@ -1,9 +1,14 @@
-package dao;
+package cn.htd.argus.dao;
 
-import dto.DciDimOrgDTO;
+import cn.htd.argus.dto.DciDimOrgDTO;
+
+import java.util.List;
 
 public interface DciDimOrgDTOMapper {
-    int insert(DciDimOrgDTO record);
 
-    int insertSelective(DciDimOrgDTO record);
+    DciDimOrgDTO selectByPrimaryKey(Long id);
+
+    List<DciDimOrgDTO> select(DciDimOrgDTO model);
+    
+    int selectAllNum();
 }
