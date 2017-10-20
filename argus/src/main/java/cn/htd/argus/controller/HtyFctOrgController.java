@@ -71,6 +71,7 @@ public class HtyFctOrgController {
         logger.info("调用(HtyPctOrgController.indexForHandle)首页页头估值获得入参，userId="+userId);
         try {
             HtyFctOrgValueDTO htyFctOrgValueDTO = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
+
             if(htyFctOrgValueDTO != null){
             	double sort = MathUtil.getPairToDouble(new BigDecimal(htyFctOrgValueDTO.getZtpm()), new BigDecimal(dciDimOrgDTOService.selectAllNum()));
             	if(htyFctOrgValueDTO.getZtpm() >= 1 && htyFctOrgValueDTO.getZtpm() <=10){
