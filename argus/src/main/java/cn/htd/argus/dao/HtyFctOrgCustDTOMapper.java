@@ -14,13 +14,13 @@ public interface HtyFctOrgCustDTOMapper {
     
     List<HtyFctOrgCustDTO> selectYear(HtyFctOrgCustDTO model);
     
-    int selectSortNumForHead(HtyFctOrgCustDTO model);
+    Integer selectSortNumForHead(HtyFctOrgCustDTO model);
     
-    int selectSortNumForBranch(HtyFctOrgCustDTO model);
+    Integer selectSortNumForBranch(HtyFctOrgCustDTO model);
     
-    int selectAvgHead(HtyFctOrgCustDTO model);
+    Integer selectAvgHead(HtyFctOrgCustDTO model);
     
-    int selectAvgBrach(HtyFctOrgCustDTO model);
+    Integer selectAvgBrach(HtyFctOrgCustDTO model);
     
     List<String> selectCompanySortHead(HtyFctOrgCustDTO model);
     

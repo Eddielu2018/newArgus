@@ -72,7 +72,7 @@ public class HtyFctOrgController {
         try {
             HtyFctOrgValueDTO htyFctOrgValueDTO = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
             if(htyFctOrgValueDTO != null){
-            	double sort = MathUtil.getPairToDouble(new BigDecimal(htyFctOrgValueDTO.getZtpm()), new BigDecimal(dciDimOrgDTOService.selectAllNum()));
+            	Double sort = MathUtil.getPairToDouble(new BigDecimal(htyFctOrgValueDTO.getZtpm()), new BigDecimal(dciDimOrgDTOService.selectAllNum()));
             	if(htyFctOrgValueDTO.getZtpm() >= 1 && htyFctOrgValueDTO.getZtpm() <=10){
             		htyFctOrgValueDTO.setStarNum(new BigDecimal(4.5));
             	}else if(htyFctOrgValueDTO.getZtpm() >=11){
@@ -214,6 +214,7 @@ public class HtyFctOrgController {
         	if("01".equals(yearWithDate.substring(yearWithDate.length()-2, yearWithDate.length()))){
         		yearDate = String.valueOf((Integer.valueOf(yearDate)-1));
         	}
+        	logger.info("==================================================yearDate="+yearDate);
         	List<HtyFctOrgCustIncomeSaleDTO> list = this.htyFctOrgCustIncomeSaleDTOService.selectMonth(yearDate, userId);
         	if(type == 0){
         		//营业
@@ -247,6 +248,7 @@ public class HtyFctOrgController {
         			wholeBottomPair.add(btMap.get("pair"));
         		}
         	}
+        	logger.info("==================================================000000000000003");
         	allDto.setWholeBottom(wholeBottom);
         	allDto.setWholeBottomDate(wholeBottomDate);
         	allDto.setWholeBottomPair(wholeBottomPair);
@@ -267,13 +269,29 @@ public class HtyFctOrgController {
 			Map<String,String> map = new HashMap<String,String>();
 			map.put("date", incomeList.getYearDate().substring(4));
 			if(kind == 0){
-				map.put("value", incomeList.getBusincomeAmt().toString());
+				if(incomeList.getBusincomeAmt()!=null){
+					map.put("value", incomeList.getBusincomeAmt().toString());
+				}else{
+					map.put("value", null);
+				}
 			}else if(kind == 1){
-				map.put("value", incomeList.getInvoicingAmt().toString());
+				if(incomeList.getInvoicingAmt()!=null){
+					map.put("value", incomeList.getInvoicingAmt().toString());
+				}else{
+					map.put("value", null);
+				}
 			}else if(kind == 2){
-				map.put("value", incomeList.getServiceAmt().toString());
+				if(incomeList.getServiceAmt()!=null){
+					map.put("value", incomeList.getServiceAmt().toString());
+				}else{
+					map.put("value", null);
+				}
 			}else if(kind == 3){
-				map.put("value", incomeList.getFinanceAmt().toString());
+				if(incomeList.getFinanceAmt()!=null){
+					map.put("value", incomeList.getFinanceAmt().toString());
+				}else{
+					map.put("value", null);
+				}
 			}
 			wholeBottomList.add(map);
 		}
@@ -286,13 +304,29 @@ public class HtyFctOrgController {
 			Map<String,String> map = new HashMap<String,String>();
 			map.put("date", incomeList.getYearDate().substring(4));
 			if(kind == 0){
-				map.put("value", incomeList.getSaleAmt().toString());
+				if(incomeList.getSaleAmt()!=null){
+					map.put("value", incomeList.getSaleAmt().toString());
+				}else{
+					map.put("value", null);
+				}
 			}else if(kind == 1){
-				map.put("value", incomeList.getOnlineSaleamt().toString());
+				if(incomeList.getOnlineSaleamt()!=null){
+					map.put("value", incomeList.getOnlineSaleamt().toString());
+				}else{
+					map.put("value", null);
+				}
 			}else if(kind == 2){
-				map.put("value", incomeList.getProdSaleamt().toString());
+				if(incomeList.getProdSaleamt()!=null){
+					map.put("value", incomeList.getProdSaleamt().toString());
+				}else{
+					map.put("value", null);
+				}
 			}else if(kind == 3){
-				map.put("value", incomeList.getNonprodSaleamt().toString());
+				if(incomeList.getNonprodSaleamt()!=null){
+					map.put("value", incomeList.getNonprodSaleamt().toString());
+				}else{
+					map.put("value", null);
+				}
 			}
 			wholeBottomList.add(map);
 		}
@@ -305,13 +339,29 @@ public class HtyFctOrgController {
 			Map<String,String> map = new HashMap<String,String>();
 			map.put("date", incomeList.getYearDate().substring(4));
 			if(kind == 0){
-				map.put("value", incomeList.getCustnum().toString());
+				if(incomeList.getCustnum()!=null){
+					map.put("value", incomeList.getCustnum().toString());
+				}else{
+					map.put("value", null);
+				}
 			}else if(kind == 1){
-				map.put("value", incomeList.getTranscustnum().toString());
+				if(incomeList.getTranscustnum()!=null){
+					map.put("value", incomeList.getTranscustnum().toString());
+				}else{
+					map.put("value", null);
+				}
 			}else if(kind == 2){
-				map.put("value", incomeList.getActCustnum().toString());
+				if(incomeList.getActCustnum()!=null){
+					map.put("value", incomeList.getActCustnum().toString());
+				}else{
+					map.put("value", null);
+				}
 			}else if(kind == 3){
-				map.put("value", incomeList.getVipNum().toString());
+				if(incomeList.getVipNum()!=null){
+					map.put("value", incomeList.getVipNum().toString());
+				}else{
+					map.put("value", null);
+				}
 			}
 			wholeBottomList.add(map);
 		}
@@ -324,17 +374,49 @@ public class HtyFctOrgController {
     		Map<String,String> map = new HashMap<String,String>();
     		map.put("date", income.getYearMon());
     		if(kind == 0){
-    			map.put("value", income.getYearBusincomeAmt().toString());
-    			map.put("pair", income.getLastyearBusincomeAmt().toString());
+    			if(income.getYearBusincomeAmt()!=null){
+    				map.put("value", income.getYearBusincomeAmt().toString());
+    			}else{
+					map.put("value", null);
+				}
+    			if(income.getLastyearBusincomeAmt()!=null){
+    				map.put("pair", income.getLastyearBusincomeAmt().toString());
+    			}else{
+					map.put("pair", null);
+				}
     		}else if(kind == 1){
-    			map.put("value", income.getYearInvoicingAmt().toString());
-    			map.put("pair", income.getLastYearInvoicingAmt().toString());
+    			if(income.getYearInvoicingAmt()!=null){
+    				map.put("value", income.getYearInvoicingAmt().toString());
+    			}else{
+					map.put("value", null);
+				}
+    			if(income.getLastYearInvoicingAmt()!=null){
+    				map.put("pair", income.getLastYearInvoicingAmt().toString());
+    			}else{
+					map.put("pair", null);
+				}
     		}else if(kind == 2){
-    			map.put("value", income.getYearServiceAmt().toString());
-    			map.put("pair", income.getLastYearServiceAmt().toString());
+    			if(income.getYearServiceAmt()!=null){
+    				map.put("value", income.getYearServiceAmt().toString());
+    			}else{
+					map.put("value", null);
+				}
+    			if(income.getLastYearServiceAmt()!=null){
+    				map.put("pair", income.getLastYearServiceAmt().toString());
+    			}else{
+					map.put("pair", null);
+				}
     		}else if(kind == 3){
-    			map.put("value", income.getYearFinanceAmt().toString());
-    			map.put("pair", income.getLastYearFinanceAmt().toString());
+    			if(income.getYearFinanceAmt()!=null){
+    				map.put("value", income.getYearFinanceAmt().toString());
+    			}else{
+					map.put("value", null);
+				}
+    			if(income.getLastYearFinanceAmt()!=null){
+    				map.put("pair", income.getLastYearFinanceAmt().toString());
+    			}else{
+					map.put("pair", null);
+				}
     		}
     		wholeBottomList.add(map);
     	}
@@ -347,17 +429,49 @@ public class HtyFctOrgController {
     		Map<String,String> map = new HashMap<String,String>();
     		map.put("date", sale.getYearMon());
     		if(kind == 0){
-    			map.put("value", sale.getYearAmt().toString());
-    			map.put("pair", sale.getLastyearAmt().toString());
+    			if(sale.getYearAmt()!=null){
+    				map.put("value", sale.getYearAmt().toString());
+    			}else{
+					map.put("value", null);
+				}
+    			if(sale.getLastyearAmt()!=null){
+    				map.put("pair", sale.getLastyearAmt().toString());
+    			}else{
+					map.put("pair", null);
+				}
     		}else if(kind == 1){
-    			map.put("value", sale.getYearOnlineSaleamt().toString());
-    			map.put("pair", sale.getLastyearOnlineSaleamt().toString());
+    			if(sale.getYearOnlineSaleamt()!=null){
+    				map.put("value", sale.getYearOnlineSaleamt().toString());
+    			}else{
+					map.put("value", null);
+				}
+    			if(sale.getLastyearOnlineSaleamt()!=null){
+    				map.put("pair", sale.getLastyearOnlineSaleamt().toString());
+    			}else{
+					map.put("pair", null);
+				}
     		}else if(kind == 2){
-    			map.put("value", sale.getYearWaitSaleamt().toString());
-    			map.put("pair", sale.getLastyearWaitSaleamt().toString());
+    			if(sale.getYearWaitSaleamt()!=null){
+    				map.put("value", sale.getYearWaitSaleamt().toString());
+    			}else{
+					map.put("value", null);
+				}
+    			if(sale.getLastyearWaitSaleamt()!=null){
+    				map.put("pair", sale.getLastyearWaitSaleamt().toString());
+    			}else{
+					map.put("pair", null);
+				}
     		}else if(kind == 3){
-    			map.put("value", sale.getYearSpSaleamt().toString());
-    			map.put("pair", sale.getLastyearSpSaleamt().toString());
+    			if(sale.getYearSpSaleamt()!=null){
+    				map.put("value", sale.getYearSpSaleamt().toString());
+    			}else{
+					map.put("value", null);
+				}
+    			if(sale.getLastyearSpSaleamt()!=null){
+    				map.put("pair", sale.getLastyearSpSaleamt().toString());
+    			}else{
+					map.put("pair", null);
+				}
     		}
     		wholeBottomList.add(map);
     	}
@@ -370,14 +484,34 @@ public class HtyFctOrgController {
     		Map<String,String> map = new HashMap<String,String>();
     		map.put("date", cust.getYearMon());
         	if(kind == 0){
-        		map.put("value", cust.getYearNewcustnum().toString());
-    			map.put("pair", cust.getLastyearNewcustnum().toString());
+        		if(cust.getYearNewcustnum()!=null){
+        			map.put("value", cust.getYearNewcustnum().toString());
+        		}else{
+					map.put("value", null);
+				}
+        		if(cust.getLastyearNewcustnum()!=null){
+        			map.put("pair", cust.getLastyearNewcustnum().toString());
+        		}else{
+					map.put("pair", null);
+				}
     		}else if(kind == 1){
-    			map.put("value", cust.getYearTranscustnum().toString());
+    			if(cust.getYearTranscustnum()!=null){
+    				map.put("value", cust.getYearTranscustnum().toString());
+    			}else{
+					map.put("value", null);
+				}
     		}else if(kind == 2){
-    			map.put("value", cust.getActCustnum().toString());
+    			if(cust.getActCustnum()!=null){
+    				map.put("value", cust.getActCustnum().toString());
+    			}else{
+					map.put("value", null);
+				}
     		}else if(kind == 3){
-    			map.put("value", cust.getVipNum().toString());
+    			if(cust.getVipNum()!=null){
+    				map.put("value", cust.getVipNum().toString());
+    			}else{
+					map.put("value", null);
+				}
     		}
         	wholeBottomList.add(map);
     	}
