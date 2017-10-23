@@ -82,7 +82,7 @@ public class HtyFctOrgCustDTOServiceImpl implements HtyFctOrgCustDTOService{
 	}
 
 	@Override
-	public int selectAvgHead(String yearMon) {
+	public Integer selectAvgHead(String yearMon) {
 		if (yearMon == null) {
             throw new IllegalArgumentException("yearMon id is null");
         }
@@ -92,7 +92,7 @@ public class HtyFctOrgCustDTOServiceImpl implements HtyFctOrgCustDTOService{
 	}
 
 	@Override
-	public int selectAvgBrach(String userId, String yearMon) {
+	public Integer selectAvgBrach(String userId, String yearMon) {
 		if (userId == null) {
             throw new IllegalArgumentException("userId id is null");
         }

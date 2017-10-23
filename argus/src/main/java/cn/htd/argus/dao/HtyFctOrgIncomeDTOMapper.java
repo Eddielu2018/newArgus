@@ -15,9 +15,9 @@ public interface HtyFctOrgIncomeDTOMapper {
     
     List<HtyFctOrgIncomeDTO> selectYear(HtyFctOrgIncomeDTO model);
     
-    int selectSortNumForHead(HtyFctOrgIncomeDTO model);
+    Integer selectSortNumForHead(HtyFctOrgIncomeDTO model);
     
-    int selectSortNumForBranch(HtyFctOrgIncomeDTO model);
+    Integer selectSortNumForBranch(HtyFctOrgIncomeDTO model);
     
     BigDecimal selectAvgHead(HtyFctOrgIncomeDTO model);
     

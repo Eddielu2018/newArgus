@@ -4,15 +4,15 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class HtyFctOrgAvgDTO {
-	private int sortNum;
+	private Integer sortNum;
 	private BigDecimal companyNow;
 	private BigDecimal headAvg;
 	private BigDecimal brachAvg;
 	private List<CompanySortDTO> companyList;
-	public int getSortNum() {
+	public Integer getSortNum() {
 		return sortNum;
 	}
-	public void setSortNum(int sortNum) {
+	public void setSortNum(Integer sortNum) {
 		this.sortNum = sortNum;
 	}
 	public BigDecimal getCompanyNow() {

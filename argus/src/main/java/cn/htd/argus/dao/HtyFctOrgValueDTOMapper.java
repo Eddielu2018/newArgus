@@ -11,7 +11,7 @@ public interface HtyFctOrgValueDTOMapper {
 
     HtyFctOrgValueDTO selectByOrgCode(HtyFctOrgValueDTO model);
     
-    int selectSortNumForHead(HtyFctOrgValueDTO model);
+    Integer selectSortNumForHead(HtyFctOrgValueDTO model);
     
-    int selectSortNumForBranch(HtyFctOrgValueDTO model);
+    Integer selectSortNumForBranch(HtyFctOrgValueDTO model);
 }
