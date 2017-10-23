@@ -112,7 +112,7 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
                 //1销售额
                 dto.setXsAmt(i.getXsAmt());
                 if(i.getOrgNum().intValue() >0){
-                    dto.setXsAmtXz(ArithUtil.div(i.getXsAmt().doubleValue(), i.getOrgNum().doubleValue(), 2));
+                    dto.setXsAmtXz(ArithUtil.div(i.getXsAmtXz().doubleValue(), i.getOrgNum().doubleValue(), 2));
                 }else{
                     dto.setXsAmtXz(null);
                 }

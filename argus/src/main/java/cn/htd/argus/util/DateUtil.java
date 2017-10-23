@@ -63,7 +63,7 @@ public class DateUtil {
 		Integer j = 0;
 		try {
 
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 			Calendar bef = Calendar.getInstance();
 			Calendar aft = Calendar.getInstance();
 			try {
@@ -90,7 +90,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String dateFormat(String datetime, Integer month) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 		Date date = null;
 		try {
 			date = sdf.parse(datetime);
@@ -105,7 +105,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 把yyyy-MM格式时间转换成yyyyMM
+	 * 把yyyy-MM-dd格式时间转换成yyyyMMdd、、
 	 *
 	 * @param pattern
 	 */
