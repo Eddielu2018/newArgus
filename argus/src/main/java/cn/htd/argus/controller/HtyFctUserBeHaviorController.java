@@ -58,7 +58,6 @@ public class HtyFctUserBeHaviorController {
 	 */
 	@RequestMapping("/behavior/whole")
 	public RestResult HtyFctUserBeHavior(
-			@RequestParam(value = "period", required = false) String period,
 			@RequestParam(value = "startTime", required = false) String startTime,
 			@RequestParam(value = "endTime", required = false) String endTime,
 			@RequestParam(value = "countryName", required = false) String countryName,
@@ -80,9 +79,6 @@ public class HtyFctUserBeHaviorController {
             }
 			if (StringUtils.isNotEmpty(endTime)) {
 				htyFctUserBeHaviorSearchDTO.setEndTime(endTime);
-            }
-			if (StringUtils.isNotEmpty(period)) {
-				htyFctUserBeHaviorSearchDTO.setPeriod(period);
             }
 			if (StringUtils.isNotEmpty(countryName)) {
 				htyFctUserBeHaviorSearchDTO.setCountryName(countryName);
