@@ -1,0 +1,21 @@
+package cn.htd.argus.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.htd.argus.bean.HtyFctUserBeHaviorSearchDTO;
+import cn.htd.argus.dao.HtyFctXwB2bLndPageDTOMapper;
+import cn.htd.argus.dto.HtyFctXwB2bLndPageDTO;
+import cn.htd.argus.service.HtyFctXwB2bLndPageDTOService;
+
+public class HtyFctXwB2bLndPageDTOServiceImpl implements HtyFctXwB2bLndPageDTOService{
+	@Autowired
+	private HtyFctXwB2bLndPageDTOMapper htyFctXwB2bLndPageDTOMDao;
+
+	@Override
+	public List<HtyFctXwB2bLndPageDTO> queryAllAccessQty(
+			HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+		return htyFctXwB2bLndPageDTOMDao.queryAllAccessQty(htyFctUserBeHaviorSearchDTO);
+	}
+}
