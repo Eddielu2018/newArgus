@@ -2,12 +2,12 @@ package cn.htd.argus.bean;
 
 public class CompanySortDTO {
 
-	private int sortNum;
+	private Integer sortNum;
 	private String companyName;
-	public int getSortNum() {
+	public Integer getSortNum() {
 		return sortNum;
 	}
-	public void setSortNum(int sortNum) {
+	public void setSortNum(Integer sortNum) {
 		this.sortNum = sortNum;
 	}
 	public String getCompanyName() {

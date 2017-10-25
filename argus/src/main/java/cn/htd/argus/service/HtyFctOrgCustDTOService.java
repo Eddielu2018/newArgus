@@ -21,9 +21,9 @@ public interface HtyFctOrgCustDTOService {
     
     HtyFctOrgSortDTO selectSort(String userId,String yearMon);
     
-    int selectAvgHead(String yearMon);
+    Integer selectAvgHead(String yearMon);
     
-    int selectAvgBrach(String userId,String yearMon);
+    Integer selectAvgBrach(String userId,String yearMon);
     
     List<CompanySortDTO> selectCompanySortHead(String yearMon);
     

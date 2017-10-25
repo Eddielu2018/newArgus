@@ -115,7 +115,7 @@
     where YEAR_MON like CONCAT(#{yearMon},'%') and ORG_CODE = #{orgCode} order by YEAR_MON ASC
   </select>
   
-  <select id="selectSortNumForHead" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+  <select id="selectSortNumForHead" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
     select u.rowNo from (  
 	select ORG_CODE,YEAR_AMT,YEAR_MON,(@rowNum:=@rowNum+1) as rowNo  
 	from hty_fct_org_sale,  
@@ -123,7 +123,7 @@
 	order by hty_fct_org_sale.YEAR_AMT desc ) u where u.ORG_CODE = #{orgCode} 
   </select>
   
-  <select id="selectSortNumForBranch" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+  <select id="selectSortNumForBranch" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
    select u.rowNo from (  
 	select t.ORG_CODE,t.YEAR_AMT,t.YEAR_MON,(@rowNum:=@rowNum+1) as rowNo from (  
 	select ORG_CODE,YEAR_AMT,YEAR_MON 

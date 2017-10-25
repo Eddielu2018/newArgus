@@ -5,23 +5,23 @@ import java.util.List;
 
 public class HtyFctOrgSaleAvgDTO {
 
-	private int headSort;
-	private int brachSort;
+	private Integer headSort;
+	private Integer brachSort;
 	private BigDecimal salePrice;
 	private BigDecimal headAvgPrice;
 	private BigDecimal brachAvgPrice;
 	private List<CompanySortDTO> headCompany;
 	private List<CompanySortDTO> brachCompany;
-	public int getHeadSort() {
+	public Integer getHeadSort() {
 		return headSort;
 	}
-	public void setHeadSort(int headSort) {
+	public void setHeadSort(Integer headSort) {
 		this.headSort = headSort;
 	}
-	public int getBrachSort() {
+	public Integer getBrachSort() {
 		return brachSort;
 	}
-	public void setBrachSort(int brachSort) {
+	public void setBrachSort(Integer brachSort) {
 		this.brachSort = brachSort;
 	}
 	public BigDecimal getSalePrice() {

@@ -2,60 +2,60 @@ package cn.htd.argus.bean;
 
 public class HtyFctOrgSortDTO {
 
-	private int valueHead;
-	private int valueBranch;
-	private int incomeHead;
-	private int incomeBrach;
-	private int saleHead;
-	private int saleBrach;
-	private int memeberHead;
-	private int memeberBrach;
-	public int getValueHead() {
+	private Integer valueHead;
+	private Integer valueBranch;
+	private Integer incomeHead;
+	private Integer incomeBrach;
+	private Integer saleHead;
+	private Integer saleBrach;
+	private Integer memeberHead;
+	private Integer memeberBrach;
+	public Integer getValueHead() {
 		return valueHead;
 	}
-	public void setValueHead(int valueHead) {
+	public void setValueHead(Integer valueHead) {
 		this.valueHead = valueHead;
 	}
-	public int getValueBranch() {
+	public Integer getValueBranch() {
 		return valueBranch;
 	}
-	public void setValueBranch(int valueBranch) {
+	public void setValueBranch(Integer valueBranch) {
 		this.valueBranch = valueBranch;
 	}
-	public int getIncomeHead() {
+	public Integer getIncomeHead() {
 		return incomeHead;
 	}
-	public void setIncomeHead(int incomeHead) {
+	public void setIncomeHead(Integer incomeHead) {
 		this.incomeHead = incomeHead;
 	}
-	public int getIncomeBrach() {
+	public Integer getIncomeBrach() {
 		return incomeBrach;
 	}
-	public void setIncomeBrach(int incomeBrach) {
+	public void setIncomeBrach(Integer incomeBrach) {
 		this.incomeBrach = incomeBrach;
 	}
-	public int getSaleHead() {
+	public Integer getSaleHead() {
 		return saleHead;
 	}
-	public void setSaleHead(int saleHead) {
+	public void setSaleHead(Integer saleHead) {
 		this.saleHead = saleHead;
 	}
-	public int getSaleBrach() {
+	public Integer getSaleBrach() {
 		return saleBrach;
 	}
-	public void setSaleBrach(int saleBrach) {
+	public void setSaleBrach(Integer saleBrach) {
 		this.saleBrach = saleBrach;
 	}
-	public int getMemeberHead() {
+	public Integer getMemeberHead() {
 		return memeberHead;
 	}
-	public void setMemeberHead(int memeberHead) {
+	public void setMemeberHead(Integer memeberHead) {
 		this.memeberHead = memeberHead;
 	}
-	public int getMemeberBrach() {
+	public Integer getMemeberBrach() {
 		return memeberBrach;
 	}
-	public void setMemeberBrach(int memeberBrach) {
+	public void setMemeberBrach(Integer memeberBrach) {
 		this.memeberBrach = memeberBrach;
 	}
 	

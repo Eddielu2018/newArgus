@@ -89,7 +89,7 @@
     where YEAR_MON like CONCAT(#{yearMon},'%') and ORG_CODE = #{orgCode} order by YEAR_MON ASC
   </select>
   
-  <select id="selectSortNumForHead" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgCustDTO" >
+  <select id="selectSortNumForHead" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgCustDTO" >
     select u.rowNo from (  
 	select ORG_CODE,YEAR_NEWCUSTNUM,YEAR_MON,(@rowNum:=@rowNum+1) as rowNo  
 	from hty_fct_org_cust,  
@@ -97,7 +97,7 @@
 	order by hty_fct_org_cust.YEAR_NEWCUSTNUM desc ) u where u.ORG_CODE = #{orgCode}
   </select>
   
-  <select id="selectSortNumForBranch" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgCustDTO" >
+  <select id="selectSortNumForBranch" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgCustDTO" >
    select u.rowNo from (  
 	select t.ORG_CODE,t.YEAR_NEWCUSTNUM,t.YEAR_MON,(@rowNum:=@rowNum+1) as rowNo from (  
 	select ORG_CODE,YEAR_NEWCUSTNUM,YEAR_MON 
@@ -109,11 +109,11 @@
 	) u where u.ORG_CODE = #{orgCode}
   </select>
   
-  <select id="selectAvgHead" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+  <select id="selectAvgHead" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
    SELECT cast(avg(YEAR_NEWCUSTNUM) as decimal(20,2)) as avgNum FROM hty_fct_org_cust where YEAR_MON=#{yearMon}
   </select>
   
-  <select id="selectAvgBrach" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+  <select id="selectAvgBrach" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
    SELECT cast(avg(YEAR_NEWCUSTNUM) as decimal(20,2)) as avgNum FROM hty_fct_org_cust where YEAR_MON=#{yearMon} 
    and ORG_CODE in (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
 	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE=#{orgCode}))

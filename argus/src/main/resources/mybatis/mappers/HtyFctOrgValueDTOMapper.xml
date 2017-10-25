@@ -73,7 +73,7 @@
     </where>
   </select>
   
-  <select id="selectSortNumForHead" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
+  <select id="selectSortNumForHead" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
     select u.rowNo from (  
 	select ORG_CODE,PTGZ,YEARMON,(@rowNum:=@rowNum+1) as rowNo  
 	from hty_fct_org_value,  
@@ -81,7 +81,7 @@
 	order by hty_fct_org_value.PTGZ desc ) u where u.ORG_CODE = #{orgCode}
   </select>
   
-  <select id="selectSortNumForBranch" resultType="int" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
+  <select id="selectSortNumForBranch" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
    select u.rowNo from (  
 	select t.ORG_CODE,t.PTGZ,t.YEARMON,(@rowNum:=@rowNum+1) as rowNo from (  
 	select ORG_CODE,PTGZ,YEARMON 

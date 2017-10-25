@@ -5,36 +5,24 @@ import java.util.List;
 
 public class HtyFctOrgBusinessAvgDTO {
 
-	private int headSort;
-	private int brachSort;
+	private Integer headSort;
+	private Integer brachSort;
 	private BigDecimal businessIncome;
 	private BigDecimal headAvgIncome;
 	private BigDecimal brachAvgIncome;
 	private List<CompanySortDTO> headCompany;
 	private List<CompanySortDTO> brachCompany;
-	public int getHeadSort() {
+	public Integer getHeadSort() {
 		return headSort;
 	}
-	public void setHeadSort(int headSort) {
+	public void setHeadSort(Integer headSort) {
 		this.headSort = headSort;
 	}
-	public int getBrachSort() {
+	public Integer getBrachSort() {
 		return brachSort;
 	}
-	public void setBrachSort(int brachSort) {
+	public void setBrachSort(Integer brachSort) {
 		this.brachSort = brachSort;
-	}
-	public List<CompanySortDTO> getHeadCompany() {
-		return headCompany;
-	}
-	public void setHeadCompany(List<CompanySortDTO> headCompany) {
-		this.headCompany = headCompany;
-	}
-	public List<CompanySortDTO> getBrachCompany() {
-		return brachCompany;
-	}
-	public void setBrachCompany(List<CompanySortDTO> brachCompany) {
-		this.brachCompany = brachCompany;
 	}
 	public BigDecimal getBusinessIncome() {
 		return businessIncome;
@@ -53,6 +41,18 @@ public class HtyFctOrgBusinessAvgDTO {
 	}
 	public void setBrachAvgIncome(BigDecimal brachAvgIncome) {
 		this.brachAvgIncome = brachAvgIncome;
+	}
+	public List<CompanySortDTO> getHeadCompany() {
+		return headCompany;
+	}
+	public void setHeadCompany(List<CompanySortDTO> headCompany) {
+		this.headCompany = headCompany;
+	}
+	public List<CompanySortDTO> getBrachCompany() {
+		return brachCompany;
+	}
+	public void setBrachCompany(List<CompanySortDTO> brachCompany) {
+		this.brachCompany = brachCompany;
 	}
 	
 }
