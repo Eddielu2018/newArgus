@@ -53,7 +53,10 @@
 	</sql>
 	<!--单品的访问数量 -->
 	<select id="queryOneItemAccessQty" resultMap="BaseResultMap">
-		select ITEM_ID,ACCESS_QTY from hty_fct_xw_b2b_item_access
+		select
+        /*ITEM_ID,ACCESS_QTY */
+        <include refid="Base_Column_List"/>
+        from hty_fct_xw_b2b_item_access
 		<include refid="where" />
 		group by ITEM_ID,ACCESS_QTY
 		order by ACCESS_QTY DESC limit 10

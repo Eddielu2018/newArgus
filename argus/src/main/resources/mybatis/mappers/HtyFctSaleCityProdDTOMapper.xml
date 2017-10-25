@@ -28,10 +28,6 @@
 	</sql>
 	<sql id="where">
 		<where>
-			<!--<if-->
-				<!--test="htyUserBeHaviorSearchDTO.period !=null and htyUserBeHaviorSearchDTO.period !=''">-->
-				<!--and DATE_KEY =#{htyUserBeHaviorSearchDTO.period}-->
-			<!--</if>-->
 			<if
 				test="htyUserBeHaviorSearchDTO.countryName !=null and htyUserBeHaviorSearchDTO.countryName !=''">
 				and CUST_COUNTRYNAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.countryName},'%')
@@ -60,7 +56,10 @@
 	</sql>
 	<!--成交单品数量 -->
 	<select id="querySaleOutItemNum" resultMap="BaseResultMap">
-		select PROD_NAME,XS_QTY from hty_fct_sale_city_prod
+		select
+       /* PROD_NAME,XS_QTY */
+        <include refid="Base_Column_List"/>
+        from hty_fct_sale_city_prod
 		<include refid="where" />
 		group by PROD_CODE,XS_QTY
 		order by XS_QTY DESC limit 10

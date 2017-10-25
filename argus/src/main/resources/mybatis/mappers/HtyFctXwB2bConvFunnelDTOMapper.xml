@@ -44,13 +44,19 @@
 	</sql>
   <!--用户购买漏斗  -->
   <select id="queryStepSequenceNum" resultMap="BaseResultMap" resultType="cn.htd.argus.dto.HtyFctXwB2bConvFunnelDTO">
-  	  select DISTINCT STEP_SEQUENCE,CUST_ID, STEP_NAME from hty_fct_xw_b2b_conv_funnel
+  	  select
+      DISTINCT STEP_SEQUENCE,
+      ID,DATE_KEY,STEP_NAME,CUST_ID,COUNTRY_NAME,PROVINCE_NAME,CITY_NAME,ETL_DATE,ETL_TIME
+      from hty_fct_xw_b2b_conv_funnel
   	  <include refid="where" />
   	  group by STEP_NAME,STEP_SEQUENCE order by  STEP_SEQUENCE DESC
   </select>
   <!--客户的复购  支付成功后隔一天再购买-->
   <select id="queryByPaySuccessNextDay" resultMap="BaseResultMap" >
-    select DISTINCT STEP_SEQUENCE,CUST_ID,STEP_NAME from hty_fct_xw_b2b_conv_funnel
+    select
+    DISTINCT STEP_SEQUENCE,
+    ID,DATE_KEY,STEP_NAME,CUST_ID,COUNTRY_NAME,PROVINCE_NAME,CITY_NAME,ETL_DATE,ETL_TIME
+    from hty_fct_xw_b2b_conv_funnel
     where STEP_SEQUENCE=4
     group by CUST_ID,STEP_NAME,STEP_SEQUENCE
     HAVING count(DISTINCT DATE_KEY)>1 order by CUST_ID DESC limit 10
