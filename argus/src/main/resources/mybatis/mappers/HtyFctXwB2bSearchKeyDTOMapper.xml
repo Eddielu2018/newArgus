@@ -48,6 +48,6 @@
 		from hty_fct_xw_b2b_search_key
 		<include refid="where" />
 		group by SEARCH_KEYWORD,SEARCH_QTY
-		order by SEARCH_QTY DESC
+		order by SEARCH_QTY DESC limit 10
 	</select>
 </mapper>
