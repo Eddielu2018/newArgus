@@ -55,6 +55,6 @@
     from hty_fct_xw_b2b_conv_funnel
     where STEP_SEQUENCE=4
     group by CUST_ID,STEP_NAME,STEP_SEQUENCE
-    HAVING count(DISTINCT DATE_KEY)>1 order by CUST_ID DESC limit 10
+    HAVING count(DISTINCT DATE_KEY)>1 order by CUST_ID DESC
   </select>
 </mapper>

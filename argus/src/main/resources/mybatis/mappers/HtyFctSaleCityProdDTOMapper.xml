@@ -54,6 +54,6 @@
         from hty_fct_sale_city_prod
 		<include refid="where" />
 		group by PROD_CODE,XS_QTY
-		order by XS_QTY DESC limit 10
+		order by XS_QTY DESC
 	</select>
 </mapper>

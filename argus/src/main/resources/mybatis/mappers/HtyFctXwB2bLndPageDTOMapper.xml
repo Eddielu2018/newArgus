@@ -56,6 +56,6 @@
         from hty_fct_xw_b2b_lnd_page
 		<include refid="where" />
 		group by PAGE_TITLE,ACCESS_QTY
-		order by ACCESS_QTY DESC limit 10
+		order by ACCESS_QTY DESC
 	</select>
 </mapper>
