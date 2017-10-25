@@ -110,7 +110,7 @@ public class HtyFctUserBeHaviorController {
 			userBeHaviorSearchDTO.setHtyFctXwB2bConvFunnelDTO(htyFctXwB2bConvFunnelDTO);
 			// 2重复购买
 			List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTORepeatBuy = htyFctXwB2bConvFunnelDTOService
-					.queryByPaySuccessNextDay();
+					.queryByPaySuccessNextDay(htyFctUserBeHaviorSearchDTO);
 			userBeHaviorSearchDTO.setHtyFctXwB2bConvFunnelDTORepeatBuy(htyFctXwB2bConvFunnelDTORepeatBuy);
 			// 成交单品
 			List<HtyFctSaleCityProdDTO> htyFctSaleCityProdDTO = htyFctSaleCityProdDTOService

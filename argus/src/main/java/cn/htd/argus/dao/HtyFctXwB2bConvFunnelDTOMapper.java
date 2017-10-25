@@ -15,5 +15,5 @@ public interface HtyFctXwB2bConvFunnelDTOMapper {
 	//购买漏斗转化
 	List<HtyFctXwB2bConvFunnelDTO> queryStepSequenceNum(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
 	//复购
-	List<HtyFctXwB2bConvFunnelDTO> queryByPaySuccessNextDay();
+	List<HtyFctXwB2bConvFunnelDTO> queryByPaySuccessNextDay(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
 }
