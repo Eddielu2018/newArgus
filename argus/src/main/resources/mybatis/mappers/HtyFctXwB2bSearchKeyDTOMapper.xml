@@ -44,7 +44,6 @@
 	</sql>
 	<select id="queryAllSearchKeyWord" resultMap="BaseResultMap">
 		select
-        /*SEARCH_KEYWORD,SEARCH_QTY,CITY_NAME,DATE_KEY */
         <include refid="Base_Column_List"/>
 		from hty_fct_xw_b2b_search_key
 		<include refid="where" />

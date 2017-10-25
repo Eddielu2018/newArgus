@@ -52,7 +52,6 @@
 	<!--落地页面的访问数量的查询 -->
 	<select id="queryAllAccessQty" resultMap="BaseResultMap">
 		select
-       /* PAGE_TITLE,ACCESS_QTY */
         <include refid="Base_Column_List"/>
         from hty_fct_xw_b2b_lnd_page
 		<include refid="where" />

@@ -23,33 +23,26 @@
 		<result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID,DATE_KEY,CUST_PRONAME,CUST_CITYNAME,CUST_COUNTRYNAME,CUST_TOWNNAME,PL_CODE,PL_NAME,PP_CODE,PP_NAME
-		,PROD_CODE,PROD_NAME,XS_AMT,XS_QTY,ETL_DATE,ETL_TIME
+        ID,DATE_KEY,CUST_PRONAME,CUST_CITYNAME,CUST_COUNTRYNAME,CUST_TOWNNAME,PL_CODE,PL_NAME,PP_CODE,PP_NAME,PROD_CODE,PROD_NAME,XS_AMT,XS_QTY,ETL_DATE,ETL_TIME
 	</sql>
 	<sql id="where">
 		<where>
-			<if
-				test="htyUserBeHaviorSearchDTO.countryName !=null and htyUserBeHaviorSearchDTO.countryName !=''">
+			<if test="htyUserBeHaviorSearchDTO.countryName !=null and htyUserBeHaviorSearchDTO.countryName !=''">
 				and CUST_COUNTRYNAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.countryName},'%')
 			</if>
-			<if
-				test="htyUserBeHaviorSearchDTO.provinceName!=null and htyUserBeHaviorSearchDTO.provinceName !=''">
+			<if test="htyUserBeHaviorSearchDTO.provinceName!=null and htyUserBeHaviorSearchDTO.provinceName !=''">
 				and CUST_PRONAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.provinceName},'%')
 			</if>
-			<if
-				test="htyUserBeHaviorSearchDTO.cityName !=null and htyUserBeHaviorSearchDTO.cityName !=''">
+			<if test="htyUserBeHaviorSearchDTO.cityName !=null and htyUserBeHaviorSearchDTO.cityName !=''">
 				and CUST_CITYNAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.cityName},'%')
             </if>
-            <if
-                    test="htyUserBeHaviorSearchDTO.townName !=null and htyUserBeHaviorSearchDTO.townName !=''">
+            <if test="htyUserBeHaviorSearchDTO.townName !=null and htyUserBeHaviorSearchDTO.townName !=''">
                 and CUST_TOWNNAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.townName},'%')
             </if>
-
             <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
                 <![CDATA[or DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
             </if>
-			<if
-				test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+			<if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
 			 	<![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
 		</where>
@@ -57,7 +50,6 @@
 	<!--成交单品数量 -->
 	<select id="querySaleOutItemNum" resultMap="BaseResultMap">
 		select
-       /* PROD_NAME,XS_QTY */
         <include refid="Base_Column_List"/>
         from hty_fct_sale_city_prod
 		<include refid="where" />
