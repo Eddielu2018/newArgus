@@ -27,8 +27,8 @@
 	</sql>
 	<sql id="where">
 		<where>
-			<if test="htyUserBeHaviorSearchDTO.countryName !=null and htyUserBeHaviorSearchDTO.countryName !=''">
-				and CUST_COUNTRYNAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.countryName},'%')
+			<if test="htyUserBeHaviorSearchDTO.custCountryName !=null and htyUserBeHaviorSearchDTO.custCountryName !=''">
+				and CUST_COUNTRYNAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.custCountryName},'%')
 			</if>
 			<if test="htyUserBeHaviorSearchDTO.provinceName!=null and htyUserBeHaviorSearchDTO.provinceName !=''">
 				and CUST_PRONAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.provinceName},'%')

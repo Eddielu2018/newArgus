@@ -63,7 +63,8 @@ public class HtyFctUserBeHaviorController {
 			@RequestParam(value = "countryName", required = false) String countryName,
 			@RequestParam(value = "provinceName", required = false) String provinceName,
 			@RequestParam(value = "cityName", required = false) String cityName,
-            @RequestParam(value = "townName", required = false) String townName
+            @RequestParam(value = "townName", required = false) String townName,
+            @RequestParam(value = "custCountryName", required = false) String custCountryName
     ) {
 		RestResult result = new RestResult();
 		try {
@@ -91,6 +92,8 @@ public class HtyFctUserBeHaviorController {
             }
             if (StringUtils.isNotEmpty(townName)) {
                 htyFctUserBeHaviorSearchDTO.setTownName(townName);}
+            if (StringUtils.isNotEmpty(custCountryName)) {
+                htyFctUserBeHaviorSearchDTO.setCustCountryName(custCountryName);}
 			// 关键词搜索
 			List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTO = htyFctXwB2bSearchKeyDTOService
 					.queryAllSearchKeyWord(htyFctUserBeHaviorSearchDTO);

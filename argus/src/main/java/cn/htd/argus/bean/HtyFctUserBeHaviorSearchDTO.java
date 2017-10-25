@@ -9,6 +9,7 @@ public class HtyFctUserBeHaviorSearchDTO {
 	private String countryName;// 地理范围 国家
     private String provinceName;// 省
     private String cityName;// 城市
+    private  String custCountryName;//区
     private String townName;
     private String plCode;
     private String plName;
@@ -18,6 +19,15 @@ public class HtyFctUserBeHaviorSearchDTO {
     private String prodName;
     private BigDecimal xsAmt;
     private BigDecimal xsQty;
+
+    public String getCustCountryName() {
+        return custCountryName;
+    }
+
+    public void setCustCountryName(String custCountryName) {
+        this.custCountryName = custCountryName;
+    }
+
     public void setTownName(String townName) {
         this.townName = townName;
     }
