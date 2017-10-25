@@ -20,10 +20,10 @@
 	</sql>
 	<sql id="where">
 		<where>
-			<if
-				test="htyUserBeHaviorSearchDTO.period !=null and htyUserBeHaviorSearchDTO.period !=''">
-				and DATE_KEY =#{htyUserBeHaviorSearchDTO.period}
-			</if>
+			<!--<if-->
+				<!--test="htyUserBeHaviorSearchDTO.period !=null and htyUserBeHaviorSearchDTO.period !=''">-->
+				<!--and DATE_KEY =#{htyUserBeHaviorSearchDTO.period}-->
+			<!--</if>-->
 			<if
 				test="htyUserBeHaviorSearchDTO.countryName !=null and htyUserBeHaviorSearchDTO.countryName !=''">
 				and COUNTRY_NAME=#{htyUserBeHaviorSearchDTO.countryName}

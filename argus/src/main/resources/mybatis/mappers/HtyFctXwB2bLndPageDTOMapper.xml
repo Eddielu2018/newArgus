@@ -23,10 +23,10 @@
 				test="htyUserBeHaviorSearchDTO.b2bShopOrSupperBossId !=null and htyUserBeHaviorSearchDTO.b2bShopOrSupperBossId !=''">
 				and ID={htyUserBeHaviorSearchDTO.b2bShopOrSupperBossId}
 			</if> -->
-			<if
-				test="htyUserBeHaviorSearchDTO.period !=null and htyUserBeHaviorSearchDTO.period !=''">
-				and DATE_KEY =#{htyUserBeHaviorSearchDTO.period}
-			</if>
+			<!--<if-->
+				<!--test="htyUserBeHaviorSearchDTO.period !=null and htyUserBeHaviorSearchDTO.period !=''">-->
+				<!--and DATE_KEY =#{htyUserBeHaviorSearchDTO.period}-->
+			<!--</if>-->
 			<if
 				test="htyUserBeHaviorSearchDTO.countryName !=null and htyUserBeHaviorSearchDTO.countryName !=''">
 				and COUNTRY_NAME=#{htyUserBeHaviorSearchDTO.countryName}
