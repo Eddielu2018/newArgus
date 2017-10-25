@@ -47,6 +47,6 @@
         from hty_fct_xw_b2b_item_access
 		<include refid="where" />
 		group by ITEM_ID,ACCESS_QTY
-		order by ACCESS_QTY DESC limit
+		order by ACCESS_QTY DESC limit 10
 	</select>
 </mapper>
