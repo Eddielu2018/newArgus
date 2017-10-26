@@ -58,13 +58,13 @@ public class HtyFctUserBeHaviorController {
 	 */
 	@RequestMapping("/behavior/whole")
 	public RestResult HtyFctUserBeHavior(
-			@RequestParam(value = "period", required = false) String period,
 			@RequestParam(value = "startTime", required = false) String startTime,
 			@RequestParam(value = "endTime", required = false) String endTime,
 			@RequestParam(value = "countryName", required = false) String countryName,
 			@RequestParam(value = "provinceName", required = false) String provinceName,
 			@RequestParam(value = "cityName", required = false) String cityName,
-            @RequestParam(value = "townName", required = false) String townName
+            @RequestParam(value = "townName", required = false) String townName,
+            @RequestParam(value = "custCountryName", required = false) String custCountryName
     ) {
 		RestResult result = new RestResult();
 		try {
@@ -81,9 +81,6 @@ public class HtyFctUserBeHaviorController {
 			if (StringUtils.isNotEmpty(endTime)) {
 				htyFctUserBeHaviorSearchDTO.setEndTime(endTime);
             }
-			if (StringUtils.isNotEmpty(period)) {
-				htyFctUserBeHaviorSearchDTO.setPeriod(period);
-            }
 			if (StringUtils.isNotEmpty(countryName)) {
 				htyFctUserBeHaviorSearchDTO.setCountryName(countryName);
             }
@@ -95,6 +92,8 @@ public class HtyFctUserBeHaviorController {
             }
             if (StringUtils.isNotEmpty(townName)) {
                 htyFctUserBeHaviorSearchDTO.setTownName(townName);}
+            if (StringUtils.isNotEmpty(custCountryName)) {
+                htyFctUserBeHaviorSearchDTO.setCustCountryName(custCountryName);}
 			// 关键词搜索
 			List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTO = htyFctXwB2bSearchKeyDTOService
 					.queryAllSearchKeyWord(htyFctUserBeHaviorSearchDTO);
@@ -114,7 +113,7 @@ public class HtyFctUserBeHaviorController {
 			userBeHaviorSearchDTO.setHtyFctXwB2bConvFunnelDTO(htyFctXwB2bConvFunnelDTO);
 			// 2重复购买
 			List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTORepeatBuy = htyFctXwB2bConvFunnelDTOService
-					.queryByPaySuccessNextDay();
+					.queryByPaySuccessNextDay(htyFctUserBeHaviorSearchDTO);
 			userBeHaviorSearchDTO.setHtyFctXwB2bConvFunnelDTORepeatBuy(htyFctXwB2bConvFunnelDTORepeatBuy);
 			// 成交单品
 			List<HtyFctSaleCityProdDTO> htyFctSaleCityProdDTO = htyFctSaleCityProdDTOService

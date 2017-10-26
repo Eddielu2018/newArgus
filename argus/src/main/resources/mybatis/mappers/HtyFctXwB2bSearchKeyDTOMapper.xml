@@ -21,10 +21,6 @@
 	<sql id="where">
 		<where>
 			<if
-				test="htyUserBeHaviorSearchDTO.period !=null and htyUserBeHaviorSearchDTO.period !=''">
-				and DATE_KEY =#{htyUserBeHaviorSearchDTO.period}
-			</if>
-			<if
 				test="htyUserBeHaviorSearchDTO.countryName !=null and htyUserBeHaviorSearchDTO.countryName !=''">
 				and COUNTRY_NAME=#{htyUserBeHaviorSearchDTO.countryName}
 			</if>
@@ -38,7 +34,7 @@
 			</if>
 			<if
 				test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
-				<![CDATA[or DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+				<![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
 			</if>
 			<if
 				test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
@@ -47,7 +43,9 @@
 		</where>
 	</sql>
 	<select id="queryAllSearchKeyWord" resultMap="BaseResultMap">
-		select SEARCH_KEYWORD,SEARCH_QTY,CITY_NAME,DATE_KEY from hty_fct_xw_b2b_search_key
+		select
+        <include refid="Base_Column_List"/>
+		from hty_fct_xw_b2b_search_key
 		<include refid="where" />
 		group by SEARCH_KEYWORD,SEARCH_QTY
 		order by SEARCH_QTY DESC limit 10

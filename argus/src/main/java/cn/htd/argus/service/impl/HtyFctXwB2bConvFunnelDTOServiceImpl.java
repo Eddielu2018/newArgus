@@ -13,14 +13,14 @@ public class HtyFctXwB2bConvFunnelDTOServiceImpl implements HtyFctXwB2bConvFunne
 	@Autowired
 	private HtyFctXwB2bConvFunnelDTOMapper htyFctXwB2bConvFunnelDTOMapperDao;
 
-	@Override
+    @Override
+    public List<HtyFctXwB2bConvFunnelDTO> queryByPaySuccessNextDay(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+        return htyFctXwB2bConvFunnelDTOMapperDao.queryByPaySuccessNextDay(htyFctUserBeHaviorSearchDTO);
+    }
+
+    @Override
 	public List<HtyFctXwB2bConvFunnelDTO> queryStepSequenceNum(
 			HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
 		return htyFctXwB2bConvFunnelDTOMapperDao.queryStepSequenceNum(htyFctUserBeHaviorSearchDTO);
-	}
-
-	@Override
-	public List<HtyFctXwB2bConvFunnelDTO> queryByPaySuccessNextDay() {
-		return htyFctXwB2bConvFunnelDTOMapperDao.queryByPaySuccessNextDay();
 	}
 }

@@ -18,14 +18,6 @@
 	</sql>
 	<sql id="where">
 		<where>
-			<!-- <if
-				test="htyUserBeHaviorSearchDTO.b2bShopOrSupperBossId !=null and htyUserBeHaviorSearchDTO.b2bShopOrSupperBossId !=''">
-				and ID={htyUserBeHaviorSearchDTO.b2bShopOrSupperBossId}
-			</if> -->
-			<if
-				test="htyUserBeHaviorSearchDTO.period !=null and htyUserBeHaviorSearchDTO.period !=''">
-				and DATE_KEY =#{htyUserBeHaviorSearchDTO.period}
-			</if>
 			<if
 				test="htyUserBeHaviorSearchDTO.countryName !=null and htyUserBeHaviorSearchDTO.countryName !=''">
 				and COUNTRY_NAME=#{htyUserBeHaviorSearchDTO.countryName}
@@ -40,20 +32,19 @@
 			</if>
 			<if
 				test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
-				<![CDATA[or DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+				<![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
 			</if>
 			<if
 				test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
 			 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
-			<!--单个单品的查询 -->
-			<!-- <if test="htyUserBeHaviorSearchDTO.itemId!=null and htyUserBeHaviorSearchDTO.itemId!=''"> 
-				and ITEM_ID=#{htyUserBeHaviorSearchDTO.itemId} </if> -->
 		</where>
 	</sql>
 	<!--单品的访问数量 -->
 	<select id="queryOneItemAccessQty" resultMap="BaseResultMap">
-		select ITEM_ID,ACCESS_QTY from hty_fct_xw_b2b_item_access
+		select
+        <include refid="Base_Column_List"/>
+        from hty_fct_xw_b2b_item_access
 		<include refid="where" />
 		group by ITEM_ID,ACCESS_QTY
 		order by ACCESS_QTY DESC limit 10
