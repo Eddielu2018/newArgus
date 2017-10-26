@@ -13,7 +13,4 @@ public interface HtyFctCustAllDTOMapper {
     
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
     
-    List<HtyFctCustAllDto> selectByTimePair(HtyFctCustInDto inDto);
-    
-    List<HtyFctCustAllDto> selectByTimeDimension(HtyFctCustInDto inDto);
 }
