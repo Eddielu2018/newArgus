@@ -6,7 +6,7 @@
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 	
-	<context:component-scan base-package="cn.htd"></context:component-scan>
+	<context:component-scan base-package="cn.htd" ></context:component-scan>
 
 	<bean id="dciDimOrgDTOService" class="cn.htd.argus.service.impl.DciDimOrgDTOServiceImpl"/>
 
@@ -22,9 +22,11 @@
 	<bean id="htyFctSaleOrgXzDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgXzDTOServiceImpl"/>
 	<bean id="htyFctSaleXzHotDTOService" class="cn.htd.argus.service.impl.HtyFctSaleXzHotDTOServiceImpl"/>
 	
-	<bean id="htyFctXwB2bSearchKeyDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bSearchKeyDTOServiceImpl" />
-	<bean id="htyFctXwB2bLndPageDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bLndPageDTOServiceImpl" />
-	<bean id="htyFctXwB2bItemAccessDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bItemAccessDTOServiceImpl" />
-	<bean id="htyFctXwB2bConvFunnelDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bConvFunnelDTOServiceImpl" />
-	<bean id="htyFctSaleCityProdDTOService" class="cn.htd.argus.service.impl.HtyFctSaleCityProdDTOServiceImpl" />
+	<bean id="htyFctXwB2bSearchKeyDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bSearchKeyDTOServiceImpl"/>
+	<bean id="htyFctXwB2bLndPageDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bLndPageDTOServiceImpl"/>
+	<bean id="htyFctXwB2bItemAccessDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bItemAccessDTOServiceImpl"/>
+	<bean id="htyFctXwB2bConvFunnelDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bConvFunnelDTOServiceImpl"/>
+	<bean id="htyFctSaleCityProdDTOService" class="cn.htd.argus.service.impl.HtyFctSaleCityProdDTOServiceImpl"/>
+	
+	<bean id="htyFctCustAllDTOService" class="cn.htd.argus.service.impl.HtyFctCustAllDTOServiceImpl"/>
 </beans>
