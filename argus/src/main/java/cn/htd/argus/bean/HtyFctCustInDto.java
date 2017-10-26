@@ -4,13 +4,11 @@ public class HtyFctCustInDto {
 	private String userId;
 	private String custStartTime;
 	private String custEndTime;
-	private String pairFirstTime;
-	private String pairSecondTime;
+	private String firstTime;
 	private Integer dimension;
-	private Integer pairFirstStart;
-	private Integer pairFirstEnd;
-	private Integer pairSecondEnd;
-	private Integer pairSecondStart;
+	private Integer start;
+	private Integer end;
+	private Integer kind;
 	public String getUserId() {
 		return userId;
 	}
@@ -29,46 +27,34 @@ public class HtyFctCustInDto {
 	public void setCustEndTime(String custEndTime) {
 		this.custEndTime = custEndTime;
 	}
-	public String getPairFirstTime() {
-		return pairFirstTime;
-	}
-	public void setPairFirstTime(String pairFirstTime) {
-		this.pairFirstTime = pairFirstTime;
-	}
-	public String getPairSecondTime() {
-		return pairSecondTime;
-	}
-	public void setPairSecondTime(String pairSecondTime) {
-		this.pairSecondTime = pairSecondTime;
-	}
 	public Integer getDimension() {
 		return dimension;
 	}
 	public void setDimension(Integer dimension) {
 		this.dimension = dimension;
 	}
-	public Integer getPairFirstStart() {
-		return pairFirstStart;
+	public String getFirstTime() {
+		return firstTime;
 	}
-	public void setPairFirstStart(Integer pairFirstStart) {
-		this.pairFirstStart = pairFirstStart;
+	public void setFirstTime(String firstTime) {
+		this.firstTime = firstTime;
 	}
-	public Integer getPairFirstEnd() {
-		return pairFirstEnd;
+	public Integer getStart() {
+		return start;
 	}
-	public void setPairFirstEnd(Integer pairFirstEnd) {
-		this.pairFirstEnd = pairFirstEnd;
+	public void setStart(Integer start) {
+		this.start = start;
 	}
-	public Integer getPairSecondEnd() {
-		return pairSecondEnd;
+	public Integer getEnd() {
+		return end;
 	}
-	public void setPairSecondEnd(Integer pairSecondEnd) {
-		this.pairSecondEnd = pairSecondEnd;
+	public void setEnd(Integer end) {
+		this.end = end;
 	}
-	public Integer getPairSecondStart() {
-		return pairSecondStart;
+	public Integer getKind() {
+		return kind;
 	}
-	public void setPairSecondStart(Integer pairSecondStart) {
-		this.pairSecondStart = pairSecondStart;
+	public void setKind(Integer kind) {
+		this.kind = kind;
 	}
 }

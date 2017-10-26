@@ -167,6 +167,91 @@
     	<if test="custEndTime != null">
         	and cust_rq &lt;= #{custEndTime}
     	</if>
+    	<if test="firstTime != null">
+        	and date_key = #{firstTime}
+    	</if>
+    	<if test="dimension != null and start != null and end != null and kind != null">
+    		<choose>
+    			<when test="dimension == 0">
+    				<choose>
+    					<when test="kind == 0">
+    						and amt_all &lt;= #{start}
+    					</when>
+    					<when test="kind == 5">
+    						and amt_all &gt; #{end}
+    					</when>
+    					<otherwise>
+    						and amt_all &gt; #{start} and amt_all &lt;= #{end}
+    					</otherwise>
+    				</choose>
+    			</when>
+    			<when test="dimension == 1">
+    				<choose>
+    					<when test="kind == 0">
+    						and amt_online &lt;= #{start}
+    					</when>
+    					<when test="kind == 5">
+    						and amt_online &gt; #{end}
+    					</when>
+    					<otherwise>
+    						and amt_online &gt; #{start} and amt_online &lt;= #{end}
+    					</otherwise>
+    				</choose>
+    			</when>
+    			<when test="dimension == 2">
+    				<choose>
+    					<when test="kind == 0">
+    						and qty_b2b &lt;= #{start}
+    					</when>
+    					<when test="kind == 5">
+    						and qty_b2b &gt; #{end}
+    					</when>
+    					<otherwise>
+    						and qty_b2b &gt; #{start} and qty_b2b &lt;= #{end}
+    					</otherwise>
+    				</choose>
+    			</when>
+    			<when test="dimension == 3">
+    				<choose>
+    					<when test="kind == 0">
+    						and qty_boss &lt;= #{start}
+    					</when>
+    					<when test="kind == 5">
+    						and qty_boss &gt; #{end}
+    					</when>
+    					<otherwise>
+    						and qty_boss &gt; #{start} and qty_boss &lt;= #{end}
+    					</otherwise>
+    				</choose>
+    			</when>
+    			<when test="dimension == 4">
+    				<choose>
+    					<when test="kind == 0">
+    						and qty_hzg &lt;= #{start}
+    					</when>
+    					<when test="kind == 5">
+    						and qty_hzg &gt; #{end}
+    					</when>
+    					<otherwise>
+    						and qty_hzg &gt; #{start} and qty_hzg &lt;= #{end}
+    					</otherwise>
+    				</choose>
+    			</when>
+    			<when test="dimension == 5">
+    				<choose>
+    					<when test="kind == 0">
+    						and amt_dk &lt;= #{start}
+    					</when>
+    					<when test="kind == 5">
+    						and amt_dk &gt; #{end}
+    					</when>
+    					<otherwise>
+    						and amt_dk &gt; #{start} and amt_dk &lt;= #{end}
+    					</otherwise>
+    				</choose>
+    			</when>
+    		</choose>
+    	</if>
     </where>
   </select>
 </mapper>
