@@ -95,27 +95,12 @@ public class HtyFctSaleOrgController {
             }
 
 
-            //1.销售商品品牌品类
-            List<BrandSortDTO> detailCategory = this.htyFctSaleOrgDetailDTOService.queryCategory();
-            List<BrandSortDTO> detailBrand = this.htyFctSaleOrgDetailDTOService.queryBrand();
-
-            dto.setDetailBrand(detailBrand);
-            dto.setDetailCategory(detailCategory);
-
-
-            //2:销售爆款品牌品来
-            List<BrandSortDTO> hotBrand = this.htyFctSaleXzHotDTOService.queryBrand();
-            List<BrandSortDTO> hotCategory = this.htyFctSaleXzHotDTOService.queryCategory();
-            dto.setHotBrand(hotBrand);
-            dto.setHotCategory(hotCategory);
-
-
-            //3.上部统计
+            //1.上部统计
             SaleCompareDTO saleCompareDTO = this.htyFctSaleOrgAllDTOService.selectCompareByOrgCode(userId, startTime, endTime);
             dto.setSaleCompareDTO(saleCompareDTO);
 
 
-            //4.中部趋势图
+            //2.中部趋势图
             SaleXzListDTO saleXzListDTO = new SaleXzListDTO();
             List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId, endTime, dateType);
             List<String> wholeBottomDate = new ArrayList<String>();
@@ -147,14 +132,15 @@ public class HtyFctSaleOrgController {
             }
             dto.setSaleXzListDTO(saleXzListDTO);
 
-            //5.下部列表页
+
+            //3.下部列表页
             Pager pager = new Pager();
             if(page != null && rows != null){
                 pager.setRows(rows);
                 pager.setPage(page);
             }
             if("0".equals(listSort)){
-                //5.1品牌品类list
+                //3.1品牌品类list
                 SaleProdListDTO saleProdListDTO = new SaleProdListDTO();
                 List<SaleProdDTO> list = htyFctSaleOrgProdDTOService.queryPage(userId, prodSort, startTime, endTime, pager);
                 Long count = htyFctSaleOrgProdDTOService.queryPageSumCount(userId, startTime, endTime);
@@ -162,18 +148,19 @@ public class HtyFctSaleOrgController {
                 saleProdListDTO.setSaleProdnum(count);
                 dto.setSaleProdListDTO(saleProdListDTO);
             }else if("1".equals(listSort)){
-                //5.2商品销售list
+                //3.2商品销售list
                 if(StringUtils.isNotEmpty(detailSort)){
                     searchDTO.setXsAmt(detailSort);
                 }
                 SaleDetailListDTO saleDetailListDTO = new SaleDetailListDTO();
                 List<SaleDetailDTO> list = htyFctSaleOrgDetailDTOService.queryPage(searchDTO, pager);
+                searchDTO.setProdCode(null);
                 Long count = htyFctSaleOrgDetailDTOService.queryPageSumCount(searchDTO);
                 saleDetailListDTO.setDetainum(count);
                 saleDetailListDTO.setSaleDetailDTOList(list);
                 dto.setSaleDetailListDTO(saleDetailListDTO);
             }else if("2".equals(listSort)){
-                //5.3爆款
+                //3.3爆款
                 SaleHotListDTO saleHotListDTO = new SaleHotListDTO();
                 List<SaleHotDTO> list = htyFctSaleXzHotDTOService.queryPage(searchDTO, pager);
                 Long count = htyFctSaleXzHotDTOService.queryPageSumCount(searchDTO);
@@ -188,7 +175,7 @@ public class HtyFctSaleOrgController {
         } catch (Exception e) {
             logger.error("获取页头估值错误" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
-            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
         }
         return result;
     }
@@ -202,9 +189,9 @@ public class HtyFctSaleOrgController {
      */
     @RequestMapping("/sale/xz/list")
     public RestResult saleXzList(@RequestParam(value = "userId", required = true) String userId,
-                                   @RequestParam(value = "endTime", required = false) String endTime,
-                                   @RequestParam(value = "dateType", required = false) String dateType,
-                                   @RequestParam(value = "xzSort", required = true) String xzSort) {
+                                 @RequestParam(value = "endTime", required = false) String endTime,
+                                 @RequestParam(value = "dateType", required = true) String dateType,
+                                 @RequestParam(value = "xzSort", required = true) String xzSort) {
         logger.info("调用(HtyFctSaleOrgController.saleXzList)行业销售趋势入参，userId="+userId+",endTime="+endTime+",xzSort="+xzSort);
         RestResult result = new RestResult();
         try {
@@ -231,8 +218,16 @@ public class HtyFctSaleOrgController {
                 }else if("2".equals(xzSort)){
                     for(SaleXzsDTO i:saleXzDTOs){
                         wholeBottomDate.add(i.getDateKey());
-                        wholeBottom.add(i.getRate().toString());
-                        wholeBottomPair.add(i.getRateXz().toString());
+                        if(i.getRate() == null){
+                            wholeBottom.add(null);
+                        }else{
+                            wholeBottom.add(i.getRate().toString());
+                        }
+                        if(i.getRateXz() == null){
+                            wholeBottomPair.add(null);
+                        }else{
+                            wholeBottomPair.add(i.getRateXz().toString());
+                        }
                     }
                 }
                 dto.setXzBottom(wholeBottom);
@@ -249,7 +244,7 @@ public class HtyFctSaleOrgController {
         } catch (Exception e) {
             logger.error("获取品牌品类销售分析" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
-            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
         }
         return result;
     }
@@ -267,11 +262,11 @@ public class HtyFctSaleOrgController {
      */
     @RequestMapping("/sale/prod/list")
     public RestResult saleProdList(@RequestParam(value = "userId", required = true) String userId,
-                                 @RequestParam(value = "page", required = false) Integer page,
-                                 @RequestParam(value = "rows", required = false) Integer rows,
-                                 @RequestParam(value = "startTime", required = false) String startTime,
-                                 @RequestParam(value = "endTime", required = false) String endTime,
-                                 @RequestParam(value = "prodSort", required = true) String prodSort) {
+                                   @RequestParam(value = "page", required = false) Integer page,
+                                   @RequestParam(value = "rows", required = false) Integer rows,
+                                   @RequestParam(value = "startTime", required = false) String startTime,
+                                   @RequestParam(value = "endTime", required = false) String endTime,
+                                   @RequestParam(value = "prodSort", required = true) String prodSort) {
         logger.info("调用(HtyFctSaleOrgController.saleProdList)品牌品类销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",prodSort="+prodSort);
         RestResult result = new RestResult();
         try {
@@ -294,7 +289,7 @@ public class HtyFctSaleOrgController {
         } catch (Exception e) {
             logger.error("获取品牌品类销售分析" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
-            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
         }
         return result;
     }
@@ -314,14 +309,14 @@ public class HtyFctSaleOrgController {
      */
     @RequestMapping("/sale/detail/list")
     public RestResult saleDetailList(@RequestParam(value = "userId", required = true) String userId,
-                                   @RequestParam(value = "page", required = false) Integer page,
-                                   @RequestParam(value = "rows", required = false) Integer rows,
-                                   @RequestParam(value = "startTime", required = false) String startTime,
-                                   @RequestParam(value = "endTime", required = false) String endTime,
-                                   @RequestParam(value = "detailSort", required = true) String detailSort,
-                                   @RequestParam(value = "prodName", required = false) String prodName,
-                                   @RequestParam(value = "plCode", required = false) String plCode,
-                                   @RequestParam(value = "ppCode", required = false) String ppCode) {
+                                     @RequestParam(value = "page", required = false) Integer page,
+                                     @RequestParam(value = "rows", required = false) Integer rows,
+                                     @RequestParam(value = "startTime", required = false) String startTime,
+                                     @RequestParam(value = "endTime", required = false) String endTime,
+                                     @RequestParam(value = "detailSort", required = true) String detailSort,
+                                     @RequestParam(value = "prodName", required = false) String prodName,
+                                     @RequestParam(value = "plCode", required = false) String plCode,
+                                     @RequestParam(value = "ppCode", required = false) String ppCode) {
         logger.info("调用(HtyFctSaleOrgController.saleProdList)商品销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",detailSort="+detailSort);
         RestResult result = new RestResult();
         try {
@@ -356,6 +351,7 @@ public class HtyFctSaleOrgController {
                 searchDTO.setPpCode(ppCode);
             }
             List<SaleDetailDTO> list = htyFctSaleOrgDetailDTOService.queryPage(searchDTO, pager);
+            searchDTO.setProdCode(null);
             Long count = htyFctSaleOrgDetailDTOService.queryPageSumCount(searchDTO);
             saleDetailListDTO.setDetainum(count);
             saleDetailListDTO.setSaleDetailDTOList(list);
@@ -383,11 +379,11 @@ public class HtyFctSaleOrgController {
      */
     @RequestMapping("/sale/hot/list")
     public RestResult salehotList(@RequestParam(value = "page", required = false) Integer page,
-                                   @RequestParam(value = "rows", required = false) Integer rows,
-                                   @RequestParam(value = "startTime", required = false) String startTime,
-                                   @RequestParam(value = "endTime", required = false) String endTime,
-                                   @RequestParam(value = "plCode", required = false) String plCode,
-                                   @RequestParam(value = "ppCode", required = false) String ppCode) {
+                                  @RequestParam(value = "rows", required = false) Integer rows,
+                                  @RequestParam(value = "startTime", required = false) String startTime,
+                                  @RequestParam(value = "endTime", required = false) String endTime,
+                                  @RequestParam(value = "plCode", required = false) String plCode,
+                                  @RequestParam(value = "ppCode", required = false) String ppCode) {
         logger.info("调用(HtyFctSaleOrgController.saleProdList)爆款销售分析入参，plCode="+plCode+",startTime="+startTime+",endTime="+endTime+",ppCode="+ppCode);
         RestResult result = new RestResult();
         try {
@@ -425,11 +421,80 @@ public class HtyFctSaleOrgController {
         } catch (Exception e) {
             logger.error("获取品牌品类销售分析" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
-            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
         }
         return result;
     }
 
+    /**
+     * 获取商品品类
+     * @return
+     */
+    @RequestMapping("/sale/detail/query/category")
+    public RestResult saleDetailQueryCategory() {
+        RestResult result = new RestResult();
+        try {
+            //1.销售商品品牌品类
+            List<BrandSortDTO> detailCategory = this.htyFctSaleOrgDetailDTOService.queryCategory();
 
+            result.setData(detailCategory);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+            logger.error("获取获取品牌品类错误" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
+        }
+        return result;
+    }
 
+    /**
+     * 获取爆款品类
+     * @return
+     */
+    @RequestMapping("/sale/hot/query/category")
+    public RestResult saleHotQueryCategory() {
+        RestResult result = new RestResult();
+        try {
+            //2:销售爆款品牌品来
+            List<BrandSortDTO> hotCategory = this.htyFctSaleXzHotDTOService.queryCategory();
+
+            result.setData(hotCategory);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+            logger.error("获取获取品牌品类错误" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
+        }
+        return result;
+    }
+
+    /**
+     * 获取品牌
+     * @param plCode
+     * @param type 类型1：商品   2：爆款
+     * @return
+     */
+    @RequestMapping("/sale/query/brand")
+    public RestResult saleQueryBrand(@RequestParam(value = "plCode", required = true) String plCode,
+                                     @RequestParam(value = "type", required = true) String type) {
+        RestResult result = new RestResult();
+        try {
+            List<BrandSortDTO> brandList = new ArrayList<BrandSortDTO>();
+            if("1".equals(type)){
+                brandList = this.htyFctSaleOrgDetailDTOService.queryBrand(plCode);
+            }else if("2".equals(type)){
+                brandList = this.htyFctSaleXzHotDTOService.queryBrand(plCode);
+            }
+            result.setData(brandList);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+            logger.error("获取品牌错误" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
+        }
+        return result;
+    }
 }

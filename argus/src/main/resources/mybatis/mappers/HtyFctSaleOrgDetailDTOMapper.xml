@@ -52,6 +52,7 @@
 
   <select id="queryBurstSumPage" resultMap="BaseResultMap">
     SELECT
+    ID,
     PROD_NAME,
     PROD_CODE,
     PP_NAME,
@@ -66,6 +67,7 @@
     FROM
     (
     SELECT
+    ID,
     PROD_NAME,
     PROD_CODE,
     PP_NAME,
@@ -82,7 +84,7 @@
     GROUP BY
     PROD_CODE
     ORDER BY
-    XS_AMT DESC
+    XS_AMT DESC,id DESC
     limit #{pager.pageOffset},#{pager.rows}
     ) b,
     (SELECT(@rowNum := 0)) c
@@ -90,6 +92,7 @@
 
   <select id="queryStopSumPage" resultMap="BaseResultMap">
     SELECT
+    ID,
     PROD_NAME,
     PROD_CODE,
     PP_NAME,
@@ -104,6 +107,7 @@
     FROM
     (
     SELECT
+    ID,
     PROD_NAME,
     PROD_CODE,
     PP_NAME,
@@ -120,7 +124,7 @@
     GROUP BY
     PROD_CODE
     ORDER BY
-    XS_AMT ASC
+    XS_AMT ASC,id ASC
     limit #{pager.pageOffset},#{pager.rows}
     ) b,
     (SELECT(@rowNum := 0)) c
@@ -190,6 +194,7 @@
     PP_NAME
     FROM
     hty_fct_sale_org_detail
+    WHERE PL_CODE = #{plCode}
     ORDER BY
     PP_CODE
   </select>
