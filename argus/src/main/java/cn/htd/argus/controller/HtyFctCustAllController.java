@@ -50,7 +50,7 @@ public class HtyFctCustAllController {
         try {
         	HtyFctCustAllOutDTO allDto = new HtyFctCustAllOutDTO();
         	int step = 1;
-        	if((searchStartTime != null || !"".equals(searchStartTime)) && (searchEndTime != null || !"".equals(searchEndTime))){
+        	if((searchStartTime != null && !"".equals(searchStartTime)) && (searchEndTime != null && !"".equals(searchEndTime))){
         		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
         	}
         	allDto = setString(allDto,step);
@@ -58,22 +58,22 @@ public class HtyFctCustAllController {
         	HtyFctCustInDto inPairDto = new HtyFctCustInDto();
         	inDto.setUserId(userId);
         	inPairDto.setUserId(userId);
-        	if(custStartTime != null || !"".equals(custStartTime)){
+        	if(custStartTime != null && !"".equals(custStartTime)){
         		inDto.setCustStartTime(custStartTime);
         		inPairDto.setCustStartTime(custStartTime);
         	}
-        	if(custEndTime != null || !"".equals(custEndTime)){
+        	if(custEndTime != null && !"".equals(custEndTime)){
         		inDto.setCustEndTime(custEndTime);
         		inPairDto.setCustEndTime(custEndTime);
         	}
-        	if(pairFirstTime != null || !"".equals(pairFirstTime)){
+        	if(pairFirstTime != null && !"".equals(pairFirstTime)){
         		inDto.setFirstTime(pairFirstTime);
         	}
-        	if(pairSecondTime != null || !"".equals(pairSecondTime)){
+        	if(pairSecondTime != null && !"".equals(pairSecondTime)){
         		inPairDto.setFirstTime(pairSecondTime);
         	}
-        	if((dimension != null || !"".equals(dimension)) && (pairFirstDimension != null || 
-        			!"".equals(pairFirstDimension)) && (pairSecondDimension != null || !"".equals(pairSecondDimension))){
+        	if((dimension != null && !"".equals(dimension)) && (pairFirstDimension != null && 
+        			!"".equals(pairFirstDimension)) && (pairSecondDimension != null && !"".equals(pairSecondDimension))){
         		inDto.setDimension(dimension);
         		inPairDto.setDimension(dimension);
         		inDto.setKind(pairFirstDimension);
