@@ -50,7 +50,7 @@ public class HtyFctCustAllController {
         try {
         	HtyFctCustAllOutDTO allDto = new HtyFctCustAllOutDTO();
         	int step = 1;
-        	if(searchStartTime != null && searchEndTime != null){
+        	if((searchStartTime != null || !"".equals(searchStartTime)) && (searchEndTime != null || !"".equals(searchEndTime))){
         		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
         	}
         	allDto = setString(allDto,step);
@@ -58,21 +58,22 @@ public class HtyFctCustAllController {
         	HtyFctCustInDto inPairDto = new HtyFctCustInDto();
         	inDto.setUserId(userId);
         	inPairDto.setUserId(userId);
-        	if(custStartTime != null){
+        	if(custStartTime != null || !"".equals(custStartTime)){
         		inDto.setCustStartTime(custStartTime);
         		inPairDto.setCustStartTime(custStartTime);
         	}
-        	if(custEndTime != null){
+        	if(custEndTime != null || !"".equals(custEndTime)){
         		inDto.setCustEndTime(custEndTime);
         		inPairDto.setCustEndTime(custEndTime);
         	}
-        	if(pairFirstTime != null){
+        	if(pairFirstTime != null || !"".equals(pairFirstTime)){
         		inDto.setFirstTime(pairFirstTime);
         	}
-        	if(pairSecondTime != null){
+        	if(pairSecondTime != null || !"".equals(pairSecondTime)){
         		inPairDto.setFirstTime(pairSecondTime);
         	}
-        	if(dimension != null && pairFirstDimension != null && pairSecondDimension != null){
+        	if((dimension != null || !"".equals(dimension)) && (pairFirstDimension != null || 
+        			!"".equals(pairFirstDimension)) && (pairSecondDimension != null || !"".equals(pairSecondDimension))){
         		inDto.setDimension(dimension);
         		inPairDto.setDimension(dimension);
         		inDto.setKind(pairFirstDimension);
@@ -481,7 +482,8 @@ public class HtyFctCustAllController {
 	}
 	
 	@RequestMapping("/cust/step")
-    public RestResult indexForCustStep(@RequestParam(value = "searchStartTime", required = false) String searchStartTime,
+    public RestResult indexForCustStep(@RequestParam(value = "dimension", required = false) Integer dimension,
+    		@RequestParam(value = "searchStartTime", required = false) String searchStartTime,
     		@RequestParam(value = "searchEndTime", required = false) String searchEndTime){
 		RestResult result = new RestResult();
         logger.info("调用(HtyFctCustAllDTOService.indexForCustStep)用户维度");
@@ -490,57 +492,52 @@ public class HtyFctCustAllController {
         	if(searchStartTime != null && searchEndTime != null){
         		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
         	}
-        	List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+        	List<String> list = new ArrayList<String>();
         	HtyFctCustAllOutDTO allDto = new HtyFctCustAllOutDTO();
         	allDto = setString(allDto,step);
-        	Map<String,String> map1 = new HashMap<>();
-        	Map<String,String> map2 = new HashMap<>();
-        	Map<String,String> map3 = new HashMap<>();
-        	Map<String,String> map4 = new HashMap<>();
-        	Map<String,String> map5 = new HashMap<>();
-        	Map<String,String> map6 = new HashMap<>();
-        	map1.put("0", allDto.getChartBottom1().get(0));
-        	map1.put("1", allDto.getChartBottom1().get(1));
-        	map1.put("2", allDto.getChartBottom1().get(2));
-        	map1.put("3", allDto.getChartBottom1().get(3));
-        	map1.put("4", allDto.getChartBottom1().get(4));
-        	map1.put("5", allDto.getChartBottom1().get(5));
-        	map2.put("0", allDto.getChartBottom2().get(0));
-        	map2.put("1", allDto.getChartBottom2().get(1));
-        	map2.put("2", allDto.getChartBottom2().get(2));
-        	map2.put("3", allDto.getChartBottom2().get(3));
-        	map2.put("4", allDto.getChartBottom2().get(4));
-        	map2.put("5", allDto.getChartBottom2().get(5));
-        	map3.put("0", allDto.getChartBottom3().get(0));
-        	map3.put("1", allDto.getChartBottom3().get(1));
-        	map3.put("2", allDto.getChartBottom3().get(2));
-        	map3.put("3", allDto.getChartBottom3().get(3));
-        	map3.put("4", allDto.getChartBottom3().get(4));
-        	map3.put("5", allDto.getChartBottom3().get(5));
-        	map4.put("0", allDto.getChartBottom4().get(0));
-        	map4.put("1", allDto.getChartBottom4().get(1));
-        	map4.put("2", allDto.getChartBottom4().get(2));
-        	map4.put("3", allDto.getChartBottom4().get(3));
-        	map4.put("4", allDto.getChartBottom4().get(4));
-        	map4.put("5", allDto.getChartBottom4().get(5));
-        	map5.put("0", allDto.getChartBottom5().get(0));
-        	map5.put("1", allDto.getChartBottom5().get(1));
-        	map5.put("2", allDto.getChartBottom5().get(2));
-        	map5.put("3", allDto.getChartBottom5().get(3));
-        	map5.put("4", allDto.getChartBottom5().get(4));
-        	map5.put("5", allDto.getChartBottom5().get(5));
-        	map6.put("0", allDto.getChartBottom6().get(0));
-        	map6.put("1", allDto.getChartBottom6().get(1));
-        	map6.put("2", allDto.getChartBottom6().get(2));
-        	map6.put("3", allDto.getChartBottom6().get(3));
-        	map6.put("4", allDto.getChartBottom6().get(4));
-        	map6.put("5", allDto.getChartBottom6().get(5));
-        	list.add(map1);
-        	list.add(map2);
-        	list.add(map3);
-        	list.add(map4);
-        	list.add(map5);
-        	list.add(map6);
+        	if(0 == dimension){
+        		list.add(allDto.getChartBottom1().get(0));
+        		list.add(allDto.getChartBottom1().get(1));
+        		list.add(allDto.getChartBottom1().get(2));
+        		list.add(allDto.getChartBottom1().get(3));
+        		list.add(allDto.getChartBottom1().get(4));
+        		list.add(allDto.getChartBottom1().get(5));
+        	}else if(1 == dimension){
+        		list.add(allDto.getChartBottom2().get(0));
+        		list.add(allDto.getChartBottom2().get(1));
+        		list.add(allDto.getChartBottom2().get(2));
+        		list.add(allDto.getChartBottom2().get(3));
+        		list.add(allDto.getChartBottom2().get(4));
+        		list.add(allDto.getChartBottom2().get(5));
+        	}else if(2 == dimension){
+        		list.add(allDto.getChartBottom3().get(0));
+        		list.add(allDto.getChartBottom3().get(1));
+        		list.add(allDto.getChartBottom3().get(2));
+        		list.add(allDto.getChartBottom3().get(3));
+        		list.add(allDto.getChartBottom3().get(4));
+        		list.add(allDto.getChartBottom3().get(5));
+        	}else if(3 == dimension){
+        		list.add(allDto.getChartBottom4().get(0));
+        		list.add(allDto.getChartBottom4().get(1));
+        		list.add(allDto.getChartBottom4().get(2));
+        		list.add(allDto.getChartBottom4().get(3));
+        		list.add(allDto.getChartBottom4().get(4));
+        		list.add(allDto.getChartBottom4().get(5));
+        	}else if(4 == dimension){
+        		list.add(allDto.getChartBottom5().get(0));
+        		list.add(allDto.getChartBottom5().get(1));
+        		list.add(allDto.getChartBottom5().get(2));
+        		list.add(allDto.getChartBottom5().get(3));
+        		list.add(allDto.getChartBottom5().get(4));
+        		list.add(allDto.getChartBottom5().get(5));
+        	}else if(5 == dimension){
+        		list.add(allDto.getChartBottom6().get(0));
+        		list.add(allDto.getChartBottom6().get(1));
+        		list.add(allDto.getChartBottom6().get(2));
+        		list.add(allDto.getChartBottom6().get(3));
+        		list.add(allDto.getChartBottom6().get(4));
+        		list.add(allDto.getChartBottom6().get(5));
+        	}
         	result.setData(list);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
             result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
