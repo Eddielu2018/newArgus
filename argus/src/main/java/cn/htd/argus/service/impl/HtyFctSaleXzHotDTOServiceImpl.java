@@ -62,9 +62,9 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
     }
 
     @Override
-    public List<BrandSortDTO> queryBrand() {
+    public List<BrandSortDTO> queryBrand(String plCode) {
         List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
-        List<HtyFctSaleXzHotDTO> list1 = dao.queryBrand();
+        List<HtyFctSaleXzHotDTO> list1 = dao.queryBrand(plCode);
         if(list1 != null){
             for(HtyFctSaleXzHotDTO i:list1){
                 BrandSortDTO dto = new BrandSortDTO();

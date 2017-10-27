@@ -114,7 +114,7 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
                 if(i.getOrgNum().intValue() >0){
                     dto.setXsAmtXz(ArithUtil.div(i.getXsAmtXz().doubleValue(), i.getOrgNum().doubleValue(), 2));
                 }else{
-                    dto.setXsAmtXz(null);
+                    dto.setXsAmtXz(new BigDecimal(0));
                 }
 
                 //2订单数
@@ -122,19 +122,19 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
                 if(i.getOrgNum().intValue() >0 ){
                     dto.setCntXz(ArithUtil.div(i.getCntXz().doubleValue(), i.getOrgNum().doubleValue(), 2));
                 }else{
-                    dto.setCntXz(null);
+                    dto.setCntXz(new BigDecimal(0));
                 }
 
                 //3毛利率
-                if(i.getXsZySr().intValue() > 0 && i.getOrgNum().intValue() >0){
+                if(i.getXsZySr().intValue() != 0 && i.getOrgNum().intValue() >0){
                     BigDecimal rate = ArithUtil.div(i.getXsZhMl().doubleValue(), i.getXsZySr().doubleValue(), 2);
                     dto.setRate(ArithUtil.div(rate.doubleValue(), i.getOrgNum().doubleValue(), 2));
 
                     BigDecimal rateXz = ArithUtil.div(i.getXsZhMlXz().doubleValue(), i.getXsZySrXz().doubleValue(), 2);
                     dto.setRateXz(ArithUtil.div(rateXz.doubleValue(), i.getOrgNum().doubleValue(), 2));
                 }else{
-                    dto.setRate(null);
-                    dto.setRateXz(null);
+                    dto.setRate(new BigDecimal(0));
+                    dto.setRateXz(new BigDecimal(0));
                 }
                 dtos.add(dto);
             }

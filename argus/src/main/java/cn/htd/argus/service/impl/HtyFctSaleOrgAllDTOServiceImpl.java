@@ -98,13 +98,16 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
                 dto.setUpperXsRanking(htyFctSaleOrgAllDTO2.getRanking());
                 dto.setUpperXsQty(htyFctSaleOrgAllDTO2.getXsQty());
                 dto.setUpperXsAmt(ArithUtil.div(htyFctSaleOrgAllDTO2.getXsAmt().doubleValue(),10000,4));
-                dto.setUpperXsLr(ArithUtil.div(htyFctSaleOrgAllDTO2.getXsLr().doubleValue(), 10000, 4));
+                if(htyFctSaleOrgAllDTO2.getXsLr() != null){
+                    dto.setUpperXsLr(ArithUtil.div(htyFctSaleOrgAllDTO2.getXsLr().doubleValue(), 10000, 4));
+                }
+
             }
 
             //销售金额同比，排序
             if(dto.getUpperXsAmt() != null && dto.getXsAmt() != null){
                 BigDecimal xsAmt =ArithUtil.sub(dto.getUpperXsAmt().doubleValue(),dto.getXsAmt().doubleValue());
-                if(dto.getUpperXsAmt().intValue() >0){
+                if(dto.getUpperXsAmt().intValue() != 0){
                     xsAmt = ArithUtil.div(xsAmt.doubleValue(),dto.getUpperXsAmt().doubleValue(),4);
                     dto.setXsAmtAn(xsAmt);
                 }else{
@@ -116,7 +119,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
             //销售净利润同比，排序
             if(dto.getXsLr() != null && dto.getUpperXsLr() != null){
                 BigDecimal xsLr = ArithUtil.sub(dto.getXsLr().doubleValue(),dto.getUpperXsLr().doubleValue());
-                if(dto.getUpperXsLr().intValue() >0){
+                if(dto.getUpperXsLr().intValue() != 0){
                     xsLr = ArithUtil.div(xsLr.doubleValue(),dto.getUpperXsLr().doubleValue(),4);
                     dto.setXsLrAn(xsLr);
                 }else{
@@ -129,7 +132,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
             if(dto.getXsQty() != null && dto.getUpperXsQty() != null){
                 BigDecimal xsQty = ArithUtil.sub(dto.getXsQty().doubleValue(), dto.getUpperXsQty());
 
-                if(dto.getUpperXsQty().intValue() >0){
+                if(dto.getUpperXsQty().intValue() != 0){
                     xsQty = ArithUtil.div(xsQty.doubleValue(),dto.getUpperXsQty() , 4);
                     dto.setXsQtyAn(xsQty);
                 }
@@ -139,7 +142,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
             //毛利率同比，排序
             if(dto.getXsMl() != null && dto.getUpperXsMl() != null){
                 BigDecimal xsMl = ArithUtil.sub(dto.getXsMl().doubleValue(),dto.getUpperXsMl().doubleValue());
-                if(dto.getUpperXsMl().intValue() >0){
+                if(dto.getUpperXsMl().intValue() != 0){
                     xsMl = ArithUtil.div(xsMl.doubleValue(),dto.getUpperXsMl().doubleValue(),4);
 
                 }else{

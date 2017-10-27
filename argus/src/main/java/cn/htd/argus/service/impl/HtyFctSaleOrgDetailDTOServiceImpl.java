@@ -52,10 +52,14 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
         }else if("1".equals(searchDTO.getXsAmt())){
             list = dao.queryStopSumPage(searchDTO, pager);
         }
+        HtyFctSaleSearchDTO dto1 = new HtyFctSaleSearchDTO();
+        dto1.setStartTime(searchDTO.getStartTime());
+        dto1.setEndTime(searchDTO.getEndTime());
+        dto1.setUserId(searchDTO.getUserId());
         //前十的爆款
-        List<HtyFctSaleOrgDetailDTO> burstList = dao.queryBurstSumPage(searchDTO, pager1);
+        List<HtyFctSaleOrgDetailDTO> burstList = dao.queryBurstSumPage(dto1, pager1);
         //后十的滞销款
-        List<HtyFctSaleOrgDetailDTO> stopList = dao.queryStopSumPage(searchDTO, pager1);
+        List<HtyFctSaleOrgDetailDTO> stopList = dao.queryStopSumPage(dto1, pager1);
         if(list != null){
 
             for(HtyFctSaleOrgDetailDTO i:list){
@@ -63,7 +67,7 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                 dto.setProdName(i.getProdName());
                 dto.setPpName(i.getPpName());
                 dto.setPlName(i.getPlName());
-                if(i.getXsQty().intValue() >0){
+                if(i.getXsQty().intValue() != 0){
                     dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 2));
                 }else{
                     dto.setXsPrice(null);
@@ -79,7 +83,7 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                 searchDTO.setProdCode(i.getProdCode());
                 HtyFctSaleOrgDetailDTO htyFctSaleOrgDetailDTO = dao.selectByProdCode(searchDTO);
                 if(htyFctSaleOrgDetailDTO != null){
-                    if(htyFctSaleOrgDetailDTO.getXsAmt().intValue() >0){
+                    if(htyFctSaleOrgDetailDTO.getXsAmt().intValue() != 0){
                         BigDecimal salesRing = ArithUtil.sub(i.getXsAmt().doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue());
                         dto.setSalesRing(ArithUtil.div(salesRing.doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue(),4));
                     }else{
@@ -89,13 +93,13 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                 //滞销
                 for(HtyFctSaleOrgDetailDTO z:stopList){
                     if(z.getProdCode().equals(i.getProdCode())){
-                        dto.setSort("1");
+                        dto.setSort("滞销");
                     }
                 }
                 //爆款
                 for(HtyFctSaleOrgDetailDTO x:burstList){
                     if(x.getProdCode().equals(i.getProdCode())){
-                        dto.setSort("0");
+                        dto.setSort("爆款");
                     }
                 }
                 dtos.add(dto);
@@ -108,15 +112,17 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
     }
 
     @Override
-    public List<BrandSortDTO> queryBrand() {
+    public List<BrandSortDTO> queryBrand(String plCode) {
         List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
-        List<HtyFctSaleOrgDetailDTO> list1 = dao.queryBrand();
+        List<HtyFctSaleOrgDetailDTO> list1 = dao.queryBrand(plCode);
         if(list1 != null){
             for(HtyFctSaleOrgDetailDTO i:list1){
-                BrandSortDTO dto = new BrandSortDTO();
-                dto.setBrandName(i.getPpName());
-                dto.setSortNum(i.getPpCode());
-                list.add(dto);
+                if(i.getPpName() != null){
+                    BrandSortDTO dto = new BrandSortDTO();
+                    dto.setBrandName(i.getPpName());
+                    dto.setSortNum(i.getPpCode());
+                    list.add(dto);
+                }
             }
         }else{
             return null;

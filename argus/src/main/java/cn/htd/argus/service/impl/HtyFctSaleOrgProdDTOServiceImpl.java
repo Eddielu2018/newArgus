@@ -72,7 +72,7 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
                 searchDTO.setStartTime(startTime);
             }
             if(StringUtils.isNotEmpty(endTime)){
-                searchDTO.setStartTime(endTime);
+                searchDTO.setEndTime(endTime);
             }
             count = dao.queryPageSumCount(searchDTO);
         } catch (Exception e) {
@@ -117,7 +117,7 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
                 dto.setXsQty(i.getXsQty());
                 dto.setXsAmt(i.getXsAmt());
                 //销售金额占比XS_AMT/XS_AMT_ALL
-                if(i.getXsAmtAll().intValue() >0){
+                if(i.getXsAmtAll().intValue() != 0){
                     dto.setXsRatio(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsAmtAll().doubleValue(), 2));
                 }else {
                     dto.setXsRatio(null);
@@ -125,7 +125,7 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
                 //平均毛利XS_SR-XS_CB
                 dto.setXsAvg(ArithUtil.sub(i.getXsSr().doubleValue(), i.getXsCb().doubleValue()));
                 //平均毛利率（XS_SR-XS_CB）/XS_SR
-                if(i.getXsSr().intValue() >0){
+                if(i.getXsSr().intValue() != 0){
                     dto.setXsAvgRatio(ArithUtil.div(dto.getXsAvg().doubleValue(), i.getXsSr().doubleValue(), 2));
                 }else{
                     dto.setXsAvgRatio(null);

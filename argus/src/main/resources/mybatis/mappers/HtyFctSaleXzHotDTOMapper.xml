@@ -93,6 +93,7 @@
     PP_NAME
     FROM
     hty_fct_sale_xz_hot
+    WHERE PL_CODE = #{plCode}
     ORDER BY
     PP_CODE
   </select>
