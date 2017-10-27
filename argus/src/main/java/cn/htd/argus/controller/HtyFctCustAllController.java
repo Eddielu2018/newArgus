@@ -17,6 +17,7 @@ import cn.htd.argus.bean.HtyFctCustInDto;
 import cn.htd.argus.dto.HtyFctCustAllDto;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.HtyFctCustAllDTOService;
+import cn.htd.argus.util.DateTimeUtil;
 import cn.htd.argus.util.HtyFctCustUtil;
 import cn.htd.argus.util.RestResult;
 
@@ -39,6 +40,8 @@ public class HtyFctCustAllController {
     		@RequestParam(value = "pairFirstTime", required = false) String pairFirstTime,
     		@RequestParam(value = "pairSecondTime", required = false) String pairSecondTime,
     		@RequestParam(value = "dimension", required = false) Integer dimension,
+    		@RequestParam(value = "searchStartTime", required = false) String searchStartTime,
+    		@RequestParam(value = "searchEndTime", required = false) String searchEndTime,
     		@RequestParam(value = "pairFirstDimension", required = false) Integer pairFirstDimension,
     		@RequestParam(value = "pairSecondDimension", required = false) Integer pairSecondDimension
     		){
@@ -46,7 +49,11 @@ public class HtyFctCustAllController {
         logger.info("调用(HtyFctCustAllDTOService.indexForCustKind)用户分类页获取入参，userId="+userId);
         try {
         	HtyFctCustAllOutDTO allDto = new HtyFctCustAllOutDTO();
-        	allDto = setString(allDto);
+        	int step = 1;
+        	if(searchStartTime != null && searchEndTime != null){
+        		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
+        	}
+        	allDto = setString(allDto,step);
         	HtyFctCustInDto inDto = new HtyFctCustInDto();
         	HtyFctCustInDto inPairDto = new HtyFctCustInDto();
         	inDto.setUserId(userId);
@@ -103,7 +110,7 @@ public class HtyFctCustAllController {
         return result;
 	}
     		
-	private HtyFctCustAllOutDTO setString(HtyFctCustAllOutDTO allDto){
+	private HtyFctCustAllOutDTO setString(HtyFctCustAllOutDTO allDto,int step){
 		List<String> chartBottom1 = new ArrayList<String>();
 		List<String> chartBottom2 = new ArrayList<String>();
 		List<String> chartBottom3 = new ArrayList<String>();
@@ -111,41 +118,41 @@ public class HtyFctCustAllController {
 		List<String> chartBottom5 = new ArrayList<String>();
 		List<String> chartBottom6 = new ArrayList<String>();
 		chartBottom1.add("无");
-		chartBottom1.add(HtyFctCustUtil.T1_2+"以下");
-		chartBottom1.add(HtyFctCustUtil.T1_2+"~"+HtyFctCustUtil.T1_3);
-		chartBottom1.add(HtyFctCustUtil.T1_3+"~"+HtyFctCustUtil.T1_4);
-		chartBottom1.add(HtyFctCustUtil.T1_4+"~"+HtyFctCustUtil.T1_5);
-		chartBottom1.add(HtyFctCustUtil.T1_5+"以上");
+		chartBottom1.add(HtyFctCustUtil.T1_2*step+"以下");
+		chartBottom1.add(HtyFctCustUtil.T1_2*step+"~"+HtyFctCustUtil.T1_3*step);
+		chartBottom1.add(HtyFctCustUtil.T1_3*step+"~"+HtyFctCustUtil.T1_4*step);
+		chartBottom1.add(HtyFctCustUtil.T1_4*step+"~"+HtyFctCustUtil.T1_5*step);
+		chartBottom1.add(HtyFctCustUtil.T1_5*step+"以上");
 		chartBottom2.add("无");
-		chartBottom2.add(HtyFctCustUtil.T2_2+"以下");
-		chartBottom2.add(HtyFctCustUtil.T2_2+"~"+HtyFctCustUtil.T2_3);
-		chartBottom2.add(HtyFctCustUtil.T2_3+"~"+HtyFctCustUtil.T2_4);
-		chartBottom2.add(HtyFctCustUtil.T2_4+"~"+HtyFctCustUtil.T2_5);
-		chartBottom2.add(HtyFctCustUtil.T2_5+"以上");
+		chartBottom2.add(HtyFctCustUtil.T2_2*step+"以下");
+		chartBottom2.add(HtyFctCustUtil.T2_2*step+"~"+HtyFctCustUtil.T2_3*step);
+		chartBottom2.add(HtyFctCustUtil.T2_3*step+"~"+HtyFctCustUtil.T2_4*step);
+		chartBottom2.add(HtyFctCustUtil.T2_4*step+"~"+HtyFctCustUtil.T2_5*step);
+		chartBottom2.add(HtyFctCustUtil.T2_5*step+"以上");
 		chartBottom3.add("无");
-		chartBottom3.add(HtyFctCustUtil.T3_2+"以下");
-		chartBottom3.add(HtyFctCustUtil.T3_2+"~"+HtyFctCustUtil.T3_3);
-		chartBottom3.add(HtyFctCustUtil.T3_3+"~"+HtyFctCustUtil.T3_4);
-		chartBottom3.add(HtyFctCustUtil.T3_4+"~"+HtyFctCustUtil.T3_5);
-		chartBottom3.add(HtyFctCustUtil.T3_5+"以上");
+		chartBottom3.add(HtyFctCustUtil.T3_2*step+"以下");
+		chartBottom3.add(HtyFctCustUtil.T3_2*step+"~"+HtyFctCustUtil.T3_3*step);
+		chartBottom3.add(HtyFctCustUtil.T3_3*step+"~"+HtyFctCustUtil.T3_4*step);
+		chartBottom3.add(HtyFctCustUtil.T3_4*step+"~"+HtyFctCustUtil.T3_5*step);
+		chartBottom3.add(HtyFctCustUtil.T3_5*step+"以上");
 		chartBottom4.add("无");
-		chartBottom4.add(HtyFctCustUtil.T4_2+"以下");
-		chartBottom4.add(HtyFctCustUtil.T4_2+"~"+HtyFctCustUtil.T4_3);
-		chartBottom4.add(HtyFctCustUtil.T4_3+"~"+HtyFctCustUtil.T4_4);
-		chartBottom4.add(HtyFctCustUtil.T4_4+"~"+HtyFctCustUtil.T4_5);
-		chartBottom4.add(HtyFctCustUtil.T4_5+"以上");
+		chartBottom4.add(HtyFctCustUtil.T4_2*step+"以下");
+		chartBottom4.add(HtyFctCustUtil.T4_2*step+"~"+HtyFctCustUtil.T4_3*step);
+		chartBottom4.add(HtyFctCustUtil.T4_3*step+"~"+HtyFctCustUtil.T4_4*step);
+		chartBottom4.add(HtyFctCustUtil.T4_4*step+"~"+HtyFctCustUtil.T4_5*step);
+		chartBottom4.add(HtyFctCustUtil.T4_5*step+"以上");
 		chartBottom5.add("无");
-		chartBottom5.add(HtyFctCustUtil.T5_2+"以下");
-		chartBottom5.add(HtyFctCustUtil.T5_2+"~"+HtyFctCustUtil.T5_3);
-		chartBottom5.add(HtyFctCustUtil.T5_3+"~"+HtyFctCustUtil.T5_4);
-		chartBottom5.add(HtyFctCustUtil.T5_4+"~"+HtyFctCustUtil.T5_5);
-		chartBottom5.add(HtyFctCustUtil.T5_5+"以上");
+		chartBottom5.add(HtyFctCustUtil.T5_2*step+"以下");
+		chartBottom5.add(HtyFctCustUtil.T5_2*step+"~"+HtyFctCustUtil.T5_3*step);
+		chartBottom5.add(HtyFctCustUtil.T5_3*step+"~"+HtyFctCustUtil.T5_4*step);
+		chartBottom5.add(HtyFctCustUtil.T5_4*step+"~"+HtyFctCustUtil.T5_5*step);
+		chartBottom5.add(HtyFctCustUtil.T5_5*step+"以上");
 		chartBottom6.add("无");
-		chartBottom6.add(HtyFctCustUtil.T6_2+"以下");
-		chartBottom6.add(HtyFctCustUtil.T6_2+"~"+HtyFctCustUtil.T6_3);
-		chartBottom6.add(HtyFctCustUtil.T6_3+"~"+HtyFctCustUtil.T6_4);
-		chartBottom6.add(HtyFctCustUtil.T6_4+"~"+HtyFctCustUtil.T6_5);
-		chartBottom6.add(HtyFctCustUtil.T6_5+"以上");
+		chartBottom6.add(HtyFctCustUtil.T6_2*step+"以下");
+		chartBottom6.add(HtyFctCustUtil.T6_2*step+"~"+HtyFctCustUtil.T6_3*step);
+		chartBottom6.add(HtyFctCustUtil.T6_3*step+"~"+HtyFctCustUtil.T6_4*step);
+		chartBottom6.add(HtyFctCustUtil.T6_4*step+"~"+HtyFctCustUtil.T6_5*step);
+		chartBottom6.add(HtyFctCustUtil.T6_5*step+"以上");
 		allDto.setChartBottom1(chartBottom1);
 		allDto.setChartBottom2(chartBottom2);
 		allDto.setChartBottom3(chartBottom3);
@@ -474,13 +481,18 @@ public class HtyFctCustAllController {
 	}
 	
 	@RequestMapping("/cust/step")
-    public RestResult indexForCustStep(){
+    public RestResult indexForCustStep(@RequestParam(value = "searchStartTime", required = false) String searchStartTime,
+    		@RequestParam(value = "searchEndTime", required = false) String searchEndTime){
 		RestResult result = new RestResult();
         logger.info("调用(HtyFctCustAllDTOService.indexForCustStep)用户维度");
         try {
+        	int step = 1;
+        	if(searchStartTime != null && searchEndTime != null){
+        		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
+        	}
         	List<Map<String,String>> list = new ArrayList<Map<String,String>>();
         	HtyFctCustAllOutDTO allDto = new HtyFctCustAllOutDTO();
-        	allDto = setString(allDto);
+        	allDto = setString(allDto,step);
         	Map<String,String> map1 = new HashMap<>();
         	Map<String,String> map2 = new HashMap<>();
         	Map<String,String> map3 = new HashMap<>();
