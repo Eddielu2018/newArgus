@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 财务效率
  * Created by wangtp on 2017/10/31.
  */
 @RestController

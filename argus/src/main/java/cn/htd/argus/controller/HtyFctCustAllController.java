@@ -22,6 +22,7 @@ import cn.htd.argus.util.HtyFctCustUtil;
 import cn.htd.argus.util.RestResult;
 
 /**
+ * 用户分类
  * Created by qj on 2017/10/25.
  */
 @RestController

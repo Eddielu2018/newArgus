@@ -27,6 +27,7 @@ import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.RestResult;
 
 /**
+ * 用户行为
  * Created by suntao on 2017/10/16.
  */
 @RestController
