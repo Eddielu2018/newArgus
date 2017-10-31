@@ -16,6 +16,7 @@
 	<bean id="htyFctOrgSaleDTOService" class="cn.htd.argus.service.impl.HtyFctOrgSaleDTOServiceImpl"/>
 	<bean id="htyFctOrgValueDTOService" class="cn.htd.argus.service.impl.HtyFctOrgValueDTOServiceImpl"/>
 
+	<!-- 选品定价 -->
 	<bean id="htyFctSaleOrgAllDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgAllDTOServiceImpl"/>
 	<bean id="htyFctSaleOrgDetailDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgDetailDTOServiceImpl"/>
 	<bean id="htyFctSaleOrgProdDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgProdDTOServiceImpl"/>
@@ -29,4 +30,9 @@
 	<bean id="htyFctSaleCityProdDTOService" class="cn.htd.argus.service.impl.HtyFctSaleCityProdDTOServiceImpl"/>
 	
 	<bean id="htyFctCustAllDTOService" class="cn.htd.argus.service.impl.HtyFctCustAllDTOServiceImpl"/>
+
+	<!-- 财务效率 -->
+	<bean id="htyConfigZcfzSubjcodeDTOService" class="cn.htd.argus.service.impl.HtyConfigZcfzSubjcodeDTOServiceImpl"/>
+	<bean id="htyFctL2DupontDTOService" class="cn.htd.argus.service.impl.HtyFctL2DupontDTOServiceImpl"/>
+	<bean id="htyFctL1ZcfzSubjamtDTOService" class="cn.htd.argus.service.impl.HtyFctL1ZcfzSubjamtDTOServiceImpl"/>
 </beans>
