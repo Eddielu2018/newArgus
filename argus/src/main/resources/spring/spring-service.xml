@@ -34,7 +34,7 @@
 
 	<!-- -->
 	<bean id="htyFctCustAllDTOService" class="cn.htd.argus.service.impl.HtyFctCustAllDTOServiceImpl"/>
-    	<bean id="htyFctMemberOrgDetailDTOService" class="cn.htd.argus.service.impl.HtyFctMemberOrgDetailDTOServiceImpl">
+    <bean id="htyFctMemberOrgDetailDTOService" class="cn.htd.argus.service.impl.HtyFctMemberOrgDetailDTOServiceImpl"/>
 	<!-- 财务效率 -->
 	<bean id="htyConfigZcfzSubjcodeDTOService" class="cn.htd.argus.service.impl.HtyConfigZcfzSubjcodeDTOServiceImpl"/>
 	<bean id="htyFctL2DupontDTOService" class="cn.htd.argus.service.impl.HtyFctL2DupontDTOServiceImpl"/>
