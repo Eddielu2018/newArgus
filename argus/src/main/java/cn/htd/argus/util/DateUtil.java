@@ -236,7 +236,7 @@ public class DateUtil {
 	 * @param dateString
 	 * @param pattern
 	 * @return
-	 * @throws java.text.ParseException
+	 * @throws ParseException
 	 */
 	public static Date createDate(String dateString, String pattern) throws ParseException {
 		Date date = null;

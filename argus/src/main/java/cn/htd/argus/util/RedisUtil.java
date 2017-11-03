@@ -35,6 +35,7 @@ public class RedisUtil {
 	/**
 	 * 返还到连接池
 	 * 
+	 * @param pool
 	 * @param redis
 	 */
 	public  void returnResource(Jedis redis) {
