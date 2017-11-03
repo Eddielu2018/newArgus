@@ -1,9 +1,14 @@
-package dao;
+package cn.htd.argus.dao;
 
-import dto.HtyFctOrgCustIncomeSaleDTO;
+import cn.htd.argus.dto.HtyFctOrgCustIncomeSaleDTO;
+
+import java.util.List;
 
 public interface HtyFctOrgCustIncomeSaleDTOMapper {
-    int insert(HtyFctOrgCustIncomeSaleDTO record);
 
-    int insertSelective(HtyFctOrgCustIncomeSaleDTO record);
+    HtyFctOrgCustIncomeSaleDTO selectByPrimaryKey(Long id);
+
+    List<HtyFctOrgCustIncomeSaleDTO> select(HtyFctOrgCustIncomeSaleDTO model);
+    
+    List<HtyFctOrgCustIncomeSaleDTO> selectMonth(HtyFctOrgCustIncomeSaleDTO model);
 }

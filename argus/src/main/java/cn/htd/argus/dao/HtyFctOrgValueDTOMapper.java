@@ -1,9 +1,17 @@
-package dao;
+package cn.htd.argus.dao;
 
-import dto.HtyFctOrgValueDTO;
+import java.util.List;
+import cn.htd.argus.dto.HtyFctOrgValueDTO;
 
 public interface HtyFctOrgValueDTOMapper {
-    int insert(HtyFctOrgValueDTO record);
 
-    int insertSelective(HtyFctOrgValueDTO record);
+    HtyFctOrgValueDTO selectByPrimaryKey(Long id);
+
+    List<HtyFctOrgValueDTO> select(HtyFctOrgValueDTO model);
+
+    HtyFctOrgValueDTO selectByOrgCode(HtyFctOrgValueDTO model);
+    
+    Integer selectSortNumForHead(HtyFctOrgValueDTO model);
+    
+    Integer selectSortNumForBranch(HtyFctOrgValueDTO model);
 }
