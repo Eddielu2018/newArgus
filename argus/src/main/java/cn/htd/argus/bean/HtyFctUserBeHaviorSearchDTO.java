@@ -1,10 +1,11 @@
 package cn.htd.argus.bean;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class HtyFctUserBeHaviorSearchDTO {
 	private String endTime;// 日历2
-//	private String period;// 时间段
+	private String period;// 时间段
 	private String startTime;// 日历1
 	private String countryName;// 地理范围 国家
     private String provinceName;// 省
@@ -137,4 +138,11 @@ public class HtyFctUserBeHaviorSearchDTO {
         this.xsQty = xsQty;
     }
 
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
 }

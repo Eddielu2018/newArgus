@@ -42,4 +42,14 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
 	public List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto) {
 		return  dao.selectByNoPair(inDto);
 	}
+
+    @Override
+    public List<HtyFctCustAllDto> queryActiveVipByCondition(HtyFctCustAllDto htyFctCustAllDto) {
+        return dao.queryActiveVipByCondition(htyFctCustAllDto);
+    }
+
+    @Override
+    public List<HtyFctCustAllDto> queryExport(HtyFctCustAllDto htyFctCustAllDto) {
+        return dao.queryExport(htyFctCustAllDto);
+    }
 }

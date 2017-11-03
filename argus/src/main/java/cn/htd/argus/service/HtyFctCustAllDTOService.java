@@ -13,6 +13,12 @@ public interface HtyFctCustAllDTOService {
 	HtyFctCustAllDto selectByPrimaryKey(Long id);
 
     HtyFctCustAllDto select(HtyFctCustAllDto dto);
-    
+
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
+
+
+    List<HtyFctCustAllDto> queryActiveVipByCondition(HtyFctCustAllDto htyFctCustAllDto);
+    //导出明细
+    List<HtyFctCustAllDto>queryExport(HtyFctCustAllDto htyFctCustAllDto);
+
 }
