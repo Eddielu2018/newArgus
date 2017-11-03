@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.htd.argus.bean.HtyFctCustAllOutDTO;
+import cn.htd.argus.bean.HtyFctCustAnalysisInOutDTO;
 import cn.htd.argus.bean.HtyFctCustInDto;
 import cn.htd.argus.dto.HtyFctCustAllDto;
 import cn.htd.argus.emuns.ResultCodeEnum;
+import cn.htd.argus.service.DciDimOrgDTOService;
 import cn.htd.argus.service.HtyFctCustAllDTOService;
 import cn.htd.argus.util.DateTimeUtil;
 import cn.htd.argus.util.HtyFctCustUtil;
@@ -31,6 +33,8 @@ public class HtyFctCustAllController {
 	
 	@Autowired
     private HtyFctCustAllDTOService htyFctCustAllDTOService;
+	@Autowired
+	private DciDimOrgDTOService dciDimOrgDTOService;
 	
 	@RequestMapping("/cust/kind")
     public RestResult indexForCustKind(@RequestParam(value = "userId", required = true) String userId,
@@ -547,5 +551,209 @@ public class HtyFctCustAllController {
             result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
         }
         return result;
+	}
+	
+	@RequestMapping("/cust/Analysis")
+    public RestResult indexForAnalysis(@RequestParam(value = "userId", required = true) String userId,
+    		@RequestParam(value = "startTime", required = false) String startTime,
+    		@RequestParam(value = "endTime", required = false) String endTime,
+    		@RequestParam(value = "type", required = true) int type,
+    		@RequestParam(value = "bossType", required = true) int bossType){
+		RestResult result = new RestResult();
+        logger.info("调用(HtyFctCustAllDTOService.indexForAnalysis)用户分析");
+        try {
+        	HtyFctCustAnalysisInOutDTO custAllDto = new HtyFctCustAnalysisInOutDTO();
+        	Integer regionOrg = dciDimOrgDTOService.selectRegionNum(userId);
+        	//上部数据
+        	HtyFctCustAllDto custUpDto = htyFctCustAllDTOService.selectForAnalysis(userId, startTime, endTime, type);
+        	if(custUpDto != null){
+        		custAllDto.setAmtAll(custUpDto.getAmtAll());
+        		custAllDto.setAmtOnline(custUpDto.getAmtOnline());
+        		custAllDto.setQtyB2b(custUpDto.getQtyB2b());
+        		custAllDto.setQtyBoss(custUpDto.getQtyBoss());
+        		custAllDto.setQtyHzg(custUpDto.getQtyHzg());
+        		custAllDto.setAmtDk(custUpDto.getAmtDk());
+        		custAllDto.setAmtAllNum(htyFctCustAllDTOService.selectForAmtAll(userId, startTime, endTime, type, regionOrg));
+        		custAllDto.setAmtOnlineNum(htyFctCustAllDTOService.selectForAmtOnline(userId, startTime, endTime, type, regionOrg));
+        		custAllDto.setQtyB2bNum(htyFctCustAllDTOService.selectForQtyB2b(userId, startTime, endTime, type, regionOrg));
+        		custAllDto.setQtyBossNum(htyFctCustAllDTOService.selectForQtyBoss(userId, startTime, endTime, type, regionOrg));
+        		custAllDto.setQtyHzgNum(htyFctCustAllDTOService.selectForQtyHzg(userId, startTime, endTime, type, regionOrg));
+        		custAllDto.setAmtDkNum(htyFctCustAllDTOService.selectForAmtDk(userId, startTime, endTime, type, regionOrg));
+        	}
+        	//左下图表
+        	int level = 1;
+    		if(startTime != null && endTime != null){
+    			level = DateTimeUtil.getMonthSpace(startTime,endTime);
+    		}
+        	List<String> listName = new ArrayList<String>();
+        	if(bossType == 0){
+        		listName.add("无");
+        		listName.add(HtyFctCustUtil.S1_2*level+"~"+HtyFctCustUtil.S1_3*level);
+        		listName.add(HtyFctCustUtil.S1_3*level+"~"+HtyFctCustUtil.S1_4*level);
+        		listName.add(HtyFctCustUtil.S1_4*level+"~"+HtyFctCustUtil.S1_5*level);
+        		listName.add(HtyFctCustUtil.S1_5*level+"以上");
+        	}else if(bossType == 1){
+        		listName.add("无");
+        		listName.add(HtyFctCustUtil.S2_2*level+"~"+HtyFctCustUtil.S2_3*level);
+        		listName.add(HtyFctCustUtil.S2_3*level+"~"+HtyFctCustUtil.S2_4*level);
+        		listName.add(HtyFctCustUtil.S2_4*level+"~"+HtyFctCustUtil.S2_5*level);
+        		listName.add(HtyFctCustUtil.S2_5*level+"以上");
+        	}
+        	List<String> listDate = new ArrayList<String>();
+        	List<String> listPair = new ArrayList<String>();
+        	List<HtyFctCustAllDto> custList = htyFctCustAllDTOService.selectForPair(userId, startTime, endTime, type);
+        	if(custList != null && custList.size()>0){
+        		//计算月份差距
+        		int my1 = 0;
+        		int my2 = 0;
+        		int my3 = 0;
+        		int my4 = 0;
+        		int my5 = 0;
+        		int other1 = 0;
+        		int other2 = 0;
+        		int other3 = 0;
+        		int other4 = 0;
+        		int other5 = 0;
+        		for(HtyFctCustAllDto custDto : custList){
+        			String user = custDto.getOrgCode();
+        			Integer time = 0;
+        			if(bossType == 0){
+        				time = custDto.getQtyBoss().intValue();
+        				if(custDto.getQtyBoss() != null){
+            				if(time <= HtyFctCustUtil.S1_1*level){
+            					if(userId.equals(user)){
+            						my1++;
+            					}else{
+            						other1++;
+            					}
+            				}else if(time > HtyFctCustUtil.S1_2*level && time <= HtyFctCustUtil.S1_3*level){
+            					if(userId.equals(user)){
+            						my2++;
+            					}else{
+            						other2++;
+            					}
+            				}else if(time > HtyFctCustUtil.S1_3*level && time <= HtyFctCustUtil.S1_4*level){
+            					if(userId.equals(user)){
+            						my3++;
+            					}else{
+            						other3++;
+            					}
+            				}else if(time > HtyFctCustUtil.S1_4*level && time <= HtyFctCustUtil.S1_5*level){
+            					if(userId.equals(user)){
+            						my4++;
+            					}else{
+            						other4++;
+            					}
+            				}else if(time > HtyFctCustUtil.S1_5*level){
+            					if(userId.equals(user)){
+            						my5++;
+            					}else{
+            						other5++;
+            					}
+            				}
+        				}else{
+        					if(userId.equals(user)){
+        						my1++;
+        					}else{
+        						other1++;
+        					}
+        				}
+        			}else if(bossType == 1){
+        				time = custDto.getQtyB2b().intValue();
+        				if(custDto.getQtyBoss() != null){
+            				if(time <= HtyFctCustUtil.S2_1*level){
+            					if(userId.equals(user)){
+            						my1++;
+            					}else{
+            						other1++;
+            					}
+            				}else if(time > HtyFctCustUtil.S2_2*level && time <= HtyFctCustUtil.S2_3*level){
+            					if(userId.equals(user)){
+            						my2++;
+            					}else{
+            						other2++;
+            					}
+            				}else if(time > HtyFctCustUtil.S2_3*level && time <= HtyFctCustUtil.S2_4*level){
+            					if(userId.equals(user)){
+            						my3++;
+            					}else{
+            						other3++;
+            					}
+            				}else if(time > HtyFctCustUtil.S2_4*level && time <= HtyFctCustUtil.S2_5*level){
+            					if(userId.equals(user)){
+            						my4++;
+            					}else{
+            						other4++;
+            					}
+            				}else if(time > HtyFctCustUtil.S2_5*level){
+            					if(userId.equals(user)){
+            						my5++;
+            					}else{
+            						other5++;
+            					}
+            				}
+        				}else{
+        					if(userId.equals(user)){
+        						my1++;
+        					}else{
+        						other1++;
+        					}
+        				}
+        			}
+        			//分部平均值
+        			other1 = other1/level;
+        			other2 = other2/level;
+        			other3 = other3/level;
+        			other4 = other4/level;
+        			other5 = other5/level;
+        		}
+        		listDate.add(String.valueOf(my1));
+        		listDate.add(String.valueOf(my2));
+        		listDate.add(String.valueOf(my3));
+        		listDate.add(String.valueOf(my4));
+        		listDate.add(String.valueOf(my5));
+        		listPair.add(String.valueOf(other1));
+        		listPair.add(String.valueOf(other2));
+        		listPair.add(String.valueOf(other3));
+        		listPair.add(String.valueOf(other4));
+        		listPair.add(String.valueOf(other5));
+        		custAllDto.setListName(listName);
+        		custAllDto.setListDate(listDate);
+        		custAllDto.setListPair(listPair);
+        	}
+        	//右下圈
+        	List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+        	if(custUpDto != null){
+        		Map<String,String> map1 = new HashMap<String,String>();
+            	Map<String,String> map2 = new HashMap<String,String>();
+            	Map<String,String> map3 = new HashMap<String,String>();
+            	Map<String,String> map4 = new HashMap<String,String>();
+	        	map1.put("name", "超级老板采购");
+	        	map1.put("value", custUpDto.getAmtOnlineBoss()!=null?custUpDto.getAmtOnlineBoss().toString():"0");
+	        	map2.put("name", "商城采购");
+	        	map2.put("value", custUpDto.getAmtOnlineB2b()!=null?custUpDto.getAmtOnlineB2b().toString():"0");
+	        	map4.put("name", "VMS采购");
+	        	map4.put("value", custUpDto.getAmtOnlineVms()!=null?custUpDto.getAmtOnlineVms().toString():"0");
+	        	map3.put("name", "线下采购");
+	        	if(custUpDto.getAmtAll() != null && custUpDto.getAmtOnline() !=null){
+	        		map3.put("value", String.valueOf(custUpDto.getAmtAll().doubleValue()-custUpDto.getAmtOnline().doubleValue()));
+	        	}else{
+	        		map3.put("value", "0");
+	        	}
+	        	list.add(map1);
+	        	list.add(map2);
+	        	list.add(map3);
+	        	list.add(map4);
+        	}
+        	custAllDto.setMap(list);
+        	result.setData(custAllDto);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+        	logger.error("用户分析" + e);
+        	result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+        	result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+        }
+     return result;
 	}
 }

@@ -31,4 +31,14 @@ public class HtyFctCustUtil {
 	public static final int T6_3 = 5;
 	public static final int T6_4 = 10;
 	public static final int T6_5 = 50;
+	public static final int S1_1 = 0;
+	public static final int S1_2 = 1;
+	public static final int S1_3 = 5;
+	public static final int S1_4 = 10;
+	public static final int S1_5 = 30;
+	public static final int S2_1 = 0;
+	public static final int S2_2 = 1;
+	public static final int S2_3 = 5;
+	public static final int S2_4 = 10;
+	public static final int S2_5 = 30;
 }

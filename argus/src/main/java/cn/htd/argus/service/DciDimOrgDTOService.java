@@ -12,4 +12,6 @@ public interface DciDimOrgDTOService {
     DciDimOrgDTO select(DciDimOrgDTO dto);
     
     int selectAllNum();
+    
+    Integer selectRegionNum(String userId);
 }

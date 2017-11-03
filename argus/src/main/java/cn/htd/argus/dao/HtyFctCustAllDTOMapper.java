@@ -2,6 +2,7 @@ package cn.htd.argus.dao;
 
 import java.util.List;
 
+import cn.htd.argus.bean.HtyFctCustAnalysisInDTO;
 import cn.htd.argus.bean.HtyFctCustInDto;
 import cn.htd.argus.dto.HtyFctCustAllDto;
 
@@ -13,4 +14,19 @@ public interface HtyFctCustAllDTOMapper {
     
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
     
+    Integer selectForAmtAll(HtyFctCustAnalysisInDTO inDto);
+    
+    HtyFctCustAllDto selectForAnalysis(HtyFctCustAnalysisInDTO inDto);
+    
+    Integer selectForAmtOnline(HtyFctCustAnalysisInDTO inDto);
+    
+    Integer selectForQtyB2b(HtyFctCustAnalysisInDTO inDto);
+    
+    Integer selectForQtyBoss(HtyFctCustAnalysisInDTO inDto);
+    
+    Integer selectForQtyHzg(HtyFctCustAnalysisInDTO inDto);
+    
+    Integer selectForAmtDk(HtyFctCustAnalysisInDTO inDto);
+    
+    List<HtyFctCustAllDto> selectForPair(HtyFctCustAnalysisInDTO inDto);
 }
