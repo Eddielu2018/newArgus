@@ -44,7 +44,6 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
 		return  dao.selectByNoPair(inDto);
 	}
 
-<<<<<<< HEAD
 	@Override
 	public Integer selectForAmtAll(String userId, String startTime, String endTime, int type,Integer regionOrg) {
 		if (userId == null) {
@@ -226,7 +225,7 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
 		inDto.setType(type);
 		return dao.selectForPair(inDto);
 	}
-=======
+
     @Override
     public List<HtyFctCustAllDto> queryActiveVipByCondition(HtyFctCustAllDto htyFctCustAllDto) {
         return dao.queryActiveVipByCondition(htyFctCustAllDto);
@@ -236,5 +235,5 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
     public List<HtyFctCustAllDto> queryExport(HtyFctCustAllDto htyFctCustAllDto) {
         return dao.queryExport(htyFctCustAllDto);
     }
->>>>>>> develop
+
 }
