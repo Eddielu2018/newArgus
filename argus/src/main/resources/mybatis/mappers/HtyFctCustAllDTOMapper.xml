@@ -161,12 +161,24 @@
    		<if test="userId != null">
         	and org_code = #{userId}
     	</if>
-    	<if test="custStartTime != null">
-        	and cust_rq &gt;= #{custStartTime}
-    	</if>
-    	<if test="custEndTime != null">
-        	and cust_rq &lt;= #{custEndTime}
-    	</if>
+    	<choose>
+    		<when  test="custStartTime !=null and custEndTime != null">
+    			<choose>
+    				<when  test="custStartTime == custEndTime">
+    					and cust_rq = #{custStartTime}
+    				</when>
+    				<otherwise>
+    					and cust_rq &gt;= #{custStartTime} and cust_rq &lt;= #{custEndTime}
+    				</otherwise>
+    			</choose>
+    		</when>
+    		<when  test="custStartTime !=null">
+    			and cust_rq &gt;= #{custStartTime}
+    		</when>
+    		<when  test="custEndTime != null">
+    			and cust_rq &lt;= #{custEndTime}
+    		</when>
+    	</choose>
     	<if test="firstTime != null">
         	and date_key = #{firstTime}
     	</if>
@@ -253,5 +265,175 @@
     		</choose>
     	</if>
     </where>
+  </select>
+  
+  <select id="selectForAnalysis" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+  	SELECT sum(amt_all) as amt_all,sum(amt_online) as amt_online,sum(qty_b2b) 
+  	as qty_b2b,sum(qty_boss)as qty_boss,SUM(qty_hzg) as qty_hzg,sum(amt_dk) 
+  	as amt_dk,sum(amt_online_boss) as amt_online_boss,sum(amt_online_b2b) 
+  	as amt_online_b2b,sum(amt_online_vms) as amt_online_vms FROM hty_fct_cust_all 
+  	where org_code=#{userId} and date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+  	<choose>
+  		<when test="type == 0">
+  			and is_cust = 1 
+  		</when>
+  		<when test="type == 1">
+  			and is_hy = 1 
+  		</when>
+  		<when test="type == 2">
+  			and is_vip = 1 
+  		</when>
+  	</choose>
+  </select>
+  
+  <select id="selectForAmtAll" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+  	select u.amtAllNum from (  
+	select t.amtAll, t.ORG_CODE ,(@rowNum:=@rowNum+1) as amtAllNum from 
+	(select a.amtAll, a.ORG_CODE from 
+	(SELECT sum(amt_all) as amtAll, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	<choose>
+  		<when test="type == 0">
+  			and is_cust = 1 
+  		</when>
+  		<when test="type == 1">
+  			and is_hy = 1 
+  		</when>
+  		<when test="type == 2">
+  			and is_vip = 1 
+  		</when>
+  	</choose>
+	 and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.amtAll DESC ) t,(select (@rowNum :=0) ) b 
+ 	) u where u.ORG_CODE = #{userId} 
+  </select>
+  
+  <select id="selectForAmtOnline" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+  	select u.amtOnlineNum from (  
+	select t.amtOnline, t.ORG_CODE ,(@rowNum:=@rowNum+1) as amtOnlineNum from 
+	(select a.amtOnline, a.ORG_CODE from 
+	(SELECT sum(amt_online) as amtOnline, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	<choose>
+  		<when test="type == 0">
+  			and is_cust = 1 
+  		</when>
+  		<when test="type == 1">
+  			and is_hy = 1 
+  		</when>
+  		<when test="type == 2">
+  			and is_vip = 1 
+  		</when>
+  	</choose>
+	 and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.amtOnline DESC ) t,(select (@rowNum :=0) ) b 
+ 	) u where u.ORG_CODE = #{userId} 
+  </select>
+  
+  <select id="selectForQtyB2b" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+  	select u.qtyB2bNum from (  
+	select t.qtyB2b, t.ORG_CODE ,(@rowNum:=@rowNum+1) as qtyB2bNum from 
+	(select a.qtyB2b, a.ORG_CODE from 
+	(SELECT sum(qty_b2b) as qtyB2b, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	<choose>
+  		<when test="type == 0">
+  			and is_cust = 1 
+  		</when>
+  		<when test="type == 1">
+  			and is_hy = 1 
+  		</when>
+  		<when test="type == 2">
+  			and is_vip = 1 
+  		</when>
+  	</choose>
+	 and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.qtyB2b DESC ) t,(select (@rowNum :=0) ) b 
+ 	) u where u.ORG_CODE = #{userId} 
+  </select>
+  
+  <select id="selectForQtyBoss" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+  	select u.qtyBossNum from (  
+	select t.qtyBoss, t.ORG_CODE ,(@rowNum:=@rowNum+1) as qtyBossNum from 
+	(select a.qtyBoss, a.ORG_CODE from 
+	(SELECT sum(qty_boss) as qtyBoss, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	<choose>
+  		<when test="type == 0">
+  			and is_cust = 1 
+  		</when>
+  		<when test="type == 1">
+  			and is_hy = 1 
+  		</when>
+  		<when test="type == 2">
+  			and is_vip = 1 
+  		</when>
+  	</choose>
+	 and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.qtyBoss DESC ) t,(select (@rowNum :=0) ) b 
+ 	) u where u.ORG_CODE = #{userId}
+  </select>
+  
+  <select id="selectForQtyHzg" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+  	select u.qtyHzgNum from (  
+	select t.qtyHzg, t.ORG_CODE ,(@rowNum:=@rowNum+1) as qtyHzgNum from 
+	(select a.qtyHzg, a.ORG_CODE from 
+	(SELECT sum(qty_hzg) as qtyHzg, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	<choose>
+  		<when test="type == 0">
+  			and is_cust = 1 
+  		</when>
+  		<when test="type == 1">
+  			and is_hy = 1 
+  		</when>
+  		<when test="type == 2">
+  			and is_vip = 1 
+  		</when>
+  	</choose>
+	 and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.qtyHzg DESC ) t,(select (@rowNum :=0) ) b 
+ 	) u where u.ORG_CODE = #{userId}
+  </select>
+  
+  <select id="selectForAmtDk" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+  	select u.amtDkNum from (  
+	select t.amtDk, t.ORG_CODE ,(@rowNum:=@rowNum+1) as amtDkNum from 
+	(select a.amtDk, a.ORG_CODE from 
+	(SELECT sum(amt_dk) as amtDk, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	<choose>
+  		<when test="type == 0">
+  			and is_cust = 1 
+  		</when>
+  		<when test="type == 1">
+  			and is_hy = 1 
+  		</when>
+  		<when test="type == 2">
+  			and is_vip = 1 
+  		</when>
+  	</choose>
+	 and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.amtDk DESC ) t,(select (@rowNum :=0) ) b 
+ 	) u where u.ORG_CODE = #{userId}
+  </select>
+  
+  <select id="selectForPair" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+  	select sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,org_code,cust_code from hty_fct_cust_all 
+  	where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+  	 and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP BY cust_code
+  	<choose>
+  		<when test="type == 0">
+  			and is_cust = 1 
+  		</when>
+  		<when test="type == 1">
+  			and is_hy = 1 
+  		</when>
+  		<when test="type == 2">
+  			and is_vip = 1 
+  		</when>
+  	</choose>
   </select>
 </mapper>

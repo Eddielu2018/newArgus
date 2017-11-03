@@ -1,5 +1,6 @@
 package cn.htd.argus.dao;
 
+import cn.htd.argus.bean.HtyFctCustAnalysisInDTO;
 import cn.htd.argus.dto.DciDimOrgDTO;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface DciDimOrgDTOMapper {
     List<DciDimOrgDTO> select(DciDimOrgDTO model);
     
     int selectAllNum();
+    
+    Integer selectRegionNum(HtyFctCustAnalysisInDTO dto);
 }

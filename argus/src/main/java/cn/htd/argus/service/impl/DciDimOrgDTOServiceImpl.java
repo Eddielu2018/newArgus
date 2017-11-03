@@ -1,5 +1,6 @@
 package cn.htd.argus.service.impl;
 
+import cn.htd.argus.bean.HtyFctCustAnalysisInDTO;
 import cn.htd.argus.dao.DciDimOrgDTOMapper;
 import cn.htd.argus.dto.DciDimOrgDTO;
 import cn.htd.argus.service.DciDimOrgDTOService;
@@ -39,5 +40,15 @@ public class DciDimOrgDTOServiceImpl implements DciDimOrgDTOService{
 	@Override
 	public int selectAllNum() {
 		return dao.selectAllNum();
+	}
+
+	@Override
+	public Integer selectRegionNum(String userId) {
+		if (userId == null) {
+            throw new IllegalArgumentException("userId is null");
+        }
+		HtyFctCustAnalysisInDTO dto = new HtyFctCustAnalysisInDTO();
+		dto.setUserId(userId);
+		return dao.selectRegionNum(dto);
 	}
 }
