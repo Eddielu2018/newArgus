@@ -412,7 +412,6 @@ public class DateUtil {
 				return false;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			return false;
 		}
 
