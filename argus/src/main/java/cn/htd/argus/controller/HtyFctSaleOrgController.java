@@ -18,6 +18,7 @@ import java.util.List;
 
 
 /**
+ * 选品定价
  * Created by wangtp on 2017/10/10.
  */
 @RestController

@@ -1,5 +1,6 @@
 package cn.htd.argus.bean;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import cn.htd.argus.dto.HtyFctSaleCityProdDTO;
@@ -10,63 +11,128 @@ import cn.htd.argus.dto.HtyFctXwB2bSearchKeyDTO;
 
 //落地页面的返回bean
 public class UserBeHaviorSearchDTO {
-	// 搜索量
-	List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTO;
-	// 落地页面访问数量
-	List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO;
+    // 落地页面访问数量
+    List<String> b2bLndPageList;
+    List<BigDecimal> b2bLndPageNumList;
+    // 搜索量
+    List<String> b2bSearchKeyList;
+    List<BigDecimal> b2bSearchKeyNumList;
 	// 单品访问数量
-	List<HtyFctXwB2bItemAccessDTO> htyFctXwB2bItemAccessDTO;
+    List<String> b2bItemAccessList;
+    List<BigDecimal> b2bItemAccessNumList;
 	// 单品销售数量
-	List<HtyFctSaleCityProdDTO> htyFctSaleCityProdDTO;
+    List<String> b2bSaleCityProdyList;
+    List<BigDecimal> b2bSaleCityProdNumList;
 	// 漏斗转化及复购
-	List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTO;
-	List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTORepeatBuy;
+    List<String> b2bConvFunnelList;
+    List<BigDecimal> b2bConvFunnelNumList;
+    //复购
+    List<String> b2bRepeatBuyList;
+    List<BigDecimal> b2bRepeatBuyNumList;
+    //本省
+        //关键字
+    List<HtyFctXwB2bSearchKeyDTO>  htyFctXwB2bSearchKeyDTOList;
+    public List<String> getB2bSearchKeyList() {
+        return b2bSearchKeyList;
+    }
 
-	public List<HtyFctXwB2bConvFunnelDTO> getHtyFctXwB2bConvFunnelDTORepeatBuy() {
-		return htyFctXwB2bConvFunnelDTORepeatBuy;
-	}
+    public void setB2bSearchKeyList(List<String> b2bSearchKeyList) {
+        this.b2bSearchKeyList = b2bSearchKeyList;
+    }
 
-	public void setHtyFctXwB2bConvFunnelDTORepeatBuy(List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTORepeatBuy) {
-		this.htyFctXwB2bConvFunnelDTORepeatBuy = htyFctXwB2bConvFunnelDTORepeatBuy;
-	}
+    public List<BigDecimal> getB2bSearchKeyNumList() {
+        return b2bSearchKeyNumList;
+    }
 
-	public List<HtyFctXwB2bConvFunnelDTO> getHtyFctXwB2bConvFunnelDTO() {
-		return htyFctXwB2bConvFunnelDTO;
-	}
+    public void setB2bSearchKeyNumList(List<BigDecimal> b2bSearchKeyNumList) {
+        this.b2bSearchKeyNumList = b2bSearchKeyNumList;
+    }
 
-	public void setHtyFctXwB2bConvFunnelDTO(List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTO) {
-		this.htyFctXwB2bConvFunnelDTO = htyFctXwB2bConvFunnelDTO;
-	}
+    public List<String> getB2bLndPageList() {
+        return b2bLndPageList;
+    }
 
-	public List<HtyFctSaleCityProdDTO> getHtyFctSaleCityProdDTO() {
-		return htyFctSaleCityProdDTO;
-	}
+    public void setB2bLndPageList(List<String> b2bLndPageList) {
+        this.b2bLndPageList = b2bLndPageList;
+    }
 
-	public void setHtyFctSaleCityProdDTO(List<HtyFctSaleCityProdDTO> htyFctSaleCityProdDTO) {
-		this.htyFctSaleCityProdDTO = htyFctSaleCityProdDTO;
-	}
+    public List<BigDecimal> getB2bLndPageNumList() {
+        return b2bLndPageNumList;
+    }
 
-	public List<HtyFctXwB2bItemAccessDTO> getHtyFctXwB2bItemAccessDTO() {
-		return htyFctXwB2bItemAccessDTO;
-	}
+    public void setB2bLndPageNumList(List<BigDecimal> b2bLndPageNumList) {
+        this.b2bLndPageNumList = b2bLndPageNumList;
+    }
 
-	public void setHtyFctXwB2bItemAccessDTO(List<HtyFctXwB2bItemAccessDTO> htyFctXwB2bItemAccessDTO) {
-		this.htyFctXwB2bItemAccessDTO = htyFctXwB2bItemAccessDTO;
-	}
+    public List<String> getB2bItemAccessList() {
+        return b2bItemAccessList;
+    }
 
-	public List<HtyFctXwB2bLndPageDTO> getHtyFctXwB2bLndPageDTO() {
-		return htyFctXwB2bLndPageDTO;
-	}
+    public void setB2bItemAccessList(List<String> b2bItemAccessList) {
+        this.b2bItemAccessList = b2bItemAccessList;
+    }
 
-	public void setHtyFctXwB2bLndPageDTO(List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO) {
-		this.htyFctXwB2bLndPageDTO = htyFctXwB2bLndPageDTO;
-	}
+    public List<BigDecimal> getB2bItemAccessNumList() {
+        return b2bItemAccessNumList;
+    }
 
-	public List<HtyFctXwB2bSearchKeyDTO> getHtyFctXwB2bSearchKeyDTO() {
-		return htyFctXwB2bSearchKeyDTO;
-	}
+    public void setB2bItemAccessNumList(List<BigDecimal> b2bItemAccessNumList) {
+        this.b2bItemAccessNumList = b2bItemAccessNumList;
+    }
 
-	public void setHtyFctXwB2bSearchKeyDTO(List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTO) {
-		this.htyFctXwB2bSearchKeyDTO = htyFctXwB2bSearchKeyDTO;
-	}
+    public List<String> getB2bSaleCityProdyList() {
+        return b2bSaleCityProdyList;
+    }
+
+    public void setB2bSaleCityProdyList(List<String> b2bSaleCityProdyList) {
+        this.b2bSaleCityProdyList = b2bSaleCityProdyList;
+    }
+
+    public List<BigDecimal> getB2bSaleCityProdNumList() {
+        return b2bSaleCityProdNumList;
+    }
+
+    public void setB2bSaleCityProdNumList(List<BigDecimal> b2bSaleCityProdNumList) {
+        this.b2bSaleCityProdNumList = b2bSaleCityProdNumList;
+    }
+
+    public List<String> getB2bConvFunnelList() {
+        return b2bConvFunnelList;
+    }
+
+    public void setB2bConvFunnelList(List<String> b2bConvFunnelList) {
+        this.b2bConvFunnelList = b2bConvFunnelList;
+    }
+
+    public List<BigDecimal> getB2bConvFunnelNumList() {
+        return b2bConvFunnelNumList;
+    }
+
+    public void setB2bConvFunnelNumList(List<BigDecimal> b2bConvFunnelNumList) {
+        this.b2bConvFunnelNumList = b2bConvFunnelNumList;
+    }
+
+    public List<String> getB2bRepeatBuyList() {
+        return b2bRepeatBuyList;
+    }
+
+    public void setB2bRepeatBuyList(List<String> b2bRepeatBuyList) {
+        this.b2bRepeatBuyList = b2bRepeatBuyList;
+    }
+
+    public List<BigDecimal> getB2bRepeatBuyNumList() {
+        return b2bRepeatBuyNumList;
+    }
+
+    public void setB2bRepeatBuyNumList(List<BigDecimal> b2bRepeatBuyNumList) {
+        this.b2bRepeatBuyNumList = b2bRepeatBuyNumList;
+    }
+
+    public List<HtyFctXwB2bSearchKeyDTO> getHtyFctXwB2bSearchKeyDTOList() {
+        return htyFctXwB2bSearchKeyDTOList;
+    }
+
+    public void setHtyFctXwB2bSearchKeyDTOList(List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTOList) {
+        this.htyFctXwB2bSearchKeyDTOList = htyFctXwB2bSearchKeyDTOList;
+    }
 }

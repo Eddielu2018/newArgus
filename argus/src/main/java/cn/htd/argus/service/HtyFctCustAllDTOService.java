@@ -13,7 +13,7 @@ public interface HtyFctCustAllDTOService {
 	HtyFctCustAllDto selectByPrimaryKey(Long id);
 
     HtyFctCustAllDto select(HtyFctCustAllDto dto);
-    
+
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
     
     Integer selectForAmtAll(String userId,String startTime,String endTime,int type,Integer regionOrg);
@@ -31,4 +31,10 @@ public interface HtyFctCustAllDTOService {
     Integer selectForAmtDk(String userId,String startTime,String endTime,int type,Integer regionOrg);
     
     List<HtyFctCustAllDto> selectForPair(String userId,String startTime,String endTime,int type);
+
+
+    List<HtyFctCustAllDto> queryActiveVipByCondition(HtyFctCustAllDto htyFctCustAllDto);
+
+    List<HtyFctCustAllDto>queryExport(HtyFctCustAllDto htyFctCustAllDto);
+
 }

@@ -13,4 +13,7 @@ import cn.htd.argus.dto.HtyFctXwB2bLndPageDTO;
  * */
 public interface HtyFctXwB2bLndPageDTOMapper {
 	List<HtyFctXwB2bLndPageDTO> queryAllAccessQty(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
+    List<HtyFctXwB2bLndPageDTO> queryByProNameAndCityName(@Param("htyFctXwB2bLndPageDTO")HtyFctXwB2bLndPageDTO htyFctXwB2bLndPageDTO,@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
+    HtyFctXwB2bLndPageDTO queryCityName(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
+    HtyFctXwB2bLndPageDTO  queryProName(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
 }

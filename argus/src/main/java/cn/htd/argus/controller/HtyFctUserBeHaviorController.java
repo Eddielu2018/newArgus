@@ -1,6 +1,10 @@
 package cn.htd.argus.controller;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import cn.htd.argus.util.DateTimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,7 @@ import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.RestResult;
 
 /**
+ * 用户行为
  * Created by suntao on 2017/10/16.
  */
 @RestController
@@ -60,18 +65,14 @@ public class HtyFctUserBeHaviorController {
 	public RestResult HtyFctUserBeHavior(
 			@RequestParam(value = "startTime", required = false) String startTime,
 			@RequestParam(value = "endTime", required = false) String endTime,
-			@RequestParam(value = "countryName", required = false) String countryName,
-			@RequestParam(value = "provinceName", required = false) String provinceName,
-			@RequestParam(value = "cityName", required = false) String cityName,
-            @RequestParam(value = "townName", required = false) String townName,
-            @RequestParam(value = "custCountryName", required = false) String custCountryName
+			@RequestParam(value = "radio", required = false) String radio,
+            @RequestParam(value = "period",required = false)String period
     ) {
 		RestResult result = new RestResult();
 		try {
-			// 1.返回值 和接受参数的对象创建
 			UserBeHaviorSearchDTO userBeHaviorSearchDTO = new UserBeHaviorSearchDTO();// 返回值
 			HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO = new HtyFctUserBeHaviorSearchDTO();// 获得参数的对象
-			// 2.日期类型的转换以及参数的设置 通过alibb的封装号的代码 进行判断 bean的对象的调用
+
 			startTime = DateUtil.conversionDate(startTime);
 			endTime = DateUtil.conversionDate(endTime);
 			// 从请求里组装bean包中对象的参数
@@ -81,44 +82,236 @@ public class HtyFctUserBeHaviorController {
 			if (StringUtils.isNotEmpty(endTime)) {
 				htyFctUserBeHaviorSearchDTO.setEndTime(endTime);
             }
-			if (StringUtils.isNotEmpty(countryName)) {
-				htyFctUserBeHaviorSearchDTO.setCountryName(countryName);
+            if (StringUtils.isEmpty(period)){
+                String date= DateTimeUtil.getTodayChar8();
+                htyFctUserBeHaviorSearchDTO.setPeriod(date);
             }
-			if (StringUtils.isNotEmpty(provinceName)) {
-				htyFctUserBeHaviorSearchDTO.setProvinceName(provinceName);
+            List<String> b2bLndPageList=new ArrayList<String>();
+            List<BigDecimal> b2bLndPageNumList=new ArrayList<BigDecimal>();
+            List<String> b2bSearchKeyList=new ArrayList<String>();
+            List<BigDecimal> b2bSearchKeyNumList=new ArrayList<BigDecimal>();
+            List<String> b2bItemAccessList=new ArrayList<String>();
+            List<BigDecimal> b2bItemAccessNumList=new ArrayList<BigDecimal>();
+            List<String> b2bConvFunnelList=new ArrayList<String>();
+            List<BigDecimal> b2bConvFunnelNumList=new ArrayList<BigDecimal>();
+            List<String> b2bRepeatBuyList=new ArrayList<String>();
+            List<BigDecimal> b2bRepeatBuyNumList=new ArrayList<BigDecimal>();
+            List<String> b2bSaleCityProdyList=new ArrayList<String>();
+            List<BigDecimal> b2bSaleCityProdNumList=new ArrayList<BigDecimal>();
+            //全国 暂时没有国外
+            if(radio.equals(0)||radio==null&&radio==""){
+                // 落地页面的访问数量
+                List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO = htyFctXwB2bLndPageDTOService
+                        .queryAllAccessQty(htyFctUserBeHaviorSearchDTO);
+                if(htyFctXwB2bLndPageDTO!=null){
+                    for (HtyFctXwB2bLndPageDTO b2bLndPage:htyFctXwB2bLndPageDTO){
+                        b2bLndPageNumList.add(b2bLndPage.getAccessQty());
+                        b2bLndPageList.add(b2bLndPage.getPageTitle());
+                    }
+                    userBeHaviorSearchDTO.setB2bLndPageList(b2bLndPageList);
+                    userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
+                }
+                // 关键词搜索
+                List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTO = htyFctXwB2bSearchKeyDTOService
+                        .queryAllSearchKeyWord(htyFctUserBeHaviorSearchDTO);
+                if (htyFctXwB2bSearchKeyDTO!=null){
+                    for(HtyFctXwB2bSearchKeyDTO b2bSearchKey:htyFctXwB2bSearchKeyDTO){
+                        b2bSearchKeyList.add(b2bSearchKey.getSearchKeyword());
+                        b2bSearchKeyNumList.add(b2bSearchKey.getSearchQty());
+                    }
+                    userBeHaviorSearchDTO.setB2bSearchKeyList(b2bSearchKeyList);
+                    userBeHaviorSearchDTO.setB2bSearchKeyNumList(b2bSearchKeyNumList);
+                }
+                // 单品访问数量
+                List<HtyFctXwB2bItemAccessDTO> htyFctXwB2bItemAccessDTO = htyFctXwB2bItemAccessDTOService
+                        .queryOneItemAccessQty(htyFctUserBeHaviorSearchDTO);
+
+                if(htyFctXwB2bItemAccessDTO!=null){
+                    for (HtyFctXwB2bItemAccessDTO b2bItemAccess:htyFctXwB2bItemAccessDTO){
+                        b2bItemAccessList.add(b2bItemAccess.getItemId());
+                        b2bItemAccessNumList.add(b2bItemAccess.getAccessQty());
+                    }
+                    userBeHaviorSearchDTO.setB2bItemAccessNumList(b2bItemAccessNumList);
+                    userBeHaviorSearchDTO.setB2bItemAccessList(b2bItemAccessList);
+                }
+                // 漏斗转换及复购
+                // 1漏斗购买
+                List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTO = htyFctXwB2bConvFunnelDTOService
+                        .queryStepSequenceNum(htyFctUserBeHaviorSearchDTO);
+                if(htyFctXwB2bConvFunnelDTO!=null){
+                    for (HtyFctXwB2bConvFunnelDTO b2bConvFunnel:htyFctXwB2bConvFunnelDTO){
+                        b2bConvFunnelList.add(b2bConvFunnel.getStepName());
+                        b2bConvFunnelNumList.add(b2bConvFunnel.getStepSequence());
+                    }
+                    userBeHaviorSearchDTO.setB2bConvFunnelList(b2bConvFunnelList);
+                    userBeHaviorSearchDTO.setB2bConvFunnelNumList(b2bConvFunnelNumList);
+                }
+                // 2重复购买
+                List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTORepeatBuy = htyFctXwB2bConvFunnelDTOService
+                        .queryByPaySuccessNextDay(htyFctUserBeHaviorSearchDTO);
+
+                if(htyFctXwB2bConvFunnelDTORepeatBuy!=null){
+                    for(HtyFctXwB2bConvFunnelDTO repeatBuy:htyFctXwB2bConvFunnelDTORepeatBuy){
+                        b2bRepeatBuyList.add(repeatBuy.getStepName());
+                        b2bRepeatBuyNumList.add(repeatBuy.getStepSequence());
+                    }
+                    userBeHaviorSearchDTO.setB2bRepeatBuyList(b2bRepeatBuyList);
+                    userBeHaviorSearchDTO.setB2bRepeatBuyNumList(b2bRepeatBuyNumList);
+                }
+                // 成交单品
+                List<HtyFctSaleCityProdDTO> htyFctSaleCityProdDTO = htyFctSaleCityProdDTOService
+                        .querySaleOutItemNum(htyFctUserBeHaviorSearchDTO);
+                if(htyFctSaleCityProdDTO!=null){
+                    for (HtyFctSaleCityProdDTO saleCityProd:htyFctSaleCityProdDTO){
+                        b2bSaleCityProdyList.add(saleCityProd.getProdName());
+                        b2bSaleCityProdNumList.add(saleCityProd.getXsQty());
+                    }
+                    userBeHaviorSearchDTO.setB2bSaleCityProdyList(b2bSaleCityProdyList);
+                    userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdNumList);
+                }
             }
-			if (StringUtils.isNotEmpty(cityName)) {
-				htyFctUserBeHaviorSearchDTO.setCityName(cityName);
+            //省查询
+            if(radio=="1"){
+                //关键词
+                HtyFctXwB2bSearchKeyDTO searchKeyProName =htyFctXwB2bSearchKeyDTOService.queryProNameSearchKey(htyFctUserBeHaviorSearchDTO);
+                List<HtyFctXwB2bSearchKeyDTO>  htyFctXwB2bSearchKeyDTO= htyFctXwB2bSearchKeyDTOService.queryByNameSearchKey(searchKeyProName, htyFctUserBeHaviorSearchDTO);
+                if(htyFctXwB2bSearchKeyDTO!=null){
+                    for (HtyFctXwB2bSearchKeyDTO b2bSearchKey:htyFctXwB2bSearchKeyDTO){
+                    b2bSearchKeyList.add(b2bSearchKey.getSearchKeyword());
+                    b2bSearchKeyNumList.add(b2bSearchKey.getSearchQty());
+                    }
+                    userBeHaviorSearchDTO.setB2bSearchKeyList(b2bSearchKeyList);
+                    userBeHaviorSearchDTO.setB2bSearchKeyNumList(b2bSearchKeyNumList);
+                }
+                //落地页
+                HtyFctXwB2bLndPageDTO b2bLndPageProName =htyFctXwB2bLndPageDTOService.queryProName(htyFctUserBeHaviorSearchDTO);
+                List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO= htyFctXwB2bLndPageDTOService.queryByProNameAndCityName(b2bLndPageProName, htyFctUserBeHaviorSearchDTO);
+                if(htyFctXwB2bLndPageDTO!=null){
+                    for (HtyFctXwB2bLndPageDTO b2bLndPage:htyFctXwB2bLndPageDTO){
+                        b2bLndPageNumList.add(b2bLndPage.getAccessQty());
+                        b2bLndPageList.add(b2bLndPage.getPageTitle());
+                    }
+                    userBeHaviorSearchDTO.setB2bLndPageList(b2bLndPageList);
+                    userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
+                }
+                //单品访问量
+                HtyFctXwB2bItemAccessDTO b2bItemAccessPro=htyFctXwB2bItemAccessDTOService.queryProName(htyFctUserBeHaviorSearchDTO);
+                List<HtyFctXwB2bItemAccessDTO>htyFctXwB2bItemAccessDTO=htyFctXwB2bItemAccessDTOService.queryByProAndCity(b2bItemAccessPro,htyFctUserBeHaviorSearchDTO);
+                if(htyFctXwB2bItemAccessDTO!=null){
+                    for (HtyFctXwB2bItemAccessDTO b2bItemAccess:htyFctXwB2bItemAccessDTO){
+                        b2bItemAccessList.add(b2bItemAccess.getItemId());
+                        b2bItemAccessNumList.add(b2bItemAccess.getAccessQty());
+                    }
+                    userBeHaviorSearchDTO.setB2bItemAccessNumList(b2bItemAccessNumList);
+                    userBeHaviorSearchDTO.setB2bItemAccessList(b2bItemAccessList);
+                }
+
+                // 漏斗转换及复购
+                // 1漏斗购买、
+                HtyFctXwB2bConvFunnelDTO b2bConvFunnelProName=htyFctXwB2bConvFunnelDTOService.queryProName(htyFctUserBeHaviorSearchDTO);
+                List<HtyFctXwB2bConvFunnelDTO>htyFctXwB2bConvFunnelDTO=htyFctXwB2bConvFunnelDTOService.queryByProAndCity(b2bConvFunnelProName,htyFctUserBeHaviorSearchDTO);
+                if(htyFctXwB2bConvFunnelDTO!=null){
+                    for (HtyFctXwB2bConvFunnelDTO b2bConvFunnel:htyFctXwB2bConvFunnelDTO){
+                        b2bConvFunnelList.add(b2bConvFunnel.getStepName());
+                        b2bConvFunnelNumList.add(b2bConvFunnel.getStepSequence());
+                    }
+                    userBeHaviorSearchDTO.setB2bConvFunnelList(b2bConvFunnelList);
+                    userBeHaviorSearchDTO.setB2bConvFunnelNumList(b2bConvFunnelNumList);
+                }
+                // 2重复购买
+                HtyFctXwB2bConvFunnelDTO b2bConvFunnelProNameRepeat=htyFctXwB2bConvFunnelDTOService.queryProName(htyFctUserBeHaviorSearchDTO);
+                List<HtyFctXwB2bConvFunnelDTO>htyFctXwB2bConvFunnelDTORepeatBuy=htyFctXwB2bConvFunnelDTOService.queryByProAndCityRepeat(b2bConvFunnelProNameRepeat, htyFctUserBeHaviorSearchDTO);
+                if(htyFctXwB2bConvFunnelDTORepeatBuy!=null){
+                    for(HtyFctXwB2bConvFunnelDTO repeatBuy:htyFctXwB2bConvFunnelDTORepeatBuy){
+                        b2bRepeatBuyList.add(repeatBuy.getStepName());
+                        b2bRepeatBuyNumList.add(repeatBuy.getStepSequence());
+                    }
+                    userBeHaviorSearchDTO.setB2bRepeatBuyList(b2bRepeatBuyList);
+                    userBeHaviorSearchDTO.setB2bRepeatBuyNumList(b2bRepeatBuyNumList);
+                }
+                // 成交单品
+                HtyFctSaleCityProdDTO htyFctSaleCityProdProName=htyFctSaleCityProdDTOService.queryProName(htyFctUserBeHaviorSearchDTO);
+                List<HtyFctSaleCityProdDTO>htyFctSaleCityProdDTO=htyFctSaleCityProdDTOService.queryProAndCity(htyFctSaleCityProdProName,htyFctUserBeHaviorSearchDTO);
+                if(htyFctSaleCityProdDTO!=null){
+                    for (HtyFctSaleCityProdDTO saleCityProd:htyFctSaleCityProdDTO){
+                        b2bSaleCityProdyList.add(saleCityProd.getProdName());
+                        b2bSaleCityProdNumList.add(saleCityProd.getXsQty());
+                    }
+                    userBeHaviorSearchDTO.setB2bSaleCityProdyList(b2bSaleCityProdyList);
+                    userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdNumList);
+                }
             }
-            if (StringUtils.isNotEmpty(townName)) {
-                htyFctUserBeHaviorSearchDTO.setTownName(townName);}
-            if (StringUtils.isNotEmpty(custCountryName)) {
-                htyFctUserBeHaviorSearchDTO.setCustCountryName(custCountryName);}
-			// 关键词搜索
-			List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTO = htyFctXwB2bSearchKeyDTOService
-					.queryAllSearchKeyWord(htyFctUserBeHaviorSearchDTO);
-			userBeHaviorSearchDTO.setHtyFctXwB2bSearchKeyDTO(htyFctXwB2bSearchKeyDTO);
-			// 落地 页面的访问数量
-			List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO = htyFctXwB2bLndPageDTOService
-					.queryAllAccessQty(htyFctUserBeHaviorSearchDTO);
-			userBeHaviorSearchDTO.setHtyFctXwB2bLndPageDTO(htyFctXwB2bLndPageDTO);
-			// 单品访问数量
-			List<HtyFctXwB2bItemAccessDTO> htyFctXwB2bItemAccessDTO = htyFctXwB2bItemAccessDTOService
-					.queryOneItemAccessQty(htyFctUserBeHaviorSearchDTO);
-			userBeHaviorSearchDTO.setHtyFctXwB2bItemAccessDTO(htyFctXwB2bItemAccessDTO);
-			// 漏斗转换及复购
-			// 1漏斗购买
-			List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTO = htyFctXwB2bConvFunnelDTOService
-					.queryStepSequenceNum(htyFctUserBeHaviorSearchDTO);
-			userBeHaviorSearchDTO.setHtyFctXwB2bConvFunnelDTO(htyFctXwB2bConvFunnelDTO);
-			// 2重复购买
-			List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTORepeatBuy = htyFctXwB2bConvFunnelDTOService
-					.queryByPaySuccessNextDay(htyFctUserBeHaviorSearchDTO);
-			userBeHaviorSearchDTO.setHtyFctXwB2bConvFunnelDTORepeatBuy(htyFctXwB2bConvFunnelDTORepeatBuy);
-			// 成交单品
-			List<HtyFctSaleCityProdDTO> htyFctSaleCityProdDTO = htyFctSaleCityProdDTOService
-					.querySaleOutItemNum(htyFctUserBeHaviorSearchDTO);
-			userBeHaviorSearchDTO.setHtyFctSaleCityProdDTO(htyFctSaleCityProdDTO);
+            //市查询
+            if(radio=="2"){
+                //关键词
+                HtyFctXwB2bSearchKeyDTO searchKeyCityName =htyFctXwB2bSearchKeyDTOService.queryCityNameSearchKey(htyFctUserBeHaviorSearchDTO);
+                List<HtyFctXwB2bSearchKeyDTO>  htyFctXwB2bSearchKeyDTO= htyFctXwB2bSearchKeyDTOService.queryByNameSearchKey( searchKeyCityName, htyFctUserBeHaviorSearchDTO);
+                if(htyFctXwB2bSearchKeyDTO!=null){
+                    for (HtyFctXwB2bSearchKeyDTO b2bSearchKey:htyFctXwB2bSearchKeyDTO){
+                        b2bSearchKeyList.add(b2bSearchKey.getSearchKeyword());
+                        b2bSearchKeyNumList.add(b2bSearchKey.getSearchQty());
+                    }
+                }
+                userBeHaviorSearchDTO.setB2bSearchKeyList(b2bSearchKeyList);
+                userBeHaviorSearchDTO.setB2bSearchKeyNumList(b2bSearchKeyNumList);
+            }
+            //落地页
+            HtyFctXwB2bLndPageDTO b2bLndPageCityName =htyFctXwB2bLndPageDTOService.queryCityName(htyFctUserBeHaviorSearchDTO);
+            List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO= htyFctXwB2bLndPageDTOService.queryByProNameAndCityName(b2bLndPageCityName, htyFctUserBeHaviorSearchDTO);
+            if(htyFctXwB2bLndPageDTO!=null){
+                for (HtyFctXwB2bLndPageDTO b2bLndPage:htyFctXwB2bLndPageDTO){
+                    b2bLndPageNumList.add(b2bLndPage.getAccessQty());
+                    b2bLndPageList.add(b2bLndPage.getPageTitle());
+                }
+                userBeHaviorSearchDTO.setB2bLndPageList(b2bLndPageList);
+                userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
+            }
+            //单品访问量
+            HtyFctXwB2bItemAccessDTO b2bItemAccessCity=htyFctXwB2bItemAccessDTOService.queryCityName(htyFctUserBeHaviorSearchDTO);
+            List<HtyFctXwB2bItemAccessDTO>htyFctXwB2bItemAccessDTO=htyFctXwB2bItemAccessDTOService.queryByProAndCity(b2bItemAccessCity,htyFctUserBeHaviorSearchDTO);
+            if(htyFctXwB2bItemAccessDTO!=null){
+                for (HtyFctXwB2bItemAccessDTO b2bItemAccess:htyFctXwB2bItemAccessDTO){
+                    b2bItemAccessList.add(b2bItemAccess.getItemId());
+                    b2bItemAccessNumList.add(b2bItemAccess.getAccessQty());
+                }
+                userBeHaviorSearchDTO.setB2bItemAccessNumList(b2bItemAccessNumList);
+                userBeHaviorSearchDTO.setB2bItemAccessList(b2bItemAccessList);
+            }
+
+            // 漏斗转换及复购
+            // 1漏斗购买、
+            HtyFctXwB2bConvFunnelDTO b2bConvFunnelCityName=htyFctXwB2bConvFunnelDTOService.queryCityName(htyFctUserBeHaviorSearchDTO);
+            List<HtyFctXwB2bConvFunnelDTO>htyFctXwB2bConvFunnelDTO=htyFctXwB2bConvFunnelDTOService.queryByProAndCity(b2bConvFunnelCityName,htyFctUserBeHaviorSearchDTO);
+            if(htyFctXwB2bConvFunnelDTO!=null){
+                for (HtyFctXwB2bConvFunnelDTO b2bConvFunnel:htyFctXwB2bConvFunnelDTO){
+                    b2bConvFunnelList.add(b2bConvFunnel.getStepName());
+                    b2bConvFunnelNumList.add(b2bConvFunnel.getStepSequence());
+                }
+                userBeHaviorSearchDTO.setB2bConvFunnelList(b2bConvFunnelList);
+                userBeHaviorSearchDTO.setB2bConvFunnelNumList(b2bConvFunnelNumList);
+            }
+            // 2重复购买
+            HtyFctXwB2bConvFunnelDTO b2bConvFunnelCityNameRepeat=htyFctXwB2bConvFunnelDTOService.queryCityName(htyFctUserBeHaviorSearchDTO);
+            List<HtyFctXwB2bConvFunnelDTO>htyFctXwB2bConvFunnelDTORepeatBuy=htyFctXwB2bConvFunnelDTOService.queryByProAndCityRepeat(b2bConvFunnelCityNameRepeat, htyFctUserBeHaviorSearchDTO);
+            if(htyFctXwB2bConvFunnelDTORepeatBuy!=null){
+                for(HtyFctXwB2bConvFunnelDTO repeatBuy:htyFctXwB2bConvFunnelDTORepeatBuy){
+                    b2bRepeatBuyList.add(repeatBuy.getStepName());
+                    b2bRepeatBuyNumList.add(repeatBuy.getStepSequence());
+                }
+                userBeHaviorSearchDTO.setB2bRepeatBuyList(b2bRepeatBuyList);
+                userBeHaviorSearchDTO.setB2bRepeatBuyNumList(b2bRepeatBuyNumList);
+            }
+            // 成交单品
+            HtyFctSaleCityProdDTO htyFctSaleCityProdCityName=htyFctSaleCityProdDTOService.queryCityName(htyFctUserBeHaviorSearchDTO);
+            List<HtyFctSaleCityProdDTO>htyFctSaleCityProdDTO=htyFctSaleCityProdDTOService.queryProAndCity(htyFctSaleCityProdCityName,htyFctUserBeHaviorSearchDTO);
+            if(htyFctSaleCityProdDTO!=null){
+                for (HtyFctSaleCityProdDTO saleCityProd:htyFctSaleCityProdDTO){
+                    b2bSaleCityProdyList.add(saleCityProd.getProdName());
+                    b2bSaleCityProdNumList.add(saleCityProd.getXsQty());
+                }
+                userBeHaviorSearchDTO.setB2bSaleCityProdyList(b2bSaleCityProdyList);
+                userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdNumList);
+            }
 			// 组装到 result里  响应的返回数据
 			result.setData(userBeHaviorSearchDTO);
 			result.setCode(ResultCodeEnum.SUCCESS.getCode());

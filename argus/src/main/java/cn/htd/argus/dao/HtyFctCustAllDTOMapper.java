@@ -9,11 +9,9 @@ import cn.htd.argus.dto.HtyFctCustAllDto;
 public interface HtyFctCustAllDTOMapper {
 
 	HtyFctCustAllDto selectByPrimaryKey(Long id);
-
     List<HtyFctCustAllDto> select(HtyFctCustAllDto model);
-    
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
-    
+
     Integer selectForAmtAll(HtyFctCustAnalysisInDTO inDto);
     
     HtyFctCustAllDto selectForAnalysis(HtyFctCustAnalysisInDTO inDto);
@@ -29,4 +27,13 @@ public interface HtyFctCustAllDTOMapper {
     Integer selectForAmtDk(HtyFctCustAnalysisInDTO inDto);
     
     List<HtyFctCustAllDto> selectForPair(HtyFctCustAnalysisInDTO inDto);
+
+    List<HtyFctCustAllDto> selectByTimePair(HtyFctCustInDto inDto);
+    //活跃会员店满足所有的条件
+    List<HtyFctCustAllDto> queryActiveVipByCondition(HtyFctCustAllDto htyFctCustAllDto);
+
+    List<HtyFctCustAllDto> selectByTimeDimension(HtyFctCustInDto inDto);
+    //导出明细
+    List<HtyFctCustAllDto>queryExport(HtyFctCustAllDto htyFctCustAllDto);
+
 }

@@ -18,4 +18,19 @@ public class HtyFctXwB2bSearchKeyDTOServiceImpl implements HtyFctXwB2bSearchKeyD
 
         return htyFctXwB2bSearchKeyDTODao.queryAllSearchKeyWord(htyFctUserBeHaviorSearchDTO);
 	}
+
+    @Override
+    public List<HtyFctXwB2bSearchKeyDTO> queryByNameSearchKey(HtyFctXwB2bSearchKeyDTO htyFctXwB2bSearchKeyDTO, HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+        return htyFctXwB2bSearchKeyDTODao.queryByNameSearchKey(htyFctXwB2bSearchKeyDTO,htyFctUserBeHaviorSearchDTO);
+    }
+
+    @Override
+    public HtyFctXwB2bSearchKeyDTO queryCityNameSearchKey(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+        return htyFctXwB2bSearchKeyDTODao.queryCityNameSearchKey(htyFctUserBeHaviorSearchDTO);
+    }
+
+    @Override
+    public HtyFctXwB2bSearchKeyDTO queryProNameSearchKey(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+        return htyFctXwB2bSearchKeyDTODao.queryProNameSearchKey(htyFctUserBeHaviorSearchDTO);
+    }
 }

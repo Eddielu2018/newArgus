@@ -18,4 +18,19 @@ private HtyFctSaleCityProdDTOMapper htyFctSaleCityProdDTODao;
 public List<HtyFctSaleCityProdDTO> querySaleOutItemNum(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
 	return htyFctSaleCityProdDTODao.querySaleOutItemNum(htyFctUserBeHaviorSearchDTO);
 }
+
+    @Override
+    public List<HtyFctSaleCityProdDTO> queryProAndCity(HtyFctSaleCityProdDTO HtyFctSaleCityProdDTO, HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+        return htyFctSaleCityProdDTODao.queryProAndCity(HtyFctSaleCityProdDTO,htyFctUserBeHaviorSearchDTO);
+    }
+
+    @Override
+    public HtyFctSaleCityProdDTO queryProName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+        return htyFctSaleCityProdDTODao.queryProName(htyFctUserBeHaviorSearchDTO);
+    }
+
+    @Override
+    public HtyFctSaleCityProdDTO queryCityName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+        return htyFctSaleCityProdDTODao.queryCityName(htyFctUserBeHaviorSearchDTO);
+    }
 }
