@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.dao.HtyFctSaleCityProdDTOMapper">
+	<resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctSaleCityProdDTO">
+		<id column="ID" property="id" jdbcType="BIGINT" />
+		<result column="DATE_KEY" property="dateKey" jdbcType="VARCHAR" />
+		<result column="CUST_PRONAME" property="custProName" jdbcType="VARCHAR" />
+		<result column="CUST_CITYNAME" property="custCityName"
+			jdbcType="VARCHAR" />
+		<result column="CUST_COUNTRYNAME" property="custCountryName"
+			jdbcType="VARCHAR" />
+		<result column="CUST_TOWNNAME" property="custTownName"
+			jdbcType="VARCHAR" />
+		<result column="PL_CODE" property="plCode" jdbcType="VARCHAR" />
+		<result column="PL_NAME" property="plName" jdbcType="VARCHAR" />
+		<result column="PP_CODE" property="ppCode" jdbcType="VARCHAR" />
+		<result column="PP_NAME" property="ppName" jdbcType="VARCHAR" />
+		<result column="PROD_CODE" property="prodCode" jdbcType="VARCHAR" />
+		<result column="PROD_NAME" property="prodName" jdbcType="VARCHAR" />
+		<result column="XS_AMT" property="xsAmt" jdbcType="DECIMAL" />
+		<result column="XS_QTY" property="xsQty" jdbcType="DECIMAL" />
+		<result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
+		<result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+        ID,DATE_KEY,CUST_PRONAME,CUST_CITYNAME,CUST_COUNTRYNAME,CUST_TOWNNAME,PL_CODE,PL_NAME,PP_CODE,PP_NAME,PROD_CODE,PROD_NAME,XS_AMT,XS_QTY,ETL_DATE,ETL_TIME
+	</sql>
+	<sql id="where">
+		<where>
+            <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+                <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+            </if>
+			<if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+			 	<![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
+			</if>
+            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
+                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+            </if>
+		</where>
+	</sql>
+	<!--成交单品数量 -->
+	<select id="querySaleOutItemNum" resultMap="BaseResultMap">
+		select
+        <include refid="Base_Column_List"/>
+        from hty_fct_sale_city_prod
+		<include refid="where" />
+		group by PROD_CODE,XS_QTY
+		order by XS_QTY DESC limit 10
+	</select>
+    <select id="queryCityName" resultMap="BaseResultMap" >
+        SELECT
+      cust_city
+      FROM
+      hty_fct_sale_city_prod
+    <include refid="where"/>
+    ORDER BY id DESC
+    LIMIT 1
+    </select>
+    <select id="queryProName" resultMap="BaseResultMap" >
+        SELECT
+        cust_proname
+        FROM
+        hty_fct_sale_city_prod
+        <include refid="where"/>
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+    <select id="queryProAndCity" resultMap="BaseResultMap">
+       SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        hty_fct_sale_city_prod
+        <where>
+            <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+                <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+                <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
+                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+            </if>
+            <if test="htyFctSaleCityProdDTO.custProName!=null">
+              AND  cust_proname=#{htyFctSaleCityProdDTO.custProName}
+            </if>
+            <if test="htyFctSaleCityProdDTO.custCityName!=null">
+                AND cust_city=#{htyFctSaleCityProdDTO.custCityName}
+            </if>
+        </where>
+        group by PROD_CODE,XS_QTY
+        order by XS_QTY DESC limit 10
+    </select>
+</mapper>

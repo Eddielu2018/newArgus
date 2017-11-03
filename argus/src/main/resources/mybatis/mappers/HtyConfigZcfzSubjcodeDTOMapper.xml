@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.dao.HtyConfigZcfzSubjcodeDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyConfigZcfzSubjcodeDTO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="fr_subjcode" property="frSubjcode" jdbcType="VARCHAR" />
+    <result column="fr_subjname" property="frSubjname" jdbcType="VARCHAR" />
+    <result column="se_subjcode" property="seSubjcode" jdbcType="VARCHAR" />
+    <result column="se_subjname" property="seSubjname" jdbcType="VARCHAR" />
+    <result column="th_subjcode" property="thSubjcode" jdbcType="VARCHAR" />
+    <result column="th_subjname" property="thSubjname" jdbcType="VARCHAR" />
+    <result column="fo_subjcode" property="foSubjcode" jdbcType="VARCHAR" />
+    <result column="fo_subjname" property="foSubjname" jdbcType="VARCHAR" />
+    <result column="subj_desc" property="subjDesc" jdbcType="VARCHAR" />
+    <result column="subj_source" property="subjSource" jdbcType="VARCHAR" />
+    <result column="qm_flag" property="qmFlag" jdbcType="CHAR" />
+    <result column="checktype" property="checktype" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fr_subjcode, fr_subjname, se_subjcode, se_subjname, th_subjcode, th_subjname, 
+    fo_subjcode, fo_subjname, subj_desc, subj_source, qm_flag, checktype
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hty_config_zcfz_subjcode
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from hty_config_zcfz_subjcode
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.htd.argus.dto.HtyConfigZcfzSubjcodeDTO" >
+    insert into hty_config_zcfz_subjcode (id, fr_subjcode, fr_subjname, 
+      se_subjcode, se_subjname, th_subjcode, 
+      th_subjname, fo_subjcode, fo_subjname, 
+      subj_desc, subj_source, qm_flag, 
+      checktype)
+    values (#{id,jdbcType=BIGINT}, #{frSubjcode,jdbcType=VARCHAR}, #{frSubjname,jdbcType=VARCHAR}, 
+      #{seSubjcode,jdbcType=VARCHAR}, #{seSubjname,jdbcType=VARCHAR}, #{thSubjcode,jdbcType=VARCHAR}, 
+      #{thSubjname,jdbcType=VARCHAR}, #{foSubjcode,jdbcType=VARCHAR}, #{foSubjname,jdbcType=VARCHAR}, 
+      #{subjDesc,jdbcType=VARCHAR}, #{subjSource,jdbcType=VARCHAR}, #{qmFlag,jdbcType=CHAR}, 
+      #{checktype,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.htd.argus.dto.HtyConfigZcfzSubjcodeDTO" >
+    insert into hty_config_zcfz_subjcode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="frSubjcode != null" >
+        fr_subjcode,
+      </if>
+      <if test="frSubjname != null" >
+        fr_subjname,
+      </if>
+      <if test="seSubjcode != null" >
+        se_subjcode,
+      </if>
+      <if test="seSubjname != null" >
+        se_subjname,
+      </if>
+      <if test="thSubjcode != null" >
+        th_subjcode,
+      </if>
+      <if test="thSubjname != null" >
+        th_subjname,
+      </if>
+      <if test="foSubjcode != null" >
+        fo_subjcode,
+      </if>
+      <if test="foSubjname != null" >
+        fo_subjname,
+      </if>
+      <if test="subjDesc != null" >
+        subj_desc,
+      </if>
+      <if test="subjSource != null" >
+        subj_source,
+      </if>
+      <if test="qmFlag != null" >
+        qm_flag,
+      </if>
+      <if test="checktype != null" >
+        checktype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="frSubjcode != null" >
+        #{frSubjcode,jdbcType=VARCHAR},
+      </if>
+      <if test="frSubjname != null" >
+        #{frSubjname,jdbcType=VARCHAR},
+      </if>
+      <if test="seSubjcode != null" >
+        #{seSubjcode,jdbcType=VARCHAR},
+      </if>
+      <if test="seSubjname != null" >
+        #{seSubjname,jdbcType=VARCHAR},
+      </if>
+      <if test="thSubjcode != null" >
+        #{thSubjcode,jdbcType=VARCHAR},
+      </if>
+      <if test="thSubjname != null" >
+        #{thSubjname,jdbcType=VARCHAR},
+      </if>
+      <if test="foSubjcode != null" >
+        #{foSubjcode,jdbcType=VARCHAR},
+      </if>
+      <if test="foSubjname != null" >
+        #{foSubjname,jdbcType=VARCHAR},
+      </if>
+      <if test="subjDesc != null" >
+        #{subjDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSource != null" >
+        #{subjSource,jdbcType=VARCHAR},
+      </if>
+      <if test="qmFlag != null" >
+        #{qmFlag,jdbcType=CHAR},
+      </if>
+      <if test="checktype != null" >
+        #{checktype,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.htd.argus.dto.HtyConfigZcfzSubjcodeDTO" >
+    update hty_config_zcfz_subjcode
+    <set >
+      <if test="frSubjcode != null" >
+        fr_subjcode = #{frSubjcode,jdbcType=VARCHAR},
+      </if>
+      <if test="frSubjname != null" >
+        fr_subjname = #{frSubjname,jdbcType=VARCHAR},
+      </if>
+      <if test="seSubjcode != null" >
+        se_subjcode = #{seSubjcode,jdbcType=VARCHAR},
+      </if>
+      <if test="seSubjname != null" >
+        se_subjname = #{seSubjname,jdbcType=VARCHAR},
+      </if>
+      <if test="thSubjcode != null" >
+        th_subjcode = #{thSubjcode,jdbcType=VARCHAR},
+      </if>
+      <if test="thSubjname != null" >
+        th_subjname = #{thSubjname,jdbcType=VARCHAR},
+      </if>
+      <if test="foSubjcode != null" >
+        fo_subjcode = #{foSubjcode,jdbcType=VARCHAR},
+      </if>
+      <if test="foSubjname != null" >
+        fo_subjname = #{foSubjname,jdbcType=VARCHAR},
+      </if>
+      <if test="subjDesc != null" >
+        subj_desc = #{subjDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSource != null" >
+        subj_source = #{subjSource,jdbcType=VARCHAR},
+      </if>
+      <if test="qmFlag != null" >
+        qm_flag = #{qmFlag,jdbcType=CHAR},
+      </if>
+      <if test="checktype != null" >
+        checktype = #{checktype,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.htd.argus.dto.HtyConfigZcfzSubjcodeDTO" >
+    update hty_config_zcfz_subjcode
+    set fr_subjcode = #{frSubjcode,jdbcType=VARCHAR},
+      fr_subjname = #{frSubjname,jdbcType=VARCHAR},
+      se_subjcode = #{seSubjcode,jdbcType=VARCHAR},
+      se_subjname = #{seSubjname,jdbcType=VARCHAR},
+      th_subjcode = #{thSubjcode,jdbcType=VARCHAR},
+      th_subjname = #{thSubjname,jdbcType=VARCHAR},
+      fo_subjcode = #{foSubjcode,jdbcType=VARCHAR},
+      fo_subjname = #{foSubjname,jdbcType=VARCHAR},
+      subj_desc = #{subjDesc,jdbcType=VARCHAR},
+      subj_source = #{subjSource,jdbcType=VARCHAR},
+      qm_flag = #{qmFlag,jdbcType=CHAR},
+      checktype = #{checktype,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

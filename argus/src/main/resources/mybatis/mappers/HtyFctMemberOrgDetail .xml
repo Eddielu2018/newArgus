@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.dao.HtyFctMemberOrgDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctMemberOrgDetail" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="date_key" property="dateKey" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
+    <result column="xs_amt" property="xsAmt" jdbcType="VARCHAR" />
+    <result column="xs_qty" property="xsQty" jdbcType="VARCHAR"/>
+      <result column="last_date" property="lastDate" jdbcType="VARCHAR"/>
+      <result column="etl_date" property="etlDate" jdbcType="VARCHAR"/>
+      <result column="etl_time" property="etlTime" jdbcType="VARCHAR"/>
+      <result column="cust_name" property="custName" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, date_key,org_code,cust_code,cust_name,xs_amt,xs_qty,last_date,etl_date,etl_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hty_fct_member_org_detail
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="querySaleNumEachShop" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctMemberOrgDetail" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_member_org_detail
+    <where>
+      <if test="dateKey != null">
+        and date_key = #{dateKey}
+      </if>
+         <if test="orgCode !=null">
+        and org_code=#{orgCode}
+        </if>
+    </where>
+      GROUP BY org_code,cust_code DESC
+      limit 10
+  </select>
+    <select id="queryAllXsAmtEachMonth" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctMemberOrgDetail">
+      SELECT  ID, date_key,org_code,cust_code,cust_name,sum(xs_amt) AS xs_amt,xs_qty,last_date,etl_date,etl_time
+      <where>
+          <if test="dateKey != null and dateKey!=''" >
+              and date_key = #{dateKey}
+          </if>
+      </where>
+      GROUP BY org_code DESC
+      limit 10
+    </select>
+    <select id="queryByCustCode" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctMemberOrgDetail">
+        <include refid="Base_Column_List"/>
+       <where>
+           <if test="custCode!=null and custCode!=''">
+               and cust_code=#{custCode}
+           </if>
+           <if test="dateKey!=null ">
+             and date_key=#{dateKey}
+           </if>
+       </where>
+    </select>
+
+    <select id="querySaleNumEachShopAll" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctMemberOrgDetail" >
+        select
+        <include refid="Base_Column_List" />
+        from hty_fct_member_org_detail
+        <where>
+            <if test="dateKey != null">
+                and date_key = #{dateKey}
+            </if>
+        </where>
+        GROUP BY org_code,cust_code DESC
+    </select>
+</mapper>

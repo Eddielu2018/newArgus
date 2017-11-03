@@ -1,452 +1,160 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.HtyFctOrgSaleDTOMapper">
-  <resultMap id="BaseResultMap" type="dto.HtyFctOrgSaleDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
-    <result column="MON_AMT" jdbcType="DECIMAL" property="monAmt" />
-    <result column="LASTMON_AMT" jdbcType="DECIMAL" property="lastmonAmt" />
-    <result column="YEAR_AMT" jdbcType="DECIMAL" property="yearAmt" />
-    <result column="LASTYEAR_AMT" jdbcType="DECIMAL" property="lastyearAmt" />
-    <result column="MON_ONLINE_SALEAMT" jdbcType="DECIMAL" property="monOnlineSaleamt" />
-    <result column="YEAR_ONLINE_SALEAMT" jdbcType="DECIMAL" property="yearOnlineSaleamt" />
-    <result column="MON_WAIT_SALEAMT" jdbcType="DECIMAL" property="monWaitSaleamt" />
-    <result column="YEAR_WAIT_SALEAMT" jdbcType="DECIMAL" property="yearWaitSaleamt" />
-    <result column="MON_SP_SALEAMT" jdbcType="DECIMAL" property="monSpSaleamt" />
-    <result column="YEAR_SP_SALEAMT" jdbcType="DECIMAL" property="yearSpSaleamt" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.dao.HtyFctOrgSaleDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="YEAR_MON" property="yearMon" jdbcType="VARCHAR" />
+    <result column="MON_AMT" property="monAmt" jdbcType="DECIMAL" />
+    <result column="LASTMON_AMT" property="lastmonAmt" jdbcType="DECIMAL" />
+    <result column="YEAR_AMT" property="yearAmt" jdbcType="DECIMAL" />
+    <result column="LASTYEAR_AMT" property="lastyearAmt" jdbcType="DECIMAL" />
+    <result column="MON_ONLINE_SALEAMT" property="monOnlineSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_MON_ONLINE_SALEAMT" property="lastmonOnlineSaleamt" jdbcType="DECIMAL" />
+    <result column="YEAR_ONLINE_SALEAMT" property="yearOnlineSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_YEAR_ONLINE_SALEAMT" property="lastyearOnlineSaleamt" jdbcType="DECIMAL" />
+    <result column="MON_WAIT_SALEAMT" property="monWaitSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_MON_WAIT_SALEAMT" property="lastmonWaitSaleamt" jdbcType="DECIMAL" />
+    <result column="YEAR_WAIT_SALEAMT" property="yearWaitSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_YEAR_WAIT_SALEAMT" property="lastyearWaitSaleamt" jdbcType="DECIMAL" />
+    <result column="MON_SP_SALEAMT" property="monSpSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_MON_SP_SALEAMT" property="lastmonSpSaleamt" jdbcType="DECIMAL" />
+    <result column="YEAR_SP_SALEAMT" property="yearSpSaleamt" jdbcType="DECIMAL" />
+    <result column="LAST_YEAR_SP_SALEAMT" property="lastyearSpSaleamt" jdbcType="DECIMAL" />
   </resultMap>
-  <insert id="insert" parameterType="dto.HtyFctOrgSaleDTO">
-    insert into hty_fct_org_sale (ID, ORG_CODE, YEAR_MON, 
-      MON_AMT, LASTMON_AMT, YEAR_AMT, 
-      LASTYEAR_AMT, MON_ONLINE_SALEAMT, YEAR_ONLINE_SALEAMT, 
-      MON_WAIT_SALEAMT, YEAR_WAIT_SALEAMT, MON_SP_SALEAMT, 
-      YEAR_SP_SALEAMT)
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearMon,jdbcType=VARCHAR}, 
-      #{monAmt,jdbcType=DECIMAL}, #{lastmonAmt,jdbcType=DECIMAL}, #{yearAmt,jdbcType=DECIMAL}, 
-      #{lastyearAmt,jdbcType=DECIMAL}, #{monOnlineSaleamt,jdbcType=DECIMAL}, #{yearOnlineSaleamt,jdbcType=DECIMAL}, 
-      #{monWaitSaleamt,jdbcType=DECIMAL}, #{yearWaitSaleamt,jdbcType=DECIMAL}, #{monSpSaleamt,jdbcType=DECIMAL}, 
-      #{yearSpSaleamt,jdbcType=DECIMAL})
-  </insert>
-  <insert id="insertSelective" parameterType="dto.HtyFctOrgSaleDTO">
-    insert into hty_fct_org_sale
-    <trim prefix="(" suffix=")" suffixOverrides=",">
+  <sql id="Base_Column_List" >
+    ID, ORG_CODE, YEAR_MON, MON_AMT, LASTMON_AMT, YEAR_AMT, LASTYEAR_AMT, MON_ONLINE_SALEAMT, 
+    LAST_MON_ONLINE_SALEAMT,YEAR_ONLINE_SALEAMT,LAST_YEAR_ONLINE_SALEAMT, MON_WAIT_SALEAMT, 
+    LAST_MON_WAIT_SALEAMT, YEAR_WAIT_SALEAMT, LAST_YEAR_WAIT_SALEAMT, MON_SP_SALEAMT, LAST_MON_SP_SALEAMT,
+     YEAR_SP_SALEAMT, LAST_YEAR_SP_SALEAMT
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hty_fct_org_sale
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_sale
+    where ORG_CODE = #{orgCode} order by YEAR_MON desc limit 1
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_sale
+    <where>
       <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="yearMon != null">
-        YEAR_MON,
-      </if>
-      <if test="monAmt != null">
-        MON_AMT,
-      </if>
-      <if test="lastmonAmt != null">
-        LASTMON_AMT,
-      </if>
-      <if test="yearAmt != null">
-        YEAR_AMT,
-      </if>
-      <if test="lastyearAmt != null">
-        LASTYEAR_AMT,
-      </if>
-      <if test="monOnlineSaleamt != null">
-        MON_ONLINE_SALEAMT,
-      </if>
-      <if test="yearOnlineSaleamt != null">
-        YEAR_ONLINE_SALEAMT,
-      </if>
-      <if test="monWaitSaleamt != null">
-        MON_WAIT_SALEAMT,
-      </if>
-      <if test="yearWaitSaleamt != null">
-        YEAR_WAIT_SALEAMT,
-      </if>
-      <if test="monSpSaleamt != null">
-        MON_SP_SALEAMT,
-      </if>
-      <if test="yearSpSaleamt != null">
-        YEAR_SP_SALEAMT,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="yearMon != null">
-        #{yearMon,jdbcType=VARCHAR},
-      </if>
-      <if test="monAmt != null">
-        #{monAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="lastmonAmt != null">
-        #{lastmonAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearAmt != null">
-        #{yearAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="lastyearAmt != null">
-        #{lastyearAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="monOnlineSaleamt != null">
-        #{monOnlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearOnlineSaleamt != null">
-        #{yearOnlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="monWaitSaleamt != null">
-        #{monWaitSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearWaitSaleamt != null">
-        #{yearWaitSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="monSpSaleamt != null">
-        #{monSpSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearSpSaleamt != null">
-        #{yearSpSaleamt,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="dto.HtyFctOrgSaleDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
-    <result column="MON_AMT" jdbcType="DECIMAL" property="monAmt" />
-    <result column="LASTMON_AMT" jdbcType="DECIMAL" property="lastmonAmt" />
-    <result column="YEAR_AMT" jdbcType="DECIMAL" property="yearAmt" />
-    <result column="LASTYEAR_AMT" jdbcType="DECIMAL" property="lastyearAmt" />
-    <result column="MON_ONLINE_SALEAMT" jdbcType="DECIMAL" property="monOnlineSaleamt" />
-    <result column="YEAR_ONLINE_SALEAMT" jdbcType="DECIMAL" property="yearOnlineSaleamt" />
-    <result column="MON_WAIT_SALEAMT" jdbcType="DECIMAL" property="monWaitSaleamt" />
-    <result column="YEAR_WAIT_SALEAMT" jdbcType="DECIMAL" property="yearWaitSaleamt" />
-    <result column="MON_SP_SALEAMT" jdbcType="DECIMAL" property="monSpSaleamt" />
-    <result column="YEAR_SP_SALEAMT" jdbcType="DECIMAL" property="yearSpSaleamt" />
-  </resultMap>
-  <insert id="insert" parameterType="dto.HtyFctOrgSaleDTO">
-    insert into hty_fct_org_sale (ID, ORG_CODE, YEAR_MON, 
-      MON_AMT, LASTMON_AMT, YEAR_AMT, 
-      LASTYEAR_AMT, MON_ONLINE_SALEAMT, YEAR_ONLINE_SALEAMT, 
-      MON_WAIT_SALEAMT, YEAR_WAIT_SALEAMT, MON_SP_SALEAMT, 
-      YEAR_SP_SALEAMT)
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearMon,jdbcType=VARCHAR}, 
-      #{monAmt,jdbcType=DECIMAL}, #{lastmonAmt,jdbcType=DECIMAL}, #{yearAmt,jdbcType=DECIMAL}, 
-      #{lastyearAmt,jdbcType=DECIMAL}, #{monOnlineSaleamt,jdbcType=DECIMAL}, #{yearOnlineSaleamt,jdbcType=DECIMAL}, 
-      #{monWaitSaleamt,jdbcType=DECIMAL}, #{yearWaitSaleamt,jdbcType=DECIMAL}, #{monSpSaleamt,jdbcType=DECIMAL}, 
-      #{yearSpSaleamt,jdbcType=DECIMAL})
-  </insert>
-  <insert id="insertSelective" parameterType="dto.HtyFctOrgSaleDTO">
-    insert into hty_fct_org_sale
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="yearMon != null">
-        YEAR_MON,
-      </if>
-      <if test="monAmt != null">
-        MON_AMT,
-      </if>
-      <if test="lastmonAmt != null">
-        LASTMON_AMT,
-      </if>
-      <if test="yearAmt != null">
-        YEAR_AMT,
-      </if>
-      <if test="lastyearAmt != null">
-        LASTYEAR_AMT,
-      </if>
-      <if test="monOnlineSaleamt != null">
-        MON_ONLINE_SALEAMT,
-      </if>
-      <if test="yearOnlineSaleamt != null">
-        YEAR_ONLINE_SALEAMT,
-      </if>
-      <if test="monWaitSaleamt != null">
-        MON_WAIT_SALEAMT,
-      </if>
-      <if test="yearWaitSaleamt != null">
-        YEAR_WAIT_SALEAMT,
-      </if>
-      <if test="monSpSaleamt != null">
-        MON_SP_SALEAMT,
-      </if>
-      <if test="yearSpSaleamt != null">
-        YEAR_SP_SALEAMT,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="yearMon != null">
-        #{yearMon,jdbcType=VARCHAR},
-      </if>
-      <if test="monAmt != null">
-        #{monAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="lastmonAmt != null">
-        #{lastmonAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearAmt != null">
-        #{yearAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="lastyearAmt != null">
-        #{lastyearAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="monOnlineSaleamt != null">
-        #{monOnlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearOnlineSaleamt != null">
-        #{yearOnlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="monWaitSaleamt != null">
-        #{monWaitSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearWaitSaleamt != null">
-        #{yearWaitSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="monSpSaleamt != null">
-        #{monSpSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearSpSaleamt != null">
-        #{yearSpSaleamt,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgSaleDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
-    <result column="MON_AMT" jdbcType="DECIMAL" property="monAmt" />
-    <result column="LASTMON_AMT" jdbcType="DECIMAL" property="lastmonAmt" />
-    <result column="YEAR_AMT" jdbcType="DECIMAL" property="yearAmt" />
-    <result column="LASTYEAR_AMT" jdbcType="DECIMAL" property="lastyearAmt" />
-    <result column="MON_ONLINE_SALEAMT" jdbcType="DECIMAL" property="monOnlineSaleamt" />
-    <result column="YEAR_ONLINE_SALEAMT" jdbcType="DECIMAL" property="yearOnlineSaleamt" />
-    <result column="MON_WAIT_SALEAMT" jdbcType="DECIMAL" property="monWaitSaleamt" />
-    <result column="YEAR_WAIT_SALEAMT" jdbcType="DECIMAL" property="yearWaitSaleamt" />
-    <result column="MON_SP_SALEAMT" jdbcType="DECIMAL" property="monSpSaleamt" />
-    <result column="YEAR_SP_SALEAMT" jdbcType="DECIMAL" property="yearSpSaleamt" />
-  </resultMap>
-  <insert id="insert" parameterType="DTO.HtyFctOrgSaleDTO">
-    insert into hty_fct_org_sale (ID, ORG_CODE, YEAR_MON, 
-      MON_AMT, LASTMON_AMT, YEAR_AMT, 
-      LASTYEAR_AMT, MON_ONLINE_SALEAMT, YEAR_ONLINE_SALEAMT, 
-      MON_WAIT_SALEAMT, YEAR_WAIT_SALEAMT, MON_SP_SALEAMT, 
-      YEAR_SP_SALEAMT)
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearMon,jdbcType=VARCHAR}, 
-      #{monAmt,jdbcType=DECIMAL}, #{lastmonAmt,jdbcType=DECIMAL}, #{yearAmt,jdbcType=DECIMAL}, 
-      #{lastyearAmt,jdbcType=DECIMAL}, #{monOnlineSaleamt,jdbcType=DECIMAL}, #{yearOnlineSaleamt,jdbcType=DECIMAL}, 
-      #{monWaitSaleamt,jdbcType=DECIMAL}, #{yearWaitSaleamt,jdbcType=DECIMAL}, #{monSpSaleamt,jdbcType=DECIMAL}, 
-      #{yearSpSaleamt,jdbcType=DECIMAL})
-  </insert>
-  <insert id="insertSelective" parameterType="DTO.HtyFctOrgSaleDTO">
-    insert into hty_fct_org_sale
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="yearMon != null">
-        YEAR_MON,
-      </if>
-      <if test="monAmt != null">
-        MON_AMT,
-      </if>
-      <if test="lastmonAmt != null">
-        LASTMON_AMT,
-      </if>
-      <if test="yearAmt != null">
-        YEAR_AMT,
-      </if>
-      <if test="lastyearAmt != null">
-        LASTYEAR_AMT,
-      </if>
-      <if test="monOnlineSaleamt != null">
-        MON_ONLINE_SALEAMT,
-      </if>
-      <if test="yearOnlineSaleamt != null">
-        YEAR_ONLINE_SALEAMT,
-      </if>
-      <if test="monWaitSaleamt != null">
-        MON_WAIT_SALEAMT,
-      </if>
-      <if test="yearWaitSaleamt != null">
-        YEAR_WAIT_SALEAMT,
-      </if>
-      <if test="monSpSaleamt != null">
-        MON_SP_SALEAMT,
-      </if>
-      <if test="yearSpSaleamt != null">
-        YEAR_SP_SALEAMT,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="yearMon != null">
-        #{yearMon,jdbcType=VARCHAR},
-      </if>
-      <if test="monAmt != null">
-        #{monAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="lastmonAmt != null">
-        #{lastmonAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearAmt != null">
-        #{yearAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="lastyearAmt != null">
-        #{lastyearAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="monOnlineSaleamt != null">
-        #{monOnlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearOnlineSaleamt != null">
-        #{yearOnlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="monWaitSaleamt != null">
-        #{monWaitSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearWaitSaleamt != null">
-        #{yearWaitSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="monSpSaleamt != null">
-        #{monSpSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearSpSaleamt != null">
-        #{yearSpSaleamt,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="DTO.HtyFctOrgSaleDTO">
-    <result column="ID" jdbcType="BIGINT" property="id" />
-    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
-    <result column="YEAR_MON" jdbcType="VARCHAR" property="yearMon" />
-    <result column="MON_AMT" jdbcType="DECIMAL" property="monAmt" />
-    <result column="LASTMON_AMT" jdbcType="DECIMAL" property="lastmonAmt" />
-    <result column="YEAR_AMT" jdbcType="DECIMAL" property="yearAmt" />
-    <result column="LASTYEAR_AMT" jdbcType="DECIMAL" property="lastyearAmt" />
-    <result column="MON_ONLINE_SALEAMT" jdbcType="DECIMAL" property="monOnlineSaleamt" />
-    <result column="YEAR_ONLINE_SALEAMT" jdbcType="DECIMAL" property="yearOnlineSaleamt" />
-    <result column="MON_WAIT_SALEAMT" jdbcType="DECIMAL" property="monWaitSaleamt" />
-    <result column="YEAR_WAIT_SALEAMT" jdbcType="DECIMAL" property="yearWaitSaleamt" />
-    <result column="MON_SP_SALEAMT" jdbcType="DECIMAL" property="monSpSaleamt" />
-    <result column="YEAR_SP_SALEAMT" jdbcType="DECIMAL" property="yearSpSaleamt" />
-  </resultMap>
-  <insert id="insert" parameterType="DTO.HtyFctOrgSaleDTO">
-    insert into hty_fct_org_sale (ID, ORG_CODE, YEAR_MON, 
-      MON_AMT, LASTMON_AMT, YEAR_AMT, 
-      LASTYEAR_AMT, MON_ONLINE_SALEAMT, YEAR_ONLINE_SALEAMT, 
-      MON_WAIT_SALEAMT, YEAR_WAIT_SALEAMT, MON_SP_SALEAMT, 
-      YEAR_SP_SALEAMT)
-    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{yearMon,jdbcType=VARCHAR}, 
-      #{monAmt,jdbcType=DECIMAL}, #{lastmonAmt,jdbcType=DECIMAL}, #{yearAmt,jdbcType=DECIMAL}, 
-      #{lastyearAmt,jdbcType=DECIMAL}, #{monOnlineSaleamt,jdbcType=DECIMAL}, #{yearOnlineSaleamt,jdbcType=DECIMAL}, 
-      #{monWaitSaleamt,jdbcType=DECIMAL}, #{yearWaitSaleamt,jdbcType=DECIMAL}, #{monSpSaleamt,jdbcType=DECIMAL}, 
-      #{yearSpSaleamt,jdbcType=DECIMAL})
-  </insert>
-  <insert id="insertSelective" parameterType="DTO.HtyFctOrgSaleDTO">
-    insert into hty_fct_org_sale
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="yearMon != null">
-        YEAR_MON,
-      </if>
-      <if test="monAmt != null">
-        MON_AMT,
-      </if>
-      <if test="lastmonAmt != null">
-        LASTMON_AMT,
-      </if>
-      <if test="yearAmt != null">
-        YEAR_AMT,
-      </if>
-      <if test="lastyearAmt != null">
-        LASTYEAR_AMT,
-      </if>
-      <if test="monOnlineSaleamt != null">
-        MON_ONLINE_SALEAMT,
-      </if>
-      <if test="yearOnlineSaleamt != null">
-        YEAR_ONLINE_SALEAMT,
-      </if>
-      <if test="monWaitSaleamt != null">
-        MON_WAIT_SALEAMT,
-      </if>
-      <if test="yearWaitSaleamt != null">
-        YEAR_WAIT_SALEAMT,
-      </if>
-      <if test="monSpSaleamt != null">
-        MON_SP_SALEAMT,
-      </if>
-      <if test="yearSpSaleamt != null">
-        YEAR_SP_SALEAMT,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="yearMon != null">
-        #{yearMon,jdbcType=VARCHAR},
-      </if>
-      <if test="monAmt != null">
-        #{monAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="lastmonAmt != null">
-        #{lastmonAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearAmt != null">
-        #{yearAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="lastyearAmt != null">
-        #{lastyearAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="monOnlineSaleamt != null">
-        #{monOnlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearOnlineSaleamt != null">
-        #{yearOnlineSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="monWaitSaleamt != null">
-        #{monWaitSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearWaitSaleamt != null">
-        #{yearWaitSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="monSpSaleamt != null">
-        #{monSpSaleamt,jdbcType=DECIMAL},
-      </if>
-      <if test="yearSpSaleamt != null">
-        #{yearSpSaleamt,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
+        and ID = #{id}
+      </if>
+      <if test="orgCode != null" >
+        and ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+      </if>
+      <if test="yearMon != null" >
+        and YEAR_MON = #{yearMon,jdbcType=VARCHAR}
+      </if>
+      <if test="monAmt != null" >
+        and MON_AMT = #{monAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastmonAmt != null" >
+        and LASTMON_AMT = #{lastmonAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="yearAmt != null" >
+        and YEAR_AMT = #{yearAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastyearAmt != null" >
+        and LASTYEAR_AMT = #{lastyearAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="monOnlineSaleamt != null" >
+        and MON_ONLINE_SALEAMT = #{monOnlineSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastmonOnlineSaleamt != null" >
+        and LAST_MON_ONLINE_SALEAMT = #{lastmonOnlineSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="yearOnlineSaleamt != null" >
+        and YEAR_ONLINE_SALEAMT = #{yearOnlineSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastyearOnlineSaleamt != null" >
+        and LAST_YEAR_ONLINE_SALEAMT = #{lastyearOnlineSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="monWaitSaleamt != null" >
+        and MON_WAIT_SALEAMT = #{monWaitSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastmonWaitSaleamt != null" >
+        and LAST_MON_WAIT_SALEAMT = #{lastmonWaitSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="yearWaitSaleamt != null" >
+        and YEAR_WAIT_SALEAMT = #{yearWaitSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastyearWaitSaleamt != null" >
+        and LAST_YEAR_WAIT_SALEAMT = #{lastyearWaitSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="monSpSaleamt != null" >
+        and MON_SP_SALEAMT = #{monSpSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastmonSpSaleamt != null" >
+        and LAST_MON_SP_SALEAMT = #{lastmonSpSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="yearSpSaleamt != null" >
+        and YEAR_SP_SALEAMT = #{yearSpSaleamt,jdbcType=DECIMAL}
+      </if>
+      <if test="lastyearSpSaleamt != null" >
+        and LAST_YEAR_SP_SALEAMT = #{lastyearSpSaleamt,jdbcType=DECIMAL}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectYear" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_org_sale
+    where YEAR_MON like CONCAT(#{yearMon},'%') and ORG_CODE = #{orgCode} order by YEAR_MON ASC
+  </select>
+  
+  <select id="selectSortNumForHead" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+    select u.rowNo from (  
+	select ORG_CODE,YEAR_AMT,YEAR_MON,(@rowNum:=@rowNum+1) as rowNo  
+	from hty_fct_org_sale,  
+	(select (@rowNum :=0) ) b  where YEAR_MON = #{yearMon} 
+	order by hty_fct_org_sale.YEAR_AMT desc ) u where u.ORG_CODE = #{orgCode} 
+  </select>
+  
+  <select id="selectSortNumForBranch" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+   select u.rowNo from (  
+	select t.ORG_CODE,t.YEAR_AMT,t.YEAR_MON,(@rowNum:=@rowNum+1) as rowNo from (  
+	select ORG_CODE,YEAR_AMT,YEAR_MON 
+	from hty_fct_org_sale  
+	where YEAR_MON = #{yearMon} and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode}))
+	order by hty_fct_org_sale.YEAR_AMT desc ) t,(select (@rowNum :=0) ) b 
+	) u where u.ORG_CODE = #{orgCode}
+  </select>
+  
+  <select id="selectAvgHead" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+   SELECT cast(avg(YEAR_AMT) as decimal(20,2)) as avgNum FROM hty_fct_org_sale where YEAR_MON=#{yearMon}
+  </select>
+  
+  <select id="selectAvgBrach" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+   SELECT cast(avg(YEAR_AMT) as decimal(20,2)) as avgNum FROM hty_fct_org_sale where YEAR_MON=#{yearMon} 
+   and ORG_CODE in (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE=#{orgCode}))
+  </select>
+  
+  <select id="selectCompanySortHead" resultType="String" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+   SELECT org.ORG_SNAME FROM hty_fct_org_sale sale,DCI_DIM_ORG org where sale.YEAR_MON=#{yearMon} 
+   and org.ORG_CODE=sale.ORG_CODE ORDER BY sale.YEAR_AMT DESC LIMIT 0,10
+  </select>
+  
+  <select id="selectCompanySortBrach" resultType="String" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
+   SELECT org.ORG_SNAME FROM hty_fct_org_sale sale,DCI_DIM_ORG org where sale.YEAR_MON=#{yearMon} 
+   and org.ORG_CODE=sale.ORG_CODE and sale.ORG_CODE in 
+   (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode})) 
+   ORDER BY sale.YEAR_AMT DESC LIMIT 0,10
+  </select>
 </mapper>

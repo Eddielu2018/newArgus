@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.dao.HtyFctSaleOrgProdDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctSaleOrgProdDTO" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="DATE_KEY" property="dateKey" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="PL_CODE" property="plCode" jdbcType="VARCHAR" />
+    <result column="PL_NAME" property="plName" jdbcType="VARCHAR" />
+    <result column="PP_CODE" property="ppCode" jdbcType="VARCHAR" />
+    <result column="PP_NAME" property="ppName" jdbcType="VARCHAR" />
+    <result column="XS_AMT" property="xsAmt" jdbcType="DECIMAL" />
+    <result column="XS_QTY" property="xsQty" jdbcType="DECIMAL" />
+    <result column="XS_AMT_ALL" property="xsAmtAll" jdbcType="DECIMAL" />
+    <result column="XS_QTY_ALL" property="xsQtyAll" jdbcType="DECIMAL" />
+    <result column="XS_CB" property="xsCb" jdbcType="DECIMAL" />
+    <result column="XS_SR" property="xsSr" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, DATE_KEY, ORG_CODE, PL_CODE, PL_NAME, PP_CODE, PP_NAME, XS_AMT, XS_QTY, XS_AMT_ALL, 
+    XS_QTY_ALL, XS_CB, XS_SR
+  </sql>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.startTime != null and searchDTO.startTime != ''">
+        <![CDATA[ and DATE_KEY >= #{searchDTO.startTime} ]]>
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
+        <![CDATA[ and DATE_KEY <= #{searchDTO.endTime} ]]>
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryBrandSumPage" resultMap="BaseResultMap">
+    SELECT
+    PP_NAME,
+    PL_NAME,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    SUM(XS_AMT_ALL) AS XS_AMT_ALL,
+    SUM(XS_SR) AS XS_SR,
+    SUM(XS_CB) AS XS_CB
+    FROM
+    hty_fct_sale_org_prod
+    <include refid="where"/>
+    GROUP BY
+    ORG_CODE,
+    PP_CODE,
+    PL_CODE
+    ORDER BY
+    PP_CODE,
+    PL_CODE
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryCategorySumPage" resultMap="BaseResultMap">
+    SELECT
+    PP_NAME,
+    PL_NAME,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    SUM(XS_AMT_ALL) AS XS_AMT_ALL,
+    SUM(XS_SR) AS XS_SR,
+    SUM(XS_CB) AS XS_CB
+    FROM
+    hty_fct_sale_org_prod
+    <include refid="where"/>
+    GROUP BY
+    ORG_CODE,
+    PP_CODE,
+    PL_CODE
+    ORDER BY
+    PL_CODE,
+    PP_CODE
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryPageSumCount" resultType="long">
+    SELECT COUNT(*) FROM (SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    hty_fct_sale_org_prod
+    <include refid="where"/>
+    GROUP BY
+    ORG_CODE,
+    PP_CODE,
+    PL_CODE) a
+
+  </select>
+
+  <select id="queryBrandPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_prod
+    <include refid="where"/>
+    ORDER BY PP_CODE,PL_CODE
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryCategoryPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_prod
+    <include refid="where"/>
+    ORDER BY PL_CODE,PP_CODE
+    limit #{pager.pageOffset},#{pager.rows}
+  </select>
+
+  <select id="queryPageCount" resultType="long">
+    SELECT COUNT(*) FROM (SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    hty_fct_sale_org_prod
+    <include refid="where"/>) a
+
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_prod
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrgCode" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctSaleOrgProdDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from hty_fct_sale_org_prod
+    where ORG_CODE = #{orgCode} order by YEAR_MON desc limit 1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from hty_fct_sale_org_prod
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctSaleOrgProdDTO" >
+    insert into hty_fct_sale_org_prod (ID, DATE_KEY, ORG_CODE, 
+      PL_CODE, PL_NAME, PP_CODE, 
+      PP_NAME, XS_AMT, XS_QTY, 
+      XS_AMT_ALL, XS_QTY_ALL, XS_CB, 
+      XS_SR)
+    values (#{id,jdbcType=BIGINT}, #{dateKey,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{plCode,jdbcType=VARCHAR}, #{plName,jdbcType=VARCHAR}, #{ppCode,jdbcType=VARCHAR}, 
+      #{ppName,jdbcType=VARCHAR}, #{xsAmt,jdbcType=DECIMAL}, #{xsQty,jdbcType=DECIMAL}, 
+      #{xsAmtAll,jdbcType=DECIMAL}, #{xsQtyAll,jdbcType=DECIMAL}, #{xsCb,jdbcType=DECIMAL}, 
+      #{xsSr,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.htd.argus.dto.HtyFctSaleOrgProdDTO" >
+    insert into hty_fct_sale_org_prod
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="dateKey != null" >
+        DATE_KEY,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="plCode != null" >
+        PL_CODE,
+      </if>
+      <if test="plName != null" >
+        PL_NAME,
+      </if>
+      <if test="ppCode != null" >
+        PP_CODE,
+      </if>
+      <if test="ppName != null" >
+        PP_NAME,
+      </if>
+      <if test="xsAmt != null" >
+        XS_AMT,
+      </if>
+      <if test="xsQty != null" >
+        XS_QTY,
+      </if>
+      <if test="xsAmtAll != null" >
+        XS_AMT_ALL,
+      </if>
+      <if test="xsQtyAll != null" >
+        XS_QTY_ALL,
+      </if>
+      <if test="xsCb != null" >
+        XS_CB,
+      </if>
+      <if test="xsSr != null" >
+        XS_SR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="dateKey != null" >
+        #{dateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="plCode != null" >
+        #{plCode,jdbcType=VARCHAR},
+      </if>
+      <if test="plName != null" >
+        #{plName,jdbcType=VARCHAR},
+      </if>
+      <if test="ppCode != null" >
+        #{ppCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ppName != null" >
+        #{ppName,jdbcType=VARCHAR},
+      </if>
+      <if test="xsAmt != null" >
+        #{xsAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQty != null" >
+        #{xsQty,jdbcType=DECIMAL},
+      </if>
+      <if test="xsAmtAll != null" >
+        #{xsAmtAll,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQtyAll != null" >
+        #{xsQtyAll,jdbcType=DECIMAL},
+      </if>
+      <if test="xsCb != null" >
+        #{xsCb,jdbcType=DECIMAL},
+      </if>
+      <if test="xsSr != null" >
+        #{xsSr,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.htd.argus.dto.HtyFctSaleOrgProdDTO" >
+    update hty_fct_sale_org_prod
+    <set >
+      <if test="dateKey != null" >
+        DATE_KEY = #{dateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="plCode != null" >
+        PL_CODE = #{plCode,jdbcType=VARCHAR},
+      </if>
+      <if test="plName != null" >
+        PL_NAME = #{plName,jdbcType=VARCHAR},
+      </if>
+      <if test="ppCode != null" >
+        PP_CODE = #{ppCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ppName != null" >
+        PP_NAME = #{ppName,jdbcType=VARCHAR},
+      </if>
+      <if test="xsAmt != null" >
+        XS_AMT = #{xsAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQty != null" >
+        XS_QTY = #{xsQty,jdbcType=DECIMAL},
+      </if>
+      <if test="xsAmtAll != null" >
+        XS_AMT_ALL = #{xsAmtAll,jdbcType=DECIMAL},
+      </if>
+      <if test="xsQtyAll != null" >
+        XS_QTY_ALL = #{xsQtyAll,jdbcType=DECIMAL},
+      </if>
+      <if test="xsCb != null" >
+        XS_CB = #{xsCb,jdbcType=DECIMAL},
+      </if>
+      <if test="xsSr != null" >
+        XS_SR = #{xsSr,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.htd.argus.dto.HtyFctSaleOrgProdDTO" >
+    update hty_fct_sale_org_prod
+    set DATE_KEY = #{dateKey,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      PL_CODE = #{plCode,jdbcType=VARCHAR},
+      PL_NAME = #{plName,jdbcType=VARCHAR},
+      PP_CODE = #{ppCode,jdbcType=VARCHAR},
+      PP_NAME = #{ppName,jdbcType=VARCHAR},
+      XS_AMT = #{xsAmt,jdbcType=DECIMAL},
+      XS_QTY = #{xsQty,jdbcType=DECIMAL},
+      XS_AMT_ALL = #{xsAmtAll,jdbcType=DECIMAL},
+      XS_QTY_ALL = #{xsQtyAll,jdbcType=DECIMAL},
+      XS_CB = #{xsCb,jdbcType=DECIMAL},
+      XS_SR = #{xsSr,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
