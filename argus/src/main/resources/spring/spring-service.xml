@@ -1,60 +1,42 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd  
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
-	
-	<context:component-scan base-package="cn.htd" ></context:component-scan>
 
-<<<<<<< HEAD
-	<bean id="dciDimOrgDTOService" class="cn.htd.argus.service.impl.DciDimOrgDTOServiceImpl"/>
+    <context:component-scan base-package="cn.htd" ></context:component-scan>
 
-=======
-	<!-- -->
-	<bean id="dciDimOrgDTOService" class="cn.htd.argus.service.impl.DciDimOrgDTOServiceImpl"/>
+    <!-- -->
+    <bean id="dciDimOrgDTOService" class="cn.htd.argus.service.impl.DciDimOrgDTOServiceImpl"/>
 
-	<!-- -->
->>>>>>> develop
-	<bean id="htyFctOrgCustDTOService" class="cn.htd.argus.service.impl.HtyFctOrgCustDTOServiceImpl"/>
-	<bean id="htyFctOrgCustIncomeSaleDTOService" class="cn.htd.argus.service.impl.HtyFctOrgCustIncomeSaleDTOServiceImpl"/>
-	<bean id="htyFctOrgIncomeDTOService" class="cn.htd.argus.service.impl.HtyFctOrgIncomeDTOServiceImpl"/>
-	<bean id="htyFctOrgSaleDTOService" class="cn.htd.argus.service.impl.HtyFctOrgSaleDTOServiceImpl"/>
-	<bean id="htyFctOrgValueDTOService" class="cn.htd.argus.service.impl.HtyFctOrgValueDTOServiceImpl"/>
+    <!-- -->
+    <bean id="htyFctOrgCustDTOService" class="cn.htd.argus.service.impl.HtyFctOrgCustDTOServiceImpl"/>
+    <bean id="htyFctOrgCustIncomeSaleDTOService" class="cn.htd.argus.service.impl.HtyFctOrgCustIncomeSaleDTOServiceImpl"/>
+    <bean id="htyFctOrgIncomeDTOService" class="cn.htd.argus.service.impl.HtyFctOrgIncomeDTOServiceImpl"/>
+    <bean id="htyFctOrgSaleDTOService" class="cn.htd.argus.service.impl.HtyFctOrgSaleDTOServiceImpl"/>
+    <bean id="htyFctOrgValueDTOService" class="cn.htd.argus.service.impl.HtyFctOrgValueDTOServiceImpl"/>
 
-<<<<<<< HEAD
-=======
-	<!-- 选品定价 -->
->>>>>>> develop
-	<bean id="htyFctSaleOrgAllDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgAllDTOServiceImpl"/>
-	<bean id="htyFctSaleOrgDetailDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgDetailDTOServiceImpl"/>
-	<bean id="htyFctSaleOrgProdDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgProdDTOServiceImpl"/>
-	<bean id="htyFctSaleOrgXzDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgXzDTOServiceImpl"/>
-	<bean id="htyFctSaleXzHotDTOService" class="cn.htd.argus.service.impl.HtyFctSaleXzHotDTOServiceImpl"/>
-<<<<<<< HEAD
-	
-=======
+    <!-- 选品定价 -->
+    <bean id="htyFctSaleOrgAllDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgAllDTOServiceImpl"/>
+    <bean id="htyFctSaleOrgDetailDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgDetailDTOServiceImpl"/>
+    <bean id="htyFctSaleOrgProdDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgProdDTOServiceImpl"/>
+    <bean id="htyFctSaleOrgXzDTOService" class="cn.htd.argus.service.impl.HtyFctSaleOrgXzDTOServiceImpl"/>
+    <bean id="htyFctSaleXzHotDTOService" class="cn.htd.argus.service.impl.HtyFctSaleXzHotDTOServiceImpl"/>
 
-	<!-- -->
->>>>>>> develop
-	<bean id="htyFctXwB2bSearchKeyDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bSearchKeyDTOServiceImpl"/>
-	<bean id="htyFctXwB2bLndPageDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bLndPageDTOServiceImpl"/>
-	<bean id="htyFctXwB2bItemAccessDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bItemAccessDTOServiceImpl"/>
-	<bean id="htyFctXwB2bConvFunnelDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bConvFunnelDTOServiceImpl"/>
-	<bean id="htyFctSaleCityProdDTOService" class="cn.htd.argus.service.impl.HtyFctSaleCityProdDTOServiceImpl"/>
-<<<<<<< HEAD
-	
-	<bean id="htyFctCustAllDTOService" class="cn.htd.argus.service.impl.HtyFctCustAllDTOServiceImpl"/>
+    <!-- -->
+    <bean id="htyFctXwB2bSearchKeyDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bSearchKeyDTOServiceImpl"/>
+    <bean id="htyFctXwB2bLndPageDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bLndPageDTOServiceImpl"/>
+    <bean id="htyFctXwB2bItemAccessDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bItemAccessDTOServiceImpl"/>
+    <bean id="htyFctXwB2bConvFunnelDTOService" class="cn.htd.argus.service.impl.HtyFctXwB2bConvFunnelDTOServiceImpl"/>
+    <bean id="htyFctSaleCityProdDTOService" class="cn.htd.argus.service.impl.HtyFctSaleCityProdDTOServiceImpl"/>
+
+    <!-- -->
+    <bean id="htyFctCustAllDTOService" class="cn.htd.argus.service.impl.HtyFctCustAllDTOServiceImpl"/>
     <bean id="htyFctMemberOrgDetailDTOService" class="cn.htd.argus.service.impl.HtyFctMemberOrgDetailDTOServiceImpl"/>
-=======
-
-	<!-- -->
-	<bean id="htyFctCustAllDTOService" class="cn.htd.argus.service.impl.HtyFctCustAllDTOServiceImpl"/>
-    <bean id="htyFctMemberOrgDetailDTOService" class="cn.htd.argus.service.impl.HtyFctMemberOrgDetailDTOServiceImpl"/>
-	<!-- 财务效率 -->
-	<bean id="htyConfigZcfzSubjcodeDTOService" class="cn.htd.argus.service.impl.HtyConfigZcfzSubjcodeDTOServiceImpl"/>
-	<bean id="htyFctL2DupontDTOService" class="cn.htd.argus.service.impl.HtyFctL2DupontDTOServiceImpl"/>
-	<bean id="htyFctL1ZcfzSubjamtDTOService" class="cn.htd.argus.service.impl.HtyFctL1ZcfzSubjamtDTOServiceImpl"/>
->>>>>>> develop
+    <!-- 财务效率 -->
+    <bean id="htyConfigZcfzSubjcodeDTOService" class="cn.htd.argus.service.impl.HtyConfigZcfzSubjcodeDTOServiceImpl"/>
+    <bean id="htyFctL2DupontDTOService" class="cn.htd.argus.service.impl.HtyFctL2DupontDTOServiceImpl"/>
+    <bean id="htyFctL1ZcfzSubjamtDTOService" class="cn.htd.argus.service.impl.HtyFctL1ZcfzSubjamtDTOServiceImpl"/>
 </beans>
