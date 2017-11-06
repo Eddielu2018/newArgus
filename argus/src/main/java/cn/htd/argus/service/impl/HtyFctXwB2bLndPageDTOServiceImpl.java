@@ -21,17 +21,17 @@ public class HtyFctXwB2bLndPageDTOServiceImpl implements HtyFctXwB2bLndPageDTOSe
 	}
 
     @Override
-    public List<HtyFctXwB2bLndPageDTO> queryByProNameAndCityName(@Param("htyFctXwB2bLndPageDTO") HtyFctXwB2bLndPageDTO htyFctXwB2bLndPageDTO, @Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+    public List<HtyFctXwB2bLndPageDTO> queryByProNameAndCityName( HtyFctXwB2bLndPageDTO htyFctXwB2bLndPageDTO, HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
         return htyFctXwB2bLndPageDTOMDao.queryByProNameAndCityName(htyFctXwB2bLndPageDTO,htyFctUserBeHaviorSearchDTO);
     }
 
     @Override
-    public HtyFctXwB2bLndPageDTO queryCityName(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+    public HtyFctXwB2bLndPageDTO queryCityName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
         return htyFctXwB2bLndPageDTOMDao.queryCityName(htyFctUserBeHaviorSearchDTO);
     }
 
     @Override
-    public HtyFctXwB2bLndPageDTO queryProName(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+    public HtyFctXwB2bLndPageDTO queryProName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
         return htyFctXwB2bLndPageDTOMDao.queryProName(htyFctUserBeHaviorSearchDTO);
     }
 }
