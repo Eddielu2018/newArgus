@@ -35,8 +35,4 @@ public interface HtyFctCustAllDTOMapper {
     List<HtyFctCustAllDto> selectByTimeDimension(HtyFctCustInDto inDto);
     //导出明细
     List<HtyFctCustAllDto>queryExport(HtyFctCustAllDto htyFctCustAllDto);
-<<<<<<< HEAD
-=======
-
->>>>>>> develop
 }

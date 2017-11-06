@@ -23,13 +23,12 @@ public class UserBeHaviorSearchDTO {
 	// 单品销售数量
     List<String> b2bSaleCityProdyList;
     List<BigDecimal> b2bSaleCityProdNumList;
-	// 漏斗转化及复购
+	// 漏斗转化
     List<String> b2bConvFunnelList;
     List<BigDecimal> b2bConvFunnelNumList;
     //复购
     List<String> b2bRepeatBuyList;
     List<BigDecimal> b2bRepeatBuyNumList;
-    //本省
         //关键字
     List<HtyFctXwB2bSearchKeyDTO>  htyFctXwB2bSearchKeyDTOList;
     public List<String> getB2bSearchKeyList() {
