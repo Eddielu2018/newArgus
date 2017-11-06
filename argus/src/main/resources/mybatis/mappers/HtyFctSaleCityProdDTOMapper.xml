@@ -34,7 +34,7 @@
 			 	<![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
             <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+                or DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
             </if>
 		</where>
 	</sql>
@@ -77,14 +77,14 @@
             <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
                 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
             </if>
-            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
-            </if>
             <if test="htyFctSaleCityProdDTO.custProName!=null">
-              AND  cust_proname=#{htyFctSaleCityProdDTO.custProName}
+                AND  cust_proname=#{htyFctSaleCityProdDTO.custProName}
             </if>
             <if test="htyFctSaleCityProdDTO.custCityName!=null">
                 AND cust_city=#{htyFctSaleCityProdDTO.custCityName}
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
+                or DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
             </if>
         </where>
         group by PROD_CODE,XS_QTY

@@ -29,7 +29,7 @@
 			 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
             <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+                or DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
             </if>
 		</where>
 	</sql>
@@ -78,7 +78,7 @@
                 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
             </if>
             <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+                or DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
             </if>
         </where>
         group by SEARCH_KEYWORD,SEARCH_QTY

@@ -21,16 +21,16 @@ public class HtyFctXwB2bItemAccessDTOServiceImpl implements HtyFctXwB2bItemAcces
 
     @Override
     public List<HtyFctXwB2bItemAccessDTO> queryByProAndCity(HtyFctXwB2bItemAccessDTO htyFctXwB2bItemAccessDTO, HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return null;
+        return htyFctXwB2bItemAccessDTODao.queryByProAndCity(htyFctXwB2bItemAccessDTO,htyFctUserBeHaviorSearchDTO);
     }
 
     @Override
     public HtyFctXwB2bItemAccessDTO queryCityName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return null;
+        return htyFctXwB2bItemAccessDTODao.queryCityName(htyFctUserBeHaviorSearchDTO);
     }
 
     @Override
     public HtyFctXwB2bItemAccessDTO queryProName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return null;
+        return htyFctXwB2bItemAccessDTODao.queryProName(htyFctUserBeHaviorSearchDTO);
     }
 }

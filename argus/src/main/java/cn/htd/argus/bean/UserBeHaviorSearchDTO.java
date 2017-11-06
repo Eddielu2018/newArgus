@@ -29,8 +29,6 @@ public class UserBeHaviorSearchDTO {
     //复购
     List<String> b2bRepeatBuyList;
     List<BigDecimal> b2bRepeatBuyNumList;
-        //关键字
-    List<HtyFctXwB2bSearchKeyDTO>  htyFctXwB2bSearchKeyDTOList;
     public List<String> getB2bSearchKeyList() {
         return b2bSearchKeyList;
     }
@@ -125,13 +123,5 @@ public class UserBeHaviorSearchDTO {
 
     public void setB2bRepeatBuyNumList(List<BigDecimal> b2bRepeatBuyNumList) {
         this.b2bRepeatBuyNumList = b2bRepeatBuyNumList;
-    }
-
-    public List<HtyFctXwB2bSearchKeyDTO> getHtyFctXwB2bSearchKeyDTOList() {
-        return htyFctXwB2bSearchKeyDTOList;
-    }
-
-    public void setHtyFctXwB2bSearchKeyDTOList(List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTOList) {
-        this.htyFctXwB2bSearchKeyDTOList = htyFctXwB2bSearchKeyDTOList;
     }
 }
