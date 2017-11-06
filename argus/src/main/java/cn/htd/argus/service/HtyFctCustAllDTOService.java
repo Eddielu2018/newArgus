@@ -15,10 +15,26 @@ public interface HtyFctCustAllDTOService {
     HtyFctCustAllDto select(HtyFctCustAllDto dto);
 
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
+    
+    Integer selectForAmtAll(String userId,String startTime,String endTime,int type,Integer regionOrg);
+    
+    HtyFctCustAllDto selectForAnalysis(String userId,String startTime,String endTime,int type);
+    
+    Integer selectForAmtOnline(String userId,String startTime,String endTime,int type,Integer regionOrg);
+    
+    Integer selectForQtyB2b(String userId,String startTime,String endTime,int type,Integer regionOrg);
+    
+    Integer selectForQtyBoss(String userId,String startTime,String endTime,int type,Integer regionOrg);
+    
+    Integer selectForQtyHzg(String userId,String startTime,String endTime,int type,Integer regionOrg);
+    
+    Integer selectForAmtDk(String userId,String startTime,String endTime,int type,Integer regionOrg);
+    
+    List<HtyFctCustAllDto> selectForPair(String userId,String startTime,String endTime,int type);
 
 
     List<HtyFctCustAllDto> queryActiveVipByCondition(HtyFctCustAllDto htyFctCustAllDto);
-    //导出明细
+
     List<HtyFctCustAllDto>queryExport(HtyFctCustAllDto htyFctCustAllDto);
 
 }

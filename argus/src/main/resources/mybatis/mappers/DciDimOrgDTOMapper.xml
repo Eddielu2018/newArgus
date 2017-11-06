@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.htd.argus.dao.DciDimOrgDTOMapper" >
-  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.DciDimOrgDTO" >
-    <id column="ID" property="id" jdbcType="BIGINT" />
-    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
-    <result column="ORG_SNAME" property="orgSname" jdbcType="VARCHAR" />
-    <result column="ORG_PCODE" property="orgPcode" jdbcType="VARCHAR" />
-    <result column="ORG_PSNAME" property="orgPsname" jdbcType="VARCHAR" />
-    <result column="ORG_XZCODE" property="orgXzcode" jdbcType="VARCHAR" />
-    <result column="ORG_XZ" property="orgXz" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DciDimOrgDTOMapper">
+  <resultMap id="BaseResultMap" type="dto.DciDimOrgDTO">
+    <result column="ID" jdbcType="BIGINT" property="id" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="ORG_SNAME" jdbcType="VARCHAR" property="orgSname" />
+    <result column="ORG_PCODE" jdbcType="VARCHAR" property="orgPcode" />
+    <result column="ORG_PSNAME" jdbcType="VARCHAR" property="orgPsname" />
+    <result column="ORG_XZCODE" jdbcType="VARCHAR" property="orgXzcode" />
+    <result column="ORG_XZ" jdbcType="VARCHAR" property="orgXz" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, ORG_CODE, ORG_SNAME, ORG_PCODE, ORG_PSNAME, ORG_XZCODE, ORG_XZ
@@ -50,5 +50,9 @@
   </select>
   <select id="selectAllNum" resultType="int" >
     select count(1) from dci_dim_org
+  </select>
+  <select id="selectRegionNum" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO">
+    SELECT count(1) from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})
   </select>
 </mapper>

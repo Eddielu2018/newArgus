@@ -375,7 +375,7 @@ public class DateTimeUtil
      * 
      * @Title: getDayChar14ByMunites
      * @Description: 根据分钟加减当前日期
-     * @param days
+     * @param mni
      * @return
      * @return String 返回类型
      */
@@ -638,8 +638,7 @@ public class DateTimeUtil
     /**
      * @Title: getOracleDate
      * @Description: 将指定Date类型参数转换为指定的Oracle日期时间格式字符串
-     * @param inputDate
-     *            传入Date类型参数
+     * @param inputDateTime 传入Date类型参数
      * @return String
      */
     public static String getOracleDate(Date inputDateTime) throws NullPointerException
@@ -2050,7 +2049,6 @@ public class DateTimeUtil
      * 
      * @Title: getSixDayDate
      * @Description: 获取1月1号到传入时间的7个日期节点
-     * @param days
      * @param dataTime
      * @return
      * @return List<String> 返回类型

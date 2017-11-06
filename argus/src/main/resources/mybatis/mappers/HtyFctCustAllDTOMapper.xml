@@ -1,174 +1,439 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.htd.argus.dao.HtyFctCustAllDTOMapper" >
-  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctCustAllDto" >
-    <id column="ID" property="id" jdbcType="BIGINT" />
-    <result column="date_key" property="dateKey" jdbcType="VARCHAR" />
-    <result column="cust_rq" property="custRq" jdbcType="VARCHAR" />
-    <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
-    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
-    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
-    <result column="org_sname" property="orgSname" jdbcType="VARCHAR" />
-    <result column="org_fname" property="orgFname" jdbcType="VARCHAR" />
-    <result column="area_procode" property="areaProCode" jdbcType="VARCHAR" />
-    <result column="area_proname" property="areaProName" jdbcType="VARCHAR" />
-    <result column="area_citycode" property="areaCityCode" jdbcType="VARCHAR" />
-    <result column="area_cityname" property="areaCityName" jdbcType="VARCHAR" />
-    <result column="area_countycode" property="areaCountyCode" jdbcType="VARCHAR" />
-    <result column="area_countyname" property="areaCountyName" jdbcType="VARCHAR" />
-    <result column="area_towncode" property="areaTownCode" jdbcType="VARCHAR" />
-    <result column="area_townname" property="areaTownName" jdbcType="VARCHAR" />
-    <result column="cust_managercode" property="custManagerCode" jdbcType="VARCHAR" />
-    <result column="cust_managername" property="custManagerName" jdbcType="VARCHAR" />
-    <result column="amt_all" property="amtAll" jdbcType="DECIMAL" />
-    <result column="amt_online" property="amtOnline" jdbcType="DECIMAL" />
-    <result column="amt_online_boss" property="amtOnlineBoss" jdbcType="DECIMAL" />
-    <result column="amt_online_b2b" property="amtOnlineB2b" jdbcType="DECIMAL" />
-    <result column="amt_online_vms" property="amtOnlineVms" jdbcType="DECIMAL" />
-    <result column="amt_dk" property="amtDk" jdbcType="DECIMAL" />
-    <result column="qty_b2b" property="qtyB2b" jdbcType="DECIMAL" />
-    <result column="qty_boss" property="qtyBoss" jdbcType="DECIMAL" />
-    <result column="qty_hzg" property="qtyHzg" jdbcType="DECIMAL" />
-    <result column="qty_fs" property="qtyFs" jdbcType="DECIMAL" />
-    <result column="is_cust" property="isCust" jdbcType="DECIMAL" />
-    <result column="is_hy" property="isHy" jdbcType="DECIMAL" />
-    <result column="is_vip" property="isVip" jdbcType="DECIMAL" />
-    <result column="is_dk" property="isDk" jdbcType="DECIMAL" />
-      <result column="expire_time" property="expireTime" jdbcType="VARCHAR"/>
-      <result column="etl_date" property="etlDate" jdbcType="VARCHAR"/>
-      <result column="etl_time" property="etlTime" jdbcType="VARCHAR"/>
-  </resultMap>
-  <sql id="Base_Column_List" >
-    ID, date_key, cust_rq, cust_code, cust_name, org_code, org_sname, org_fname,
-     area_procode, area_proname, area_citycode, area_cityname,
-     area_countycode, area_countyname, area_towncode, area_townname, cust_managercode,
-     cust_managername, amt_all, amt_online, amt_online_boss, amt_online_b2b,
-     amt_online_vms, amt_dk, qty_b2b, qty_boss, qty_hzg, qty_fs, is_cust,
-     is_hy, is_vip, is_dk,expire_time,etl_date,etl_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from hty_fct_cust_all
-    where ID = #{id,jdbcType=BIGINT}
-  </select>
+    <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctCustAllDto" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="date_key" property="dateKey" jdbcType="VARCHAR" />
+        <result column="cust_rq" property="custRq" jdbcType="VARCHAR" />
+        <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
+        <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+        <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+        <result column="org_sname" property="orgSname" jdbcType="VARCHAR" />
+        <result column="org_fname" property="orgFname" jdbcType="VARCHAR" />
+        <result column="area_procode" property="areaProCode" jdbcType="VARCHAR" />
+        <result column="area_proname" property="areaProName" jdbcType="VARCHAR" />
+        <result column="area_citycode" property="areaCityCode" jdbcType="VARCHAR" />
+        <result column="area_cityname" property="areaCityName" jdbcType="VARCHAR" />
+        <result column="area_countycode" property="areaCountyCode" jdbcType="VARCHAR" />
+        <result column="area_countyname" property="areaCountyName" jdbcType="VARCHAR" />
+        <result column="area_towncode" property="areaTownCode" jdbcType="VARCHAR" />
+        <result column="area_townname" property="areaTownName" jdbcType="VARCHAR" />
+        <result column="cust_managercode" property="custManagerCode" jdbcType="VARCHAR" />
+        <result column="cust_managername" property="custManagerName" jdbcType="VARCHAR" />
+        <result column="amt_all" property="amtAll" jdbcType="DECIMAL" />
+        <result column="amt_online" property="amtOnline" jdbcType="DECIMAL" />
+        <result column="amt_online_boss" property="amtOnlineBoss" jdbcType="DECIMAL" />
+        <result column="amt_online_b2b" property="amtOnlineB2b" jdbcType="DECIMAL" />
+        <result column="amt_online_vms" property="amtOnlineVms" jdbcType="DECIMAL" />
+        <result column="amt_dk" property="amtDk" jdbcType="DECIMAL" />
+        <result column="qty_b2b" property="qtyB2b" jdbcType="DECIMAL" />
+        <result column="qty_boss" property="qtyBoss" jdbcType="DECIMAL" />
+        <result column="qty_hzg" property="qtyHzg" jdbcType="DECIMAL" />
+        <result column="qty_fs" property="qtyFs" jdbcType="DECIMAL" />
+        <result column="is_cust" property="isCust" jdbcType="DECIMAL" />
+        <result column="is_hy" property="isHy" jdbcType="DECIMAL" />
+        <result column="is_vip" property="isVip" jdbcType="DECIMAL" />
+        <result column="is_dk" property="isDk" jdbcType="DECIMAL" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        ID, date_key, cust_rq, cust_code, cust_name, org_code, org_sname, org_fname,
+        area_procode, area_proname, area_citycode, area_cityname,
+        area_countycode, area_countyname, area_towncode, area_townname, cust_managercode,
+        cust_managername, amt_all, amt_online, amt_online_boss, amt_online_b2b,
+        amt_online_vms, amt_dk, qty_b2b, qty_boss, qty_hzg, qty_fs, is_cust,
+        is_hy, is_vip, is_dk
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from hty_fct_cust_all
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
 
-  <select id="queryActiveVipByCondition" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
-    select
-    id
-    from hty_fct_cust_all
-    <where>
-      <if test="id != null">
-        and ID = #{id}
-      </if>
-      <if test="dateKey != null">
-        and date_key = #{dateKey}
-      </if>
-      <if test="custRq != null">
-        and cust_rq = #{custRq}
-      </if>
-      <if test="custCode != null">
-        and cust_code = #{custCode}
-      </if>
-      <if test="custName != null">
-        and cust_name = #{custName}
-      </if>
-      <if test="orgCode != null">
-        and org_code = #{orgCode}
-      </if>
-      <if test="orgSname != null">
-        and org_sname = #{orgSname}
-      </if>
-      <if test="orgFname != null">
-        and org_fname = #{orgFname}
-      </if>
-      <if test="areaProCode != null">
-        and area_procode = #{areaProCode}
-      </if>
-      <if test="areaProName != null">
-        and area_proname = #{areaProName}
-      </if>
-      <if test="areaCityCode != null">
-        and area_citycode = #{areaCityCode}
-      </if>
-      <if test="areaCityName != null">
-        and area_cityname = #{areaCityName}
-      </if>
-      <if test="areaCountyCode != null">
-        and area_countycode = #{areaCountyCode}
-      </if>
-      <if test="areaCountyName != null">
-        and area_countyname = #{areaCountyName}
-      </if>
-      <if test="areaTownCode != null">
-        and area_towncode = #{areaTownCode}
-      </if>
-      <if test="areaTownName != null">
-        and area_townname = #{areaTownName}
-      </if>
-      <if test="custManagerCode != null">
-        and cust_managercode = #{custManagerCode}
-      </if>
-      <if test="custManagerName != null">
-        and cust_managername = #{custManagerName}
-      </if>
-      <if test="amtAll != null">
-        and amt_all = #{amtAll}
-      </if>
-      <if test="amtOnline != null">
-        and amt_online = #{amtOnline}
-      </if>
-      <if test="amtOnlineBoss != null">
-        and amt_online_boss = #{amtOnlineBoss}
-      </if>
-      <if test="amtOnlineB2b != null">
-        and amt_online_b2b = #{amtOnlineB2b}
-      </if>
-      <if test="amtOnlineVms != null">
-        and amt_online_vms = #{amtOnlineVms}
-      </if>
-      <if test="amtDk != null">
-        and amt_dk = #{amtDk}
-      </if>
-      <if test="qtyB2b != null">
-        and qty_b2b = #{qtyB2b}
-      </if>
-      <if test="qtyBoss != null">
-        and qty_boss = #{qtyBoss}
-      </if>
-      <if test="qtyHzg != null">
-        and qty_hzg = #{qtyHzg}
-      </if>
-      <if test="qtyFs != null">
-        and qty_fs = #{qtyFs}
-      </if>
-      <if test="isCust != null">
-        and is_cust = #{isCust}
-      </if>
-      <if test="isHy != null">
-        and is_hy = #{isHy}
-      </if>
-      <if test="isVip != null">
-        and is_vip = #{isVip}
-      </if>
-      <if test="isDk != null">
-        and is_dk = #{isDk}
-      </if>
-    </where>
-      GROUP BY amt_all,amt_online,qty_b2b,qty_hzg,amt_dk,qty_fs
-      ORDER BY amt_all,amt_online,qty_b2b,qty_hzg,amt_dk,qty_fs DESC limit 10
-  </select>
-  <select id="queryExport" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
-  	select
-    <include refid="Base_Column_List" />
-    from hty_fct_cust_all
-      <where>
-          <if test="isHy != null">
-          and is_hy = #{isHy}
-      </if>
-          <if test="isVip != null">
-              and is_vip = #{isVip}
-          </if>
-      </where>
-  </select>
+    <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.DciDimOrgDTO" >
+        select
+        <include refid="Base_Column_List" />
+        from hty_fct_cust_all
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="dateKey != null">
+                and date_key = #{dateKey}
+            </if>
+            <if test="custRq != null">
+                and cust_rq = #{custRq}
+            </if>
+            <if test="custCode != null">
+                and cust_code = #{custCode}
+            </if>
+            <if test="custName != null">
+                and cust_name = #{custName}
+            </if>
+            <if test="orgCode != null">
+                and org_code = #{orgCode}
+            </if>
+            <if test="orgSname != null">
+                and org_sname = #{orgSname}
+            </if>
+            <if test="orgFname != null">
+                and org_fname = #{orgFname}
+            </if>
+            <if test="areaProCode != null">
+                and area_procode = #{areaProCode}
+            </if>
+            <if test="areaProName != null">
+                and area_proname = #{areaProName}
+            </if>
+            <if test="areaCityCode != null">
+                and area_citycode = #{areaCityCode}
+            </if>
+            <if test="areaCityName != null">
+                and area_cityname = #{areaCityName}
+            </if>
+            <if test="areaCountyCode != null">
+                and area_countycode = #{areaCountyCode}
+            </if>
+            <if test="areaCountyName != null">
+                and area_countyname = #{areaCountyName}
+            </if>
+            <if test="areaTownCode != null">
+                and area_towncode = #{areaTownCode}
+            </if>
+            <if test="areaTownName != null">
+                and area_townname = #{areaTownName}
+            </if>
+            <if test="custManagerCode != null">
+                and cust_managercode = #{custManagerCode}
+            </if>
+            <if test="custManagerName != null">
+                and cust_managername = #{custManagerName}
+            </if>
+            <if test="amtAll != null">
+                and amt_all = #{amtAll}
+            </if>
+            <if test="amtOnline != null">
+                and amt_online = #{amtOnline}
+            </if>
+            <if test="amtOnlineBoss != null">
+                and amt_online_boss = #{amtOnlineBoss}
+            </if>
+            <if test="amtOnlineB2b != null">
+                and amt_online_b2b = #{amtOnlineB2b}
+            </if>
+            <if test="amtOnlineVms != null">
+                and amt_online_vms = #{amtOnlineVms}
+            </if>
+            <if test="amtDk != null">
+                and amt_dk = #{amtDk}
+            </if>
+            <if test="qtyB2b != null">
+                and qty_b2b = #{qtyB2b}
+            </if>
+            <if test="qtyBoss != null">
+                and qty_boss = #{qtyBoss}
+            </if>
+            <if test="qtyHzg != null">
+                and qty_hzg = #{qtyHzg}
+            </if>
+            <if test="qtyFs != null">
+                and qty_fs = #{qtyFs}
+            </if>
+            <if test="isCust != null">
+                and is_cust = #{isCust}
+            </if>
+            <if test="isHy != null">
+                and is_hy = #{isHy}
+            </if>
+            <if test="isVip != null">
+                and is_vip = #{isVip}
+            </if>
+            <if test="isDk != null">
+                and is_dk = #{isDk}
+            </if>
+        </where>
+    </select>
+    <select id="selectByNoPair" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustInDto" >
+        select
+        <include refid="Base_Column_List" />
+        from hty_fct_cust_all
+        <where>
+            <if test="userId != null">
+                and org_code = #{userId}
+            </if>
+            <choose>
+                <when  test="custStartTime !=null and custEndTime != null">
+                    <choose>
+                        <when  test="custStartTime == custEndTime">
+                            and cust_rq = #{custStartTime}
+                        </when>
+                        <otherwise>
+                            and cust_rq &gt;= #{custStartTime} and cust_rq &lt;= #{custEndTime}
+                        </otherwise>
+                    </choose>
+                </when>
+                <when  test="custStartTime !=null">
+                    and cust_rq &gt;= #{custStartTime}
+                </when>
+                <when  test="custEndTime != null">
+                    and cust_rq &lt;= #{custEndTime}
+                </when>
+            </choose>
+            <if test="firstTime != null">
+                and date_key = #{firstTime}
+            </if>
+            <if test="dimension != null and start != null and end != null and kind != null">
+                <choose>
+                    <when test="dimension == 0">
+                        <choose>
+                            <when test="kind == 0">
+                                and amt_all &lt;= #{start}
+                            </when>
+                            <when test="kind == 5">
+                                and amt_all &gt; #{end}
+                            </when>
+                            <otherwise>
+                                and amt_all &gt; #{start} and amt_all &lt;= #{end}
+                            </otherwise>
+                        </choose>
+                    </when>
+                    <when test="dimension == 1">
+                        <choose>
+                            <when test="kind == 0">
+                                and amt_online &lt;= #{start}
+                            </when>
+                            <when test="kind == 5">
+                                and amt_online &gt; #{end}
+                            </when>
+                            <otherwise>
+                                and amt_online &gt; #{start} and amt_online &lt;= #{end}
+                            </otherwise>
+                        </choose>
+                    </when>
+                    <when test="dimension == 2">
+                        <choose>
+                            <when test="kind == 0">
+                                and qty_b2b &lt;= #{start}
+                            </when>
+                            <when test="kind == 5">
+                                and qty_b2b &gt; #{end}
+                            </when>
+                            <otherwise>
+                                and qty_b2b &gt; #{start} and qty_b2b &lt;= #{end}
+                            </otherwise>
+                        </choose>
+                    </when>
+                    <when test="dimension == 3">
+                        <choose>
+                            <when test="kind == 0">
+                                and qty_boss &lt;= #{start}
+                            </when>
+                            <when test="kind == 5">
+                                and qty_boss &gt; #{end}
+                            </when>
+                            <otherwise>
+                                and qty_boss &gt; #{start} and qty_boss &lt;= #{end}
+                            </otherwise>
+                        </choose>
+                    </when>
+                    <when test="dimension == 4">
+                        <choose>
+                            <when test="kind == 0">
+                                and qty_hzg &lt;= #{start}
+                            </when>
+                            <when test="kind == 5">
+                                and qty_hzg &gt; #{end}
+                            </when>
+                            <otherwise>
+                                and qty_hzg &gt; #{start} and qty_hzg &lt;= #{end}
+                            </otherwise>
+                        </choose>
+                    </when>
+                    <when test="dimension == 5">
+                        <choose>
+                            <when test="kind == 0">
+                                and amt_dk &lt;= #{start}
+                            </when>
+                            <when test="kind == 5">
+                                and amt_dk &gt; #{end}
+                            </when>
+                            <otherwise>
+                                and amt_dk &gt; #{start} and amt_dk &lt;= #{end}
+                            </otherwise>
+                        </choose>
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectForAnalysis" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+        SELECT sum(amt_all) as amt_all,sum(amt_online) as amt_online,sum(qty_b2b)
+        as qty_b2b,sum(qty_boss)as qty_boss,SUM(qty_hzg) as qty_hzg,sum(amt_dk)
+        as amt_dk,sum(amt_online_boss) as amt_online_boss,sum(amt_online_b2b)
+        as amt_online_b2b,sum(amt_online_vms) as amt_online_vms FROM hty_fct_cust_all
+        where org_code=#{userId} and date_key &gt;= #{startTime} and date_key &lt;= #{endTime}
+        <choose>
+            <when test="type == 0">
+                and is_cust = 1
+            </when>
+            <when test="type == 1">
+                and is_hy = 1
+            </when>
+            <when test="type == 2">
+                and is_vip = 1
+            </when>
+        </choose>
+    </select>
+
+    <select id="selectForAmtAll" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+        select u.amtAllNum from (
+        select t.amtAll, t.ORG_CODE ,(@rowNum:=@rowNum+1) as amtAllNum from
+        (select a.amtAll, a.ORG_CODE from
+        (SELECT sum(amt_all) as amtAll, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime}
+        <choose>
+            <when test="type == 0">
+                and is_cust = 1
+            </when>
+            <when test="type == 1">
+                and is_hy = 1
+            </when>
+            <when test="type == 2">
+                and is_vip = 1
+            </when>
+        </choose>
+        and ORG_CODE in
+        (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE =
+        (SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.amtAll DESC ) t,(select (@rowNum :=0) ) b
+        ) u where u.ORG_CODE = #{userId}
+    </select>
+
+    <select id="selectForAmtOnline" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+        select u.amtOnlineNum from (
+        select t.amtOnline, t.ORG_CODE ,(@rowNum:=@rowNum+1) as amtOnlineNum from
+        (select a.amtOnline, a.ORG_CODE from
+        (SELECT sum(amt_online) as amtOnline, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime}
+        <choose>
+            <when test="type == 0">
+                and is_cust = 1
+            </when>
+            <when test="type == 1">
+                and is_hy = 1
+            </when>
+            <when test="type == 2">
+                and is_vip = 1
+            </when>
+        </choose>
+        and ORG_CODE in
+        (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE =
+        (SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.amtOnline DESC ) t,(select (@rowNum :=0) ) b
+        ) u where u.ORG_CODE = #{userId}
+    </select>
+
+    <select id="selectForQtyB2b" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+        select u.qtyB2bNum from (
+        select t.qtyB2b, t.ORG_CODE ,(@rowNum:=@rowNum+1) as qtyB2bNum from
+        (select a.qtyB2b, a.ORG_CODE from
+        (SELECT sum(qty_b2b) as qtyB2b, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime}
+        <choose>
+            <when test="type == 0">
+                and is_cust = 1
+            </when>
+            <when test="type == 1">
+                and is_hy = 1
+            </when>
+            <when test="type == 2">
+                and is_vip = 1
+            </when>
+        </choose>
+        and ORG_CODE in
+        (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE =
+        (SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.qtyB2b DESC ) t,(select (@rowNum :=0) ) b
+        ) u where u.ORG_CODE = #{userId}
+    </select>
+
+    <select id="selectForQtyBoss" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+        select u.qtyBossNum from (
+        select t.qtyBoss, t.ORG_CODE ,(@rowNum:=@rowNum+1) as qtyBossNum from
+        (select a.qtyBoss, a.ORG_CODE from
+        (SELECT sum(qty_boss) as qtyBoss, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime}
+        <choose>
+            <when test="type == 0">
+                and is_cust = 1
+            </when>
+            <when test="type == 1">
+                and is_hy = 1
+            </when>
+            <when test="type == 2">
+                and is_vip = 1
+            </when>
+        </choose>
+        and ORG_CODE in
+        (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE =
+        (SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.qtyBoss DESC ) t,(select (@rowNum :=0) ) b
+        ) u where u.ORG_CODE = #{userId}
+    </select>
+
+    <select id="selectForQtyHzg" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+        select u.qtyHzgNum from (
+        select t.qtyHzg, t.ORG_CODE ,(@rowNum:=@rowNum+1) as qtyHzgNum from
+        (select a.qtyHzg, a.ORG_CODE from
+        (SELECT sum(qty_hzg) as qtyHzg, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime}
+        <choose>
+            <when test="type == 0">
+                and is_cust = 1
+            </when>
+            <when test="type == 1">
+                and is_hy = 1
+            </when>
+            <when test="type == 2">
+                and is_vip = 1
+            </when>
+        </choose>
+        and ORG_CODE in
+        (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE =
+        (SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.qtyHzg DESC ) t,(select (@rowNum :=0) ) b
+        ) u where u.ORG_CODE = #{userId}
+    </select>
+
+    <select id="selectForAmtDk" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+        select u.amtDkNum from (
+        select t.amtDk, t.ORG_CODE ,(@rowNum:=@rowNum+1) as amtDkNum from
+        (select a.amtDk, a.ORG_CODE from
+        (SELECT sum(amt_dk) as amtDk, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime}
+        <choose>
+            <when test="type == 0">
+                and is_cust = 1
+            </when>
+            <when test="type == 1">
+                and is_hy = 1
+            </when>
+            <when test="type == 2">
+                and is_vip = 1
+            </when>
+        </choose>
+        and ORG_CODE in
+        (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE =
+        (SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.amtDk DESC ) t,(select (@rowNum :=0) ) b
+        ) u where u.ORG_CODE = #{userId}
+    </select>
+
+    <select id="selectForPair" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
+        select sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,org_code,cust_code from hty_fct_cust_all
+        where date_key &gt;= #{startTime} and date_key &lt;= #{endTime}
+        and ORG_CODE in
+        (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE =
+        (SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP BY cust_code
+        <choose>
+            <when test="type == 0">
+                and is_cust = 1
+            </when>
+            <when test="type == 1">
+                and is_hy = 1
+            </when>
+            <when test="type == 2">
+                and is_vip = 1
+            </when>
+        </choose>
+    </select>
 </mapper>
