@@ -51,4 +51,8 @@
   <select id="selectAllNum" resultType="int" >
     select count(1) from dci_dim_org
   </select>
+  <select id="selectRegionNum" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO">
+    SELECT count(1) from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})
+  </select>
 </mapper>
