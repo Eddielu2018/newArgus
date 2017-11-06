@@ -38,49 +38,49 @@ import cn.htd.argus.util.RestResult;
 @RestController
 @RequestMapping("/userBehavior")
 public class HtyFctUserBeHaviorController {
-	// 日志
-	Logger logger = LoggerFactory.getLogger(HtyFctUserBeHaviorController.class);
-	// 落地页面的访问数量
-	@Autowired
-	private HtyFctXwB2bLndPageDTOService htyFctXwB2bLndPageDTOService;
-	// 搜索量
-	@Autowired
-	private HtyFctXwB2bSearchKeyDTOService htyFctXwB2bSearchKeyDTOService;
-	// 单品的访问量
-	@Autowired
-	private HtyFctXwB2bItemAccessDTOService htyFctXwB2bItemAccessDTOService;
-	// 单品销售数量
-	@Autowired
-	private HtyFctSaleCityProdDTOService htyFctSaleCityProdDTOService;
-	// 漏斗转化及复购
-	@Autowired
-	private HtyFctXwB2bConvFunnelDTOService htyFctXwB2bConvFunnelDTOService;
+    // 日志
+    Logger logger = LoggerFactory.getLogger(HtyFctUserBeHaviorController.class);
+    // 落地页面的访问数量
+    @Autowired
+    private HtyFctXwB2bLndPageDTOService htyFctXwB2bLndPageDTOService;
+    // 搜索量
+    @Autowired
+    private HtyFctXwB2bSearchKeyDTOService htyFctXwB2bSearchKeyDTOService;
+    // 单品的访问量
+    @Autowired
+    private HtyFctXwB2bItemAccessDTOService htyFctXwB2bItemAccessDTOService;
+    // 单品销售数量
+    @Autowired
+    private HtyFctSaleCityProdDTOService htyFctSaleCityProdDTOService;
+    // 漏斗转化及复购
+    @Autowired
+    private HtyFctXwB2bConvFunnelDTOService htyFctXwB2bConvFunnelDTOService;
 
-	/**
-	 * 用户行为
-	 * 
-	 * @param
-	 * @return
-	 */
-	@RequestMapping("/behavior/whole")
-	public RestResult HtyFctUserBeHavior(
-			@RequestParam(value = "startTime", required = false) String startTime,
-			@RequestParam(value = "endTime", required = false) String endTime,
-			@RequestParam(value = "radio", required = false) String radio,
+    /**
+     * 用户行为
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping("/behavior/whole")
+    public RestResult HtyFctUserBeHavior(
+            @RequestParam(value = "startTime", required = false) String startTime,
+            @RequestParam(value = "endTime", required = false) String endTime,
+            @RequestParam(value = "radio", required = false) String radio,
             @RequestParam(value = "period",required = false)String period
     ) {
-		RestResult result = new RestResult();
-		try {
-			UserBeHaviorSearchDTO userBeHaviorSearchDTO = new UserBeHaviorSearchDTO();// 返回值
-			HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO = new HtyFctUserBeHaviorSearchDTO();// 获得参数的对象
-			startTime = DateUtil.conversionDate(startTime);
-			endTime = DateUtil.conversionDate(endTime);
-			// 从请求里组装bean包中对象的参数
-			if (StringUtils.isNotEmpty(startTime)) {
-				htyFctUserBeHaviorSearchDTO.setStartTime(startTime);
+        RestResult result = new RestResult();
+        try {
+            UserBeHaviorSearchDTO userBeHaviorSearchDTO = new UserBeHaviorSearchDTO();// 返回值
+            HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO = new HtyFctUserBeHaviorSearchDTO();// 获得参数的对象
+            startTime = DateUtil.conversionDate(startTime);
+            endTime = DateUtil.conversionDate(endTime);
+            // 从请求里组装bean包中对象的参数
+            if (StringUtils.isNotEmpty(startTime)) {
+                htyFctUserBeHaviorSearchDTO.setStartTime(startTime);
             }
-			if (StringUtils.isNotEmpty(endTime)) {
-				htyFctUserBeHaviorSearchDTO.setEndTime(endTime);
+            if (StringUtils.isNotEmpty(endTime)) {
+                htyFctUserBeHaviorSearchDTO.setEndTime(endTime);
             }
             if (StringUtils.isEmpty(period)){
                 String date= DateTimeUtil.getTodayChar8();
@@ -185,8 +185,8 @@ public class HtyFctUserBeHaviorController {
                 List<HtyFctXwB2bSearchKeyDTO>  htyFctXwB2bSearchKeyDTO= htyFctXwB2bSearchKeyDTOService.queryByNameSearchKey(htyFctXwB2bSearchKey, htyFctUserBeHaviorSearchDTO);
                 if(htyFctXwB2bSearchKeyDTO.size()>0){
                     for (HtyFctXwB2bSearchKeyDTO b2bSearchKey:htyFctXwB2bSearchKeyDTO){
-                    b2bSearchKeyList.add(b2bSearchKey.getSearchKeyword());
-                    b2bSearchKeyNumList.add(b2bSearchKey.getSearchQty());
+                        b2bSearchKeyList.add(b2bSearchKey.getSearchKeyword());
+                        b2bSearchKeyNumList.add(b2bSearchKey.getSearchQty());
                     }
                 }
                 userBeHaviorSearchDTO.setB2bSearchKeyList(b2bSearchKeyList);
@@ -332,14 +332,14 @@ public class HtyFctUserBeHaviorController {
                 userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdNumList);
             }
             // 组装到 result里  响应的返回数据
-			result.setData(userBeHaviorSearchDTO);
-			result.setCode(ResultCodeEnum.SUCCESS.getCode());
-			result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
-		} catch (Exception e) {
-			logger.error("获取用户行为的查询" + e);
-			result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
-			result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
-		}
-		return result;
-	}
+            result.setData(userBeHaviorSearchDTO);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+            logger.error("获取用户行为的查询" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+        }
+        return result;
+    }
 }
