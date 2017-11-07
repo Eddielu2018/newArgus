@@ -33,7 +33,6 @@ public interface HtyFctCustAllDTOService {
 
     List<HtyFctCustAllDto> selectForPair(String userId,String startTime,String endTime,int type);
 
-
     List<HtyFctCustAllDto> queryActiveVipByCondition(HtyFctCustAllDto htyFctCustAllDto);
 
     List<HtyFctCustAllDto>queryExport(HtyFctCustAllDto htyFctCustAllDto);
