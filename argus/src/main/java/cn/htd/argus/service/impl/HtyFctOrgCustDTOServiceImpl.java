@@ -76,8 +76,14 @@ public class HtyFctOrgCustDTOServiceImpl implements HtyFctOrgCustDTOService{
 		fdto.setOrgCode(userId);
 		fdto.setYearMon(yearMon);
 		HtyFctOrgSortDTO dto = new HtyFctOrgSortDTO();
-		dto.setMemeberHead(dao.selectSortNumForHead(fdto));
-		dto.setMemeberBrach(dao.selectSortNumForBranch(fdto));
+		List<Integer> headList = dao.selectSortNumForHead(fdto);
+		List<Integer> branchList = dao.selectSortNumForBranch(fdto);
+		if(headList != null && headList.size()>0){
+			dto.setMemeberHead(headList.get(0));
+		}
+		if(branchList != null && branchList.size()>0){
+			dto.setMemeberBrach(branchList.get(0));
+		}
 		return dto;
 	}
 

@@ -214,7 +214,7 @@ public class HtyFctOrgController {
         		yearDate = String.valueOf((Integer.valueOf(yearDate)-1));
         	}
         	logger.info("==================================================yearDate="+yearDate);
-        	List<HtyFctOrgCustIncomeSaleDTO> list = this.htyFctOrgCustIncomeSaleDTOService.selectMonth(yearDate, userId);
+        	List<HtyFctOrgCustIncomeSaleDTO> list = this.htyFctOrgCustIncomeSaleDTOService.selectMonth(yearWithDate, userId);
         	if(type == 0){
         		//营业
         		List<HtyFctOrgIncomeDTO> incomeList = this.htyFctOrgIncomeDTOService.selectYear(userId,yearDate);
@@ -373,46 +373,46 @@ public class HtyFctOrgController {
     		Map<String,String> map = new HashMap<String,String>();
     		map.put("date", income.getYearMon());
     		if(kind == 0){
-    			if(income.getYearBusincomeAmt()!=null){
-    				map.put("value", income.getYearBusincomeAmt().toString());
+    			if(income.getMonBusincomeAmt()!=null){
+    				map.put("value", income.getMonBusincomeAmt().toString());
     			}else{
 					map.put("value", null);
 				}
-    			if(income.getLastyearBusincomeAmt()!=null){
-    				map.put("pair", income.getLastyearBusincomeAmt().toString());
+    			if(income.getLastMonBusincomeAmt()!=null){
+    				map.put("pair", income.getLastMonBusincomeAmt().toString());
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 1){
-    			if(income.getYearInvoicingAmt()!=null){
-    				map.put("value", income.getYearInvoicingAmt().toString());
+    			if(income.getMonInvoicingAmt()!=null){
+    				map.put("value", income.getMonInvoicingAmt().toString());
     			}else{
 					map.put("value", null);
 				}
-    			if(income.getLastYearInvoicingAmt()!=null){
-    				map.put("pair", income.getLastYearInvoicingAmt().toString());
+    			if(income.getLastMonInvoicingAmt()!=null){
+    				map.put("pair", income.getLastMonInvoicingAmt().toString());
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 2){
-    			if(income.getYearServiceAmt()!=null){
-    				map.put("value", income.getYearServiceAmt().toString());
+    			if(income.getMonServiceAmt()!=null){
+    				map.put("value", income.getMonServiceAmt().toString());
     			}else{
 					map.put("value", null);
 				}
-    			if(income.getLastYearServiceAmt()!=null){
-    				map.put("pair", income.getLastYearServiceAmt().toString());
+    			if(income.getLastMonServiceAmt()!=null){
+    				map.put("pair", income.getLastMonServiceAmt().toString());
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 3){
-    			if(income.getYearFinanceAmt()!=null){
-    				map.put("value", income.getYearFinanceAmt().toString());
+    			if(income.getMonFinanceAmt()!=null){
+    				map.put("value", income.getMonFinanceAmt().toString());
     			}else{
 					map.put("value", null);
 				}
-    			if(income.getLastYearFinanceAmt()!=null){
-    				map.put("pair", income.getLastYearFinanceAmt().toString());
+    			if(income.getLastMonFinanceAmt()!=null){
+    				map.put("pair", income.getLastMonFinanceAmt().toString());
     			}else{
 					map.put("pair", null);
 				}
@@ -428,46 +428,46 @@ public class HtyFctOrgController {
     		Map<String,String> map = new HashMap<String,String>();
     		map.put("date", sale.getYearMon());
     		if(kind == 0){
-    			if(sale.getYearAmt()!=null){
-    				map.put("value", sale.getYearAmt().toString());
+    			if(sale.getMonAmt()!=null){
+    				map.put("value", sale.getMonAmt().toString());
     			}else{
 					map.put("value", null);
 				}
-    			if(sale.getLastyearAmt()!=null){
-    				map.put("pair", sale.getLastyearAmt().toString());
+    			if(sale.getLastmonAmt()!=null){
+    				map.put("pair", sale.getLastmonAmt().toString());
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 1){
-    			if(sale.getYearOnlineSaleamt()!=null){
-    				map.put("value", sale.getYearOnlineSaleamt().toString());
+    			if(sale.getMonOnlineSaleamt()!=null){
+    				map.put("value", sale.getMonOnlineSaleamt().toString());
     			}else{
 					map.put("value", null);
 				}
-    			if(sale.getLastyearOnlineSaleamt()!=null){
-    				map.put("pair", sale.getLastyearOnlineSaleamt().toString());
+    			if(sale.getLastmonOnlineSaleamt()!=null){
+    				map.put("pair", sale.getLastmonOnlineSaleamt().toString());
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 2){
-    			if(sale.getYearWaitSaleamt()!=null){
-    				map.put("value", sale.getYearWaitSaleamt().toString());
+    			if(sale.getMonWaitSaleamt()!=null){
+    				map.put("value", sale.getMonWaitSaleamt().toString());
     			}else{
 					map.put("value", null);
 				}
-    			if(sale.getLastyearWaitSaleamt()!=null){
-    				map.put("pair", sale.getLastyearWaitSaleamt().toString());
+    			if(sale.getLastmonWaitSaleamt()!=null){
+    				map.put("pair", sale.getLastmonWaitSaleamt().toString());
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 3){
-    			if(sale.getYearSpSaleamt()!=null){
-    				map.put("value", sale.getYearSpSaleamt().toString());
+    			if(sale.getMonSpSaleamt()!=null){
+    				map.put("value", sale.getMonSpSaleamt().toString());
     			}else{
 					map.put("value", null);
 				}
-    			if(sale.getLastyearSpSaleamt()!=null){
-    				map.put("pair", sale.getLastyearSpSaleamt().toString());
+    			if(sale.getLastmonSpSaleamt()!=null){
+    				map.put("pair", sale.getLastmonSpSaleamt().toString());
     			}else{
 					map.put("pair", null);
 				}
@@ -483,19 +483,19 @@ public class HtyFctOrgController {
     		Map<String,String> map = new HashMap<String,String>();
     		map.put("date", cust.getYearMon());
         	if(kind == 0){
-        		if(cust.getYearNewcustnum()!=null){
-        			map.put("value", cust.getYearNewcustnum().toString());
+        		if(cust.getMonNewcustnum()!=null){
+        			map.put("value", cust.getMonNewcustnum().toString());
         		}else{
 					map.put("value", null);
 				}
-        		if(cust.getLastyearNewcustnum()!=null){
-        			map.put("pair", cust.getLastyearNewcustnum().toString());
+        		if(cust.getLastmonNewcustnum()!=null){
+        			map.put("pair", cust.getLastmonNewcustnum().toString());
         		}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 1){
-    			if(cust.getYearTranscustnum()!=null){
-    				map.put("value", cust.getYearTranscustnum().toString());
+    			if(cust.getMonTranscustnum()!=null){
+    				map.put("value", cust.getMonTranscustnum().toString());
     			}else{
 					map.put("value", null);
 				}
@@ -625,17 +625,22 @@ public class HtyFctOrgController {
     private BaseNumDTO getBaseNum(BaseNumDTO base,BigDecimal nowNum,BigDecimal lastNum){
     	base.setNum(nowNum);
     	double difference = 0;
-    	if(nowNum.compareTo(lastNum) == 1){
-    		base.setIndex(1);
-    		difference = (nowNum.doubleValue()-lastNum.doubleValue());
-    		base.setPair(String.valueOf(MathUtil.getPairToDouble(new BigDecimal(difference),lastNum)));
-    	}else if(nowNum.compareTo(lastNum) == 0){
+    	if(nowNum != null && lastNum != null && lastNum.doubleValue() != 0){
+	    	if(nowNum.compareTo(lastNum) == 1){
+	    		base.setIndex(1);
+	    		difference = (nowNum.doubleValue()-lastNum.doubleValue());
+	    		base.setPair(String.valueOf(MathUtil.getPairToDouble(new BigDecimal(difference),lastNum)));
+	    	}else if(nowNum.compareTo(lastNum) == 0){
+	    		base.setIndex(1);
+	    		base.setPair(new BigDecimal(0).toString());
+	    	}else{
+	    		base.setIndex(0);
+	    		difference = Math.abs(nowNum.doubleValue()-lastNum.doubleValue());
+	    		base.setPair(String.valueOf((MathUtil.getPairToDouble(new BigDecimal(difference),lastNum))));
+	    	}
+    	}else{
     		base.setIndex(1);
     		base.setPair(new BigDecimal(0).toString());
-    	}else{
-    		base.setIndex(0);
-    		difference = Math.abs(nowNum.doubleValue()-lastNum.doubleValue());
-    		base.setPair(String.valueOf((MathUtil.getPairToDouble(new BigDecimal(difference),lastNum))));
     	}
     	return base;
     }

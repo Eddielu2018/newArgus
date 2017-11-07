@@ -55,4 +55,9 @@
     SELECT count(1) from DCI_DIM_ORG c where c.ORG_PCODE = 
 	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})
   </select>
+  
+  <select id="selectRegionNumWithOutCust" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO">
+    SELECT count(1) from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId}) and c.ORG_PCODE &lt;&gt; #{userId}
+  </select>
 </mapper>
