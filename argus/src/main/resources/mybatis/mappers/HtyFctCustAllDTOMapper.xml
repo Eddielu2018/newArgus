@@ -153,6 +153,18 @@
             </if>
         </where>
     </select>
+    <select id="queryCityAndProByUserId" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctUserBeHaviorSearchDTO">
+        SELECT
+        area_proname,area_cityname
+        FROM hty_fct_cust_all
+        <where>
+            <if test="userId != null">
+                and org_code = #{userId}
+            </if>
+        </where>
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
     <select id="selectByNoPair" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustInDto" >
         select
         <include refid="Base_Column_List" />
