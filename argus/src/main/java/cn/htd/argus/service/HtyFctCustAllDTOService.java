@@ -1,5 +1,6 @@
 package cn.htd.argus.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import cn.htd.argus.bean.HtyFctCustInDto;
@@ -32,9 +33,7 @@ public interface HtyFctCustAllDTOService {
     
     List<HtyFctCustAllDto> selectForPair(String userId,String startTime,String endTime,int type);
 
+    List<HtyFctCustAllDto> selectForManager(String userId,String dateTime,int aliveType,int vipType,String outType);
 
-    List<HtyFctCustAllDto> queryActiveVipByCondition(HtyFctCustAllDto htyFctCustAllDto);
-
-    List<HtyFctCustAllDto>queryExport(HtyFctCustAllDto htyFctCustAllDto);
-
+    BigDecimal selectSumAmt(String userId,String dateTime);
 }

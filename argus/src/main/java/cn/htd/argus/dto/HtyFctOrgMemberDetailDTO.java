@@ -5,17 +5,17 @@ import java.math.BigDecimal;
 /**
  * Created by Administrator on 2017/10/30.
  */
-public class HtyFctMemberOrgDetail {
+public class HtyFctOrgMemberDetailDTO {
     private Long id;
     private String dateKey;
     private String orgCode;
     private String custCode;
-    private String custName;
     private BigDecimal xsAmt;
     private BigDecimal xsQty;
     private String lastDate;
-    private String etlDate;
-    private String etlTime;
+    private int sortType;
+    private String custName;
+    private int outType;
     public Long getId() {
         return id;
     }
@@ -72,27 +72,27 @@ public class HtyFctMemberOrgDetail {
         this.lastDate = lastDate;
     }
 
-    public String getEtlDate() {
-        return etlDate;
-    }
+	public int getSortType() {
+		return sortType;
+	}
 
-    public void setEtlDate(String etlDate) {
-        this.etlDate = etlDate;
-    }
+	public void setSortType(int sortType) {
+		this.sortType = sortType;
+	}
+	public String getCustName() {
+		return custName;
+	}
 
-    public String getEtlTime() {
-        return etlTime;
-    }
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
 
-    public void setEtlTime(String etlTime) {
-        this.etlTime = etlTime;
-    }
+	public int getOutType() {
+		return outType;
+	}
 
-    public String getCustName() {
-        return custName;
-    }
-
-    public void setCustName(String custName) {
-        this.custName = custName;
-    }
+	public void setOutType(int outType) {
+		this.outType = outType;
+	}
+    
 }
