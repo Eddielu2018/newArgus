@@ -209,9 +209,9 @@ public class HtyFctUserBeHaviorController {
                         b2bItemAccessList.add(b2bItemAccess.getItemId());
                         b2bItemAccessNumList.add(b2bItemAccess.getAccessQty());
                     }
+                    userBeHaviorSearchDTO.setB2bItemAccessNumList(b2bItemAccessNumList);
+                    userBeHaviorSearchDTO.setB2bItemAccessList(b2bItemAccessList);
                 }
-                userBeHaviorSearchDTO.setB2bItemAccessNumList(b2bItemAccessNumList);
-                userBeHaviorSearchDTO.setB2bItemAccessList(b2bItemAccessList);
 
                 // 漏斗转换及复购
                 // 1漏斗购买、

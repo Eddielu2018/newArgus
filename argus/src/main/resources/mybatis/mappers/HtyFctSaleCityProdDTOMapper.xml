@@ -49,7 +49,7 @@
 	</select>
     <select id="queryCityName" resultMap="BaseResultMap" >
         SELECT
-      cust_city
+      cust_cityname
       FROM
       hty_fct_sale_city_prod
     <include refid="where"/>
