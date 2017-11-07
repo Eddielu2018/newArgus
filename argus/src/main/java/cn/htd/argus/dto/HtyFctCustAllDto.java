@@ -35,15 +35,8 @@ public class HtyFctCustAllDto {
 	 private String isHy;
 	 private String isVip;
 	 private String isDk;
-     private String   expireTime;
-    private String   etl_date;
-    private String etl_time;
-    public String getExpireTime() {
-        return expireTime;
-    }
-    public void setExpireTime(String expireTime) {
-        this.expireTime = expireTime;
-    }
+	 private String outType;
+	 private String expireTime;
     public Long getId() {
 		return id;
 	}
@@ -236,20 +229,17 @@ public class HtyFctCustAllDto {
 	public void setIsDk(String isDk) {
 		this.isDk = isDk;
 	}
-
-    public String getEtl_date() {
-        return etl_date;
-    }
-
-    public void setEtl_date(String etl_date) {
-        this.etl_date = etl_date;
-    }
-
-    public String getEtl_time() {
-        return etl_time;
-    }
-
-    public void setEtl_time(String etl_time) {
-        this.etl_time = etl_time;
-    }
+	public String getOutType() {
+		return outType;
+	}
+	public void setOutType(String outType) {
+		this.outType = outType;
+	}
+	public String getExpireTime() {
+		return expireTime;
+	}
+	public void setExpireTime(String expireTime) {
+		this.expireTime = expireTime;
+	}
+	
 }

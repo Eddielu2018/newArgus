@@ -37,6 +37,15 @@ public class DateUtil {
 		return firstday;
 	}
 
+	public static int getTowTimeDays(Date time1,Date time2) {
+		Calendar aCalendar = Calendar.getInstance();
+	    aCalendar.setTime(time1);
+	    int day1 = aCalendar.get(Calendar.DAY_OF_YEAR);
+	    aCalendar.setTime(time2);
+	    int day2 = aCalendar.get(Calendar.DAY_OF_YEAR);
+	    return day2 - day1;
+	}
+	
 	/***
 	 * 获取当月最后一天
 	 * @return
