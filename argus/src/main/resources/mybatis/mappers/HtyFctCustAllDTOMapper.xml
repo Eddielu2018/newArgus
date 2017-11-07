@@ -454,5 +454,5 @@
   <select id="selectSumAmt" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
   	SELECT sum(amt_all) FROM hty_fct_cust_all where org_code=#{orgCode} and date_key=#{dateKey};
   </select>
-    
+ 
 </mapper>

@@ -79,10 +79,6 @@ public class HtyFctUserBeHaviorController {
             if (StringUtils.isNotEmpty(endTime)) {
                 htyFctUserBeHaviorSearchDTO.setEndTime(endTime);
             }
-            if (StringUtils.isEmpty(period)){
-                String date= DateTimeUtil.getTodayChar8();
-                htyFctUserBeHaviorSearchDTO.setPeriod(date);
-            }
             List<String> b2bLndPageList=new ArrayList<String>();
             List<BigDecimal> b2bLndPageNumList=new ArrayList<BigDecimal>();
             List<String> b2bSearchKeyList=new ArrayList<String>();
