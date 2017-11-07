@@ -31,8 +31,6 @@ public interface HtyFctCustAllDTOMapper {
     
     List<HtyFctCustAllDto> selectForPair(HtyFctCustAnalysisInDTO inDto);
 
-    List<HtyFctCustAllDto> selectByTimePair(HtyFctCustInDto inDto);
-   
     List<HtyFctCustAllDto> selectForManager(HtyFctCustAllDto model);
     
     BigDecimal selectSumAmt(HtyFctCustAllDto model);
