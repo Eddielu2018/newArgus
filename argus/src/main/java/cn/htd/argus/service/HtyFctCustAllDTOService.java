@@ -3,6 +3,7 @@ package cn.htd.argus.service;
 import java.util.List;
 
 import cn.htd.argus.bean.HtyFctCustInDto;
+import cn.htd.argus.bean.HtyFctUserBeHaviorSearchDTO;
 import cn.htd.argus.dto.HtyFctCustAllDto;
 
 /**
@@ -36,5 +37,5 @@ public interface HtyFctCustAllDTOService {
     List<HtyFctCustAllDto> queryActiveVipByCondition(HtyFctCustAllDto htyFctCustAllDto);
 
     List<HtyFctCustAllDto>queryExport(HtyFctCustAllDto htyFctCustAllDto);
-
+    HtyFctCustAllDto  queryCityAndProByUserId(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
 }

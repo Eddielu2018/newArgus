@@ -2,6 +2,7 @@ package cn.htd.argus.service.impl;
 
 import java.util.List;
 
+import cn.htd.argus.bean.HtyFctUserBeHaviorSearchDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,4 +237,8 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
         return dao.queryExport(htyFctCustAllDto);
     }
 
+    @Override
+    public HtyFctCustAllDto queryCityAndProByUserId(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+        return dao.queryCityAndProByUserId(htyFctUserBeHaviorSearchDTO);
+    }
 }

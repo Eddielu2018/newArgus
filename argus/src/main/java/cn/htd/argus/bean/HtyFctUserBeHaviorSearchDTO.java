@@ -20,6 +20,7 @@ public class HtyFctUserBeHaviorSearchDTO {
     private String prodName;
     private BigDecimal xsAmt;
     private BigDecimal xsQty;
+    private String userId;
 
     public String getCustCountryName() {
         return custCountryName;
@@ -144,5 +145,13 @@ public class HtyFctUserBeHaviorSearchDTO {
 
     public void setPeriod(String period) {
         this.period = period;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

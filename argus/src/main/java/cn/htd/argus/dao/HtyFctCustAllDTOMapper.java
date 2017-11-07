@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.htd.argus.bean.HtyFctCustAnalysisInDTO;
 import cn.htd.argus.bean.HtyFctCustInDto;
+import cn.htd.argus.bean.HtyFctUserBeHaviorSearchDTO;
 import cn.htd.argus.dto.HtyFctCustAllDto;
 
 public interface HtyFctCustAllDTOMapper {
@@ -35,4 +36,6 @@ public interface HtyFctCustAllDTOMapper {
     List<HtyFctCustAllDto> selectByTimeDimension(HtyFctCustInDto inDto);
     //导出明细
     List<HtyFctCustAllDto>queryExport(HtyFctCustAllDto htyFctCustAllDto);
+
+    HtyFctCustAllDto  queryCityAndProByUserId(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
 }
