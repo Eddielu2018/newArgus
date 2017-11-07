@@ -104,7 +104,7 @@ public class HtyFctUserBeHaviorController {
             HtyFctSaleCityProdDTO htyFctSaleCityProd=new HtyFctSaleCityProdDTO();
 
             //全国 暂时没有国外
-            if(radio.equals("0")||radio==null||radio==""){
+            if(radio==null||radio==""||radio.equals("0")){
                 // 落地页面的访问数量
                 List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO= htyFctXwB2bLndPageDTOService
                         .queryAllAccessQty(htyFctUserBeHaviorSearchDTO);

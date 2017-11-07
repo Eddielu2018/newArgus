@@ -15,8 +15,7 @@ public class HtyFctXwB2bLndPageDTOServiceImpl implements HtyFctXwB2bLndPageDTOSe
 	private HtyFctXwB2bLndPageDTOMapper htyFctXwB2bLndPageDTOMDao;
 
 	@Override
-	public List<HtyFctXwB2bLndPageDTO> queryAllAccessQty(
-			HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+	public List<HtyFctXwB2bLndPageDTO> queryAllAccessQty(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
 		return htyFctXwB2bLndPageDTOMDao.queryAllAccessQty(htyFctUserBeHaviorSearchDTO);
 	}
 
