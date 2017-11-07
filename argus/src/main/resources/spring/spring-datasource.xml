@@ -24,4 +24,11 @@
 		</property>
 	</bean>
 
+	<bean id="hlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${boss.driverClassName}"/>
+		<property name="url" value="${boss.url}"/>
+		<property name="username" value="${hl.username}"/>
+		<property name="password" value="${hl.password}"/>
+	</bean>
+
 </beans>
