@@ -36,4 +36,5 @@ public interface HtyFctCustAllDTOMapper {
     List<HtyFctCustAllDto> selectForManager(HtyFctCustAllDto model);
     
     BigDecimal selectSumAmt(HtyFctCustAllDto model);
+
 }

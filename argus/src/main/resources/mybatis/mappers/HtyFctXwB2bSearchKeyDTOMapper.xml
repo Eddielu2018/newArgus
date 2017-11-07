@@ -21,18 +21,6 @@
 	<sql id="where">
 		<where>
 			<if
-				test="htyUserBeHaviorSearchDTO.countryName !=null and htyUserBeHaviorSearchDTO.countryName !=''">
-				and COUNTRY_NAME=#{htyUserBeHaviorSearchDTO.countryName}
-			</if>
-			<if
-				test="htyUserBeHaviorSearchDTO.provinceName!=null and htyUserBeHaviorSearchDTO.provinceName !=''">
-				and PROVINCE_NAME=#{htyUserBeHaviorSearchDTO.provinceName}
-			</if>
-			<if
-				test="htyUserBeHaviorSearchDTO.cityName !=null and htyUserBeHaviorSearchDTO.cityName !=''">
-				and CITY_NAME=#{htyUserBeHaviorSearchDTO.cityName}
-			</if>
-			<if
 				test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
 				<![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
 			</if>
@@ -40,6 +28,9 @@
 				test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
 			 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
+            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
+                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+            </if>
 		</where>
 	</sql>
 	<select id="queryAllSearchKeyWord" resultMap="BaseResultMap">
@@ -50,4 +41,47 @@
 		group by SEARCH_KEYWORD,SEARCH_QTY
 		order by SEARCH_QTY DESC limit 10
 	</select>
+    <select id="queryProNameSearchKey" resultMap="BaseResultMap">
+        SELECT
+      province_name
+        FROM
+        hty_fct_xw_b2b_search_key
+       <include refid="where"/>
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+    <select id="queryCityNameSearchKey" resultMap="BaseResultMap">
+        SELECT
+      city_name
+        FROM
+    hty_fct_xw_b2b_search_key
+        <include refid="where"/>
+         ORDER BY id DESC
+        LIMIT 1
+    </select>
+    <select id="queryByNameSearchKey" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        hty_fct_xw_b2b_search_key
+        <where>
+            <if test="htyFctXwB2bSearchKeyDTO.provinceName!=null">
+                and PROVINCE_NAME=#{htyFctXwB2bSearchKeyDTO.provinceName}
+            </if>
+            <if test="htyFctXwB2bSearchKeyDTO.cityName!=null">
+                and CITY_NAME=#{htyFctXwB2bSearchKeyDTO.cityName}
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+                <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+                <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
+                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+            </if>
+        </where>
+        group by SEARCH_KEYWORD,SEARCH_QTY
+        order by SEARCH_QTY DESC limit 10
+    </select>
 </mapper>

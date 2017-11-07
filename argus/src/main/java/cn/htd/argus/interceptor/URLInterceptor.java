@@ -14,15 +14,13 @@ public class URLInterceptor implements HandlerInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
 			throws Exception {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
 			throws Exception {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -40,7 +38,6 @@ public class URLInterceptor implements HandlerInterceptor {
 			
 			e.setValue(value);
 		}
-		
 		return true;
 	}
 

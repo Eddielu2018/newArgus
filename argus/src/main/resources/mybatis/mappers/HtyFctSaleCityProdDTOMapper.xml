@@ -27,24 +27,15 @@
 	</sql>
 	<sql id="where">
 		<where>
-			<if test="htyUserBeHaviorSearchDTO.custCountryName !=null and htyUserBeHaviorSearchDTO.custCountryName !=''">
-				and CUST_COUNTRYNAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.custCountryName},'%')
-			</if>
-			<if test="htyUserBeHaviorSearchDTO.provinceName!=null and htyUserBeHaviorSearchDTO.provinceName !=''">
-				and CUST_PRONAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.provinceName},'%')
-			</if>
-			<if test="htyUserBeHaviorSearchDTO.cityName !=null and htyUserBeHaviorSearchDTO.cityName !=''">
-				and CUST_CITYNAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.cityName},'%')
-            </if>
-            <if test="htyUserBeHaviorSearchDTO.townName !=null and htyUserBeHaviorSearchDTO.townName !=''">
-                and CUST_TOWNNAME like CONCAT('%',#{htyUserBeHaviorSearchDTO.townName},'%')
-            </if>
             <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
                 <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
             </if>
 			<if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
 			 	<![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
+            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
+                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+            </if>
 		</where>
 	</sql>
 	<!--成交单品数量 -->
@@ -56,4 +47,47 @@
 		group by PROD_CODE,XS_QTY
 		order by XS_QTY DESC limit 10
 	</select>
+    <select id="queryCityName" resultMap="BaseResultMap" >
+        SELECT
+      cust_city
+      FROM
+      hty_fct_sale_city_prod
+    <include refid="where"/>
+    ORDER BY id DESC
+    LIMIT 1
+    </select>
+    <select id="queryProName" resultMap="BaseResultMap" >
+        SELECT
+        cust_proname
+        FROM
+        hty_fct_sale_city_prod
+        <include refid="where"/>
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+    <select id="queryProAndCity" resultMap="BaseResultMap">
+       SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        hty_fct_sale_city_prod
+        <where>
+            <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+                <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+                <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
+                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+            </if>
+            <if test="htyFctSaleCityProdDTO.custProName!=null">
+              AND  cust_proname=#{htyFctSaleCityProdDTO.custProName}
+            </if>
+            <if test="htyFctSaleCityProdDTO.custCityName!=null">
+                AND cust_city=#{htyFctSaleCityProdDTO.custCityName}
+            </if>
+        </where>
+        group by PROD_CODE,XS_QTY
+        order by XS_QTY DESC limit 10
+    </select>
 </mapper>
