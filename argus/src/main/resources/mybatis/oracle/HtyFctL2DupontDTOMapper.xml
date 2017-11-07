@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctL2DupontDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctL2DupontDTO" >
+    <result column="dtime" property="dtime" jdbcType="VARCHAR" />
+    <result column="year_mon" property="yearMon" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="dq_current_ratio" property="dqCurrentRatio" jdbcType="DECIMAL" />
+    <result column="tq_current_ratio" property="tqCurrentRatio" jdbcType="DECIMAL" />
+    <result column="sn_current_ratio" property="snCurrentRatio" jdbcType="DECIMAL" />
+    <result column="dq_quick_ratio" property="dqQuickRatio" jdbcType="DECIMAL" />
+    <result column="tq_quick_ratio" property="tqQuickRatio" jdbcType="DECIMAL" />
+    <result column="sn_quick_ratio" property="snQuickRatio" jdbcType="DECIMAL" />
+    <result column="dq_debt_assets_ratio" property="dqDebtAssetsRatio" jdbcType="DECIMAL" />
+    <result column="tq_debt_assets_ratio" property="tqDebtAssetsRatio" jdbcType="DECIMAL" />
+    <result column="sn_debt_assets_ratio" property="snDebtAssetsRatio" jdbcType="DECIMAL" />
+    <result column="dq_sup_exposure_days" property="dqSupExposureDays" jdbcType="DECIMAL" />
+    <result column="tq_sup_exposure_days" property="tqSupExposureDays" jdbcType="DECIMAL" />
+    <result column="sn_sup_exposure_days" property="snSupExposureDays" jdbcType="DECIMAL" />
+    <result column="dq_receive_conv_ratio" property="dqReceiveConvRatio" jdbcType="DECIMAL" />
+    <result column="tq_receive_conv_ratio" property="tqReceiveConvRatio" jdbcType="DECIMAL" />
+    <result column="sn_receive_conv_ratio" property="snReceiveConvRatio" jdbcType="DECIMAL" />
+    <result column="dq_receive_conv_days" property="dqReceiveConvDays" jdbcType="DECIMAL" />
+    <result column="tq_receive_conv_days" property="tqReceiveConvDays" jdbcType="DECIMAL" />
+    <result column="sn_receive_conv_days" property="snReceiveConvDays" jdbcType="DECIMAL" />
+    <result column="dq_dep_rec_conv_ratio" property="dqDepRecConvRatio" jdbcType="DECIMAL" />
+    <result column="tq_dep_rec_conv_ratio" property="tqDepRecConvRatio" jdbcType="DECIMAL" />
+    <result column="sn_dep_rec_conv_ratio" property="snDepRecConvRatio" jdbcType="DECIMAL" />
+    <result column="dq_dep_rec_conv_days" property="dqDepRecConvDays" jdbcType="DECIMAL" />
+    <result column="tq_dep_rec_conv_days" property="tqDepRecConvDays" jdbcType="DECIMAL" />
+    <result column="sn_dep_rec_conv_days" property="snDepRecConvDays" jdbcType="DECIMAL" />
+    <result column="dq_inventory_conv_ratio" property="dqInventoryConvRatio" jdbcType="DECIMAL" />
+    <result column="tq_inventory_conv_ratio" property="tqInventoryConvRatio" jdbcType="DECIMAL" />
+    <result column="sn_inventory_conv_ratio" property="snInventoryConvRatio" jdbcType="DECIMAL" />
+    <result column="dq_inventory_conv_days" property="dqInventoryConvDays" jdbcType="DECIMAL" />
+    <result column="tq_inventory_conv_days" property="tqInventoryConvDays" jdbcType="DECIMAL" />
+    <result column="sn_inventory_conv_days" property="snInventoryConvDays" jdbcType="DECIMAL" />
+    <result column="dq_dep_pay_conv_ratio" property="dqDepPayConvRatio" jdbcType="DECIMAL" />
+    <result column="tq_dep_pay_conv_ratio" property="tqDepPayConvRatio" jdbcType="DECIMAL" />
+    <result column="sn_dep_pay_conv_ratio" property="snDepPayConvRatio" jdbcType="DECIMAL" />
+    <result column="dq_dep_pay_conv_days" property="dqDepPayConvDays" jdbcType="DECIMAL" />
+    <result column="tq_dep_pay_conv_days" property="tqDepPayConvDays" jdbcType="DECIMAL" />
+    <result column="sn_dep_pay_conv_days" property="snDepPayConvDays" jdbcType="DECIMAL" />
+    <result column="dq_acc_pay_conv_ratio" property="dqAccPayConvRatio" jdbcType="DECIMAL" />
+    <result column="tq_acc_pay_conv_ratio" property="tqAccPayConvRatio" jdbcType="DECIMAL" />
+    <result column="sn_acc_pay_conv_ratio" property="snAccPayConvRatio" jdbcType="DECIMAL" />
+    <result column="dq_acc_pay_conv_days" property="dqAccPayConvDays" jdbcType="DECIMAL" />
+    <result column="tq_acc_pay_conv_days" property="tqAccPayConvDays" jdbcType="DECIMAL" />
+    <result column="sn_acc_pay_conv_days" property="snAccPayConvDays" jdbcType="DECIMAL" />
+    <result column="dq_operate_cycle" property="dqOperateCycle" jdbcType="DECIMAL" />
+    <result column="tq_operate_cycle" property="tqOperateCycle" jdbcType="DECIMAL" />
+    <result column="sn_operate_cycle" property="snOperateCycle" jdbcType="DECIMAL" />
+    <result column="dq_cash_cycle" property="dqCashCycle" jdbcType="DECIMAL" />
+    <result column="tq_cash_cycle" property="tqCashCycle" jdbcType="DECIMAL" />
+    <result column="sn_cash_cycle" property="snCashCycle" jdbcType="DECIMAL" />
+    <result column="dq_rota" property="dqRota" jdbcType="DECIMAL" />
+    <result column="tq_rota" property="tqRota" jdbcType="DECIMAL" />
+    <result column="sn_rota" property="snRota" jdbcType="DECIMAL" />
+    <result column="dq_roe" property="dqRoe" jdbcType="DECIMAL" />
+    <result column="tq_roe" property="tqRoe" jdbcType="DECIMAL" />
+    <result column="sn_roe" property="snRoe" jdbcType="DECIMAL" />
+    <result column="dq_gross_profit_ratio" property="dqGrossProfitRatio" jdbcType="DECIMAL" />
+    <result column="tq_gross_profit_ratio" property="tqGrossProfitRatio" jdbcType="DECIMAL" />
+    <result column="sn_gross_profit_ratio" property="snGrossProfitRatio" jdbcType="DECIMAL" />
+    <result column="dq_sale_growth_ratio" property="dqSaleGrowthRatio" jdbcType="DECIMAL" />
+    <result column="tq_sale_growth_ratio" property="tqSaleGrowthRatio" jdbcType="DECIMAL" />
+    <result column="sn_sale_growth_ratio" property="snSaleGrowthRatio" jdbcType="DECIMAL" />
+    <result column="dq_net_growth_ratio" property="dqNetGrowthRatio" jdbcType="DECIMAL" />
+    <result column="tq_net_growth_ratio" property="tqNetGrowthRatio" jdbcType="DECIMAL" />
+    <result column="sn_net_growth_ratio" property="snNetGrowthRatio" jdbcType="DECIMAL" />
+    <result column="dq_operate_profit_ratio" property="dqOperateProfitRatio" jdbcType="DECIMAL" />
+    <result column="tq_operate_profit_ratio" property="tqOperateProfitRatio" jdbcType="DECIMAL" />
+    <result column="sn_operate_profit_ratio" property="snOperateProfitRatio" jdbcType="DECIMAL" />
+    <result column="dq_sale_net_ratio" property="dqSaleNetRatio" jdbcType="DECIMAL" />
+    <result column="tq_sale_net_ratio" property="tqSaleNetRatio" jdbcType="DECIMAL" />
+    <result column="sn_sale_net_ratio" property="snSaleNetRatio" jdbcType="DECIMAL" />
+    <result column="dq_third_ratio" property="dqThirdRatio" jdbcType="DECIMAL" />
+    <result column="tq_third_ratio" property="tqThirdRatio" jdbcType="DECIMAL" />
+    <result column="sn_third_ratio" property="snThirdRatio" jdbcType="DECIMAL" />
+    <result column="lvl" property="lvl" jdbcType="VARCHAR" />
+    <result column="etl_date" property="etlDate" jdbcType="DECIMAL" />
+    <result column="etl_time" property="etlTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dtime, year_mon, org_code, dq_current_ratio, tq_current_ratio, sn_current_ratio,
+    dq_quick_ratio, tq_quick_ratio, sn_quick_ratio, dq_debt_assets_ratio, tq_debt_assets_ratio, 
+    sn_debt_assets_ratio, dq_sup_exposure_days, tq_sup_exposure_days, sn_sup_exposure_days, 
+    dq_receive_conv_ratio, tq_receive_conv_ratio, sn_receive_conv_ratio, dq_receive_conv_days, 
+    tq_receive_conv_days, sn_receive_conv_days, dq_dep_rec_conv_ratio, tq_dep_rec_conv_ratio, 
+    sn_dep_rec_conv_ratio, dq_dep_rec_conv_days, tq_dep_rec_conv_days, sn_dep_rec_conv_days, 
+    dq_inventory_conv_ratio, tq_inventory_conv_ratio, sn_inventory_conv_ratio, dq_inventory_conv_days, 
+    tq_inventory_conv_days, sn_inventory_conv_days, dq_dep_pay_conv_ratio, tq_dep_pay_conv_ratio, 
+    sn_dep_pay_conv_ratio, dq_dep_pay_conv_days, tq_dep_pay_conv_days, sn_dep_pay_conv_days, 
+    dq_acc_pay_conv_ratio, tq_acc_pay_conv_ratio, sn_acc_pay_conv_ratio, dq_acc_pay_conv_days, 
+    tq_acc_pay_conv_days, sn_acc_pay_conv_days, dq_operate_cycle, tq_operate_cycle, sn_operate_cycle, 
+    dq_cash_cycle, tq_cash_cycle, sn_cash_cycle, dq_rota, tq_rota, sn_rota, dq_roe, tq_roe, 
+    sn_roe, dq_gross_profit_ratio, tq_gross_profit_ratio, sn_gross_profit_ratio, dq_sale_growth_ratio, 
+    tq_sale_growth_ratio, sn_sale_growth_ratio, dq_net_growth_ratio, tq_net_growth_ratio, 
+    sn_net_growth_ratio, dq_operate_profit_ratio, tq_operate_profit_ratio, sn_operate_profit_ratio, 
+    dq_sale_net_ratio, tq_sale_net_ratio, sn_sale_net_ratio, dq_third_ratio, tq_third_ratio, 
+    sn_third_ratio, lvl, etl_date, etl_time
+  </sql>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and  dtime = #{searchDTO.endTime}
+      </if>
+      and lvl='06'
+    </where>
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edw_fct_l2_dupont
+    <include refid="where"/>
+  </select>
+
+</mapper>

@@ -1,6 +1,6 @@
 package cn.htd.argus.service.impl;
 
-import cn.htd.argus.dao.HtyConfigZcfzSubjcodeDTOMapper;
+import cn.htd.argus.mappers.HtyConfigZcfzSubjcodeDTOMapper;
 import cn.htd.argus.service.HtyConfigZcfzSubjcodeDTOService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
