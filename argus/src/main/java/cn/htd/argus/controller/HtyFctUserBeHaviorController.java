@@ -104,7 +104,7 @@ public class HtyFctUserBeHaviorController {
             HtyFctSaleCityProdDTO htyFctSaleCityProd=new HtyFctSaleCityProdDTO();
 
             //全国 暂时没有国外
-            if(radio.equals("0")||radio==null||radio==""){
+            if("0".equals(radio)||radio==null){
                 // 落地页面的访问数量
                 List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO= htyFctXwB2bLndPageDTOService
                         .queryAllAccessQty(htyFctUserBeHaviorSearchDTO);
@@ -175,7 +175,7 @@ public class HtyFctUserBeHaviorController {
                 }
             }
             //省查询
-            if(radio.equals("1")){
+            if("1".equals(radio)){
                 //关键词
                 HtyFctXwB2bSearchKeyDTO searchKeyProName =htyFctXwB2bSearchKeyDTOService.queryProNameSearchKey(htyFctUserBeHaviorSearchDTO);
                 htyFctXwB2bSearchKey.setProvinceName(searchKeyProName.getProvinceName());
@@ -251,7 +251,7 @@ public class HtyFctUserBeHaviorController {
                 }
             }
             //市查询
-            if(radio.equals("2")) {
+            if("2".equals(radio)) {
                 //关键词
                 HtyFctXwB2bSearchKeyDTO searchKeyCityName = htyFctXwB2bSearchKeyDTOService.queryCityNameSearchKey(htyFctUserBeHaviorSearchDTO);
                 htyFctXwB2bSearchKey.setCityName(searchKeyCityName.getCityName());
