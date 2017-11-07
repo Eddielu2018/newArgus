@@ -14,9 +14,9 @@ public interface HtyFctOrgCustDTOMapper {
     
     List<HtyFctOrgCustDTO> selectYear(HtyFctOrgCustDTO model);
     
-    Integer selectSortNumForHead(HtyFctOrgCustDTO model);
+    List<Integer> selectSortNumForHead(HtyFctOrgCustDTO model);
     
-    Integer selectSortNumForBranch(HtyFctOrgCustDTO model);
+    List<Integer> selectSortNumForBranch(HtyFctOrgCustDTO model);
     
     Integer selectAvgHead(HtyFctOrgCustDTO model);
     

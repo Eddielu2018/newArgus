@@ -1,5 +1,6 @@
 package cn.htd.argus.service;
 
+import cn.htd.argus.bean.HtyFctCustAnalysisInDTO;
 import cn.htd.argus.dto.DciDimOrgDTO;
 
 /**
@@ -14,4 +15,6 @@ public interface DciDimOrgDTOService {
     int selectAllNum();
     
     Integer selectRegionNum(String userId);
+    
+    Integer selectRegionNumWithOutCust(String userId);
 }

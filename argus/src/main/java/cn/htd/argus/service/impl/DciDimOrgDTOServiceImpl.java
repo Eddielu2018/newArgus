@@ -51,4 +51,14 @@ public class DciDimOrgDTOServiceImpl implements DciDimOrgDTOService{
 		dto.setUserId(userId);
 		return dao.selectRegionNum(dto);
 	}
+
+	@Override
+	public Integer selectRegionNumWithOutCust(String userId) {
+		if (userId == null) {
+            throw new IllegalArgumentException("userId is null");
+        }
+		HtyFctCustAnalysisInDTO dto = new HtyFctCustAnalysisInDTO();
+		dto.setUserId(userId);
+		return dao.selectRegionNumWithOutCust(dto);
+	}
 }

@@ -422,9 +422,6 @@
   <select id="selectForPair" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
   	select sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,org_code,cust_code from hty_fct_cust_all 
   	where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
-  	 and ORG_CODE in 
-	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP BY cust_code
   	<choose>
   		<when test="type == 0">
   			and is_cust = "是" 
@@ -436,6 +433,10 @@
   			and is_vip = 1 
   		</when>
   	</choose>
+  	 and ORG_CODE in 
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
+	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId}))
+  	 GROUP BY cust_code
   </select>
   
   <select id="selectForManager" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
