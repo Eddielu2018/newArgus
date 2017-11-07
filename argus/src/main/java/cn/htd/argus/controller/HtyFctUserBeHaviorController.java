@@ -212,7 +212,6 @@ public class HtyFctUserBeHaviorController {
                     userBeHaviorSearchDTO.setB2bItemAccessNumList(b2bItemAccessNumList);
                     userBeHaviorSearchDTO.setB2bItemAccessList(b2bItemAccessList);
                 }
-
                 // 漏斗转换及复购
                 // 1漏斗购买、
                 HtyFctXwB2bConvFunnelDTO b2bConvFunnelProName=htyFctXwB2bConvFunnelDTOService.queryProName(htyFctUserBeHaviorSearchDTO);
