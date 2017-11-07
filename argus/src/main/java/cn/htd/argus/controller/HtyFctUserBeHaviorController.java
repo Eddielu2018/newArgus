@@ -174,7 +174,7 @@ public class HtyFctUserBeHaviorController {
             }
             //省查询
             if("1".equals(radio)){
-             String proName=htyFctCustAllDTO.getAreaProName();
+                String proName=htyFctCustAllDTO.getAreaProName();
                 //关键词
                 htyFctXwB2bSearchKey.setProvinceName(proName);
                 List<HtyFctXwB2bSearchKeyDTO>  htyFctXwB2bSearchKeyDTO= htyFctXwB2bSearchKeyDTOService.queryByNameSearchKey(htyFctXwB2bSearchKey, htyFctUserBeHaviorSearchDTO);
@@ -199,7 +199,7 @@ public class HtyFctUserBeHaviorController {
                 }
                 //单品访问量
                 htyFctXwB2bItemAccess.setProvinceName(proName);
-                List<HtyFctXwB2bItemAccessDTO>htyFctXwB2bItemAccessDTO=htyFctXwB2bItemAccessDTOService.queryByProAndCity(htyFctXwB2bItemAccess,htyFctUserBeHaviorSearchDTO);
+                List<HtyFctXwB2bItemAccessDTO>htyFctXwB2bItemAccessDTO=htyFctXwB2bItemAccessDTOService.queryByProAndCity(htyFctXwB2bItemAccess, htyFctUserBeHaviorSearchDTO);
                 if(htyFctXwB2bItemAccessDTO.size()>0){
                     for (HtyFctXwB2bItemAccessDTO b2bItemAccess:htyFctXwB2bItemAccessDTO){
                         b2bItemAccessList.add(b2bItemAccess.getItemId());
@@ -245,7 +245,7 @@ public class HtyFctUserBeHaviorController {
             }
             //市查询
             if("2".equals(radio)) {
-              String cityName= htyFctCustAllDTO.getAreaCityName();
+                String cityName= htyFctCustAllDTO.getAreaCityName();
                 //关键词
                 htyFctXwB2bSearchKey.setCityName(cityName);
                 List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTO = htyFctXwB2bSearchKeyDTOService.queryByNameSearchKey(htyFctXwB2bSearchKey, htyFctUserBeHaviorSearchDTO);

@@ -158,9 +158,9 @@
         area_proname,area_cityname
         FROM hty_fct_cust_all
         <where>
-        <if test="userId != null">
-            and org_code = #{userId}
-        </if>
+            <if test="userId != null">
+                and org_code = #{userId}
+            </if>
         </where>
         ORDER BY id DESC
         LIMIT 1

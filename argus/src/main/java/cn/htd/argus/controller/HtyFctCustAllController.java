@@ -1,12 +1,28 @@
 package cn.htd.argus.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFDataFormat;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +30,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.htd.argus.bean.HtyFctCustAllOut1DTO;
 import cn.htd.argus.bean.HtyFctCustAllOutDTO;
 import cn.htd.argus.bean.HtyFctCustAnalysisInOutDTO;
 import cn.htd.argus.bean.HtyFctCustInDto;
+import cn.htd.argus.bean.HtyFctOrgMemberBannerDTO;
+import cn.htd.argus.bean.HtyFctOrgMemberMothOutDTO;
 import cn.htd.argus.dto.HtyFctCustAllDto;
-import cn.htd.argus.dto.HtyFctMemberOrgDetail;
+import cn.htd.argus.dto.HtyFctOrgMemberDetailDTO;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.DciDimOrgDTOService;
 import cn.htd.argus.service.HtyFctCustAllDTOService;
-import cn.htd.argus.service.HtyFctMemberOrgDetailDTOService;
+import cn.htd.argus.service.HtyFctOrgMemberDetailDTOService;
 import cn.htd.argus.util.DateTimeUtil;
 import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.HtyFctCustUtil;
+import cn.htd.argus.util.MathUtil;
 import cn.htd.argus.util.RestResult;
 
 /**
@@ -42,7 +60,7 @@ public class HtyFctCustAllController {
 	@Autowired
 	private DciDimOrgDTOService dciDimOrgDTOService;
 	@Autowired
-	private HtyFctMemberOrgDetailDTOService htyFctMemberOrgDetailDTOService;
+	private HtyFctOrgMemberDetailDTOService htyFctOrgMemberDetailDTOService;
 	
 	@RequestMapping("/cust/kind")
     public RestResult indexForCustKind(@RequestParam(value = "userId", required = true) String userId,
@@ -561,201 +579,6 @@ public class HtyFctCustAllController {
         return result;
 	}
 	
-	@RequestMapping("/cust/kind1")
-    public RestResult indexForCustKind1(@RequestParam(value = "userId", required = true) String userId,//
-    		@RequestParam(value ="type", required = true) String type,//
-    		@RequestParam(value ="custTime", required = false) String custTime,
-            @RequestParam(value ="isHy", required=false) String isHy,
-            @RequestParam(value ="isVip", required=false)String isVip,
-            @RequestParam(value ="analysisType ",required = false)Integer analysisType,//
-            @RequestParam(value ="export",required = false)Integer export,
-            @RequestParam(value = "custCode",required =false)String custCode
-    		){
-		RestResult result = new RestResult();
-        logger.info("调用(HtyFctCustAllDTOService.indexForCustKind)用户分类页获取入参，userId="+userId);
-        try {
-
-        	HtyFctCustAllOut1DTO allDto = new HtyFctCustAllOut1DTO();
-        	HtyFctCustAllDto htyFctCustAllDto = new HtyFctCustAllDto();
-        	HtyFctCustInDto inDto = new HtyFctCustInDto();
-            HtyFctMemberOrgDetail htyFctMemberOrgDetail=new HtyFctMemberOrgDetail();
-        	inDto.setUserId(userId);
-            if(isHy!=null){
-                htyFctCustAllDto.setIsHy(isHy);
-            }
-            if(isVip!=null){
-                htyFctCustAllDto.setIsVip(isVip);
-            }
-            if(custTime!=null){
-                htyFctMemberOrgDetail.setDateKey(custTime);
-            }
-            if (custCode!=null){
-                htyFctMemberOrgDetail.setCustCode(custCode);
-            }
-        	if(type.equals("0")){
-        	//活跃会员店分析
-                    List<HtyFctCustAllDto> htyFctCustAllDtoList = htyFctCustAllDTOService.queryActiveVipByCondition(htyFctCustAllDto);
-                     allDto.setHtyFctCustAllDtoList(htyFctCustAllDtoList);
-                //导出明细  活跃会员
-                if (export==0){
-                    List<HtyFctCustAllDto> custAllExportList=htyFctCustAllDTOService.queryExport(htyFctCustAllDto);
-                    allDto.setCustAllExportList(custAllExportList);
-                }
-            }
-            else if(type.equals("1")){
-        	//vip会员分析
-                 //vip店
-                if(isVip.equals("是")){
-
-                List<HtyFctCustAllDto> htyFctCustAllDtoList = htyFctCustAllDTOService.queryActiveVipByCondition(htyFctCustAllDto);
-                allDto.setHtyFctCustAllDtoList(htyFctCustAllDtoList);
-                    //导出明细  vip会员
-                    if(export==1){
-                        List<HtyFctCustAllDto> exportVipList=htyFctCustAllDTOService.queryExport(htyFctCustAllDto);
-                        allDto.setExportVipList(exportVipList);
-                    }
-                }
-                 //高潜vip
-                if(isHy.equals("是")&&isVip.equals("否")){
-                    List<HtyFctCustAllDto> htyFctCustAllDtoList = htyFctCustAllDTOService.queryActiveVipByCondition(htyFctCustAllDto);
-                    allDto.setHtyFctCustAllDtoList(htyFctCustAllDtoList);
-                    //导出明细  高潜vip会员
-                    if(export==1){
-                        List<HtyFctCustAllDto> exportVipList=htyFctCustAllDTOService.queryExport(htyFctCustAllDto);
-                        allDto.setExportVipList(exportVipList);
-                    }
-                }
-        	}
-            else if(type.equals(2)){
-
-        	//月度分析
-                    //导出明细   月度分析
-                if(export==2){
-                    if (analysisType==0){
-                        List<HtyFctMemberOrgDetail>saleNumEachShopAllList = htyFctMemberOrgDetailDTOService.querySaleNumEachShopAll(htyFctMemberOrgDetail);
-                        allDto.setSaleNumEachShopAllList(saleNumEachShopAllList);
-                    }
-                    if (analysisType==1){
-
-                    }
-                    if (analysisType==2){
-
-                    }
-                }
-                HtyFctMemberOrgDetail allXsAmtEachMonth =htyFctMemberOrgDetailDTOService.queryAllXsAmtEachMonth(htyFctMemberOrgDetail);
-                htyFctMemberOrgDetail.setOrgCode(allXsAmtEachMonth.getOrgCode());
-                List<HtyFctMemberOrgDetail>saleNumEachShop = htyFctMemberOrgDetailDTOService.querySaleNumEachShop(htyFctMemberOrgDetail);
-                //销售额占比
-                if (analysisType==0){
-                        //月份  会员店的销售额在对应平台的占比
-                        //会员店名称
-                        List<String> hyNameList=new ArrayList<>();
-                        if (saleNumEachShop!=null){
-                            for (HtyFctMemberOrgDetail memberOrg:saleNumEachShop){
-                                hyNameList.add(memberOrg.getCustName());
-                            }
-                            allDto.setHyNameList(hyNameList);
-                        }
-                        //销售额
-                        List<BigDecimal>hyShopSaleNumList=new ArrayList<BigDecimal>();
-                        if (saleNumEachShop!=null) {
-                            for (HtyFctMemberOrgDetail memberOrg : saleNumEachShop) {
-                                hyShopSaleNumList.add(memberOrg.getXsAmt());
-                            }
-                            allDto.setHyShopSaleNumList(hyShopSaleNumList);
-                        }
-                        //销售占比
-                        List<BigDecimal>saleRatioList=new ArrayList<BigDecimal>();
-                        if(saleNumEachShop!=null && allXsAmtEachMonth!=null){
-                            //平台的销售额
-                               if ((allXsAmtEachMonth.getXsAmt()).intValue()==0){
-                                   saleRatioList.add(allXsAmtEachMonth.getXsAmt());
-                               }else {
-                                   //会员店的销售额
-                                   for (HtyFctMemberOrgDetail MemberOrgDetail : saleNumEachShop) {
-                                       BigDecimal bigDecimal = BigDecimal.valueOf(0);
-                                       bigDecimal.add(MemberOrgDetail.getXsAmt());
-                                       bigDecimal.divide(allXsAmtEachMonth.getXsAmt());
-                                       saleRatioList.add(bigDecimal);
-                                   }
-                               }
-                            allDto.setSaleRatioList(saleRatioList);
-                        }
-                        //最近一次购买日期
-                        List<String>lastBuyDateList=new ArrayList<String>();
-                        if(saleNumEachShop!=null) {
-                            for (HtyFctMemberOrgDetail memberOrg : saleNumEachShop) {
-                                lastBuyDateList.add(memberOrg.getLastDate());
-                            }
-                            allDto.setLastBuyDateList(lastBuyDateList);
-                        }
-                        //间隔天数
-                        List<Integer>intervalDaysList=new ArrayList<Integer>();
-                        if(saleNumEachShop!=null) {
-                            for (HtyFctMemberOrgDetail memberOrg : saleNumEachShop) {
-                               int lastDate= Integer.valueOf(memberOrg.getLastDate());
-                               int nowDate= Integer.valueOf(DateTimeUtil.getTodayChar8());
-                               int intervalDay= nowDate-lastDate;
-                                intervalDaysList.add(intervalDay);
-                            }
-                            allDto.setIntervalDaysList(intervalDaysList);
-                        }
-                            //近6个月趋势
-                        if(custCode!=null && custCode!="") {
-                            List<String> dateListLastSixMonth = new ArrayList<String>();
-                            List<BigDecimal> saleLastSixMonthList = new ArrayList<BigDecimal>();
-                            for (int i = 1; i < 6; i++) {
-                                if (custTime != null) {
-                                    htyFctMemberOrgDetail.setDateKey(custTime);
-                                    HtyFctMemberOrgDetail memberOrgDetail = htyFctMemberOrgDetailDTOService.queryByCustCode(htyFctMemberOrgDetail);
-                                    if (memberOrgDetail != null) {
-                                        saleLastSixMonthList.add(memberOrgDetail.getXsAmt());
-                                    }
-                                    dateListLastSixMonth.add(custTime);
-                                }
-                                custTime = DateUtil.dateFormat(custTime, 1);
-                            }
-                            allDto.setSaleLastSixMonthList(saleLastSixMonthList);
-                            allDto.setDateListLastSixMonth(dateListLastSixMonth);
-                        }
-                    }else if(analysisType==1){
-                        //根据购买频次排序  月份
-                        List<BigDecimal>buyCountList=new ArrayList<BigDecimal>();
-                        if(saleNumEachShop!=null){
-                           for(HtyFctMemberOrgDetail memberOrg : saleNumEachShop){
-                               buyCountList.add(memberOrg.getXsQty());
-                           }
-                            Collections.sort(buyCountList);
-                            Collections.reverse(buyCountList);
-                            allDto.setBuyCountList(buyCountList);
-                        }
-                    }else if(analysisType==2){
-                        //购买市场间隔 排序 月份
-                        List<Integer>intervalDaysSortList=new ArrayList<Integer>();
-                    if(saleNumEachShop!=null) {
-                        for (HtyFctMemberOrgDetail memberOrg : saleNumEachShop) {
-                            int lastDate= Integer.valueOf(memberOrg.getLastDate());
-                            int nowDate= Integer.valueOf(DateTimeUtil.getTodayChar8());
-                            int intervalDay= nowDate-lastDate;
-                            intervalDaysSortList.add(intervalDay);
-                        }
-                        Collections.sort(intervalDaysSortList);
-                        Collections.reverse(intervalDaysSortList);
-                        allDto.setIntervalDaysSortList(intervalDaysSortList);
-                    }
-                    }
-        	}
-        		result.setData(allDto);
-                result.setCode(ResultCodeEnum.SUCCESS.getCode());
-                result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
-        } catch (Exception e) {
-            logger.error("目标用户管理页面" + e);
-            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
-            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
-        }
-        return result;
-	}
-	
 	@RequestMapping("/cust/Analysis")
     public RestResult indexForAnalysis(@RequestParam(value = "userId", required = true) String userId,
     		@RequestParam(value = "startTime", required = false) String startTime,
@@ -768,10 +591,20 @@ public class HtyFctCustAllController {
         	HtyFctCustAnalysisInOutDTO custAllDto = new HtyFctCustAnalysisInOutDTO();
         	Integer regionOrg = dciDimOrgDTOService.selectRegionNum(userId);
         	//上部数据
+        	SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
+        	String newTime = newDf.format(new Date()); 
+        	if(startTime == null || endTime == null){
+        		startTime = newTime;
+        		endTime = newTime;
+        	}
         	HtyFctCustAllDto custUpDto = htyFctCustAllDTOService.selectForAnalysis(userId, startTime, endTime, type);
         	if(custUpDto != null){
-        		custAllDto.setAmtAll(custUpDto.getAmtAll());
-        		custAllDto.setAmtOnline(custUpDto.getAmtOnline());
+        		if(custUpDto.getAmtAll() != null){
+        			custAllDto.setAmtAll(new BigDecimal(MathUtil.getWanDouble(custUpDto.getAmtAll())));
+        		}
+        		if(custUpDto.getAmtOnline() != null){
+        			custAllDto.setAmtOnline(new BigDecimal(MathUtil.getWanDouble(custUpDto.getAmtOnline())));
+        		}
         		custAllDto.setQtyB2b(custUpDto.getQtyB2b());
         		custAllDto.setQtyBoss(custUpDto.getQtyBoss());
         		custAllDto.setQtyHzg(custUpDto.getQtyHzg());
@@ -926,28 +759,29 @@ public class HtyFctCustAllController {
         	}
         	//右下圈
         	List<Map<String,String>> list = new ArrayList<Map<String,String>>();
-        	if(custUpDto != null){
-        		Map<String,String> map1 = new HashMap<String,String>();
-            	Map<String,String> map2 = new HashMap<String,String>();
-            	Map<String,String> map3 = new HashMap<String,String>();
-            	Map<String,String> map4 = new HashMap<String,String>();
-	        	map1.put("name", "超级老板采购");
+        	Map<String,String> map1 = new HashMap<String,String>();
+            Map<String,String> map2 = new HashMap<String,String>();
+            Map<String,String> map3 = new HashMap<String,String>();
+            Map<String,String> map4 = new HashMap<String,String>();
+	        map1.put("name", "超级老板采购");
+	        map2.put("name", "商城采购");
+	        map4.put("name", "VMS采购");
+	        map3.put("name", "线下采购");
+	        if(custUpDto != null){
 	        	map1.put("value", custUpDto.getAmtOnlineBoss()!=null?custUpDto.getAmtOnlineBoss().toString():"0");
-	        	map2.put("name", "商城采购");
-	        	map2.put("value", custUpDto.getAmtOnlineB2b()!=null?custUpDto.getAmtOnlineB2b().toString():"0");
-	        	map4.put("name", "VMS采购");
-	        	map4.put("value", custUpDto.getAmtOnlineVms()!=null?custUpDto.getAmtOnlineVms().toString():"0");
-	        	map3.put("name", "线下采购");
+	        	 map2.put("value", custUpDto.getAmtOnlineB2b()!=null?custUpDto.getAmtOnlineB2b().toString():"0");
+	        	 map4.put("value", custUpDto.getAmtOnlineVms()!=null?custUpDto.getAmtOnlineVms().toString():"0");
+	        	
 	        	if(custUpDto.getAmtAll() != null && custUpDto.getAmtOnline() !=null){
-	        		map3.put("value", String.valueOf(custUpDto.getAmtAll().doubleValue()-custUpDto.getAmtOnline().doubleValue()));
+	        		map3.put("value", MathUtil.getDouble(custUpDto.getAmtAll().doubleValue()-custUpDto.getAmtOnline().doubleValue()));
 	        	}else{
-	        		map3.put("value", "0");
+	        		map3.put("value", null);
 	        	}
-	        	list.add(map1);
-	        	list.add(map2);
-	        	list.add(map3);
-	        	list.add(map4);
-        	}
+	        }
+	        list.add(map1);
+	        list.add(map2);
+	        list.add(map3);
+	        list.add(map4);
         	custAllDto.setMap(list);
         	result.setData(custAllDto);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
@@ -958,5 +792,400 @@ public class HtyFctCustAllController {
         	result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
         }
      return result;
+	}
+	
+	@RequestMapping("/cust/manager")
+	public RestResult indexForManager(@RequestParam(value = "userId", required = true) String userId,
+		@RequestParam(value = "aliveType", required = true) int aliveType,
+		@RequestParam(value = "pageType", required = true) int pageType,
+		@RequestParam(value = "time", required = false) String time){
+		RestResult result = new RestResult();
+	    logger.info("调用(HtyFctCustAllDTOService.indexForManager)用户管理");
+	    try {
+	        SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
+	        String newTime = newDf.format(new Date()); 
+	        if(time == null ){
+	        	time = newTime;
+	        }
+	        List<HtyFctCustAllDto> list = htyFctCustAllDTOService.selectForManager(userId, time, aliveType, pageType,"1");
+	        result.setData(list);
+	        result.setCode(ResultCodeEnum.SUCCESS.getCode());
+	        result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+	    } catch (Exception e) {
+	        logger.error("用户管理" + e);
+	        result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+	        result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+	    }
+	 return result;
+	}
+	
+	@RequestMapping("/cust/month")
+	public RestResult indexForMonth(@RequestParam(value = "userId", required = true) String userId,
+			@RequestParam(value = "sortType", required = true) int sortType,
+			@RequestParam(value = "dateTime", required = true) String dateTime){
+		RestResult result = new RestResult();
+	    logger.info("调用(HtyFctCustAllDTOService.indexForMonth)用户管理月分析");
+	    try {
+	    	String today = DateTimeUtil.getTodayChar6();
+	    	if(dateTime == null){
+	    		dateTime = today;
+	    	}
+	    	//取当月销售量
+	    	BigDecimal allAmt = htyFctOrgMemberDetailDTOService.selectSumAmt(userId, dateTime);
+	    	//取列表
+	    	List<HtyFctOrgMemberDetailDTO> memberList = htyFctOrgMemberDetailDTOService.selectWithName(userId, dateTime, sortType,1);
+	    	//解析列表
+	    	result.setData(getMothList(memberList,allAmt,1));
+	        result.setCode(ResultCodeEnum.SUCCESS.getCode());
+	        result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+	    } catch (Exception e) {
+	        logger.error("用户管理月分析" + e);
+	        result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+	        result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+	    }
+	 return result;
+	}
+	
+	@RequestMapping("/cust/banner")
+	public RestResult indexForMonthBanner(@RequestParam(value = "userId", required = true) String userId,
+			@RequestParam(value = "custCode", required = true) String custCode){
+		RestResult result = new RestResult();
+	    logger.info("调用(HtyFctCustAllDTOService.indexForMonth)用户管理月分析");
+	    try {
+	    	HtyFctOrgMemberBannerDTO dto = new HtyFctOrgMemberBannerDTO();
+	    	//按当日算6个月前
+	    	String today = DateTimeUtil.getTodayChar6();
+	    	String sixMonth = DateTimeUtil.getLastMonthChar6ByMonth(-5);
+	    	//取当月销售量
+	    	BigDecimal allAmt = htyFctOrgMemberDetailDTOService.selectSumAmtSixMonth(userId, sixMonth, today);
+	    	//取列表
+	    	List<HtyFctOrgMemberDetailDTO> memberList = htyFctOrgMemberDetailDTOService.selectSixMonthsAll(userId, sixMonth, today);
+	    	List<HtyFctOrgMemberDetailDTO> custList = htyFctOrgMemberDetailDTOService.selectSixMonth(custCode, sixMonth, today);
+	    	//解析列表
+	    	dto.setSortList(getMothList(memberList,allAmt,0));
+	    	List<String> listName = new ArrayList<String>();
+	    	List<String> listDate = new ArrayList<String>();
+	    	if(custList != null && custList.size()>0){
+	    		for(HtyFctOrgMemberDetailDTO member: custList){
+	    			listName.add(member.getDateKey());
+	    			if(member.getXsQty() != null){
+	    				listDate.add(String.valueOf(member.getXsQty()));
+	    			}
+	    		}
+	    	}
+	    	dto.setListName(listName);
+	    	dto.setListDate(listDate);
+	    	result.setData(dto);
+	        result.setCode(ResultCodeEnum.SUCCESS.getCode());
+	        result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+	    } catch (Exception e) {
+	        logger.error("用户管理月分析" + e);
+	        result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+	        result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+	    }
+	 return result;
+	}
+	
+	private List<HtyFctOrgMemberMothOutDTO> getMothList(List<HtyFctOrgMemberDetailDTO> memberList,BigDecimal allAmt,int type) throws ParseException{
+		List<HtyFctOrgMemberMothOutDTO> list = new ArrayList<HtyFctOrgMemberMothOutDTO>();
+		if(allAmt != null && memberList != null && memberList.size()>0){
+    		for(HtyFctOrgMemberDetailDTO member : memberList){
+    			HtyFctOrgMemberMothOutDTO dto = new HtyFctOrgMemberMothOutDTO();
+    			dto.setCustCode(member.getCustCode());
+    			dto.setCustName(member.getCustName());
+    			dto.setXsAmt(member.getXsAmt());
+    			if(member.getXsAmt() != null && member.getXsAmt().doubleValue()>=0){
+    				dto.setSellPoint(String.valueOf(MathUtil.getPairToDouble(member.getXsAmt(), allAmt)));
+    			}else{
+    				dto.setSellPoint("0");
+    			}
+    			if(type == 1){
+	    			dto.setLastDate(member.getLastDate());
+	    			if(member.getLastDate() != null){
+		    			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+						Date start = sdf.parse(member.getLastDate());
+						dto.setLastTime(DateUtil.getTowTimeDays(start, new Date()));
+	    			}else{
+	    				dto.setLastTime(null);
+	    			}
+    			}
+    			list.add(dto);
+    		}
+    	}
+		return list;
+	}
+	
+	private byte[] indexForMonthExcle(String userId,int sortType,String dateTime){
+		logger.info("调用(HtyFctCustAllDTOService.indexForMonthExcle)月度会员导出");
+		byte[] content = null;
+		//取当月销售量
+		BigDecimal allAmt = htyFctOrgMemberDetailDTOService.selectSumAmt(userId, dateTime);
+    	//取列表
+    	List<HtyFctOrgMemberDetailDTO> memberList = htyFctOrgMemberDetailDTOService.selectWithName(userId, dateTime, sortType,1);
+    	try {
+			List<HtyFctOrgMemberMothOutDTO> list = getMothList(memberList,allAmt,1);
+			XSSFWorkbook  book = new XSSFWorkbook();
+		    XSSFSheet sheet = book.createSheet("sheet1");
+		    XSSFRow firstRow = sheet.createRow(0);
+		    XSSFCell[] firstCell = null;
+		    firstCell = new XSSFCell[6];
+		    for(int i = 0 ;i < firstCell.length;i++){
+	       		firstCell[i] = firstRow.createCell(i);
+	       	}
+		    firstCell[0].setCellValue(new XSSFRichTextString("序号"));
+		    firstCell[1].setCellValue(new XSSFRichTextString("会员店名称"));
+	       	firstCell[2].setCellValue(new XSSFRichTextString("销售额"));
+	       	firstCell[3].setCellValue(new XSSFRichTextString("销售额占比"));
+	       	firstCell[4].setCellValue(new XSSFRichTextString("最近一次购买日期"));
+	       	firstCell[5].setCellValue(new XSSFRichTextString("间隔天数"));
+	       	if(list != null && list.size() > 0){
+	       		for(int i = 0;i<list.size();i++){
+	       			HtyFctOrgMemberMothOutDTO dto = list.get(i);
+	       			XSSFRow row = sheet.createRow(i+1);
+	        		XSSFCell[] cell = null;
+	        		cell = new XSSFCell[9];
+        			for(int b = 0 ;b < cell.length;b++){
+    	        		cell[b] = row.createCell(b);
+    	        	}
+        			cell[0].setCellValue(i+1);
+        			if(dto.getCustName() == null){
+        				cell[1].setCellValue("");
+        			}else{
+        				cell[1].setCellValue(dto.getCustName());
+        			}
+        			if(dto.getXsAmt() == null){
+        				cell[2].setCellValue("");
+        			}else{
+        				cell[2].setCellValue(dto.getXsAmt().doubleValue());
+        			}
+        			if(dto.getSellPoint() == null){
+        				cell[3].setCellValue("");
+        			}else{
+        				cell[3].setCellValue(dto.getSellPoint()+"%");
+        			}
+        			if(dto.getLastDate() == null){
+        				cell[4].setCellValue("");
+        			}else{
+        				cell[4].setCellValue(dto.getLastDate());
+        			}
+        			if(dto.getLastTime() == null){
+        				cell[5].setCellValue("");
+        			}else{
+        				cell[5].setCellValue(dto.getLastTime().intValue());
+        			}
+	       		}
+	       	}
+	        ByteArrayOutputStream os = new ByteArrayOutputStream();
+	        book.write(os);
+	        content = os.toByteArray();
+		} catch (Exception e) {
+			 logger.error("用户管理" + e);
+		}
+		return content;
+	}
+	
+	private byte[] indexForManagerExcle(String userId,int aliveType,int pageType,String time){
+		logger.info("调用(HtyFctCustAllDTOService.indexForManagerExcle)用户管理导出");
+		byte[] content = null;
+		try {
+	        List<HtyFctCustAllDto> list = htyFctCustAllDTOService.selectForManager(userId, time, aliveType, pageType,"1");
+	        XSSFWorkbook  book = new XSSFWorkbook();
+	        XSSFSheet sheet = book.createSheet("sheet1");
+	        XSSFRow firstRow = sheet.createRow(0);
+	        XSSFCell[] firstCell = null;
+	        if(pageType == 0){
+	        	 firstCell = new XSSFCell[9];
+	        	 for(int i = 0 ;i < firstCell.length;i++){
+	        		 firstCell[i] = firstRow.createCell(i);
+	        	 }
+	        	 firstCell[0].setCellValue(new XSSFRichTextString("序号"));
+	        	 firstCell[1].setCellValue(new XSSFRichTextString("会员店名称"));
+	        	 firstCell[2].setCellValue(new XSSFRichTextString("整体采购（元）"));
+	        	 firstCell[3].setCellValue(new XSSFRichTextString("线上采购（元）"));
+	        	 firstCell[4].setCellValue(new XSSFRichTextString("商城登录（次）"));
+	        	 firstCell[5].setCellValue(new XSSFRichTextString("超级老板登录（次）"));
+	        	 firstCell[6].setCellValue(new XSSFRichTextString("商品上架（个）"));
+	        	 firstCell[7].setCellValue(new XSSFRichTextString("贷款金额（元）"));
+	        	 firstCell[8].setCellValue(new XSSFRichTextString("有效粉丝（个）"));
+	        }else {
+	        	 firstCell = new XSSFCell[8];
+	        	 for(int i = 0 ;i < firstCell.length;i++){
+	        		 firstCell[i] = firstRow.createCell(i);
+	        	 }
+	        	 firstCell[0].setCellValue(new XSSFRichTextString("序号"));
+	        	 firstCell[1].setCellValue(new XSSFRichTextString("会员店名称"));
+	        	 firstCell[2].setCellValue(new XSSFRichTextString("VIP结束日期"));
+	        	 firstCell[3].setCellValue(new XSSFRichTextString("省"));
+	        	 firstCell[4].setCellValue(new XSSFRichTextString("市"));
+	        	 firstCell[5].setCellValue(new XSSFRichTextString("县"));
+	        	 firstCell[6].setCellValue(new XSSFRichTextString("镇"));
+	        	 firstCell[7].setCellValue(new XSSFRichTextString("客户经理"));
+	        }
+	        if(list != null && list.size() > 0){
+	        	for(int i = 0;i<list.size();i++){
+	        		HtyFctCustAllDto cust = list.get(i);
+	        		XSSFRow row = sheet.createRow(i+1);
+	        		XSSFCell[] cell = null;
+	        		if(pageType == 0){
+	        			cell = new XSSFCell[9];
+	        			for(int b = 0 ;b < cell.length;b++){
+	    	        		cell[b] = row.createCell(b);
+	    	        	}
+	        			cell[0].setCellValue(i+1);
+	        			if(cust.getCustName() == null){
+	        				cell[1].setCellValue("");
+	        			}else{
+	        				cell[1].setCellValue(cust.getCustName());
+	        			}
+	        			if(cust.getAmtAll() == null){
+	        				cell[2].setCellValue("");
+	        			}else{
+	        				cell[2].setCellValue(cust.getAmtAll().doubleValue());
+	        			}
+	        			if(cust.getAmtOnline() == null){
+	        				cell[3].setCellValue("");
+	        			}else{
+	        				cell[3].setCellValue(cust.getAmtOnline().doubleValue());
+	        			}
+	        			if(cust.getQtyB2b() == null){
+	        				cell[4].setCellValue("");
+	        			}else{
+	        				cell[4].setCellValue(cust.getQtyB2b().doubleValue());
+	        			}
+	        			if(cust.getQtyBoss() == null){
+	        				cell[5].setCellValue("");
+	        			}else{
+	        				cell[5].setCellValue(cust.getQtyBoss().doubleValue());
+	        			}
+	        			if(cust.getQtyHzg() == null){
+	        				cell[6].setCellValue("");
+	        			}else{
+	        				cell[6].setCellValue(cust.getQtyHzg().doubleValue());
+	        			}
+	        			if(cust.getAmtDk() == null){
+	        				cell[7].setCellValue("");
+	        			}else{
+	        				cell[7].setCellValue(cust.getAmtDk().doubleValue());
+	        			}
+	        			if(cust.getQtyFs() == null){
+	        				cell[8].setCellValue("");
+	        			}else{
+	        				cell[8].setCellValue(cust.getQtyFs().doubleValue());
+	        			}
+	        		}else{
+	        			cell = new XSSFCell[8];
+	        			for(int b = 0 ;b < cell.length;b++){
+	    	        		cell[b] = row.createCell(b);
+	    	        	}
+	        			cell[0].setCellValue(i+1);
+	        			if(cust.getCustName() == null){
+	        				cell[1].setCellValue("");
+	        			}else{
+	        				cell[1].setCellValue(cust.getCustName());
+	        			}
+	        			if(cust.getExpireTime() == null){
+	        				cell[2].setCellValue("");
+	        			}else{
+	        				cell[2].setCellValue(cust.getExpireTime());
+	        			}
+	        			if(cust.getAreaProName() == null){
+	        				cell[3].setCellValue("");
+	        			}else{
+	        				cell[3].setCellValue(cust.getAreaProName());
+	        			}
+	        			if(cust.getAreaCityName() == null){
+	        				cell[4].setCellValue("");
+	        			}else{
+	        				cell[4].setCellValue(cust.getAreaCityName());
+	        			}
+	        			if(cust.getAreaCountyName() == null){
+	        				cell[5].setCellValue("");
+	        			}else{
+	        				cell[5].setCellValue(cust.getAreaCountyName());
+	        			}
+	        			if(cust.getAreaTownName() == null){
+	        				cell[6].setCellValue("");
+	        			}else{
+	        				cell[6].setCellValue(cust.getAreaTownName());
+	        			}
+	        			if(cust.getCustManagerName() == null){
+	        				cell[7].setCellValue("");
+	        			}else{
+	        				cell[7].setCellValue(cust.getCustManagerName());
+	        			}
+	        		}
+	        	}
+	        }
+	        //把workbook放入inputsteam里
+	        ByteArrayOutputStream os = new ByteArrayOutputStream();
+	        book.write(os);
+	        content = os.toByteArray();
+	    } catch (Exception e) {
+	        logger.error("用户管理" + e);
+	    }
+		return content;
+	}
+
+	@RequestMapping("/cust/manager/downLoad")
+	public void downLoadManager(HttpServletRequest request, HttpServletResponse response){
+		String userId = request.getParameter("userId");
+		int aliveType = Integer.valueOf(request.getParameter("aliveType"));
+		int pageType = Integer.valueOf(request.getParameter("pageType"));
+		SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
+		String time = request.getParameter("time");
+        String newTime = newDf.format(new Date()); 
+        if(time == null ){
+        	time = newTime;
+        }
+		String filename = "";
+		if(pageType == 0){
+			filename = "custAlive.xlsx";
+		}else{
+			filename = "VIPAlive.xlsx";
+		}
+		byte[] buffer = indexForManagerExcle(userId,aliveType,pageType,time);
+		response.reset();  
+		response.addHeader("Content-Disposition", "attachment;filename="  
+                + new String(filename.getBytes()));  
+		response.addHeader("Content-Length", "" + buffer.length);  
+		try {
+			OutputStream toClient = new BufferedOutputStream(  
+			        response.getOutputStream());
+			response.setContentType("application/vnd.ms-excel;charset=uft-8");
+			toClient.write(buffer);  
+            toClient.flush();  
+            toClient.close();  
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	
+	@RequestMapping("/cust/month/downLoad")
+	public void downLoadMonth(HttpServletRequest request, HttpServletResponse response){
+		String userId = request.getParameter("userId");
+		int sortType = Integer.valueOf(request.getParameter("sortType"));
+		String dateTime = request.getParameter("dateTime");
+		String today = DateTimeUtil.getTodayChar6();
+    	if(dateTime == null){
+    		dateTime = today;
+    	}
+    	String filename = "custMonth.xlsx";
+    	byte[] buffer = indexForMonthExcle(userId,sortType,dateTime);
+    	response.reset();  
+		response.addHeader("Content-Disposition", "attachment;filename="  
+                + new String(filename.getBytes()));  
+		response.addHeader("Content-Length", "" + buffer.length);  
+		try {
+			OutputStream toClient = new BufferedOutputStream(  
+			        response.getOutputStream());
+			response.setContentType("application/vnd.ms-excel;charset=uft-8");
+			toClient.write(buffer);  
+            toClient.flush();  
+            toClient.close();  
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 }

@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class HtyFctUserBeHaviorSearchDTO {
-	private String endTime;// 日历2
-	private String startTime;// 日历1
+    private String endTime;// 日历2
+    private String startTime;// 日历1
     private String userId;
 
     public String getEndTime() {
