@@ -41,7 +41,7 @@
         <include refid="Base_Column_List"/>
         from hty_fct_sale_city_prod
         <include refid="where" />
-        group by PROD_CODE,XS_QTY
+        group by PROD_NAME
         order by XS_QTY DESC limit 10
     </select>
     <select id="queryProAndCity" resultMap="BaseResultMap">
@@ -63,7 +63,7 @@
                 AND cust_city=#{htyFctSaleCityProdDTO.custCityName}
             </if>
         </where>
-        group by PROD_CODE,XS_QTY
+        group by PROD_NAME
         order by XS_QTY DESC limit 10
     </select>
 </mapper>

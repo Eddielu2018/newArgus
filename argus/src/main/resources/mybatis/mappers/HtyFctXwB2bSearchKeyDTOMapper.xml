@@ -15,9 +15,6 @@
         <result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
         <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
     </resultMap>
-    <sql id="Base_Column_List">
-        ID,DATE_KEY,SEARCH_KEYWORD,SEARCH_TYPE,COUNTRY_NAME,PROVINCE_NAME,CITY_NAME,SEARCH_QTY,ETL_DATE,ETL_TIME
-    </sql>
     <sql id="where">
         <where>
             <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
@@ -33,7 +30,7 @@
         search_keyword,search_qty
         from hty_fct_xw_b2b_search_key
         <include refid="where" />
-        group by SEARCH_KEYWORD,SEARCH_QTY
+        group by SEARCH_KEYWORD
         order by SEARCH_QTY DESC limit 10
     </select>
     <select id="queryByNameSearchKey" resultMap="BaseResultMap">
@@ -55,7 +52,7 @@
                 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
             </if>
         </where>
-        group by SEARCH_KEYWORD,SEARCH_QTY
+        group by SEARCH_KEYWORD
         order by SEARCH_QTY DESC limit 10
     </select>
 </mapper>

@@ -14,7 +14,7 @@
         <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List">
-		ITEM_ID,ACCESS_QTY
+		ITEM_ID,SUM(ACCESS_QTY) AS ACCESS_QTY
 	</sql>
     <sql id="where">
         <where>
@@ -32,7 +32,7 @@
         <include refid="Base_Column_List"/>
         from hty_fct_xw_b2b_item_access
         <include refid="where" />
-        group by ITEM_ID,ACCESS_QTY
+        group by ITEM_ID
         order by ACCESS_QTY DESC limit 10
     </select>
     <select id="queryByProAndCity" resultMap="BaseResultMap">
@@ -48,13 +48,13 @@
                 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
             </if>
             <if test="htyFctXwB2bItemAccessDTO.provinceName!=null">
-                and PROVINCE_NAME={htyFctXwB2bItemAccessDTO.provinceName}
+                and PROVINCE_NAME=#{htyFctXwB2bItemAccessDTO.provinceName}
             </if>
             <if test="htyFctXwB2bItemAccessDTO.cityName!=null">
-                and CITY_NAME={htyFctXwB2bItemAccessDTO.cityName}
+                and CITY_NAME=#{htyFctXwB2bItemAccessDTO.cityName}
             </if>
         </where>
-        group by ITEM_ID,ACCESS_QTY
+        group by ITEM_ID
         order by ACCESS_QTY DESC limit 10
     </select>
 </mapper>

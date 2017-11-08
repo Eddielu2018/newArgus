@@ -33,4 +33,5 @@ public class HtyFctXwB2bConvFunnelDTOServiceImpl implements HtyFctXwB2bConvFunne
     public List<HtyFctXwB2bConvFunnelDTO> queryByProAndCityRepeat(HtyFctXwB2bConvFunnelDTO htyFctXwB2bConvFunnelDTO, HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
         return htyFctXwB2bConvFunnelDTOMapperDao.queryByProAndCityRepeat(htyFctXwB2bConvFunnelDTO,htyFctUserBeHaviorSearchDTO);
     }
+
 }
