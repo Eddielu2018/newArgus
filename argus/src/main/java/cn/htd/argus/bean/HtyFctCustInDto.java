@@ -9,6 +9,8 @@ public class HtyFctCustInDto {
 	private Integer start;
 	private Integer end;
 	private Integer kind;
+	private String searchStartTime;
+	private String searchEndTime;
 	public String getUserId() {
 		return userId;
 	}
@@ -56,5 +58,17 @@ public class HtyFctCustInDto {
 	}
 	public void setKind(Integer kind) {
 		this.kind = kind;
+	}
+	public String getSearchStartTime() {
+		return searchStartTime;
+	}
+	public void setSearchStartTime(String seachStartTime) {
+		this.searchStartTime = seachStartTime;
+	}
+	public String getSearchEndTime() {
+		return searchEndTime;
+	}
+	public void setSearchEndTime(String seachEndTime) {
+		this.searchEndTime = seachEndTime;
 	}
 }
