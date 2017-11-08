@@ -15,9 +15,9 @@ public interface HtyFctOrgSaleDTOMapper {
     
     List<HtyFctOrgSaleDTO> selectYear(HtyFctOrgSaleDTO model);
     
-    Integer selectSortNumForHead(HtyFctOrgSaleDTO model);
+    List<Integer> selectSortNumForHead(HtyFctOrgSaleDTO model);
     
-    Integer selectSortNumForBranch(HtyFctOrgSaleDTO model);
+    List<Integer> selectSortNumForBranch(HtyFctOrgSaleDTO model);
     
     BigDecimal selectAvgHead(HtyFctOrgSaleDTO model);
     

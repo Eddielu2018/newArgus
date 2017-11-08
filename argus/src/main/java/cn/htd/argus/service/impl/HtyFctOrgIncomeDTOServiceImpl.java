@@ -77,8 +77,14 @@ public class HtyFctOrgIncomeDTOServiceImpl implements HtyFctOrgIncomeDTOService{
 		fdto.setOrgCode(userId);
 		fdto.setYearMon(yearMon);
 		HtyFctOrgSortDTO dto = new HtyFctOrgSortDTO();
-		dto.setIncomeHead(dao.selectSortNumForHead(fdto));
-		dto.setIncomeBrach(dao.selectSortNumForBranch(fdto));
+		List<Integer> headList = dao.selectSortNumForHead(fdto);
+		List<Integer> branchList = dao.selectSortNumForBranch(fdto);
+		if(headList != null && headList.size()>0){
+			dto.setIncomeHead(headList.get(0));
+		}
+		if(branchList != null && branchList.size()>0){
+			dto.setIncomeBrach(branchList.get(0));
+		}
 		return dto;
 	}
 

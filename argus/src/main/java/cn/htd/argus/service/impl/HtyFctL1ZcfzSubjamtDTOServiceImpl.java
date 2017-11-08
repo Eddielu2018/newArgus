@@ -1,6 +1,6 @@
 package cn.htd.argus.service.impl;
 
-import cn.htd.argus.dao.HtyFctL1ZcfzSubjamtDTOMapper;
+import cn.htd.argus.mappers.HtyFctL1ZcfzSubjamtDTOMapper;
 import cn.htd.argus.service.HtyFctL1ZcfzSubjamtDTOService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

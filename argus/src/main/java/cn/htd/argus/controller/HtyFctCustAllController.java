@@ -590,6 +590,7 @@ public class HtyFctCustAllController {
         try {
         	HtyFctCustAnalysisInOutDTO custAllDto = new HtyFctCustAnalysisInOutDTO();
         	Integer regionOrg = dciDimOrgDTOService.selectRegionNum(userId);
+        	Integer regionNoOrg = dciDimOrgDTOService.selectRegionNumWithOutCust(userId);
         	//上部数据
         	SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
         	String newTime = newDf.format(new Date()); 
@@ -609,12 +610,18 @@ public class HtyFctCustAllController {
         		custAllDto.setQtyBoss(custUpDto.getQtyBoss());
         		custAllDto.setQtyHzg(custUpDto.getQtyHzg());
         		custAllDto.setAmtDk(custUpDto.getAmtDk());
-        		custAllDto.setAmtAllNum(htyFctCustAllDTOService.selectForAmtAll(userId, startTime, endTime, type, regionOrg));
-        		custAllDto.setAmtOnlineNum(htyFctCustAllDTOService.selectForAmtOnline(userId, startTime, endTime, type, regionOrg));
-        		custAllDto.setQtyB2bNum(htyFctCustAllDTOService.selectForQtyB2b(userId, startTime, endTime, type, regionOrg));
-        		custAllDto.setQtyBossNum(htyFctCustAllDTOService.selectForQtyBoss(userId, startTime, endTime, type, regionOrg));
-        		custAllDto.setQtyHzgNum(htyFctCustAllDTOService.selectForQtyHzg(userId, startTime, endTime, type, regionOrg));
-        		custAllDto.setAmtDkNum(htyFctCustAllDTOService.selectForAmtDk(userId, startTime, endTime, type, regionOrg));
+        		Integer temp1 = htyFctCustAllDTOService.selectForAmtAll(userId, startTime, endTime, type, regionOrg);
+        		Integer temp2 = htyFctCustAllDTOService.selectForAmtOnline(userId, startTime, endTime, type, regionOrg);
+        		Integer temp3 = htyFctCustAllDTOService.selectForQtyB2b(userId, startTime, endTime, type, regionOrg);
+        		Integer temp4 = htyFctCustAllDTOService.selectForQtyBoss(userId, startTime, endTime, type, regionOrg);
+        		Integer temp5 = htyFctCustAllDTOService.selectForQtyHzg(userId, startTime, endTime, type, regionOrg);
+        		Integer temp6 = htyFctCustAllDTOService.selectForAmtDk(userId, startTime, endTime, type, regionOrg);
+        		custAllDto.setAmtAllNum(temp1>99?99:temp1);
+        		custAllDto.setAmtOnlineNum(temp2>99?99:temp2);
+        		custAllDto.setQtyB2bNum(temp3>99?99:temp3);
+        		custAllDto.setQtyBossNum(temp4>99?99:temp4);
+        		custAllDto.setQtyHzgNum(temp5>99?99:temp5);
+        		custAllDto.setAmtDkNum(temp6>99?99:temp6);
         	}
         	//左下图表
         	int level = 1;
@@ -736,12 +743,14 @@ public class HtyFctCustAllController {
         					}
         				}
         			}
-        			//分部平均值
-        			other1 = other1/level;
-        			other2 = other2/level;
-        			other3 = other3/level;
-        			other4 = other4/level;
-        			other5 = other5/level;
+        		}
+        		//分部平均值
+        		if(regionNoOrg != null && regionNoOrg != 0){
+	    			other1 = other1/regionNoOrg;
+	    			other2 = other2/regionNoOrg;
+	    			other3 = other3/regionNoOrg;
+	    			other4 = other4/regionNoOrg;
+	    			other5 = other5/regionNoOrg;
         		}
         		listDate.add(String.valueOf(my1));
         		listDate.add(String.valueOf(my2));
@@ -923,7 +932,7 @@ public class HtyFctCustAllController {
     	//取列表
     	List<HtyFctOrgMemberDetailDTO> memberList = htyFctOrgMemberDetailDTOService.selectWithName(userId, dateTime, sortType,1);
     	try {
-			List<HtyFctOrgMemberMothOutDTO> list = getMothList(memberList,allAmt,1);
+			List<HtyFctOrgMemberMothOutDTO> list = getMothList(memberList,allAmt,0);
 			XSSFWorkbook  book = new XSSFWorkbook();
 		    XSSFSheet sheet = book.createSheet("sheet1");
 		    XSSFRow firstRow = sheet.createRow(0);
@@ -988,7 +997,7 @@ public class HtyFctCustAllController {
 		logger.info("调用(HtyFctCustAllDTOService.indexForManagerExcle)用户管理导出");
 		byte[] content = null;
 		try {
-	        List<HtyFctCustAllDto> list = htyFctCustAllDTOService.selectForManager(userId, time, aliveType, pageType,"1");
+	        List<HtyFctCustAllDto> list = htyFctCustAllDTOService.selectForManager(userId, time, aliveType, pageType,"0");
 	        XSSFWorkbook  book = new XSSFWorkbook();
 	        XSSFSheet sheet = book.createSheet("sheet1");
 	        XSSFRow firstRow = sheet.createRow(0);

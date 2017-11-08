@@ -77,8 +77,14 @@ public class HtyFctOrgSaleDTOServiceImpl implements HtyFctOrgSaleDTOService{
 		fdto.setOrgCode(userId);
 		fdto.setYearMon(yearMon);
 		HtyFctOrgSortDTO dto = new HtyFctOrgSortDTO();
-		dto.setSaleHead(dao.selectSortNumForHead(fdto));
-		dto.setSaleBrach(dao.selectSortNumForBranch(fdto));
+		List<Integer> headList = dao.selectSortNumForHead(fdto);
+		List<Integer> branchList = dao.selectSortNumForBranch(fdto);
+		if(headList != null && headList.size()>0){
+			dto.setSaleHead(headList.get(0));
+		}
+		if(branchList != null && branchList.size()>0){
+			dto.setSaleBrach(branchList.get(0));
+		}
 		return dto;
 	}
 

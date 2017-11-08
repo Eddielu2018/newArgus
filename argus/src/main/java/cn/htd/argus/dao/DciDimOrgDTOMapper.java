@@ -14,4 +14,6 @@ public interface DciDimOrgDTOMapper {
     int selectAllNum();
     
     Integer selectRegionNum(HtyFctCustAnalysisInDTO dto);
+    
+    Integer selectRegionNumWithOutCust(HtyFctCustAnalysisInDTO dto);
 }

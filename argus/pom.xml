@@ -73,6 +73,11 @@
 			<version>6.0.4</version>
 		</dependency>
 		<dependency>
+			<groupId>ojdbc14</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.3.0</version>
+		</dependency>
+		<dependency>
 			<groupId>cn.htd.common</groupId>
 			<artifactId>common-core</artifactId>
 			<version>1.1.0-RELEASE</version>
