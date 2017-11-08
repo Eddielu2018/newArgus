@@ -7,7 +7,7 @@ public enum ResultCodeEnum {
     SUCCESS("1", "成功！"),
     FAIL("0", "失败！"),
     ERROR_SERVER_EXCEPTION("1001", "服务器错误！"),
-    ERROR_IS_NOT_MENBER("2001", "会员不存在！"),
+    ERROR_IS_NOT_MENBER("2001", "数据不存在！"),
     LOGIN_TIMEOUT("9001", "登录超时！");
 
     private String code;

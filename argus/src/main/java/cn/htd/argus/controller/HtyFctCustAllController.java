@@ -80,6 +80,12 @@ public class HtyFctCustAllController {
         try {
         	HtyFctCustAllOutDTO allDto = new HtyFctCustAllOutDTO();
         	int step = 1;
+        	if(type == 0){
+        		searchStartTime = custStartTime;
+        		searchEndTime = custEndTime;
+        		custStartTime = null;
+        		custEndTime = null;
+        	}
         	if((searchStartTime != null && !"".equals(searchStartTime)) && (searchEndTime != null && !"".equals(searchEndTime))){
         		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
         	}
@@ -91,6 +97,16 @@ public class HtyFctCustAllController {
         	if(custStartTime != null && !"".equals(custStartTime)){
         		inDto.setCustStartTime(custStartTime);
         		inPairDto.setCustStartTime(custStartTime);
+        	}
+        	if(type == 0){
+        		String today = DateTimeUtil.getTodayChar6();
+        		if(searchStartTime != null && !"".equals(searchStartTime) && searchEndTime != null && !"".equals(searchEndTime)){
+        			inDto.setSearchStartTime(searchStartTime);
+        			inDto.setSearchEndTime(searchEndTime);
+        		}else{
+        			inDto.setSearchStartTime(today);
+        			inDto.setSearchEndTime(today);
+        		}
         	}
         	if(custEndTime != null && !"".equals(custEndTime)){
         		inDto.setCustEndTime(custEndTime);
@@ -930,9 +946,9 @@ public class HtyFctCustAllController {
 		//取当月销售量
 		BigDecimal allAmt = htyFctOrgMemberDetailDTOService.selectSumAmt(userId, dateTime);
     	//取列表
-    	List<HtyFctOrgMemberDetailDTO> memberList = htyFctOrgMemberDetailDTOService.selectWithName(userId, dateTime, sortType,1);
+    	List<HtyFctOrgMemberDetailDTO> memberList = htyFctOrgMemberDetailDTOService.selectWithName(userId, dateTime, sortType,0);
     	try {
-			List<HtyFctOrgMemberMothOutDTO> list = getMothList(memberList,allAmt,0);
+			List<HtyFctOrgMemberMothOutDTO> list = getMothList(memberList,allAmt,1);
 			XSSFWorkbook  book = new XSSFWorkbook();
 		    XSSFSheet sheet = book.createSheet("sheet1");
 		    XSSFRow firstRow = sheet.createRow(0);
