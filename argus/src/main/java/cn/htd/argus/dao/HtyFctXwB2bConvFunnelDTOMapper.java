@@ -18,7 +18,5 @@ public interface HtyFctXwB2bConvFunnelDTOMapper {
 	List<HtyFctXwB2bConvFunnelDTO> queryByPaySuccessNextDay(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
 
     List<HtyFctXwB2bConvFunnelDTO>queryByProAndCity(@Param("htyFctXwB2bConvFunnelDTO")HtyFctXwB2bConvFunnelDTO htyFctXwB2bConvFunnelDTO,@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
-    HtyFctXwB2bConvFunnelDTO queryCityName(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
-    HtyFctXwB2bConvFunnelDTO queryProName(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
     List<HtyFctXwB2bConvFunnelDTO> queryByProAndCityRepeat(@Param("htyFctXwB2bConvFunnelDTO")HtyFctXwB2bConvFunnelDTO htyFctXwB2bConvFunnelDTO,@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
 }

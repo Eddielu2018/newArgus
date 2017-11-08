@@ -30,15 +30,6 @@ public class HtyFctXwB2bConvFunnelDTOServiceImpl implements HtyFctXwB2bConvFunne
     }
 
     @Override
-    public HtyFctXwB2bConvFunnelDTO queryCityName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return htyFctXwB2bConvFunnelDTOMapperDao.queryCityName(htyFctUserBeHaviorSearchDTO);
-    }
-
-    @Override
-    public HtyFctXwB2bConvFunnelDTO queryProName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return htyFctXwB2bConvFunnelDTOMapperDao.queryProName(htyFctUserBeHaviorSearchDTO);
-    }
-    @Override
     public List<HtyFctXwB2bConvFunnelDTO> queryByProAndCityRepeat(HtyFctXwB2bConvFunnelDTO htyFctXwB2bConvFunnelDTO, HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
         return htyFctXwB2bConvFunnelDTOMapperDao.queryByProAndCityRepeat(htyFctXwB2bConvFunnelDTO,htyFctUserBeHaviorSearchDTO);
     }

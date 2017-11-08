@@ -14,6 +14,4 @@ import cn.htd.argus.dto.HtyFctSaleCityProdDTO;
 public interface HtyFctSaleCityProdDTOMapper {
 	List<HtyFctSaleCityProdDTO> querySaleOutItemNum(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
     List<HtyFctSaleCityProdDTO> queryProAndCity(@Param("htyFctSaleCityProdDTO")HtyFctSaleCityProdDTO HtyFctSaleCityProdDTO,@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
-    HtyFctSaleCityProdDTO queryProName(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
-    HtyFctSaleCityProdDTO queryCityName(@Param("htyUserBeHaviorSearchDTO") HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
 }

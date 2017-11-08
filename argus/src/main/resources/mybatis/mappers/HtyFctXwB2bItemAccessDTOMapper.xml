@@ -19,10 +19,6 @@
 	<sql id="where">
 		<where>
 			<if
-				test="htyUserBeHaviorSearchDTO.cityName !=null and htyUserBeHaviorSearchDTO.cityName !=''">
-				and CITY_NAME=#{htyUserBeHaviorSearchDTO.cityName}
-			</if>
-			<if
 				test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
 				<![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
 			</if>
@@ -30,41 +26,20 @@
 				test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
 			 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
-            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                or DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
-            </if>
 		</where>
 	</sql>
 	<!--单品的访问数量 -->
 	<select id="queryOneItemAccessQty" resultMap="BaseResultMap">
 		select
-        <include refid="Base_Column_List"/>
+        access_qty,item_id
         from hty_fct_xw_b2b_item_access
 		<include refid="where" />
 		group by ITEM_ID,ACCESS_QTY
 		order by ACCESS_QTY DESC limit 10
 	</select>
-    <select id="queryProName" resultMap="BaseResultMap">
-        SELECT
-      province_name
-        FROM
-      hty_fct_xw_b2b_item_access
-        <include refid="where"/>
-        ORDER BY id DESC
-      LIMIT 1
-     </select>
-    <select id="queryCityName" resultMap="BaseResultMap">
-      SELECT
-      city_name
-      FROM
-      hty_fct_xw_b2b_item_access
-    <include refid="where"/>
-      ORDER BY id DESC
-      LIMIT 1
-    </select>
     <select id="queryByProAndCity" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+        access_qty,item_id
         from
         hty_fct_xw_b2b_item_access
         <where>
@@ -79,9 +54,6 @@
             </if>
             <if test="htyFctXwB2bItemAccessDTO.cityName!=null">
                 and CITY_NAME=#{htyFctXwB2bItemAccessDTO.cityName}
-            </if>
-            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                or DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
             </if>
         </where>
         group by ITEM_ID,ACCESS_QTY

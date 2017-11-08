@@ -20,48 +20,25 @@
 	</sql>
 	<sql id="where">
 		<where>
-			<if
-				test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+			<if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
 				<![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
 			</if>
-			<if
-				test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+			<if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
 			 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
-            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                or DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
-            </if>
 		</where>
 	</sql>
 	<select id="queryAllSearchKeyWord" resultMap="BaseResultMap">
 		select
-        <include refid="Base_Column_List"/>
+        search_keyword,search_qty
 		from hty_fct_xw_b2b_search_key
 		<include refid="where" />
 		group by SEARCH_KEYWORD,SEARCH_QTY
 		order by SEARCH_QTY DESC limit 10
 	</select>
-    <select id="queryProNameSearchKey" resultMap="BaseResultMap">
-        SELECT
-      province_name
-        FROM
-        hty_fct_xw_b2b_search_key
-       <include refid="where"/>
-        ORDER BY id DESC
-        LIMIT 1
-    </select>
-    <select id="queryCityNameSearchKey" resultMap="BaseResultMap">
-        SELECT
-      city_name
-        FROM
-    hty_fct_xw_b2b_search_key
-        <include refid="where"/>
-         ORDER BY id DESC
-        LIMIT 1
-    </select>
     <select id="queryByNameSearchKey" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+        search_keyword,search_qty
         FROM
         hty_fct_xw_b2b_search_key
         <where>
@@ -76,9 +53,6 @@
             </if>
             <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
                 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
-            </if>
-            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                or DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
             </if>
         </where>
         group by SEARCH_KEYWORD,SEARCH_QTY

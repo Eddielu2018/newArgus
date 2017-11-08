@@ -24,13 +24,4 @@ public class HtyFctXwB2bItemAccessDTOServiceImpl implements HtyFctXwB2bItemAcces
         return htyFctXwB2bItemAccessDTODao.queryByProAndCity(htyFctXwB2bItemAccessDTO,htyFctUserBeHaviorSearchDTO);
     }
 
-    @Override
-    public HtyFctXwB2bItemAccessDTO queryCityName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return htyFctXwB2bItemAccessDTODao.queryCityName(htyFctUserBeHaviorSearchDTO);
-    }
-
-    @Override
-    public HtyFctXwB2bItemAccessDTO queryProName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return htyFctXwB2bItemAccessDTODao.queryProName(htyFctUserBeHaviorSearchDTO);
-    }
 }
