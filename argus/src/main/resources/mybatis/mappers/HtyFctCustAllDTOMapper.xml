@@ -50,7 +50,18 @@
         from hty_fct_cust_all
         where ID = #{id,jdbcType=BIGINT}
     </select>
-
+    <select id="queryCityAndProByUserId" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctUserBeHaviorSearchDTO">
+        SELECT
+        area_proname,area_cityname
+        FROM hty_fct_cust_all
+        <where>
+            <if test="userId != null">
+                and org_code = #{userId}
+            </if>
+        </where>
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
     <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
         select
         <include refid="Base_Column_List" />
