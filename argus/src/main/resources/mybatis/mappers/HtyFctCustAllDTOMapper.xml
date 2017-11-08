@@ -194,6 +194,9 @@
     	<if test="firstTime != null">
         	and date_key = #{firstTime}
     	</if>
+    	<if test="searchStartTime != null and searchEndTime != null">
+    		and date_key &gt;= #{searchStartTime} and date_key &lt;= #{searchEndTime} 
+    	</if>
     	<if test="dimension != null and start != null and end != null and kind != null">
     		<choose>
     			<when test="dimension == 0">
