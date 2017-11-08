@@ -15,16 +15,14 @@
         <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List">
-        ID,DATE_KEY,PAGE_PATH,PAGE_TITLE,COUNTRY_NAME,PROVINCE_NAME,CITY_NAME,ACCESS_QTY,ETL_DATE,ETL_TIME
+        PAGE_TITLE,ACCESS_QTY
     </sql>
 	<sql id="where">
 		<where>
-			<if
-				test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+			<if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
 				<![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
 			</if>
-			<if
-				test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+			<if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
 			 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
 		</where>

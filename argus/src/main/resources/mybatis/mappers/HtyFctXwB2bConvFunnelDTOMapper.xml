@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.htd.argus.dao.HtyFctXwB2bConvFunnelDTOMapper" >
- <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctXwB2bConvFunnelDTO" >
-    <id column="ID" property="id" jdbcType="BIGINT" />
-    <result column="DATE_KEY" property="dateKey" jdbcType="VARCHAR" />
-    <result column="STEP_NAME" property="stepName" jdbcType="VARCHAR" />
-    <result column="STEP_SEQUENCE" property="stepSequence" jdbcType="DECIMAL" />
-    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
-    <result column="COUNTRY_NAME" property="countryName" jdbcType="VARCHAR" />
-    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
-    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
-    <result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
-    <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="where">
-		<where>
-			<if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
-				<![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
-			</if>
-			<if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
-			 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
-			</if>
-		</where>
-	</sql>
+    <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctXwB2bConvFunnelDTO" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="DATE_KEY" property="dateKey" jdbcType="VARCHAR" />
+        <result column="STEP_NAME" property="stepName" jdbcType="VARCHAR" />
+        <result column="STEP_SEQUENCE" property="stepSequence" jdbcType="DECIMAL" />
+        <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+        <result column="COUNTRY_NAME" property="countryName" jdbcType="VARCHAR" />
+        <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+        <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+        <result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
+        <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="where">
+        <where>
+            <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+                <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+                <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
+                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
+            </if>
+        </where>
+    </sql>
     <sql id="base">
         STEP_SEQUENCE,
-    COUNT(STEP_NAME)AS STEP_NAME,CUST_ID,
+        COUNT(STEP_NAME)AS STEP_NAME,CUST_ID
     </sql>
-  <!--用户购买漏斗  -->
-  <select id="queryStepSequenceNum" resultMap="BaseResultMap" resultType="cn.htd.argus.dto.HtyFctXwB2bConvFunnelDTO">
-  	  select
-      <include refid="base"/>
-      from hty_fct_xw_b2b_conv_funnel
-  	  <include refid="where" />
-  	  group by STEP_NAME,STEP_SEQUENCE order by  STEP_SEQUENCE DESC limit 5
-  </select>
-  <!--客户的复购  支付成功后隔一天再购买-->
-  <select id="queryByPaySuccessNextDay" resultMap="BaseResultMap" >
-    select
-    <include refid="base"/>
-    from hty_fct_xw_b2b_conv_funnel
-      <include refid="where"/>
-    group by STEP_SEQUENCE
-    HAVING count(DISTINCT DATE_KEY)>1  limit 10
-  </select>
-    <select id="queryByProAndCity" resultMap="BaseResultMap">
-        SELECT
+    <!--用户购买漏斗  -->
+    <select id="queryStepSequenceNum" resultMap="BaseResultMap" resultType="cn.htd.argus.dto.HtyFctXwB2bConvFunnelDTO">
+        select
         <include refid="base"/>
+        from hty_fct_xw_b2b_conv_funnel
+        <include refid="where" />
+        group by STEP_NAME,STEP_SEQUENCE order by  STEP_SEQUENCE DESC limit 5
+    </select>
+    <!--客户的复购  支付成功后隔一天再购买-->
+    <select id="queryByPaySuccessNextDay" resultMap="BaseResultMap" >
+        select
+        <include refid="base"/>
+        from hty_fct_xw_b2b_conv_funnel
+        <include refid="where"/>
+        group by STEP_SEQUENCE
+        HAVING count(DISTINCT DATE_KEY)>1  limit 10
+    </select>
+    <select id="queryByProAndCity">
+        SELECT
+        <include refid="Base_Column_List" />
         FROM
         hty_fct_xw_b2b_conv_funnel
         <where>
@@ -68,8 +71,6 @@
     <select id="queryByProAndCityRepeat" resultMap="BaseResultMap">
         SELECT
         <include refid="base"/>
-        FROM
-        hty_fct_xw_b2b_conv_funnel
         <where>
             <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
                 <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
@@ -87,4 +88,5 @@
         group by STEP_SEQUENCE
         HAVING count(DISTINCT DATE_KEY)>1  limit 10
     </select>
+
 </mapper>
