@@ -9,6 +9,4 @@ import org.apache.ibatis.annotations.Param;
 public interface HtyFctXwB2bItemAccessDTOService {
 	List<HtyFctXwB2bItemAccessDTO>	queryOneItemAccessQty(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
     List<HtyFctXwB2bItemAccessDTO> queryByProAndCity(HtyFctXwB2bItemAccessDTO htyFctXwB2bItemAccessDTO,HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
-    HtyFctXwB2bItemAccessDTO queryCityName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
-    HtyFctXwB2bItemAccessDTO queryProName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
 }

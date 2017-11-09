@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.htd.argus.dao.HtyFctXwB2bItemAccessDTOMapper">
-	<resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctXwB2bItemAccessDTO">
-		<id column="ID" property="id" jdbcType="BIGINT" />
-		<result column="DATE_KEY" property="dateKey" jdbcType="VARCHAR" />
-		<result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
-		<result column="COUNTRY_NAME" property="countryName" jdbcType="VARCHAR" />
-		<result column="PROVINCE_NAME" property="provinceName"
-			jdbcType="VARCHAR" />
-		<result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
-		<result column="ACCESS_QTY" property="accessQty" jdbcType="DECIMAL" />
-		<result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
-		<result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
-	</resultMap>
-	<sql id="Base_Column_List">
-		ITEM_ID,ACCESS_QTY
+    <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctXwB2bItemAccessDTO">
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="DATE_KEY" property="dateKey" jdbcType="VARCHAR" />
+        <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
+        <result column="COUNTRY_NAME" property="countryName" jdbcType="VARCHAR" />
+        <result column="PROVINCE_NAME" property="provinceName"
+                jdbcType="VARCHAR" />
+        <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+        <result column="ACCESS_QTY" property="accessQty" jdbcType="DECIMAL" />
+        <result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
+        <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+		ITEM_ID,SUM(ACCESS_QTY) AS ACCESS_QTY
 	</sql>
-	<sql id="where">
-		<where>
-			<if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
-				<![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
-			</if>
-			<if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
-			 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
-			</if>
-		</where>
-	</sql>
-	<!--单品的访问数量 -->
-	<select id="queryOneItemAccessQty" resultMap="BaseResultMap">
-		select
+    <sql id="where">
+        <where>
+            <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+                <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+                <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
+            </if>
+        </where>
+    </sql>
+    <!--单品的访问数量 -->
+    <select id="queryOneItemAccessQty" resultMap="BaseResultMap">
+        select
         <include refid="Base_Column_List"/>
         from hty_fct_xw_b2b_item_access
-		<include refid="where" />
-		group by ITEM_ID,ACCESS_QTY
-		order by ACCESS_QTY DESC limit 10
-	</select>
+        <include refid="where" />
+        group by ITEM_ID
+        order by ACCESS_QTY DESC limit 10
+    </select>
     <select id="queryByProAndCity" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
@@ -48,13 +48,13 @@
                 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
             </if>
             <if test="htyFctXwB2bItemAccessDTO.provinceName!=null">
-                and PROVINCE_NAME={htyFctXwB2bItemAccessDTO.provinceName}
+                and PROVINCE_NAME=#{htyFctXwB2bItemAccessDTO.provinceName}
             </if>
             <if test="htyFctXwB2bItemAccessDTO.cityName!=null">
-                and CITY_NAME={htyFctXwB2bItemAccessDTO.cityName}
+                and CITY_NAME=#{htyFctXwB2bItemAccessDTO.cityName}
             </if>
         </where>
-        group by ITEM_ID,ACCESS_QTY
+        group by ITEM_ID
         order by ACCESS_QTY DESC limit 10
     </select>
 </mapper>

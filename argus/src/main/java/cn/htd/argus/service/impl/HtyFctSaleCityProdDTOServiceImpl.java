@@ -23,14 +23,4 @@ public List<HtyFctSaleCityProdDTO> querySaleOutItemNum(HtyFctUserBeHaviorSearchD
     public List<HtyFctSaleCityProdDTO> queryProAndCity(HtyFctSaleCityProdDTO HtyFctSaleCityProdDTO, HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
         return htyFctSaleCityProdDTODao.queryProAndCity(HtyFctSaleCityProdDTO,htyFctUserBeHaviorSearchDTO);
     }
-
-    @Override
-    public HtyFctSaleCityProdDTO queryProName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return htyFctSaleCityProdDTODao.queryProName(htyFctUserBeHaviorSearchDTO);
-    }
-
-    @Override
-    public HtyFctSaleCityProdDTO queryCityName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return htyFctSaleCityProdDTODao.queryCityName(htyFctUserBeHaviorSearchDTO);
-    }
 }

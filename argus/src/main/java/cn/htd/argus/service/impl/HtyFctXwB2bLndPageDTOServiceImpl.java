@@ -15,8 +15,7 @@ public class HtyFctXwB2bLndPageDTOServiceImpl implements HtyFctXwB2bLndPageDTOSe
 	private HtyFctXwB2bLndPageDTOMapper htyFctXwB2bLndPageDTOMDao;
 
 	@Override
-	public List<HtyFctXwB2bLndPageDTO> queryAllAccessQty(
-			HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
+	public List<HtyFctXwB2bLndPageDTO> queryAllAccessQty(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
 		return htyFctXwB2bLndPageDTOMDao.queryAllAccessQty(htyFctUserBeHaviorSearchDTO);
 	}
 
@@ -25,13 +24,4 @@ public class HtyFctXwB2bLndPageDTOServiceImpl implements HtyFctXwB2bLndPageDTOSe
         return htyFctXwB2bLndPageDTOMDao.queryByProNameAndCityName(htyFctXwB2bLndPageDTO,htyFctUserBeHaviorSearchDTO);
     }
 
-    @Override
-    public HtyFctXwB2bLndPageDTO queryCityName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return htyFctXwB2bLndPageDTOMDao.queryCityName(htyFctUserBeHaviorSearchDTO);
-    }
-
-    @Override
-    public HtyFctXwB2bLndPageDTO queryProName(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
-        return htyFctXwB2bLndPageDTOMDao.queryProName(htyFctUserBeHaviorSearchDTO);
-    }
 }

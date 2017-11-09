@@ -13,7 +13,7 @@ public interface HtyFctCustAllDTOMapper {
     HtyFctCustAllDto selectByPrimaryKey(Long id);
 
     List<HtyFctCustAllDto> select(HtyFctCustAllDto model);
-    
+
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
 
     Integer selectForAmtAll(HtyFctCustAnalysisInDTO inDto);
@@ -33,7 +33,7 @@ public interface HtyFctCustAllDTOMapper {
     List<HtyFctCustAllDto> selectForPair(HtyFctCustAnalysisInDTO inDto);
 
     List<HtyFctCustAllDto> selectForManager(HtyFctCustAllDto model);
-    
+
     BigDecimal selectSumAmt(HtyFctCustAllDto model);
 
     HtyFctCustAllDto  queryCityAndProByUserId(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);

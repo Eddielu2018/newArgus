@@ -228,44 +228,44 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
         return dao.selectForPair(inDto);
     }
 
-	@Override
-	public List<HtyFctCustAllDto> selectForManager(String userId, String dateTime, int aliveType, int vipType,String outType) {
-		if (userId == null) {
+    @Override
+    public List<HtyFctCustAllDto> selectForManager(String userId, String dateTime, int aliveType, int vipType,String outType) {
+        if (userId == null) {
             throw new IllegalArgumentException("userId is null");
         }
-		if (dateTime == null) {
+        if (dateTime == null) {
             throw new IllegalArgumentException("startTime is null");
         }
-		HtyFctCustAllDto dto = new HtyFctCustAllDto();
-		dto.setOrgCode(userId);
-		dto.setDateKey(dateTime);
-		dto.setOutType(outType);
-		if(aliveType == 1){
-			dto.setIsHy("是");
-		}else{
-			dto.setIsHy("否");
-		}
-		if(vipType == 1){
-			dto.setIsVip("1");
-		}else{
-			dto.setIsVip("0");
-		}
-		return dao.selectForManager(dto);
-	}
+        HtyFctCustAllDto dto = new HtyFctCustAllDto();
+        dto.setOrgCode(userId);
+        dto.setDateKey(dateTime);
+        dto.setOutType(outType);
+        if(aliveType == 1){
+            dto.setIsHy("是");
+        }else{
+            dto.setIsHy("否");
+        }
+        if(vipType == 1){
+            dto.setIsVip("1");
+        }else{
+            dto.setIsVip("0");
+        }
+        return dao.selectForManager(dto);
+    }
 
-	@Override
-	public BigDecimal selectSumAmt(String userId, String dateTime) {
-		if (userId == null) {
+    @Override
+    public BigDecimal selectSumAmt(String userId, String dateTime) {
+        if (userId == null) {
             throw new IllegalArgumentException("userId is null");
         }
-		if (dateTime == null) {
+        if (dateTime == null) {
             throw new IllegalArgumentException("startTime is null");
         }
-		HtyFctCustAllDto dto = new HtyFctCustAllDto();
-		dto.setOrgCode(userId);
-		dto.setDateKey(dateTime);
-		return dao.selectSumAmt(dto);
-	}
+        HtyFctCustAllDto dto = new HtyFctCustAllDto();
+        dto.setOrgCode(userId);
+        dto.setDateKey(dateTime);
+        return dao.selectSumAmt(dto);
+    }
 
 
     @Override

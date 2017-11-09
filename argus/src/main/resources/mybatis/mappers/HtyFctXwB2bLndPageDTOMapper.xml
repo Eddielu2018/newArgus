@@ -14,9 +14,6 @@
         <result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
         <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
     </resultMap>
-    <sql id="Base_Column_List">
-        PAGE_TITLE,ACCESS_QTY
-    </sql>
 	<sql id="where">
 		<where>
 			<if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
@@ -25,23 +22,18 @@
 			<if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
 			 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
 			</if>
-            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
-            </if>
 		</where>
 	</sql>
     <!--落地页面的访问数量的查询 -->
     <select id="queryAllAccessQty" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+        SELECT page_title,sum(access_qty) as access_qty
         from hty_fct_xw_b2b_lnd_page
         <include refid="where" />
-        group by PAGE_TITLE,ACCESS_QTY
-        order by ACCESS_QTY DESC limit 10
+        group by page_title ORDER by ACCESS_QTY DESC limit 10
     </select>
     <select id="queryByProNameAndCityName" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+        page_title,sum(access_qty) as access_qty
         from
         hty_fct_xw_b2b_lnd_page
         <where>
@@ -51,9 +43,6 @@
             <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
                 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
             </if>
-            <if test="htyUserBeHaviorSearchDTO.period!=null and htyUserBeHaviorSearchDTO.period!=''">
-                and DATE_KEY=#{htyUserBeHaviorSearchDTO.period}
-            </if>
             <if test="htyFctXwB2bLndPageDTO.provinceName!=null">
                 AND PROVINCE_NAME=#{htyFctXwB2bLndPageDTO.provinceName}
             </if>
@@ -61,7 +50,7 @@
                 AND CITY_NAME=#{htyFctXwB2bLndPageDTO.cityName}
             </if>
         </where>
-        group by PAGE_TITLE,ACCESS_QTY
+        group by PAGE_TITLE
         order by ACCESS_QTY DESC limit 10
 	</select>
 </mapper>

@@ -35,7 +35,7 @@ public interface HtyFctCustAllDTOService {
     List<HtyFctCustAllDto> selectForManager(String userId,String dateTime,int aliveType,int vipType,String outType);
 
     BigDecimal selectSumAmt(String userId,String dateTime);
-    
+
     List<HtyFctCustAllDto> selectForPair(String userId,String startTime,String endTime,int type);
 
     HtyFctCustAllDto  queryCityAndProByUserId(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO);
