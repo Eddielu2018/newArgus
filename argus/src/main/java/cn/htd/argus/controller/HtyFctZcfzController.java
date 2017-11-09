@@ -1,10 +1,10 @@
 package cn.htd.argus.controller;
 
 import cn.htd.argus.bean.*;
+import cn.htd.argus.dto.EdwFctL2OkrKpiFinanceDTO;
+import cn.htd.argus.dto.EdwFctZsdFinanceDTO;
 import cn.htd.argus.dto.HtyFctL2DupontDTO;
-import cn.htd.argus.service.HtyConfigZcfzSubjcodeDTOService;
-import cn.htd.argus.service.HtyFctL1ZcfzSubjamtDTOService;
-import cn.htd.argus.service.HtyFctL2DupontDTOService;
+import cn.htd.argus.service.*;
 import cn.htd.argus.util.ArithUtil;
 import cn.htd.argus.util.RestResult;
 import org.slf4j.Logger;
@@ -32,11 +32,23 @@ public class HtyFctZcfzController {
     @Autowired
     private HtyFctL2DupontDTOService htyFctL2DupontDTOService;
 
+    @Autowired
+    private EdwFctZsdFinanceDTOService edwFctZsdFinanceDTOService;
+    @Autowired
+    private EdwFctL2OkrKpiFinanceDTOService edwFctL2OkrKpiFinanceDTOService;
+
+
+    /**
+     * 杜邦分析
+     * @param userId
+     * @param endTime
+     * @return
+     */
     @RequestMapping("/dupont/all")
     public RestResult dupontAll(@RequestParam(value = "userId", required = true) String userId,
                               @RequestParam(value = "endTime", required = false) String endTime) {
         RestResult result = new RestResult();
-        logger.info("调用(HtyFctZcfzController.dupontAll)首页页头估值获得入参，userId=" + userId);
+        logger.info("调用(HtyFctZcfzController.dupontAll)首页页头估值获得入参，userId=" + userId+"，endTime="+endTime);
 
         DupontDTO dupontDTO = new DupontDTO();
         DupontRadarDTO dupontRadarDTO = null;
@@ -45,11 +57,111 @@ public class HtyFctZcfzController {
             dupontRadarDTO = getRadar(htyFctL2DupontDTO);
         }
 
-        System.out.println(dupontRadarDTO);
         return null;
     }
 
-    private void getBaseNum(DupontDTO dupontDTO,HtyFctL2DupontDTO htyFctL2DupontDTO){
+    /**
+     * 风险提示
+     * @param userId
+     * @param endTime
+     * @return
+     */
+    @RequestMapping("/finance/all")
+    public RestResult financeAll(@RequestParam(value = "userId", required = true) String userId,
+                                @RequestParam(value = "endTime", required = false) String endTime) {
+        RestResult result = new RestResult();
+        logger.info("调用(HtyFctZcfzController.financeAll)首页页头估值获得入参，userId=" + userId+"，endTime="+endTime);
+
+        EdwFctZsdFinanceDTO edwFctZsdFinanceDTO = this.edwFctZsdFinanceDTOService.select(userId,endTime);
+        EdwFctL2OkrKpiFinanceDTO edwFctL2OkrKpiFinanceDTO = this.edwFctL2OkrKpiFinanceDTOService.select(userId,endTime);
+        FinanceDTO financeDTO = getRadar(edwFctZsdFinanceDTO, edwFctL2OkrKpiFinanceDTO);
+        return null;
+    }
+
+    /**
+     * 业务支持
+     * @param userId
+     * @param endTime
+     * @return
+     */
+    @RequestMapping("/support/all")
+    public RestResult supportAll(@RequestParam(value = "userId", required = true) String userId,
+                                 @RequestParam(value = "endTime", required = false) String endTime) {
+        RestResult result = new RestResult();
+        logger.info("调用(HtyFctZcfzController.supportAll)首页页头估值获得入参，userId=" + userId+"，endTime="+endTime);
+
+        EdwFctZsdFinanceDTO edwFctZsdFinanceDTO = this.edwFctZsdFinanceDTOService.selectSupport(userId, endTime);
+        FinanceSupportDTO financeSupportDTO = getFinanceSupportDTO(edwFctZsdFinanceDTO);
+        return null;
+    }
+
+    /**
+     * 业务支持封装数据
+     * @param edwFctZsdFinanceDTO
+     * @return
+     */
+    private FinanceSupportDTO getFinanceSupportDTO(EdwFctZsdFinanceDTO edwFctZsdFinanceDTO){
+        FinanceSupportDTO financeSupportDTO = new FinanceSupportDTO();
+        if(edwFctZsdFinanceDTO != null){
+            financeSupportDTO.setWhiteRatio(edwFctZsdFinanceDTO.getWhiteRatio());
+            financeSupportDTO.setActWhiteRatio(edwFctZsdFinanceDTO.getActWhiteRatio());
+            financeSupportDTO.setWhiteLoanRatio(edwFctZsdFinanceDTO.getWhiteLoanRatio());
+            financeSupportDTO.setMonNewTicketRatio(edwFctZsdFinanceDTO.getMonNewTicketRatio());
+            financeSupportDTO.setFinancialexpensesRatio(edwFctZsdFinanceDTO.getFinancialexpensesRatio());
+            financeSupportDTO.setTiecardmemberRatio(edwFctZsdFinanceDTO.getTiecardmemberRatio());
+        }
+        return financeSupportDTO;
+    }
+
+    /**
+     * 风险提示封装数据
+     * @param edwFctZsdFinanceDTO
+     * @param edwFctL2OkrKpiFinanceDTO
+     * @return
+     */
+    private FinanceDTO getRadar(EdwFctZsdFinanceDTO edwFctZsdFinanceDTO, EdwFctL2OkrKpiFinanceDTO edwFctL2OkrKpiFinanceDTO){
+        FinanceDTO financeDTO = new FinanceDTO();
+        BigDecimal zero = new BigDecimal(0);
+        if(edwFctZsdFinanceDTO != null){
+            if(edwFctZsdFinanceDTO.getOverdueAmtRatio() != null){
+                financeDTO.setOverdueAmtRatio(edwFctZsdFinanceDTO.getOverdueAmtRatio());
+            }else{
+                financeDTO.setOverdueAmtRatio(zero);
+            }
+            if(edwFctZsdFinanceDTO.getOverdueCustnumRatio() != null){
+                financeDTO.setOverdueCustnumRatio(edwFctZsdFinanceDTO.getOverdueCustnumRatio());
+            }else{
+                financeDTO.setOverdueCustnumRatio(zero);
+            }
+            if(edwFctZsdFinanceDTO.getOver30Ratio() != null){
+                financeDTO.setOver30Ratio(edwFctZsdFinanceDTO.getOver30Ratio());
+            }else{
+                financeDTO.setOver30Ratio(zero);
+            }
+        }else{
+            financeDTO.setOverdueAmtRatio(zero);
+            financeDTO.setOverdueCustnumRatio(zero);
+            financeDTO.setOver30Ratio(zero);
+        }
+        if(edwFctL2OkrKpiFinanceDTO != null){
+            financeDTO.setXjYyRatio(edwFctL2OkrKpiFinanceDTO.getXjYyRatio());
+            financeDTO.setYs90Ratio(edwFctL2OkrKpiFinanceDTO.getYs90Ratio());
+            financeDTO.setHk15BgtRatio(edwFctL2OkrKpiFinanceDTO.getHk15BgtRatio());
+            financeDTO.setYf90Ratio(edwFctL2OkrKpiFinanceDTO.getYf90Ratio());
+            financeDTO.setSingleCustXsRatio(edwFctL2OkrKpiFinanceDTO.getSingleCustXsRatio());
+            financeDTO.setPdDiffRatio(edwFctL2OkrKpiFinanceDTO.getPdDiffRatio());
+            financeDTO.setBxPbRatio(edwFctL2OkrKpiFinanceDTO.getBxPbRatio());
+            financeDTO.setPxDiffRatio(edwFctL2OkrKpiFinanceDTO.getPxDiffRatio());
+        }
+        return financeDTO;
+    }
+
+    /**
+     * 杜邦分析封装数据
+     * @param dupontDTO
+     * @param htyFctL2DupontDTO
+     */
+    private void getDupontDTO(DupontDTO dupontDTO,HtyFctL2DupontDTO htyFctL2DupontDTO){
         BigDecimal num = null;
         dupontDTO.setDqGrossProfitRatio(htyFctL2DupontDTO.getDqGrossProfitRatio());
         if(htyFctL2DupontDTO.getTqGrossProfitRatio().intValue() != 0){

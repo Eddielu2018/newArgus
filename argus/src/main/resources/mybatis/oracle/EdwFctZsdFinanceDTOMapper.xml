@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.EdwFctZsdFinanceDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.EdwFctZsdFinanceDTO" >
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="YEAR_DATE" property="yearDate" jdbcType="VARCHAR" />
+    <result column="OVERDUE_AMT" property="overdueAmt" jdbcType="DECIMAL" />
+    <result column="CREDIT_AMT" property="creditAmt" jdbcType="DECIMAL" />
+    <result column="OVERDUE_CUSTNUM" property="overdueCustnum" jdbcType="DECIMAL" />
+    <result column="LOAN_CUSTNUM" property="loanCustnum" jdbcType="DECIMAL" />
+    <result column="OVER30LOAN_AMT" property="over30loanAmt" jdbcType="DECIMAL" />
+    <result column="LOAN_AMT" property="loanAmt" jdbcType="DECIMAL" />
+    <result column="WHITE_CUSTNUM" property="whiteCustnum" jdbcType="DECIMAL" />
+    <result column="WHITE_LOAN_CUSTNUM" property="whiteLoanCustnum" jdbcType="DECIMAL" />
+    <result column="ACT_WHITE_CUSTNUM" property="actWhiteCustnum" jdbcType="DECIMAL" />
+    <result column="FINANCE_CUSTNUM" property="financeCustnum" jdbcType="DECIMAL" />
+    <result column="MON_NEWTICKET_AMT" property="monNewticketAmt" jdbcType="DECIMAL" />
+    <result column="MON_NEWLOAN_AMT" property="monNewloanAmt" jdbcType="DECIMAL" />
+    <result column="FINANCIALEXPENSES_AMT" property="financialexpensesAmt" jdbcType="DECIMAL" />
+    <result column="SALEREVENUE_AMT" property="salerevenueAmt" jdbcType="DECIMAL" />
+    <result column="TIECARDMEMBER_NUM" property="tiecardmemberNum" jdbcType="DECIMAL" />
+    <result column="ACTMUMBER_NUM" property="actmumberNum" jdbcType="DECIMAL" />
+    <result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
+    <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
+    <result column="overdueAmtRatio" property="overdueAmtRatio" jdbcType="DECIMAL" />
+    <result column="overdueCustnumRatio" property="overdueCustnumRatio" jdbcType="DECIMAL" />
+    <result column="over30Ratio" property="over30Ratio" jdbcType="DECIMAL" />
+
+    <result column="whiteRatio" property="whiteRatio" jdbcType="DECIMAL" />
+    <result column="actWhiteRatio" property="actWhiteRatio" jdbcType="DECIMAL" />
+    <result column="whiteLoanRatio" property="whiteLoanRatio" jdbcType="DECIMAL" />
+    <result column="monNewTicketRatio" property="monNewTicketRatio" jdbcType="DECIMAL" />
+    <result column="monNewTicketRatio" property="monNewTicketRatio" jdbcType="DECIMAL" />
+    <result column="tiecardmemberRatio" property="tiecardmemberRatio" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ORG_CODE, YEAR_DATE, OVERDUE_AMT,CREDIT_AMT, OVERDUE_CUSTNUM, LOAN_CUSTNUM,OVER30LOAN_AMT, LOAN_AMT, WHITE_CUSTNUM,
+    WHITE_LOAN_CUSTNUM, ACT_WHITE_CUSTNUM, FINANCE_CUSTNUM,MON_NEWTICKET_AMT, MON_NEWLOAN_AMT, FINANCIALEXPENSES_AMT,
+    SALEREVENUE_AMT, TIECARDMEMBER_NUM, ACTMUMBER_NUM,ETL_DATE, ETL_TIME
+  </sql>
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and  YEAR_DATE = #{searchDTO.endTime}
+      </if>
+    </where>
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap">
+    SELECT
+    ROUND (DECODE (CREDIT_AMT, 0, 1, OVERDUE_AMT / CREDIT_AMT ),4) * 100 AS overdueAmtRatio,
+    ROUND (DECODE (LOAN_CUSTNUM, 0, 1, OVERDUE_CUSTNUM / LOAN_CUSTNUM ),4) * 100 AS overdueCustnumRatio,
+    ROUND (DECODE (LOAN_AMT, 0, 1, OVER30LOAN_AMT / LOAN_AMT ),4) * 100 AS over30Ratio
+    FROM
+    EDW_FCT_ZSD_FINANCE
+    <include refid="where"/>
+  </select>
+
+  <select id="selectSupport" resultMap="BaseResultMap">
+    SELECT
+    ROUND (DECODE (FINANCE_CUSTNUM, 0, 1, WHITE_CUSTNUM / FINANCE_CUSTNUM ),4) * 100 AS whiteRatio,
+    ROUND (DECODE (FINANCE_CUSTNUM, 0, 1, ACT_WHITE_CUSTNUM / FINANCE_CUSTNUM ),4) * 100 AS actWhiteRatio,
+    ROUND (DECODE (ACT_WHITE_CUSTNUM, 0, 1, WHITE_LOAN_CUSTNUM / ACT_WHITE_CUSTNUM ),4) * 100 AS whiteLoanRatio,
+    ROUND (DECODE (MON_NEWLOAN_AMT, 0, 1, MON_NEWTICKET_AMT / MON_NEWLOAN_AMT ),4) * 100 AS monNewTicketRatio,
+    ROUND (DECODE (SALEREVENUE_AMT, 0, 1, FINANCIALEXPENSES_AMT / SALEREVENUE_AMT ),4) * 100 AS financialexpensesRatio,
+    ROUND (DECODE (ACTMUMBER_NUM, 0, 1, TIECARDMEMBER_NUM / ACTMUMBER_NUM ),4) * 100 AS tiecardmemberRatio
+    FROM
+    EDW_FCT_ZSD_FINANCE
+    <include refid="where"/>
+  </select>
+
+</mapper>
