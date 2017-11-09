@@ -522,7 +522,7 @@ public class HtyFctOrgController {
     	//营业
     	BaseNumDTO baseIncome = new BaseNumDTO();
     	baseIncome.setName("总营业收入");
-    	if(date == 0){
+    	if(date == 0 && htyFctOrgIncomeDTO != null){
     		//按月
     		baseIncome = getBaseNum(baseIncome,htyFctOrgIncomeDTO.getMonBusincomeAmt(),htyFctOrgIncomeDTO.getLastMonBusincomeAmt());
     	}else{
@@ -533,7 +533,7 @@ public class HtyFctOrgController {
     	//金额
     	BaseNumDTO basePrice = new BaseNumDTO();
     	basePrice.setName("总销售金额");
-    	if(date == 0){
+    	if(date == 0 && htyFctOrgSaleDTO != null){
     		//按月
     		basePrice = getBaseNum(basePrice,htyFctOrgSaleDTO.getMonAmt(),htyFctOrgSaleDTO.getLastmonAmt());
     	}else{
@@ -544,7 +544,7 @@ public class HtyFctOrgController {
     	//会员
     	BaseNumDTO baseMember = new BaseNumDTO();
     	baseMember.setName("新增会员店总数");
-    	if(date == 0){
+    	if(date == 0 && htyFctOrgCustDTO != null){
     		//按月
     		baseMember = getBaseNum(baseMember,new BigDecimal(htyFctOrgCustDTO.getMonNewcustnum()),new BigDecimal(htyFctOrgCustDTO.getLastmonNewcustnum()));
     	}else{
