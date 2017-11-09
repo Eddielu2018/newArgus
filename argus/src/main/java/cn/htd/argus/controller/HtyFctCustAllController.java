@@ -255,7 +255,7 @@ public class HtyFctCustAllController {
     	for(HtyFctCustAllDto dto : list){
     		//整体采购
     		if(dto.getAmtAll() != null){
-	    		Double t1 = dto.getAmtAll().doubleValue();
+	    		Double t1 = dto.getAmtAll().doubleValue()/10000;
 	    		if(t1 <= HtyFctCustUtil.T1_1){
 	    			T1_1++;
 	    		}else if(t1 > HtyFctCustUtil.T1_1 && t1 <= HtyFctCustUtil.T1_2){
@@ -274,7 +274,7 @@ public class HtyFctCustAllController {
     		}
     		//线上采购
     		if(dto.getAmtOnline() != null){
-	    		Double t2 = dto.getAmtOnline().doubleValue();
+	    		Double t2 = dto.getAmtOnline().doubleValue()/10000;
 	    		if(t2 <= HtyFctCustUtil.T2_1){
 	    			T2_1++;
 	    		}else if(t2 > HtyFctCustUtil.T2_1 && t2 <= HtyFctCustUtil.T2_2){
@@ -350,7 +350,7 @@ public class HtyFctCustAllController {
     		}
     		//贷款金额
     		if(dto.getAmtDk() != null){
-	    		Double t6 = dto.getAmtDk().doubleValue();
+	    		Double t6 = dto.getAmtDk().doubleValue()/10000;
 	    		if(t6 <= HtyFctCustUtil.T6_1){
 	    			T6_1++;
 	    		}else if(t6 > HtyFctCustUtil.T6_1 && t6 <= HtyFctCustUtil.T6_2){
@@ -1181,8 +1181,7 @@ public class HtyFctCustAllController {
             toClient.flush();  
             toClient.close();  
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("月度下载" + e);
 		} 
 	}
 	
@@ -1209,8 +1208,7 @@ public class HtyFctCustAllController {
             toClient.flush();  
             toClient.close();  
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("用户管理下载" + e);
 		} 
 	}
 }
