@@ -64,7 +64,12 @@ public class HtyFctOrgValueDTOServiceImpl implements HtyFctOrgValueDTOService{
 	}
 
 	@Override
-	public HtyFctOrgValueDTO selectOrgMax() {
-		return dao.selectOrgMax();
+	public HtyFctOrgValueDTO selectOrgMax(String yearMon) {
+		if (yearMon == null) {
+            throw new IllegalArgumentException("yearMon id is null");
+        }
+		 HtyFctOrgValueDTO dto = new HtyFctOrgValueDTO();
+		 dto.setYearmon(yearMon);
+		return dao.selectOrgMax(dto);
 	}
 }

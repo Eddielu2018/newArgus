@@ -132,13 +132,13 @@ public class HtyFctCustAllController {
         		inPairDto.setEnd(Integer.valueOf(temp2[1]));
         	}
         	List<HtyFctCustAllDto> firstList = htyFctCustAllDTOService.selectByNoPair(inDto);
-        	allDto = setNum(allDto,firstList);
+        	allDto = setNum(allDto,firstList,step);
         	List<HtyFctCustAllDto> secondList = null;
         	if(type != 0){
         		//有对比
 	        	secondList = htyFctCustAllDTOService.selectByNoPair(inPairDto);
 	        	HtyFctCustAllOutDTO pairDto = new HtyFctCustAllOutDTO();
-	        	pairDto = setNum(pairDto,secondList);
+	        	pairDto = setNum(pairDto,secondList,step);
 	        	allDto.setChartPair1(pairDto.getChartDate1());
 	        	allDto.setChartPair2(pairDto.getChartDate2());
 	        	allDto.setChartPair3(pairDto.getChartDate3());
@@ -209,7 +209,7 @@ public class HtyFctCustAllController {
 		return allDto;
 	}
 	
-	private HtyFctCustAllOutDTO setNum(HtyFctCustAllOutDTO allDto,List<HtyFctCustAllDto> list){
+	private HtyFctCustAllOutDTO setNum(HtyFctCustAllOutDTO allDto,List<HtyFctCustAllDto> list,int step){
 		int T1_1 = 0;
     	int T1_2 = 0;
     	int T1_3 = 0;
@@ -255,7 +255,7 @@ public class HtyFctCustAllController {
     	for(HtyFctCustAllDto dto : list){
     		//整体采购
     		if(dto.getAmtAll() != null){
-	    		Double t1 = dto.getAmtAll().doubleValue()/10000;
+	    		Double t1 = dto.getAmtAll().doubleValue()/(10000*step);
 	    		if(t1 <= HtyFctCustUtil.T1_1){
 	    			T1_1++;
 	    		}else if(t1 > HtyFctCustUtil.T1_1 && t1 <= HtyFctCustUtil.T1_2){
@@ -274,7 +274,7 @@ public class HtyFctCustAllController {
     		}
     		//线上采购
     		if(dto.getAmtOnline() != null){
-	    		Double t2 = dto.getAmtOnline().doubleValue()/10000;
+	    		Double t2 = dto.getAmtOnline().doubleValue()/(10000*step);
 	    		if(t2 <= HtyFctCustUtil.T2_1){
 	    			T2_1++;
 	    		}else if(t2 > HtyFctCustUtil.T2_1 && t2 <= HtyFctCustUtil.T2_2){
@@ -350,7 +350,7 @@ public class HtyFctCustAllController {
     		}
     		//贷款金额
     		if(dto.getAmtDk() != null){
-	    		Double t6 = dto.getAmtDk().doubleValue()/10000;
+	    		Double t6 = dto.getAmtDk().doubleValue()/(10000*step);
 	    		if(t6 <= HtyFctCustUtil.T6_1){
 	    			T6_1++;
 	    		}else if(t6 > HtyFctCustUtil.T6_1 && t6 <= HtyFctCustUtil.T6_2){
@@ -644,16 +644,20 @@ public class HtyFctCustAllController {
     		if(startTime != null && endTime != null){
     			level = DateTimeUtil.getMonthSpace(startTime,endTime);
     		}
+    		int pairTime = DateTimeUtil.getMonthSpace("201704",newTime);
+    		if(level > pairTime){
+    			level = pairTime;
+    		}
         	List<String> listName = new ArrayList<String>();
         	if(bossType == 0){
         		listName.add("无");
-        		listName.add(HtyFctCustUtil.S1_2*level+"~"+HtyFctCustUtil.S1_3*level);
+        		listName.add(HtyFctCustUtil.S1_1*level+"~"+HtyFctCustUtil.S1_3*level);
         		listName.add(HtyFctCustUtil.S1_3*level+"~"+HtyFctCustUtil.S1_4*level);
         		listName.add(HtyFctCustUtil.S1_4*level+"~"+HtyFctCustUtil.S1_5*level);
         		listName.add(HtyFctCustUtil.S1_5*level+"以上");
         	}else if(bossType == 1){
         		listName.add("无");
-        		listName.add(HtyFctCustUtil.S2_2*level+"~"+HtyFctCustUtil.S2_3*level);
+        		listName.add(HtyFctCustUtil.S2_1*level+"~"+HtyFctCustUtil.S2_3*level);
         		listName.add(HtyFctCustUtil.S2_3*level+"~"+HtyFctCustUtil.S2_4*level);
         		listName.add(HtyFctCustUtil.S2_4*level+"~"+HtyFctCustUtil.S2_5*level);
         		listName.add(HtyFctCustUtil.S2_5*level+"以上");
@@ -685,7 +689,7 @@ public class HtyFctCustAllController {
             					}else{
             						other1++;
             					}
-            				}else if(time > HtyFctCustUtil.S1_2*level && time <= HtyFctCustUtil.S1_3*level){
+            				}else if(time > HtyFctCustUtil.S1_1*level && time <= HtyFctCustUtil.S1_3*level){
             					if(userId.equals(user)){
             						my2++;
             					}else{
@@ -726,7 +730,7 @@ public class HtyFctCustAllController {
             					}else{
             						other1++;
             					}
-            				}else if(time > HtyFctCustUtil.S2_2*level && time <= HtyFctCustUtil.S2_3*level){
+            				}else if(time > HtyFctCustUtil.S2_1*level && time <= HtyFctCustUtil.S2_3*level){
             					if(userId.equals(user)){
             						my2++;
             					}else{
@@ -843,8 +847,8 @@ public class HtyFctCustAllController {
 	        	}
 	        }else if(pageType == 1){
 	        	if(aliveType == 0){
-	        		isVip = 1;
-	        		isHy = 0;
+	        		isVip = 0;
+	        		isHy = 1;
 	        	}else if(aliveType == 1){
 	        		isVip = 1;
 	        	}
@@ -1041,6 +1045,16 @@ public class HtyFctCustAllController {
 		byte[] content = null;
 		try {
 	        List<HtyFctCustAllDto> list = htyFctCustAllDTOService.selectForManager(userId, time, aliveType, pageType,"0");
+	        if(list != null && list.size()>0){
+		        for(HtyFctCustAllDto dto : list){
+		        	if(dto.getAmtAll() == null){
+		        		dto.setAmtAll(new BigDecimal(0));
+		        	}
+		        	if(dto.getAmtOnline() == null){
+		        		dto.setAmtOnline(new BigDecimal(0));
+		        	}
+		        }
+	        }
 	        XSSFWorkbook  book = new XSSFWorkbook();
 	        XSSFSheet sheet = book.createSheet("sheet1");
 	        XSSFRow firstRow = sheet.createRow(0);

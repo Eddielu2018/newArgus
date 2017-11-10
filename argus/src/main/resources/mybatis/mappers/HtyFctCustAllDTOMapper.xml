@@ -64,13 +64,7 @@
     </select>
   <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
     select
-    ID, date_key, cust_rq, cust_code, cust_name, org_code, org_sname, org_fname,
-     area_procode, area_proname, area_citycode, area_cityname,
-     area_countycode, area_countyname, area_towncode, area_townname, cust_managercode,
-     cust_managername,sum(amt_all) as amt_all,sum(amt_online) as amt_online, amt_online_boss, amt_online_b2b,
-     amt_online_vms,sum(amt_dk) as amt_dk,sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,sum(qty_hzg) as qty_hzg, qty_fs, is_cust,
-     is_hy, is_vip, is_dk, expire_time 
-    from hty_fct_cust_all
+    <include refid="Base_Column_List" />
     <where>
       <if test="id != null">
         and ID = #{id}
@@ -171,8 +165,13 @@
     </where>
   </select>
   <select id="selectByNoPair" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustInDto" >
-  	select
-    <include refid="Base_Column_List" />
+  	select 
+  	ID, date_key, cust_rq, cust_code, cust_name, org_code, org_sname, org_fname,
+     area_procode, area_proname, area_citycode, area_cityname,
+     area_countycode, area_countyname, area_towncode, area_townname, cust_managercode,
+     cust_managername,sum(amt_all) as amt_all,sum(amt_online) as amt_online, amt_online_boss, amt_online_b2b,
+     amt_online_vms,sum(amt_dk) as amt_dk,sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,sum(qty_hzg) as qty_hzg, qty_fs, is_cust,
+     is_hy, is_vip, is_dk, expire_time 
     from hty_fct_cust_all
     <where>
    		<if test="userId != null">

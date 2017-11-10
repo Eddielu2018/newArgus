@@ -1,6 +1,7 @@
 package cn.htd.argus.controller;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -70,12 +71,12 @@ public class HtyFctOrgController {
         try {
             HtyFctOrgValueDTO htyFctOrgValueDTO = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
             if(htyFctOrgValueDTO != null){
-            	HtyFctOrgValueDTO maxHty = this.htyFctOrgValueDTOService.selectOrgMax();
-                htyFctOrgValueDTO.setMaxZhnl(maxHty.getMaxZhnl());
-                htyFctOrgValueDTO.setMaxPsgz(maxHty.getMaxPsgz());
-                htyFctOrgValueDTO.setMaxPegz(maxHty.getMaxPegz());
-                htyFctOrgValueDTO.setMaxPbgz(maxHty.getMaxPbgz());
-                htyFctOrgValueDTO.setMaxCvmgz(maxHty.getMaxCvmgz());
+            	HtyFctOrgValueDTO maxHty = this.htyFctOrgValueDTOService.selectOrgMax(htyFctOrgValueDTO.getYearmon());
+                htyFctOrgValueDTO.setMaxZhnl(maxHty.getZhnl());
+                htyFctOrgValueDTO.setMaxPsgz(maxHty.getPsgz());
+                htyFctOrgValueDTO.setMaxPegz(maxHty.getPegz());
+                htyFctOrgValueDTO.setMaxPbgz(maxHty.getPbgz());
+                htyFctOrgValueDTO.setMaxCvmgz(maxHty.getCvmgz());
             	Double sort = MathUtil.getPairToDouble(new BigDecimal(htyFctOrgValueDTO.getZtpm()), new BigDecimal(dciDimOrgDTOService.selectAllNum()));
             	if(htyFctOrgValueDTO.getZtpm() >= 1 && htyFctOrgValueDTO.getZtpm() <=10){
             		htyFctOrgValueDTO.setStarNum(new BigDecimal(4.5));

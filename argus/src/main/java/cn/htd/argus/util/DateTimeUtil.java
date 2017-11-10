@@ -2130,7 +2130,7 @@ public class DateTimeUtil
 
         result = c2.get(Calendar.MONTH) - c1.get(Calendar.MONTH);
 
-        return result == 0 ? 1 : Math.abs(result);
+        return result == 0 ? 1 : Math.abs(result)+1;
 
     }
 }
