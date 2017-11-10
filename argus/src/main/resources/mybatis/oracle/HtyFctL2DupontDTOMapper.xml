@@ -7,21 +7,28 @@
     <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
     <result column="dq_current_ratio" property="dqCurrentRatio" jdbcType="DECIMAL" />
     <result column="tq_current_ratio" property="tqCurrentRatio" jdbcType="DECIMAL" />
+    <result column="tb_current_ratio" property="tbCurrentRatio" jdbcType="DECIMAL" />
     <result column="sn_current_ratio" property="snCurrentRatio" jdbcType="DECIMAL" />
     <result column="dq_quick_ratio" property="dqQuickRatio" jdbcType="DECIMAL" />
     <result column="tq_quick_ratio" property="tqQuickRatio" jdbcType="DECIMAL" />
+    <result column="tb_quick_ratio" property="tbQuickRatio" jdbcType="DECIMAL" />
     <result column="sn_quick_ratio" property="snQuickRatio" jdbcType="DECIMAL" />
+    <result column="dq_qycs" property="dqQycs" jdbcType="DECIMAL" />
+    <result column="tb_qycs" property="tbQycs" jdbcType="DECIMAL" />
     <result column="dq_debt_assets_ratio" property="dqDebtAssetsRatio" jdbcType="DECIMAL" />
     <result column="tq_debt_assets_ratio" property="tqDebtAssetsRatio" jdbcType="DECIMAL" />
+    <result column="tb_debt_assets_ratio" property="tbDebtAssetsRatio" jdbcType="DECIMAL" />
     <result column="sn_debt_assets_ratio" property="snDebtAssetsRatio" jdbcType="DECIMAL" />
     <result column="dq_sup_exposure_days" property="dqSupExposureDays" jdbcType="DECIMAL" />
     <result column="tq_sup_exposure_days" property="tqSupExposureDays" jdbcType="DECIMAL" />
     <result column="sn_sup_exposure_days" property="snSupExposureDays" jdbcType="DECIMAL" />
     <result column="dq_receive_conv_ratio" property="dqReceiveConvRatio" jdbcType="DECIMAL" />
     <result column="tq_receive_conv_ratio" property="tqReceiveConvRatio" jdbcType="DECIMAL" />
+    <result column="tb_receive_conv_ratio" property="tbReceiveConvRatio" jdbcType="DECIMAL" />
     <result column="sn_receive_conv_ratio" property="snReceiveConvRatio" jdbcType="DECIMAL" />
     <result column="dq_receive_conv_days" property="dqReceiveConvDays" jdbcType="DECIMAL" />
     <result column="tq_receive_conv_days" property="tqReceiveConvDays" jdbcType="DECIMAL" />
+    <result column="tb_receive_conv_days" property="tbReceiveConvDays" jdbcType="DECIMAL" />
     <result column="sn_receive_conv_days" property="snReceiveConvDays" jdbcType="DECIMAL" />
     <result column="dq_dep_rec_conv_ratio" property="dqDepRecConvRatio" jdbcType="DECIMAL" />
     <result column="tq_dep_rec_conv_ratio" property="tqDepRecConvRatio" jdbcType="DECIMAL" />
@@ -49,33 +56,43 @@
     <result column="sn_acc_pay_conv_days" property="snAccPayConvDays" jdbcType="DECIMAL" />
     <result column="dq_operate_cycle" property="dqOperateCycle" jdbcType="DECIMAL" />
     <result column="tq_operate_cycle" property="tqOperateCycle" jdbcType="DECIMAL" />
+    <result column="tb_operate_cycle" property="tbOperateCycle" jdbcType="DECIMAL" />
     <result column="sn_operate_cycle" property="snOperateCycle" jdbcType="DECIMAL" />
     <result column="dq_cash_cycle" property="dqCashCycle" jdbcType="DECIMAL" />
     <result column="tq_cash_cycle" property="tqCashCycle" jdbcType="DECIMAL" />
+    <result column="tb_cash_cycle" property="tbCashCycle" jdbcType="DECIMAL" />
     <result column="sn_cash_cycle" property="snCashCycle" jdbcType="DECIMAL" />
     <result column="dq_rota" property="dqRota" jdbcType="DECIMAL" />
     <result column="tq_rota" property="tqRota" jdbcType="DECIMAL" />
+    <result column="tb_rota" property="tbRota" jdbcType="DECIMAL" />
     <result column="sn_rota" property="snRota" jdbcType="DECIMAL" />
     <result column="dq_roe" property="dqRoe" jdbcType="DECIMAL" />
     <result column="tq_roe" property="tqRoe" jdbcType="DECIMAL" />
+    <result column="tb_roe" property="tbRoe" jdbcType="DECIMAL" />
     <result column="sn_roe" property="snRoe" jdbcType="DECIMAL" />
     <result column="dq_gross_profit_ratio" property="dqGrossProfitRatio" jdbcType="DECIMAL" />
     <result column="tq_gross_profit_ratio" property="tqGrossProfitRatio" jdbcType="DECIMAL" />
+    <result column="tb_gross_profit_ratio" property="tbGrossProfitRatio" jdbcType="DECIMAL" />
     <result column="sn_gross_profit_ratio" property="snGrossProfitRatio" jdbcType="DECIMAL" />
     <result column="dq_sale_growth_ratio" property="dqSaleGrowthRatio" jdbcType="DECIMAL" />
     <result column="tq_sale_growth_ratio" property="tqSaleGrowthRatio" jdbcType="DECIMAL" />
+    <result column="tb_sale_growth_ratio" property="tbSaleGrowthRatio" jdbcType="DECIMAL" />
     <result column="sn_sale_growth_ratio" property="snSaleGrowthRatio" jdbcType="DECIMAL" />
     <result column="dq_net_growth_ratio" property="dqNetGrowthRatio" jdbcType="DECIMAL" />
     <result column="tq_net_growth_ratio" property="tqNetGrowthRatio" jdbcType="DECIMAL" />
+    <result column="tb_net_growth_ratio" property="tbNetGrowthRatio" jdbcType="DECIMAL" />
     <result column="sn_net_growth_ratio" property="snNetGrowthRatio" jdbcType="DECIMAL" />
     <result column="dq_operate_profit_ratio" property="dqOperateProfitRatio" jdbcType="DECIMAL" />
     <result column="tq_operate_profit_ratio" property="tqOperateProfitRatio" jdbcType="DECIMAL" />
+    <result column="tb_operate_profit_ratio" property="tbOperateProfitRatio" jdbcType="DECIMAL" />
     <result column="sn_operate_profit_ratio" property="snOperateProfitRatio" jdbcType="DECIMAL" />
     <result column="dq_sale_net_ratio" property="dqSaleNetRatio" jdbcType="DECIMAL" />
     <result column="tq_sale_net_ratio" property="tqSaleNetRatio" jdbcType="DECIMAL" />
+    <result column="tb_sale_net_ratio" property="tbSaleNetRatio" jdbcType="DECIMAL" />
     <result column="sn_sale_net_ratio" property="snSaleNetRatio" jdbcType="DECIMAL" />
     <result column="dq_third_ratio" property="dqThirdRatio" jdbcType="DECIMAL" />
     <result column="tq_third_ratio" property="tqThirdRatio" jdbcType="DECIMAL" />
+    <result column="tb_third_ratio" property="tbThirdRatio" jdbcType="DECIMAL" />
     <result column="sn_third_ratio" property="snThirdRatio" jdbcType="DECIMAL" />
     <result column="lvl" property="lvl" jdbcType="VARCHAR" />
     <result column="etl_date" property="etlDate" jdbcType="DECIMAL" />
@@ -116,6 +133,42 @@
   <select id="select" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
+    from edw_fct_l2_dupont
+    <include refid="where"/>
+  </select>
+
+  <select id="selectTb" resultMap="BaseResultMap">
+    select round(dq_roe,4)*100 as dq_roe,                                   --当期净资产收益率
+    round(decode(tq_roe,0,1,dq_roe/tq_roe-1),4)*100 as tb_roe,       --净资产收益率同比
+    round(dq_rota,4)*100 as dq_rota,                                  --当期总资产收益率
+    round(decode(tq_rota,0,1,dq_rota/tq_rota-1),4)*100 as tb_rota,   --总资产收益率同比
+    round(dq_sale_net_ratio,4)*100 as dq_sale_net_ratio,             --当期销售净利率
+    round(decode(tq_sale_net_ratio,0,1,dq_sale_net_ratio/tq_sale_net_ratio-1),4)*100 as tb_sale_net_ratio, --销售净利率同比
+    --权益乘数 1/（1-资产负债率）
+    round(decode(dq_debt_assets_ratio,1,1,1/(1-dq_debt_assets_ratio)),4)*100 as dq_qycs,   --当期权益乘数
+    round(decode(decode(tq_debt_assets_ratio,1,1,1/(1-tq_debt_assets_ratio)),0,1,decode(dq_debt_assets_ratio,1,1,1/(1-dq_debt_assets_ratio))/decode(tq_debt_assets_ratio,1,1,1/(1-tq_debt_assets_ratio))-1),4)*100 as tb_qycs,  --权益乘数同比
+    round(dq_gross_profit_ratio,4)*100 as dq_gross_profit_ratio,     --当期销售毛利率
+    round(decode(tq_gross_profit_ratio,0,1,dq_gross_profit_ratio/tq_gross_profit_ratio-1),4)*100 as tb_gross_profit_ratio,  --销售毛利率同比
+    round(dq_debt_assets_ratio,4)*100 as dq_debt_assets_ratio,     --当期资产负债率
+    round(decode(tq_debt_assets_ratio,0,1,dq_debt_assets_ratio/tq_debt_assets_ratio-1),4)*100 as tb_debt_assets_ratio,      --资产负债率同比
+    round(dq_operate_cycle*100,4) as dq_operate_cycle,         --当期营业周期
+    round(decode(tq_operate_cycle,0,1,dq_operate_cycle/tq_operate_cycle-1),4)*100 as tb_operate_cycle,                      --营业周期同比
+    round(dq_sale_growth_ratio*100,4) as dq_sale_growth_ratio,     --当期主营业务收入增长率
+    round(decode(tq_sale_growth_ratio,0,1,dq_sale_growth_ratio/tq_sale_growth_ratio-1),4)*100 as tb_sale_growth_ratio,      --业务收入增长率同比
+    round(dq_operate_profit_ratio,4)*100 as dq_operate_profit_ratio,  --当期营业利润率
+    round(decode(tq_operate_profit_ratio,0,1,dq_operate_profit_ratio/tq_operate_profit_ratio-1),4)*100 as tb_operate_profit_ratio, --营业利润率同比
+    round(dq_current_ratio,4)*100 as dq_current_ratio,            --当期流动比率
+    round(decode(tq_current_ratio,0,1,dq_current_ratio/tq_current_ratio-1),4)*100 as tb_current_ratio,    --流动比率同比
+    round(dq_cash_cycle,4)*100 as dq_cash_cycle,                  --当期现金周期
+    round(decode(tq_cash_cycle,0,1,dq_cash_cycle/tq_cash_cycle-1),4)*100 as tb_cash_cycle,                --现金周期同比
+    round(dq_net_growth_ratio,4)*100 as dq_net_growth_ratio,      --当期净利润增长率
+    round(decode(tq_net_growth_ratio,0,1,dq_net_growth_ratio/tq_net_growth_ratio-1),4)*100 as tb_net_growth_ratio,  --净利润增长率同比
+    round(dq_third_ratio,4)*100 as dq_third_ratio,                --当期三项费用比重
+    round(decode(tq_third_ratio,0,1,dq_third_ratio/tq_third_ratio-1),4)*100 as tb_third_ratio,    --三项费用比重同比
+    round(dq_quick_ratio,4)*100 as dq_quick_ratio,                --当期速动比率
+    round(decode(tq_quick_ratio,0,1,dq_quick_ratio/tq_quick_ratio-1),4)*100 as tb_quick_ratio,    --当期速动比率同比
+    round(dq_receive_conv_days,4)*100 as dq_receive_conv_days,    --当期应收账款周转率
+    round(decode(tq_receive_conv_days,0,1,dq_receive_conv_days/tq_receive_conv_days-1),4)*100 as tb_receive_conv_days --当期应收账款周转率同比
     from edw_fct_l2_dupont
     <include refid="where"/>
   </select>

@@ -64,7 +64,12 @@
     </select>
   <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
     select
-    <include refid="Base_Column_List" />
+    ID, date_key, cust_rq, cust_code, cust_name, org_code, org_sname, org_fname,
+     area_procode, area_proname, area_citycode, area_cityname,
+     area_countycode, area_countyname, area_towncode, area_townname, cust_managercode,
+     cust_managername,sum(amt_all) as amt_all,sum(amt_online) as amt_online, amt_online_boss, amt_online_b2b,
+     amt_online_vms,sum(amt_dk) as amt_dk,sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,sum(qty_hzg) as qty_hzg, qty_fs, is_cust,
+     is_hy, is_vip, is_dk, expire_time 
     from hty_fct_cust_all
     <where>
       <if test="id != null">
@@ -280,6 +285,7 @@
     		</choose>
     	</if>
     </where>
+     group by cust_code
   </select>
   
   <select id="selectForAnalysis" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
@@ -458,8 +464,12 @@
     cust_name,amt_all,amt_online,qty_b2b,qty_boss,qty_hzg,amt_dk,qty_fs,expire_time
     ,area_proname,area_cityname,area_countyname,area_townname,cust_managername 
     from hty_fct_cust_all where date_key = #{dateKey} and org_code = #{orgCode}
+    <if test="isHy != null">
      and is_hy = #{isHy} 
+    </if>
+    <if test="isVip != null">
      and is_vip = #{isVip} 
+    </if>
     order by amt_all desc ,amt_online desc,qty_b2b desc ,qty_boss desc,qty_hzg desc,amt_dk desc
   <if test="outType == 1">
   	 limit 10

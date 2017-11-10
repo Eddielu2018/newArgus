@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.EdwFctL2OkrKpiFinanceDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.EdwFctL2OkrKpiFinanceDTO" >
+    <result column="RQ" property="rq" jdbcType="CHAR" />
+    <result column="YEAR_MON" property="yearMon" jdbcType="CHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="CHAR" />
+    <result column="XJ_YY_RATIO" property="xjYyRatio" jdbcType="DECIMAL" />
+    <result column="YS_90_RATIO" property="ys90Ratio" jdbcType="DECIMAL" />
+    <result column="YF_90_RATIO" property="yf90Ratio" jdbcType="DECIMAL" />
+    <result column="HK_15_BGT_RATIO" property="hk15BgtRatio" jdbcType="DECIMAL" />
+    <result column="SINGLE_CUST_XS_RATIO" property="singleCustXsRatio" jdbcType="DECIMAL" />
+    <result column="PD_DIFF_RATIO" property="pdDiffRatio" jdbcType="DECIMAL" />
+    <result column="BX_PB_RATIO" property="bxPbRatio" jdbcType="DECIMAL" />
+    <result column="PX_DIFF_RATIO" property="pxDiffRatio" jdbcType="DECIMAL" />
+    <result column="EXP1" property="exp1" jdbcType="DECIMAL" />
+    <result column="EXP2" property="exp2" jdbcType="DECIMAL" />
+    <result column="EXP3" property="exp3" jdbcType="DECIMAL" />
+    <result column="EXP4" property="exp4" jdbcType="DECIMAL" />
+    <result column="EXP5" property="exp5" jdbcType="DECIMAL" />
+    <result column="EXP6" property="exp6" jdbcType="DECIMAL" />
+    <result column="EXP7" property="exp7" jdbcType="DECIMAL" />
+    <result column="EXP8" property="exp8" jdbcType="DECIMAL" />
+    <result column="EXP9" property="exp9" jdbcType="DECIMAL" />
+    <result column="EXP10" property="exp10" jdbcType="DECIMAL" />
+    <result column="EXP11" property="exp11" jdbcType="DECIMAL" />
+    <result column="EXP12" property="exp12" jdbcType="DECIMAL" />
+    <result column="EXP13" property="exp13" jdbcType="DECIMAL" />
+    <result column="EXP14" property="exp14" jdbcType="DECIMAL" />
+    <result column="EXP15" property="exp15" jdbcType="DECIMAL" />
+    <result column="EXP16" property="exp16" jdbcType="DECIMAL" />
+    <result column="EXP17" property="exp17" jdbcType="DECIMAL" />
+    <result column="EXP18" property="exp18" jdbcType="DECIMAL" />
+    <result column="EXP19" property="exp19" jdbcType="DECIMAL" />
+    <result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
+    <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RQ, YEAR_MON, ORG_CODE,XJ_YY_RATIO, YS_90_RATIO, YF_90_RATIO,HK_15_BGT_RATIO, SINGLE_CUST_XS_RATIO, PD_DIFF_RATIO,
+    BX_PB_RATIO, PX_DIFF_RATIO
+  </sql>
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and  RQ = #{searchDTO.endTime}
+      </if>
+    </where>
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from EDW_FCT_L2_OKR_KPI_FINANCE
+    <include refid="where"/>
+  </select>
+
+  <select id="selectFinance" resultMap="BaseResultMap">
+    select (case when b.rq > a.year_mon then 0 else a.xj_yy_ratio end)*100 as xj_yy_ratio,                  --现金营业款占比
+    (case when b.rq > a.year_mon then 0 else a.ys_90_ratio end)*100 as ys_90_ratio,                  --超90天应收占比
+    (case when b.rq > a.year_mon then 0 else a.yf_90_ratio end)*100 as yf_90_ratio,                  --超90天预付占比
+    (case when b.rq > a.year_mon then 0 else a.hk_15_bgt_ratio end)*100 as hk_15_bgt_ratio,          --15天回款预算占比
+    (case when b.rq > a.year_mon then 0 else a.single_cust_xs_ratio end)*100 as single_cust_xs_ratio,--单客户销售占比
+    (case when b.rq > a.year_mon then 0 else a.pd_diff_ratio end)*100 as pd_diff_ratio,              --盘点差异率
+    (case when b.rq > a.year_mon then 0 else a.bx_pb_ratio end)*100 as bx_pb_ratio,                  --保险配比率
+    (case when b.rq > a.year_mon then 0 else a.px_diff_ratio end) as px_diff_ratio               --盘点差异率
+    from htd_edw.edw_fct_l2_okr_kpi_finance a,
+    htd_ods.dci_dim_org b
+    where a.org_code = #{searchDTO.userId}
+    and a.org_code = b.org_code
+    and a.rq = #{searchDTO.endTime}
+  </select>
+
+</mapper>

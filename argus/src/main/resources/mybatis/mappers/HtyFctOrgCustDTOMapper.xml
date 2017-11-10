@@ -15,10 +15,11 @@
     <result column="MORRUNACT_CUSTNUM" property="morrunactCustnum" jdbcType="INTEGER" />
     <result column="VIP_NUM" property="vipNum" jdbcType="INTEGER" />
     <result column="EXPIRE30_VIP_NUM" property="expire30VipNum" jdbcType="INTEGER" />
+    <result column="CUST_NUM" property="custNum" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, ORG_CODE, YEAR_MON, MON_NEWCUSTNUM, LASTMON_NEWCUSTNUM, YEAR_NEWCUSTNUM, LASTYEAR_NEWCUSTNUM, 
-    MON_TRANSCUSTNUM, YEAR_TRANSCUSTNUM, ACT_CUSTNUM, MORRUNACT_CUSTNUM, VIP_NUM, EXPIRE30_VIP_NUM
+    MON_TRANSCUSTNUM, YEAR_TRANSCUSTNUM, ACT_CUSTNUM, MORRUNACT_CUSTNUM, VIP_NUM, EXPIRE30_VIP_NUM, CUST_NUM
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -79,6 +80,9 @@
       <if test="expire30VipNum != null">
         and EXPIRE30_VIP_NUM = #{expire30VipNum}
       </if>
+      <if test="custNum != null">
+        and CUST_NUM = #{custNum}
+      </if>
     </where>
   </select>
   
@@ -131,4 +135,5 @@
 	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode})) 
    ORDER BY sale.YEAR_NEWCUSTNUM DESC LIMIT 0,10
   </select>
+  
 </mapper>

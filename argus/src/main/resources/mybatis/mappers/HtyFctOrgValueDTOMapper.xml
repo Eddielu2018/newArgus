@@ -92,4 +92,8 @@
 	order by hty_fct_org_value.PTGZ desc ) t,(select (@rowNum :=0) ) b 
 	) u where u.ORG_CODE = #{orgCode}
   </select>
+  
+   <select id="selectOrgMax" resultMap="BaseResultMap" >
+   	select Max(ZHNL) as ZHNL,Max(PBGZ) as PBGZ,Max(PSGZ) as PSGZ,Max(PEGZ) as PEGZ,Max(CVMGZ) as CVMGZ from hty_fct_org_value
+   </select>
 </mapper>

@@ -15,4 +15,6 @@ public interface HtyFctOrgValueDTOService {
     HtyFctOrgValueDTO selectByOrgCode(String userId);
     
     HtyFctOrgSortDTO selectSort(String userId,String yearMon);
+    
+    HtyFctOrgValueDTO selectOrgMax();
 }

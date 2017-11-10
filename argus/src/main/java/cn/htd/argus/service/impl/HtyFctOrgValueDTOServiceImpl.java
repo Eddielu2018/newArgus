@@ -62,4 +62,9 @@ public class HtyFctOrgValueDTOServiceImpl implements HtyFctOrgValueDTOService{
 		dto.setValueBranch(dao.selectSortNumForBranch(fdto));
 		return dto;
 	}
+
+	@Override
+	public HtyFctOrgValueDTO selectOrgMax() {
+		return dao.selectOrgMax();
+	}
 }
