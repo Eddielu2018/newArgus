@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.ZeusConfigDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.ZeusConfigDTO" >
+    <result column="C_VALUE1" property="cValue1" jdbcType="DECIMAL" />
+    <result column="C_VALUE2" property="cValue2" jdbcType="VARCHAR" />
+    <result column="C_VALUE3" property="cValue3" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <select id="selectFinance" resultMap="BaseResultMap">
+    SELECT
+    C_VALUE1,
+    C_VALUE2,
+    C_VALUE3*100 as C_VALUE3
+    FROM
+    ZEUS_CONFIG_OKRREFERENCE
+    WHERE
+    C_VALUE1 IN ('12', '13','14','15','16','17','18','19','20','21','22','23')
+  </select>
+
+  <select id="selectFinanceSupport" resultMap="BaseResultMap">
+    SELECT
+    C_VALUE1,
+    C_VALUE2,
+	C_VALUE3*100 as C_VALUE3
+    FROM
+	ZEUS_CONFIG_OKRREFERENCE
+    WHERE
+	C_VALUE1 IN ('31', '32','33','34','35','36','37')
+  </select>
+</mapper>

@@ -65,7 +65,7 @@
     (case when b.rq > a.year_mon then 0 else a.single_cust_xs_ratio end)*100 as single_cust_xs_ratio,--单客户销售占比
     (case when b.rq > a.year_mon then 0 else a.pd_diff_ratio end)*100 as pd_diff_ratio,              --盘点差异率
     (case when b.rq > a.year_mon then 0 else a.bx_pb_ratio end)*100 as bx_pb_ratio,                  --保险配比率
-    (case when b.rq > a.year_mon then 0 else a.px_diff_ratio end)*100 as px_diff_ratio               --保险配比率
+    (case when b.rq > a.year_mon then 0 else a.px_diff_ratio end) as px_diff_ratio               --盘点差异率
     from htd_edw.edw_fct_l2_okr_kpi_finance a,
     htd_ods.dci_dim_org b
     where a.org_code = #{searchDTO.userId}
