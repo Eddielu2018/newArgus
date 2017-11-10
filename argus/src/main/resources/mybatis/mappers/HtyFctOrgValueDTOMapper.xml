@@ -93,7 +93,8 @@
 	) u where u.ORG_CODE = #{orgCode}
   </select>
   
-   <select id="selectOrgMax" resultMap="BaseResultMap" >
-   	select Max(ZHNL) as ZHNL,Max(PBGZ) as PBGZ,Max(PSGZ) as PSGZ,Max(PEGZ) as PEGZ,Max(CVMGZ) as CVMGZ from hty_fct_org_value
+   <select id="selectOrgMax" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >
+   	select Max(ZHNL) as ZHNL,Max(PBGZ) as PBGZ,Max(PSGZ) as PSGZ,Max(PEGZ) as PEGZ,Max(CVMGZ) as CVMGZ from hty_fct_org_value 
+   	where YEARMON = #{yearmon}
    </select>
 </mapper>

@@ -240,15 +240,19 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
         dto.setOrgCode(userId);
         dto.setDateKey(dateTime);
         dto.setOutType(outType);
-        if(aliveType == 1){
-            dto.setIsHy("是");
-        }else if(aliveType == 0){
-            dto.setIsHy("否");
+        if(aliveType != null){
+	        if(aliveType == 1){
+	            dto.setIsHy("是");
+	        }else if(aliveType == 0){
+	            dto.setIsHy("否");
+	        }
         }
-        if(vipType == 1){
-            dto.setIsVip("1");
-        }else if(vipType == 0){
-            dto.setIsVip("0");
+        if(vipType != null){
+	        if(vipType == 1){
+	            dto.setIsVip("1");
+	        }else if(vipType == 0){
+	            dto.setIsVip("0");
+	        }
         }
         return dao.selectForManager(dto);
     }

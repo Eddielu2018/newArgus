@@ -15,6 +15,6 @@ public interface HtyFctOrgValueDTOMapper {
     
     Integer selectSortNumForBranch(HtyFctOrgValueDTO model);
     
-    HtyFctOrgValueDTO selectOrgMax();
+    HtyFctOrgValueDTO selectOrgMax(HtyFctOrgValueDTO model);
     
 }
