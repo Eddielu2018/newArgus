@@ -57,4 +57,20 @@
     <include refid="where"/>
   </select>
 
+  <select id="selectFinance" resultMap="BaseResultMap">
+    select (case when b.rq > a.year_mon then 0 else a.xj_yy_ratio end)*100 as xj_yy_ratio,                  --现金营业款占比
+    (case when b.rq > a.year_mon then 0 else a.ys_90_ratio end)*100 as ys_90_ratio,                  --超90天应收占比
+    (case when b.rq > a.year_mon then 0 else a.yf_90_ratio end)*100 as yf_90_ratio,                  --超90天预付占比
+    (case when b.rq > a.year_mon then 0 else a.hk_15_bgt_ratio end)*100 as hk_15_bgt_ratio,          --15天回款预算占比
+    (case when b.rq > a.year_mon then 0 else a.single_cust_xs_ratio end)*100 as single_cust_xs_ratio,--单客户销售占比
+    (case when b.rq > a.year_mon then 0 else a.pd_diff_ratio end)*100 as pd_diff_ratio,              --盘点差异率
+    (case when b.rq > a.year_mon then 0 else a.bx_pb_ratio end)*100 as bx_pb_ratio,                  --保险配比率
+    (case when b.rq > a.year_mon then 0 else a.px_diff_ratio end)*100 as px_diff_ratio               --保险配比率
+    from htd_edw.edw_fct_l2_okr_kpi_finance a,
+    htd_ods.dci_dim_org b
+    where a.org_code = #{searchDTO.userId}
+    and a.org_code = b.org_code
+    and a.rq = #{searchDTO.endTime}
+  </select>
+
 </mapper>

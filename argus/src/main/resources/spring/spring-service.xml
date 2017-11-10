@@ -36,10 +36,9 @@
     <bean id="htyFctCustAllDTOService" class="cn.htd.argus.service.impl.HtyFctCustAllDTOServiceImpl"/>
     <bean id="htyFctOrgMemberDetailDTOService" class="cn.htd.argus.service.impl.HtyFctOrgMemberDetailDTOServiceImpl"/>
     <!-- 财务效率 -->
-    <bean id="htyConfigZcfzSubjcodeDTOService" class="cn.htd.argus.service.impl.HtyConfigZcfzSubjcodeDTOServiceImpl"/>
     <bean id="htyFctL2DupontDTOService" class="cn.htd.argus.service.impl.HtyFctL2DupontDTOServiceImpl"/>
-    <bean id="htyFctL1ZcfzSubjamtDTOService" class="cn.htd.argus.service.impl.HtyFctL1ZcfzSubjamtDTOServiceImpl"/>
     <bean id="edwFctZsdFinanceDTOService" class="cn.htd.argus.service.impl.EdwFctZsdFinanceDTOServiceImpl"/>
     <bean id="edwFctL2OkrKpiFinanceDTOService" class="cn.htd.argus.service.impl.EdwFctL2OkrKpiFinanceDTOServiceImpl"/>
+    <bean id="edwFctl1DupontDetailDTOService" class="cn.htd.argus.service.impl.EdwFctl1DupontDetailDTOServiceImpl"/>
 
 </beans>

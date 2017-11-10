@@ -10,4 +10,6 @@ public interface EdwFctL2OkrKpiFinanceDTOMapper {
     int insertSelective(EdwFctL2OkrKpiFinanceDTO record);
 
     EdwFctL2OkrKpiFinanceDTO select(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
+
+    EdwFctL2OkrKpiFinanceDTO selectFinance(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
 }

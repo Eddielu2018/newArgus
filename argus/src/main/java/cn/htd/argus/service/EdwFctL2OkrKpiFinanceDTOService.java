@@ -7,4 +7,6 @@ import cn.htd.argus.dto.EdwFctL2OkrKpiFinanceDTO;
  */
 public interface EdwFctL2OkrKpiFinanceDTOService {
     EdwFctL2OkrKpiFinanceDTO select(String userId,String endTime);
+
+    EdwFctL2OkrKpiFinanceDTO selectFinance(String userId,String endTime);
 }

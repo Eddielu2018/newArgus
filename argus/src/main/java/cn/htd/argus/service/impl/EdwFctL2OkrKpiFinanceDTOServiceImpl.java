@@ -26,4 +26,18 @@ public class EdwFctL2OkrKpiFinanceDTOServiceImpl implements EdwFctL2OkrKpiFinanc
         dto.setUserId(userId);
         return dao.select(dto);
     }
+
+    @Override
+    public EdwFctL2OkrKpiFinanceDTO selectFinance(String userId, String endTime) {
+        if (userId == null) {
+            throw new IllegalArgumentException("userId id is null");
+        }
+        if (endTime == null) {
+            throw new IllegalArgumentException("endTime id is null");
+        }
+        HtyFctSaleSearchDTO dto = new HtyFctSaleSearchDTO();
+        dto.setEndTime(endTime);
+        dto.setUserId(userId);
+        return dao.selectFinance(dto);
+    }
 }

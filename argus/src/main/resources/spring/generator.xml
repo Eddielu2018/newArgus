@@ -33,6 +33,6 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-		<table tableName="edw_fct_zsd_finance" domainObjectName="EdwFctZsdFinanceDTO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+		<table tableName="edw_fct_l1_dupont_detail" domainObjectName="EdwFctl1DupontDetailDTO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 	</context>
 </generatorConfiguration>

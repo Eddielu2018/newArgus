@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Param;
 public interface HtyFctL2DupontDTOMapper {
 
     HtyFctL2DupontDTO select(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
+
+    HtyFctL2DupontDTO selectTb(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO);
 }

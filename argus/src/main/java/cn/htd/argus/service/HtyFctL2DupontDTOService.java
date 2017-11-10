@@ -8,4 +8,6 @@ import cn.htd.argus.dto.HtyFctL2DupontDTO;
 public interface HtyFctL2DupontDTOService {
 
     HtyFctL2DupontDTO select(String userId,String endTime);
+
+    HtyFctL2DupontDTO selectTb(String userId,String endTime);
 }
