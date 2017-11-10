@@ -229,7 +229,7 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
     }
 
     @Override
-    public List<HtyFctCustAllDto> selectForManager(String userId, String dateTime, int aliveType, int vipType,String outType) {
+    public List<HtyFctCustAllDto> selectForManager(String userId, String dateTime, Integer aliveType, Integer vipType,String outType) {
         if (userId == null) {
             throw new IllegalArgumentException("userId is null");
         }
@@ -242,12 +242,12 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
         dto.setOutType(outType);
         if(aliveType == 1){
             dto.setIsHy("是");
-        }else{
+        }else if(aliveType == 0){
             dto.setIsHy("否");
         }
         if(vipType == 1){
             dto.setIsVip("1");
-        }else{
+        }else if(vipType == 0){
             dto.setIsVip("0");
         }
         return dao.selectForManager(dto);

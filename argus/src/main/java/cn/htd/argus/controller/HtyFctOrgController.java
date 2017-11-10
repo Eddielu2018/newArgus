@@ -69,8 +69,13 @@ public class HtyFctOrgController {
         logger.info("调用(HtyPctOrgController.indexForHandle)首页页头估值获得入参，userId="+userId);
         try {
             HtyFctOrgValueDTO htyFctOrgValueDTO = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
-
             if(htyFctOrgValueDTO != null){
+            	HtyFctOrgValueDTO maxHty = this.htyFctOrgValueDTOService.selectOrgMax();
+                htyFctOrgValueDTO.setMaxZhnl(maxHty.getMaxZhnl());
+                htyFctOrgValueDTO.setMaxPsgz(maxHty.getMaxPsgz());
+                htyFctOrgValueDTO.setMaxPegz(maxHty.getMaxPegz());
+                htyFctOrgValueDTO.setMaxPbgz(maxHty.getMaxPbgz());
+                htyFctOrgValueDTO.setMaxCvmgz(maxHty.getMaxCvmgz());
             	Double sort = MathUtil.getPairToDouble(new BigDecimal(htyFctOrgValueDTO.getZtpm()), new BigDecimal(dciDimOrgDTOService.selectAllNum()));
             	if(htyFctOrgValueDTO.getZtpm() >= 1 && htyFctOrgValueDTO.getZtpm() <=10){
             		htyFctOrgValueDTO.setStarNum(new BigDecimal(4.5));
@@ -188,7 +193,7 @@ public class HtyFctOrgController {
         		map2.put("name", "交易会员店数");
         		map3.put("name", "活跃会员店数");
         		map4.put("name", "VIP会员店数");
-        		map1.put("value", allDto.getWholeLeft().get(2).getNum().toString());
+        		map1.put("value", htyFctOrgCustDTO.getCustNum() != null ? htyFctOrgCustDTO.getCustNum().toString() : "0");
         		map2.put("value", allDto.getWholeTop().get(0).getNum().toString());
         		map3.put("value", allDto.getWholeTop().get(1).getNum().toString());
         		map4.put("value", allDto.getWholeTop().get(2).getNum().toString());

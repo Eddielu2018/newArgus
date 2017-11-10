@@ -832,7 +832,34 @@ public class HtyFctCustAllController {
 	        if(time == null ){
 	        	time = newTime;
 	        }
-	        List<HtyFctCustAllDto> list = htyFctCustAllDTOService.selectForManager(userId, time, aliveType, pageType,"1");
+	        Integer isVip = null;
+	        Integer isHy = null;
+	        if(pageType == 0){
+	        	if(aliveType == 0){
+	        		isVip = 0;
+	        		isHy = 0;
+	        	}else if(aliveType == 1){
+	        		isHy = 1;
+	        	}
+	        }else if(pageType == 1){
+	        	if(aliveType == 0){
+	        		isVip = 1;
+	        		isHy = 0;
+	        	}else if(aliveType == 1){
+	        		isVip = 1;
+	        	}
+	        }
+	        List<HtyFctCustAllDto> list = htyFctCustAllDTOService.selectForManager(userId, time, isHy, isVip,"1");
+	        if(list != null && list.size()>0){
+		        for(HtyFctCustAllDto dto : list){
+		        	if(dto.getAmtAll() == null){
+		        		dto.setAmtAll(new BigDecimal(0));
+		        	}
+		        	if(dto.getAmtOnline() == null){
+		        		dto.setAmtOnline(new BigDecimal(0));
+		        	}
+		        }
+	        }
 	        result.setData(list);
 	        result.setCode(ResultCodeEnum.SUCCESS.getCode());
 	        result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
