@@ -24,8 +24,8 @@
         </where>
     </sql>
     <sql id="base">
-        STEP_SEQUENCE,
-        COUNT(STEP_NAME)AS STEP_NAME
+        STEP_NAME,
+        COUNT(STEP_NAME)AS STEP_SEQUENCE
     </sql>
     <!--用户购买漏斗  -->
     <select id="queryStepSequenceNum" resultMap="BaseResultMap">
@@ -41,7 +41,7 @@
         <include refid="base"/>
         from hty_fct_xw_b2b_conv_funnel
         <where>
-            AND STEP_SEQUENCE=4
+            AND STEP_NAME='支付成功'
             <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
                 <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
             </if>
@@ -79,7 +79,7 @@
         from
         hty_fct_xw_b2b_conv_funnel
         <where>
-            AND STEP_SEQUENCE=4
+            AND STEP_NAME='支付成功'
             <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
                 <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
             </if>
