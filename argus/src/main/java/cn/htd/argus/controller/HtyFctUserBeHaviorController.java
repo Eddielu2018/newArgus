@@ -109,7 +109,13 @@ public class HtyFctUserBeHaviorController {
                 if(htyFctXwB2bLndPageDTO.size()>0){
                     for (HtyFctXwB2bLndPageDTO b2bLndPage:htyFctXwB2bLndPageDTO){
                         b2bLndPageNumList.add(b2bLndPage.getAccessQty());
+                        if(b2bLndPage.getPageTitle().length()>20){
+                          String  str= b2bLndPage.getPageTitle().substring(0,20);
+                            b2bLndPageList.add(str);
+                        }
+                        else {
                         b2bLndPageList.add(b2bLndPage.getPageTitle());
+                        }
                     }
                     userBeHaviorSearchDTO.setB2bLndPageList(b2bLndPageList);
                     userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
@@ -192,7 +198,13 @@ public class HtyFctUserBeHaviorController {
                 if(htyFctXwB2bLndPageDTO.size()>0){
                     for (HtyFctXwB2bLndPageDTO b2bLndPage:htyFctXwB2bLndPageDTO){
                         b2bLndPageNumList.add(b2bLndPage.getAccessQty());
-                        b2bLndPageList.add(b2bLndPage.getPageTitle());
+                        if(b2bLndPage.getPageTitle().length()>20){
+                            String  str= b2bLndPage.getPageTitle().substring(0,20);
+                            b2bLndPageList.add(str);
+                        }
+                        else {
+                            b2bLndPageList.add(b2bLndPage.getPageTitle());
+                        }
                     }
                     userBeHaviorSearchDTO.setB2bLndPageList(b2bLndPageList);
                     userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
@@ -263,7 +275,13 @@ public class HtyFctUserBeHaviorController {
                 if (htyFctXwB2bLndPageDTO.size() > 0) {
                     for (HtyFctXwB2bLndPageDTO b2bLndPage : htyFctXwB2bLndPageDTO) {
                         b2bLndPageNumList.add(b2bLndPage.getAccessQty());
-                        b2bLndPageList.add(b2bLndPage.getPageTitle());
+                        if(b2bLndPage.getPageTitle().length()>20){
+                            String  str= b2bLndPage.getPageTitle().substring(0,20);
+                            b2bLndPageList.add(str);
+                        }
+                        else {
+                            b2bLndPageList.add(b2bLndPage.getPageTitle());
+                        }
                     }
                     userBeHaviorSearchDTO.setB2bLndPageList(b2bLndPageList);
                     userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
