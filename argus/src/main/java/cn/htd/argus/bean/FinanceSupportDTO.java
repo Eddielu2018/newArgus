@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * Created by wangtp on 2017/11/9.
  */
 public class FinanceSupportDTO {
-    //1.
+    //1.真实值
     //白名单覆盖率
     private BigDecimal whiteRatio;
     //白名单激活率
@@ -33,6 +33,25 @@ public class FinanceSupportDTO {
     private String financialexpensesRatioState;
     //有效客户绑卡率
     private String tiecardmemberRatioState;
+
+    //3.参考值
+    //白名单覆盖率
+    private BigDecimal whiteRatioRe;
+    //白名单激活率
+    private BigDecimal actWhiteRatioRe;
+    //白名单转化率
+    private BigDecimal whiteLoanRatioRe;
+    //总部新办电票占比
+    private BigDecimal monNewTicketRatioRe;
+    //财务费用率
+    private BigDecimal financialexpensesRatioRe;
+    //有效客户绑卡率
+    private BigDecimal tiecardmemberRatioRe;
+
+    //需要关注数量
+    private Integer num;
+    //分数
+    private BigDecimal score;
 
     public BigDecimal getWhiteRatio() {
         return whiteRatio;
@@ -128,5 +147,69 @@ public class FinanceSupportDTO {
 
     public void setTiecardmemberRatioState(String tiecardmemberRatioState) {
         this.tiecardmemberRatioState = tiecardmemberRatioState;
+    }
+
+    public BigDecimal getWhiteRatioRe() {
+        return whiteRatioRe;
+    }
+
+    public void setWhiteRatioRe(BigDecimal whiteRatioRe) {
+        this.whiteRatioRe = whiteRatioRe;
+    }
+
+    public BigDecimal getActWhiteRatioRe() {
+        return actWhiteRatioRe;
+    }
+
+    public void setActWhiteRatioRe(BigDecimal actWhiteRatioRe) {
+        this.actWhiteRatioRe = actWhiteRatioRe;
+    }
+
+    public BigDecimal getWhiteLoanRatioRe() {
+        return whiteLoanRatioRe;
+    }
+
+    public void setWhiteLoanRatioRe(BigDecimal whiteLoanRatioRe) {
+        this.whiteLoanRatioRe = whiteLoanRatioRe;
+    }
+
+    public BigDecimal getMonNewTicketRatioRe() {
+        return monNewTicketRatioRe;
+    }
+
+    public void setMonNewTicketRatioRe(BigDecimal monNewTicketRatioRe) {
+        this.monNewTicketRatioRe = monNewTicketRatioRe;
+    }
+
+    public BigDecimal getFinancialexpensesRatioRe() {
+        return financialexpensesRatioRe;
+    }
+
+    public void setFinancialexpensesRatioRe(BigDecimal financialexpensesRatioRe) {
+        this.financialexpensesRatioRe = financialexpensesRatioRe;
+    }
+
+    public BigDecimal getTiecardmemberRatioRe() {
+        return tiecardmemberRatioRe;
+    }
+
+    public void setTiecardmemberRatioRe(BigDecimal tiecardmemberRatioRe) {
+        this.tiecardmemberRatioRe = tiecardmemberRatioRe;
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public BigDecimal getScore() {
+        return score;
+    }
+
+    public void setScore(BigDecimal score) {
+        this.score = score;
     }
 }

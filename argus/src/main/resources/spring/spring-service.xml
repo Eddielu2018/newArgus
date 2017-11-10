@@ -40,5 +40,6 @@
     <bean id="edwFctZsdFinanceDTOService" class="cn.htd.argus.service.impl.EdwFctZsdFinanceDTOServiceImpl"/>
     <bean id="edwFctL2OkrKpiFinanceDTOService" class="cn.htd.argus.service.impl.EdwFctL2OkrKpiFinanceDTOServiceImpl"/>
     <bean id="edwFctl1DupontDetailDTOService" class="cn.htd.argus.service.impl.EdwFctl1DupontDetailDTOServiceImpl"/>
+    <bean id="zeusConfigDTOService" class="cn.htd.argus.service.impl.ZeusConfigDTOServiceImpl"/>
 
 </beans>

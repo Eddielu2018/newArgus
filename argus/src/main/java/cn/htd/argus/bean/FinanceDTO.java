@@ -6,7 +6,8 @@ import java.math.BigDecimal;
  * Created by wangtp on 2017/11/9.
  */
 public class FinanceDTO {
-    //1.EDW_FCT_L2_OKR_KPI_FINANCE
+    //1.实际值
+    //1.1EDW_FCT_L2_OKR_KPI_FINANCE
     //收现金营业款占比（收款）
     private BigDecimal xjYyRatio;
     //超90天应收占比
@@ -24,7 +25,7 @@ public class FinanceDTO {
     //坪效差异率
     private BigDecimal pxDiffRatio;
 
-    //2.EDW_FCT_ZSD_FINANCE
+    //1.2EDW_FCT_ZSD_FINANCE
     //平台金融服务逾期金额率
     private BigDecimal overdueAmtRatio;
     //供应链金融逾期家数占比
@@ -33,7 +34,7 @@ public class FinanceDTO {
     private BigDecimal over30Ratio;
 
 
-    //1.异常状态0：正常 1：异常
+    //2.异常状态0：正常 1：异常
     //收现金营业款占比（收款）
     private String xjYyRatioState;
     //超90天应收占比
@@ -51,13 +52,45 @@ public class FinanceDTO {
     //坪效差异率
     private String pxDiffRatioState;
 
-    //2.EDW_FCT_ZSD_FINANCE
     //平台金融服务逾期金额率
     private String overdueAmtRatioState;
     //供应链金融逾期家数占比
     private String overdueCustnumRatioState;
     //超30天个人借款占比
     private String over30RatioState;
+
+    //3,参考值
+    //收现金营业款占比（收款）
+    private BigDecimal xjYyRatioRe;
+    //超90天应收占比
+    private BigDecimal ys90RatioRe;
+    //前15天回款预算完成率
+    private BigDecimal hk15BgtRatioRe;
+    //超90天预付占比
+    private BigDecimal yf90RatioRe;
+    //单客户销售占比
+    private BigDecimal singleCustXsRatioRe;
+    //盘点差异率
+    private BigDecimal pdDiffRatioRe;
+    //保险配比率最大值
+    private BigDecimal bxPbRatioReMax;
+    //保险配比率最小值
+    private BigDecimal bxPbRatioReMin;
+    //坪效差异率
+    private BigDecimal pxDiffRatioRe;
+
+    //平台金融服务逾期金额率
+    private BigDecimal overdueAmtRatioRe;
+    //供应链金融逾期家数占比
+    private BigDecimal overdueCustnumRatioRe;
+    //超30天个人借款占比
+    private BigDecimal over30RatioRe;
+
+    //需要关注数量
+    private Integer num;
+    //分数
+    private BigDecimal score;
+
 
 
     public BigDecimal getXjYyRatio() {
@@ -234,5 +267,117 @@ public class FinanceDTO {
 
     public void setOver30RatioState(String over30RatioState) {
         this.over30RatioState = over30RatioState;
+    }
+
+    public BigDecimal getXjYyRatioRe() {
+        return xjYyRatioRe;
+    }
+
+    public void setXjYyRatioRe(BigDecimal xjYyRatioRe) {
+        this.xjYyRatioRe = xjYyRatioRe;
+    }
+
+    public BigDecimal getYs90RatioRe() {
+        return ys90RatioRe;
+    }
+
+    public void setYs90RatioRe(BigDecimal ys90RatioRe) {
+        this.ys90RatioRe = ys90RatioRe;
+    }
+
+    public BigDecimal getHk15BgtRatioRe() {
+        return hk15BgtRatioRe;
+    }
+
+    public void setHk15BgtRatioRe(BigDecimal hk15BgtRatioRe) {
+        this.hk15BgtRatioRe = hk15BgtRatioRe;
+    }
+
+    public BigDecimal getYf90RatioRe() {
+        return yf90RatioRe;
+    }
+
+    public void setYf90RatioRe(BigDecimal yf90RatioRe) {
+        this.yf90RatioRe = yf90RatioRe;
+    }
+
+    public BigDecimal getSingleCustXsRatioRe() {
+        return singleCustXsRatioRe;
+    }
+
+    public void setSingleCustXsRatioRe(BigDecimal singleCustXsRatioRe) {
+        this.singleCustXsRatioRe = singleCustXsRatioRe;
+    }
+
+    public BigDecimal getPdDiffRatioRe() {
+        return pdDiffRatioRe;
+    }
+
+    public void setPdDiffRatioRe(BigDecimal pdDiffRatioRe) {
+        this.pdDiffRatioRe = pdDiffRatioRe;
+    }
+
+    public BigDecimal getBxPbRatioReMax() {
+        return bxPbRatioReMax;
+    }
+
+    public void setBxPbRatioReMax(BigDecimal bxPbRatioReMax) {
+        this.bxPbRatioReMax = bxPbRatioReMax;
+    }
+
+    public BigDecimal getBxPbRatioReMin() {
+        return bxPbRatioReMin;
+    }
+
+    public void setBxPbRatioReMin(BigDecimal bxPbRatioReMin) {
+        this.bxPbRatioReMin = bxPbRatioReMin;
+    }
+
+    public BigDecimal getPxDiffRatioRe() {
+        return pxDiffRatioRe;
+    }
+
+    public void setPxDiffRatioRe(BigDecimal pxDiffRatioRe) {
+        this.pxDiffRatioRe = pxDiffRatioRe;
+    }
+
+    public BigDecimal getOverdueAmtRatioRe() {
+        return overdueAmtRatioRe;
+    }
+
+    public void setOverdueAmtRatioRe(BigDecimal overdueAmtRatioRe) {
+        this.overdueAmtRatioRe = overdueAmtRatioRe;
+    }
+
+    public BigDecimal getOverdueCustnumRatioRe() {
+        return overdueCustnumRatioRe;
+    }
+
+    public void setOverdueCustnumRatioRe(BigDecimal overdueCustnumRatioRe) {
+        this.overdueCustnumRatioRe = overdueCustnumRatioRe;
+    }
+
+    public BigDecimal getOver30RatioRe() {
+        return over30RatioRe;
+    }
+
+    public void setOver30RatioRe(BigDecimal over30RatioRe) {
+        this.over30RatioRe = over30RatioRe;
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public BigDecimal getScore() {
+        return score;
+    }
+
+    public void setScore(BigDecimal score) {
+        this.score = score;
     }
 }

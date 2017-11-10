@@ -1,10 +1,7 @@
 package cn.htd.argus.controller;
 
 import cn.htd.argus.bean.*;
-import cn.htd.argus.dto.EdwFctL2OkrKpiFinanceDTO;
-import cn.htd.argus.dto.EdwFctZsdFinanceDTO;
-import cn.htd.argus.dto.EdwFctl1DupontDetailDTO;
-import cn.htd.argus.dto.HtyFctL2DupontDTO;
+import cn.htd.argus.dto.*;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
 import cn.htd.argus.util.ArithUtil;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 财务效率
@@ -35,6 +33,8 @@ public class HtyFctZcfzController {
     private EdwFctL2OkrKpiFinanceDTOService edwFctL2OkrKpiFinanceDTOService;
     @Autowired
     private EdwFctl1DupontDetailDTOService edwFctl1DupontDetailDTOService;
+    @Autowired
+    private ZeusConfigDTOService zeusConfigDTOService;
 
 
     /**
@@ -87,10 +87,20 @@ public class HtyFctZcfzController {
         RestResult result = new RestResult();
         logger.info("调用(HtyFctZcfzController.financeAll)首页页头估值获得入参，userId=" + userId+"，endTime="+endTime);
 
-        EdwFctZsdFinanceDTO edwFctZsdFinanceDTO = this.edwFctZsdFinanceDTOService.select(userId,endTime);
-        EdwFctL2OkrKpiFinanceDTO edwFctL2OkrKpiFinanceDTO = this.edwFctL2OkrKpiFinanceDTOService.selectFinance(userId, endTime);
-        FinanceDTO financeDTO = getFinanceDTO(edwFctZsdFinanceDTO, edwFctL2OkrKpiFinanceDTO);
-        return null;
+        try {
+            EdwFctZsdFinanceDTO edwFctZsdFinanceDTO = this.edwFctZsdFinanceDTOService.select(userId,endTime);
+            EdwFctL2OkrKpiFinanceDTO edwFctL2OkrKpiFinanceDTO = this.edwFctL2OkrKpiFinanceDTOService.selectFinance(userId, endTime);
+            FinanceDTO financeDTO = getFinanceDTO(edwFctZsdFinanceDTO, edwFctL2OkrKpiFinanceDTO);
+
+            result.setData(financeDTO);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+            logger.error("风险提示" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+        }
+        return result;
     }
 
     /**
@@ -105,9 +115,19 @@ public class HtyFctZcfzController {
         RestResult result = new RestResult();
         logger.info("调用(HtyFctZcfzController.supportAll)首页页头估值获得入参，userId=" + userId+"，endTime="+endTime);
 
-        EdwFctZsdFinanceDTO edwFctZsdFinanceDTO = this.edwFctZsdFinanceDTOService.selectSupport(userId, endTime);
-        FinanceSupportDTO financeSupportDTO = getFinanceSupportDTO(edwFctZsdFinanceDTO);
-        return null;
+        try {
+            EdwFctZsdFinanceDTO edwFctZsdFinanceDTO = this.edwFctZsdFinanceDTOService.selectSupport(userId, endTime);
+            FinanceSupportDTO financeSupportDTO = getFinanceSupportDTO(edwFctZsdFinanceDTO);
+
+            result.setData(financeSupportDTO);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+            logger.error("业务支持" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+        }
+        return result;
     }
 
     /**
@@ -202,14 +222,76 @@ public class HtyFctZcfzController {
      */
     private FinanceSupportDTO getFinanceSupportDTO(EdwFctZsdFinanceDTO edwFctZsdFinanceDTO){
         FinanceSupportDTO financeSupportDTO = new FinanceSupportDTO();
+        List<ZeusConfigDTO> list = this.zeusConfigDTOService.selectFinanceSupport();
+        //分数
+        BigDecimal score = new BigDecimal(0);
+        //权重得分
+        BigDecimal weight = new BigDecimal(16.7);
+        //需要关注数量
+        Integer num = 6;
         if(edwFctZsdFinanceDTO != null){
+            //实际值
             financeSupportDTO.setWhiteRatio(edwFctZsdFinanceDTO.getWhiteRatio());
             financeSupportDTO.setActWhiteRatio(edwFctZsdFinanceDTO.getActWhiteRatio());
             financeSupportDTO.setWhiteLoanRatio(edwFctZsdFinanceDTO.getWhiteLoanRatio());
             financeSupportDTO.setMonNewTicketRatio(edwFctZsdFinanceDTO.getMonNewTicketRatio());
             financeSupportDTO.setFinancialexpensesRatio(edwFctZsdFinanceDTO.getFinancialexpensesRatio());
             financeSupportDTO.setTiecardmemberRatio(edwFctZsdFinanceDTO.getTiecardmemberRatio());
+
+            //比较参考值计算得分
+            if(edwFctZsdFinanceDTO.getWhiteRatio().compareTo(list.get(0).getcValue3()) != -1){
+                financeSupportDTO.setWhiteRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeSupportDTO.setWhiteRatioState("1");
+            }
+            if(edwFctZsdFinanceDTO.getActWhiteRatio().compareTo(list.get(1).getcValue3()) != -1){
+                financeSupportDTO.setActWhiteRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeSupportDTO.setActWhiteRatioState("1");
+            }
+            if(edwFctZsdFinanceDTO.getWhiteLoanRatio().compareTo(list.get(2).getcValue3()) != -1){
+                financeSupportDTO.setWhiteLoanRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeSupportDTO.setWhiteLoanRatioState("1");
+            }
+            if(edwFctZsdFinanceDTO.getMonNewTicketRatio().compareTo(list.get(3).getcValue3()) == 0){
+                financeSupportDTO.setMonNewTicketRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeSupportDTO.setMonNewTicketRatioState("1");
+            }
+            if(edwFctZsdFinanceDTO.getFinancialexpensesRatio().compareTo(list.get(5).getcValue3()) == -1){
+                financeSupportDTO.setFinancialexpensesRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeSupportDTO.setFinancialexpensesRatioState("1");
+            }
+            if(edwFctZsdFinanceDTO.getTiecardmemberRatio().compareTo(list.get(6).getcValue3()) != -1){
+                financeSupportDTO.setTiecardmemberRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeSupportDTO.setTiecardmemberRatioState("0");
+            }
         }
+        //参考值
+        financeSupportDTO.setWhiteRatioRe(list.get(0).getcValue3());
+        financeSupportDTO.setActWhiteRatioRe(list.get(1).getcValue3());
+        financeSupportDTO.setWhiteLoanRatioRe(list.get(2).getcValue3());
+        financeSupportDTO.setMonNewTicketRatioRe(list.get(3).getcValue3());
+        financeSupportDTO.setFinancialexpensesRatioRe(list.get(5).getcValue3());
+        financeSupportDTO.setTiecardmemberRatioRe(list.get(6).getcValue3());
+
+        financeSupportDTO.setNum(num);
+        financeSupportDTO.setScore(score.setScale(0,BigDecimal.ROUND_HALF_UP));
         return financeSupportDTO;
     }
 
@@ -221,6 +303,13 @@ public class HtyFctZcfzController {
      */
     private FinanceDTO getFinanceDTO(EdwFctZsdFinanceDTO edwFctZsdFinanceDTO, EdwFctL2OkrKpiFinanceDTO edwFctL2OkrKpiFinanceDTO){
         FinanceDTO financeDTO = new FinanceDTO();
+        List<ZeusConfigDTO> list = this.zeusConfigDTOService.selectFinance();
+        //分数
+        BigDecimal score = new BigDecimal(0);
+        //权重得分
+        BigDecimal weight = new BigDecimal(9.1);
+        //需要关注数量
+        Integer num = 11;
         BigDecimal zero = new BigDecimal(0);
         if(edwFctZsdFinanceDTO != null){
             if(edwFctZsdFinanceDTO.getOverdueAmtRatio() != null){
@@ -238,11 +327,35 @@ public class HtyFctZcfzController {
             }else{
                 financeDTO.setOver30Ratio(zero);
             }
+
+            if(edwFctZsdFinanceDTO.getOverdueAmtRatio().compareTo(list.get(9).getcValue3()) ==0 ){
+                financeDTO.setOverdueAmtRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setOverdueAmtRatioState("1");
+            }
+            if(edwFctZsdFinanceDTO.getOverdueCustnumRatio().compareTo(list.get(10).getcValue3()) == 0){
+                financeDTO.setOverdueCustnumRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setOverdueCustnumRatioState("1");
+            }
+            if(edwFctZsdFinanceDTO.getOver30Ratio().compareTo(list.get(11).getcValue3()) == 0){
+                financeDTO.setOver30RatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setOver30RatioState("1");
+            }
         }else{
             financeDTO.setOverdueAmtRatio(zero);
             financeDTO.setOverdueCustnumRatio(zero);
             financeDTO.setOver30Ratio(zero);
         }
+
+
         if(edwFctL2OkrKpiFinanceDTO != null){
             financeDTO.setXjYyRatio(edwFctL2OkrKpiFinanceDTO.getXjYyRatio());
             financeDTO.setYs90Ratio(edwFctL2OkrKpiFinanceDTO.getYs90Ratio());
@@ -252,7 +365,82 @@ public class HtyFctZcfzController {
             financeDTO.setPdDiffRatio(edwFctL2OkrKpiFinanceDTO.getPdDiffRatio());
             financeDTO.setBxPbRatio(edwFctL2OkrKpiFinanceDTO.getBxPbRatio());
             financeDTO.setPxDiffRatio(edwFctL2OkrKpiFinanceDTO.getPxDiffRatio());
+
+            if(edwFctL2OkrKpiFinanceDTO.getXjYyRatio().compareTo(list.get(0).getcValue3()) == 0){
+                financeDTO.setXjYyRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setXjYyRatioState("1");
+            }
+            if(edwFctL2OkrKpiFinanceDTO.getYs90Ratio().compareTo(list.get(1).getcValue3()) == 0){
+                financeDTO.setYs90RatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setYs90RatioState("1");
+            }
+            if(edwFctL2OkrKpiFinanceDTO.getHk15BgtRatio().compareTo(list.get(2).getcValue3()) == -1){
+                financeDTO.setHk15BgtRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setHk15BgtRatioState("1");
+            }
+            if(edwFctL2OkrKpiFinanceDTO.getYf90Ratio().compareTo(list.get(3).getcValue3()) == 0){
+                financeDTO.setYf90RatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setYf90RatioState("1");
+            }
+            if(edwFctL2OkrKpiFinanceDTO.getSingleCustXsRatio().compareTo(list.get(4).getcValue3())!= 1){
+                financeDTO.setSingleCustXsRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setSingleCustXsRatioState("1");
+            }
+            if(edwFctL2OkrKpiFinanceDTO.getPdDiffRatio().compareTo(list.get(5).getcValue3()) != 1 &&  edwFctL2OkrKpiFinanceDTO.getPdDiffRatio().compareTo(zero) != -1){
+                financeDTO.setPdDiffRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else {
+                financeDTO.setPdDiffRatioState("1");
+            }
+            if(edwFctL2OkrKpiFinanceDTO.getBxPbRatio().compareTo(list.get(6).getcValue3())!= -1 && edwFctL2OkrKpiFinanceDTO.getBxPbRatio().compareTo(list.get(7).getcValue3())!= 1){
+                financeDTO.setBxPbRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setBxPbRatioState("1");
+            }
+            if(edwFctL2OkrKpiFinanceDTO.getPxDiffRatio().compareTo(ArithUtil.div(list.get(8).getcValue3().doubleValue(), new BigDecimal(100).doubleValue(), 0)) != -1){
+                financeDTO.setPxDiffRatioState("0");
+                score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
+                num = num - 1;
+            }else{
+                financeDTO.setPxDiffRatioState("1");
+            }
         }
+
+        //参考值
+        financeDTO.setXjYyRatioRe(list.get(0).getcValue3());
+        financeDTO.setYs90RatioRe(list.get(1).getcValue3());
+        financeDTO.setHk15BgtRatioRe(list.get(2).getcValue3());
+        financeDTO.setYf90RatioRe(list.get(3).getcValue3());
+        financeDTO.setSingleCustXsRatioRe(list.get(4).getcValue3());
+        financeDTO.setPdDiffRatioRe(list.get(5).getcValue3());
+        financeDTO.setBxPbRatioReMin(list.get(6).getcValue3());
+        financeDTO.setBxPbRatioReMax(list.get(7).getcValue3());
+        financeDTO.setPxDiffRatioRe(ArithUtil.div(list.get(8).getcValue3().doubleValue(),new BigDecimal(100).doubleValue(),0));
+        financeDTO.setOverdueAmtRatioRe(list.get(9).getcValue3());
+        financeDTO.setOverdueCustnumRatioRe(list.get(10).getcValue3());
+        financeDTO.setOver30RatioRe(list.get(11).getcValue3());
+
+
+        financeDTO.setNum(num);
+        financeDTO.setScore(score.setScale(0,BigDecimal.ROUND_HALF_UP));
         return financeDTO;
     }
 
