@@ -26,6 +26,18 @@ public class HtyFctOrgValueDTO {
     private Integer ztpm;
 
     private BigDecimal starNum;
+    
+    private BigDecimal maxZhnl;
+    
+    private BigDecimal maxPbgz;
+    
+    private BigDecimal maxPsgz;
+    
+    private BigDecimal maxPegz;
+    
+    private BigDecimal maxCvmgz;
+    
+    
     public Long getId() {
         return id;
     }
@@ -121,4 +133,45 @@ public class HtyFctOrgValueDTO {
 	public void setStarNum(BigDecimal starNum) {
 		this.starNum = starNum;
 	}
+
+	public BigDecimal getMaxZhnl() {
+		return maxZhnl;
+	}
+
+	public void setMaxZhnl(BigDecimal maxZhnl) {
+		this.maxZhnl = maxZhnl;
+	}
+
+	public BigDecimal getMaxPbgz() {
+		return maxPbgz;
+	}
+
+	public void setMaxPbgz(BigDecimal maxPbgz) {
+		this.maxPbgz = maxPbgz;
+	}
+
+	public BigDecimal getMaxPsgz() {
+		return maxPsgz;
+	}
+
+	public void setMaxPsgz(BigDecimal maxPsgz) {
+		this.maxPsgz = maxPsgz;
+	}
+
+	public BigDecimal getMaxPegz() {
+		return maxPegz;
+	}
+
+	public void setMaxPegz(BigDecimal maxPegz) {
+		this.maxPegz = maxPegz;
+	}
+
+	public BigDecimal getMaxCvmgz() {
+		return maxCvmgz;
+	}
+
+	public void setMaxCvmgz(BigDecimal maxCvmgz) {
+		this.maxCvmgz = maxCvmgz;
+	}
+	
 }

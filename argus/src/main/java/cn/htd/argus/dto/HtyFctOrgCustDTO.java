@@ -26,6 +26,8 @@ public class HtyFctOrgCustDTO {
     private Integer vipNum;
 
     private Integer expire30VipNum;
+    
+    private Integer custNum;
 
     public Long getId() {
         return id;
@@ -130,4 +132,13 @@ public class HtyFctOrgCustDTO {
     public void setExpire30VipNum(Integer expire30VipNum) {
         this.expire30VipNum = expire30VipNum;
     }
+
+	public Integer getCustNum() {
+		return custNum;
+	}
+
+	public void setCustNum(Integer custNum) {
+		this.custNum = custNum;
+	}
+    
 }

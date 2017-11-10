@@ -32,7 +32,7 @@ public interface HtyFctCustAllDTOService {
 
     Integer selectForAmtDk(String userId,String startTime,String endTime,int type,Integer regionOrg);
 
-    List<HtyFctCustAllDto> selectForManager(String userId,String dateTime,int aliveType,int vipType,String outType);
+    List<HtyFctCustAllDto> selectForManager(String userId,String dateTime,Integer aliveType,Integer vipType,String outType);
 
     BigDecimal selectSumAmt(String userId,String dateTime);
 
