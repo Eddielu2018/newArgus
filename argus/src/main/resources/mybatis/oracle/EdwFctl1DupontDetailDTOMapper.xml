@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.EdwFctl1DupontDetailDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.EdwFctl1DupontDetailDTO" >
+    <result column="DTIME" property="dtime" jdbcType="CHAR" />
+    <result column="YEAR_MON" property="yearMon" jdbcType="CHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="CHAR" />
+    <result column="TURN_NUM" property="turnNum" jdbcType="DECIMAL" />
+    <result column="CURRENT_ASSETS" property="currentAssets" jdbcType="DECIMAL" />
+    <result column="DQ_CURRENT_ASSETS" property="dqCurrentAssets" jdbcType="DECIMAL" />
+    <result column="TB_CURRENT_ASSETS" property="tbCurrentAssets" jdbcType="DECIMAL" />
+    <result column="CURRENT_LIABILITIES" property="currentLiabilities" jdbcType="DECIMAL" />
+    <result column="DQ_CURRENT_LIABILITIES" property="dqCurrentLiabilities" jdbcType="DECIMAL" />
+    <result column="TB_CURRENT_LIABILITIES" property="tbCurrentLiabilities" jdbcType="DECIMAL" />
+    <result column="TOTAL_ASSETS" property="totalAssets" jdbcType="DECIMAL" />
+    <result column="DQ_TOTAL_ASSETS" property="dqTotalAssets" jdbcType="DECIMAL" />
+    <result column="TB_TOTAL_ASSETS" property="tbTotalAssets" jdbcType="DECIMAL" />
+    <result column="TOTAL_LIABILITIES" property="totalLiabilities" jdbcType="DECIMAL" />
+    <result column="DQ_LIABILITIES" property="dqLiabilities" jdbcType="DECIMAL" />
+    <result column="TB_TOTAL_LIABILITIES" property="tbTotalLiabilities" jdbcType="DECIMAL" />
+    <result column="OPEN_RECEIVABLES" property="openReceivables" jdbcType="DECIMAL" />
+    <result column="DQ_RECEIVABLES" property="dqReceivables" jdbcType="DECIMAL" />
+    <result column="TB_RECEIVABLES" property="tbReceivables" jdbcType="DECIMAL" />
+    <result column="END_RECEIVABLES" property="endReceivables" jdbcType="DECIMAL" />
+    <result column="OPEN_DEPOSIT_RECEIVED" property="openDepositReceived" jdbcType="DECIMAL" />
+    <result column="END_DEPOSIT_RECEIVED" property="endDepositReceived" jdbcType="DECIMAL" />
+    <result column="OPEN_DEPOSIT_PAYABLE" property="openDepositPayable" jdbcType="DECIMAL" />
+    <result column="DQ_DEPOSIT_PAYABLE" property="dqDepositPayable" jdbcType="DECIMAL" />
+    <result column="TB_DEPOSIT_PAYABLE" property="tbDepositPayable" jdbcType="DECIMAL" />
+    <result column="END_DEPOSIT_PAYABLE" property="endDepositPayable" jdbcType="DECIMAL" />
+    <result column="OPEN_INVENTORY" property="openInventory" jdbcType="DECIMAL" />
+    <result column="DQ_INVENTORY" property="dqInventory" jdbcType="DECIMAL" />
+    <result column="TB_INVENTORY" property="tbInventory" jdbcType="DECIMAL" />
+    <result column="END_INVENTORY" property="endInventory" jdbcType="DECIMAL" />
+    <result column="OPEN_ACCOUNTS_PAYABLE" property="openAccountsPayable" jdbcType="DECIMAL" />
+    <result column="END_ACCOUNTS_PAYABLE" property="endAccountsPayable" jdbcType="DECIMAL" />
+    <result column="END_ASSETS" property="endAssets" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_SALE_DQ" property="prtlossSaleDq" jdbcType="DECIMAL" />
+    <result column="DQ_PRTLOSS_SALE" property="dqPrtlossSale" jdbcType="DECIMAL" />
+    <result column="TB_PRTLOSS_SALE" property="tbPprtlossSale" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_SALE_TQ" property="prtlossSaleTq" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_COST_DQ" property="prtlossCostDq" jdbcType="DECIMAL" />
+    <result column="DQ_PRTLOSS_COST" property="dqPrtlossCost" jdbcType="DECIMAL" />
+    <result column="TB_PRTLOSS_COST" property="tbPrtlossCost" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_COST_TQ" property="prtlossCostTq" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_GROSS" property="prtlossGross" jdbcType="DECIMAL" />
+    <result column="DQ_PRTLOSS_GROSS" property="dqPrtlossGross" jdbcType="DECIMAL" />
+    <result column="TB_PRTLOSS_GROSS" property="tbPrtlossGross" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_EXPENSE" property="prtlossExpense" jdbcType="DECIMAL" />
+    <result column="DQ_PRTLOSS_EXPENSE" property="dqPrtlossExpense" jdbcType="DECIMAL" />
+    <result column="TB_PRTLOSS_EXPENSE" property="tbPrtlossExpense" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_OPERATE" property="prtlossOperate" jdbcType="DECIMAL" />
+    <result column="DQ_PRTLOSS_OPERATE" property="dqPrtlossOperate" jdbcType="DECIMAL" />
+    <result column="TB_PRTLOSS_OPERATE" property="tbPrtlossOperate" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_BEFORE" property="prtlossBefore" jdbcType="DECIMAL" />
+    <result column="DQ_PRTLOSS_BEFORE" property="dqPrtlossBefore" jdbcType="DECIMAL" />
+    <result column="TB_PRTLOSS_BEFORE" property="tbPrtlossBefore" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_NET_DQ" property="prtlossNetDq" jdbcType="DECIMAL" />
+    <result column="DQ_PRTLOSS_NET" property="dqPrtlossNet" jdbcType="DECIMAL" />
+    <result column="TB_PRTLOSS_NET" property="tbPrtlossNet" jdbcType="DECIMAL" />
+    <result column="PRTLOSS_NET_TQ" property="prtlossNetTq" jdbcType="DECIMAL" />
+    <result column="EXPOSURE_AMT" property="exposureAmt" jdbcType="DECIMAL" />
+    <result column="TQ_TOTAL_ASSETS" property="tqTotalAssets" jdbcType="DECIMAL" />
+    <result column="TQ_END_ASSETS" property="tqEndAssets" jdbcType="DECIMAL" />
+    <result column="TQ_TOTAL_LIABILITIES" property="tqTotalLiabilities" jdbcType="DECIMAL" />
+    <result column="DQ_END_LIABILITIES" property="dqEndLiabilities" jdbcType="DECIMAL" />
+    <result column="DQ_LONG_LIABILITIES" property="dqLongLiabilities" jdbcType="DECIMAL" />
+    <result column="TB_LONG_LIABILITIES" property="tbLongLiabilities" jdbcType="DECIMAL" />
+    <result column="TQ_LONG_LIABILITIES" property="tqLongLiabilities" jdbcType="DECIMAL" />
+    <result column="DQ_END_LONG_LIABILITIES" property="dqEndLongLiabilities" jdbcType="DECIMAL" />
+    <result column="TQ_CURRENT_LIABILITIES" property="tqCurrentLiabilities" jdbcType="DECIMAL" />
+    <result column="DQ_END_CURRENT_LIABILITIES" property="dqEndCurrentLiabilities" jdbcType="DECIMAL" />
+    <result column="TQ_CURRENT_ASSETS" property="tqCurrentAssets" jdbcType="DECIMAL" />
+    <result column="DQ_END_CURRENT_ASSETS" property="dqEndCurrentAssets" jdbcType="DECIMAL" />
+    <result column="DQ_LONG_ASSETS" property="dqLongAssets" jdbcType="DECIMAL" />
+    <result column="TB_LONG_ASSETS" property="tbLongAssets" jdbcType="DECIMAL" />
+    <result column="TQ_LONG_ASSETS" property="tqLongAssets" jdbcType="DECIMAL" />
+    <result column="DQ_END_LONG_ASSETS" property="dqEndLongAssets" jdbcType="DECIMAL" />
+    <result column="DQ_MONEY_FUNDS" property="dqMoneyFunds" jdbcType="DECIMAL" />
+    <result column="TB_MONEY_FUNDS" property="tbMoneyFunds" jdbcType="DECIMAL" />
+    <result column="TQ_MONEY_FUNDS" property="tqMoneyFunds" jdbcType="DECIMAL" />
+    <result column="DQ_END_MONEY_FUNDS" property="dqEndMoneyFunds" jdbcType="DECIMAL" />
+    <result column="TQ_INVENTORY" property="tqInventory" jdbcType="DECIMAL" />
+    <result column="TQ_OTHER_PRTLOSS" property="tqOtherPrtloss" jdbcType="DECIMAL" />
+    <result column="DQ_OTHER_PRTLOSS" property="dqOtherPrtloss" jdbcType="DECIMAL" />
+    <result column="TB_OTHER_PRTLOSS" property="tbOtherPrtloss" jdbcType="DECIMAL" />
+    <result column="TQ_PRTLOSS_BEFORE" property="tqPrtlossBefore" jdbcType="DECIMAL" />
+    <result column="TQ_PRTLOSS_EXPENSE" property="tqPrtlossExpense" jdbcType="DECIMAL" />
+    <result column="TQ_PRTLOSS_GROSS" property="tqPrtlossGross" jdbcType="DECIMAL" />
+    <result column="TQ_PRTLOSS_OPERATE" property="tqPrtlossOperate" jdbcType="DECIMAL" />
+    <result column="TQ_DEPOSIT_PAYABLE" property="tqDepositPayable" jdbcType="DECIMAL" />
+    <result column="TQ_RECEIVABLES" property="tqReceivables" jdbcType="DECIMAL" />
+    <result column="DQ_AVG_ASSETS" property="dqAvgAssets" jdbcType="DECIMAL" />
+    <result column="TB_AVG_ASSETS" property="tbAvgAssets" jdbcType="DECIMAL" />
+    <result column="TQ_AVG_ASSETS" property="tqAvgAssets" jdbcType="DECIMAL" />
+    <result column="DQ_ASSETS_CONV_RATIO" property="dqAssetsConvRatio" jdbcType="DECIMAL" />
+    <result column="TB_ASSETS_CONV_RATIO" property="tbAssetsConvRatio" jdbcType="DECIMAL" />
+    <result column="TQ_ASSETS_CONV_RATIO" property="tqAssetsConvRatio" jdbcType="DECIMAL" />
+    <result column="ETL_DATE" property="etlDate" jdbcType="DECIMAL" />
+    <result column="ETL_TIME" property="etlTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DTIME, YEAR_MON, ORG_CODE,TURN_NUM, CURRENT_ASSETS, CURRENT_LIABILITIES,TOTAL_ASSETS, TOTAL_LIABILITIES, OPEN_RECEIVABLES,
+    END_RECEIVABLES, OPEN_DEPOSIT_RECEIVED, END_DEPOSIT_RECEIVED,OPEN_DEPOSIT_PAYABLE, END_DEPOSIT_PAYABLE,OPEN_INVENTORY, END_INVENTORY, OPEN_ACCOUNTS_PAYABLE,
+    END_ACCOUNTS_PAYABLE, END_ASSETS, PRTLOSS_SALE_DQ,PRTLOSS_SALE_TQ, PRTLOSS_COST_DQ, PRTLOSS_COST_TQ,PRTLOSS_GROSS, PRTLOSS_EXPENSE, PRTLOSS_OPERATE,
+    PRTLOSS_BEFORE, PRTLOSS_NET_DQ, PRTLOSS_NET_TQ,EXPOSURE_AMT, TQ_TOTAL_ASSETS, TQ_END_ASSETS,TQ_TOTAL_LIABILITIES, DQ_END_LIABILITIES, DQ_LONG_LIABILITIES,
+    TQ_LONG_LIABILITIES, DQ_END_LONG_LIABILITIES,TQ_CURRENT_LIABILITIES, DQ_END_CURRENT_LIABILITIES,TQ_CURRENT_ASSETS, DQ_END_CURRENT_ASSETS, DQ_LONG_ASSETS,TQ_LONG_ASSETS, DQ_END_LONG_ASSETS, DQ_MONEY_FUNDS,TQ_MONEY_FUNDS, DQ_END_MONEY_FUNDS, TQ_INVENTORY,
+    TQ_OTHER_PRTLOSS, DQ_OTHER_PRTLOSS, TQ_PRTLOSS_BEFORE,TQ_PRTLOSS_EXPENSE, TQ_PRTLOSS_GROSS, TQ_PRTLOSS_OPERATE,TQ_DEPOSIT_PAYABLE, TQ_RECEIVABLES, DQ_AVG_ASSETS,
+    TQ_AVG_ASSETS, DQ_ASSETS_CONV_RATIO, TQ_ASSETS_CONV_RATIO,ETL_DATE, ETL_TIME
+  </sql>
+
+  <select id="selectTb" resultMap="BaseResultMap">
+    select round(case when b.rq > a.year_mon then 0 else a.dq_assets_conv_ratio end,4)*100 as dq_assets_conv_ratio,   --当期资产周转率
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_assets_conv_ratio,0,1,a.dq_assets_conv_ratio/a.tq_assets_conv_ratio-1) end,4)*100 as tb_assets_conv_ratio, --资产周转率同比
+       case when b.rq > a.year_mon then 0 else a.dq_avg_assets end as dq_avg_assets,    --当期平均资产
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_avg_assets,0,1,a.dq_avg_assets/a.tq_avg_assets-1) end,4)*100 as tb_avg_assets,       --平均资产同比
+       case when b.rq > a.year_mon then 0 else a.total_assets end as dq_total_assets,              --当期资产总额
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_total_assets,0,1,a.total_assets/a.tq_total_assets-1) end,4)*100 as tb_total_assets,  --资产总额同比
+       case when b.rq > a.year_mon then 0 else a.dq_long_assets end as dq_long_assets,             --当期非流动资产
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_long_assets,0,1,a.dq_long_assets/a.tq_long_assets) end,4)*100 as tb_long_assets,     --非流动资产同比
+       case when b.rq > a.year_mon then 0 else a.current_assets end as dq_current_assets,          --当期流动资产
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_current_assets,0,1,a.current_assets/a.tq_current_assets-1) end,4)*100 as tb_current_assets,             --流动资产同比
+       case when b.rq > a.year_mon then 0 else a.dq_money_funds end as dq_money_funds,             --当期货币资金
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_money_funds,0,1,a.dq_money_funds/a.tq_money_funds-1) end,4)*100 tb_money_funds,                         --货币资金同比
+       case when b.rq > a.year_mon then 0 else a.open_deposit_payable end as dq_deposit_payable,   --当期预付账款
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_deposit_payable,0,1,a.open_deposit_payable/a.tq_deposit_payable-1) end,4)*100 as tb_deposit_payable,    --预付账款同比
+       case when b.rq > a.year_mon then 0 else a.total_liabilities end as dq_liabilities,          --当期负债
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_total_liabilities,0,1,a.total_liabilities/a.tq_total_liabilities-1) end,4)*100 as tb_total_liabilities, --负债同比
+       case when b.rq > a.year_mon then 0 else a.dq_long_liabilities end as dq_long_liabilities,   --当期非流动负债
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_long_liabilities,0,1,a.dq_long_liabilities/a.tq_long_liabilities-1) end,4)*100 as tb_long_liabilities,  --非流动负债同比
+       case when b.rq > a.year_mon then 0 else a.current_liabilities end as dq_current_liabilities,--当期流动负债
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_current_liabilities,0,1,a.current_liabilities/a.tq_current_liabilities-1) end,4)*100 as tb_current_liabilities, --流动负债同比
+       case when b.rq > a.year_mon then 0 else a.open_inventory end as dq_inventory,               --当期存货
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_inventory,0,1,a.open_inventory/a.tq_inventory-1) end,4)*100 as tb_inventory,       --存货同比
+       case when b.rq > a.year_mon then 0 else a.open_receivables end as dq_receivables,           --当期应收账款
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_receivables,0,1,a.open_receivables/a.tq_receivables-1) end,4)*100 as tb_receivables,  --应收账款同比
+       case when b.rq > a.year_mon then 0 else a.prtloss_sale_dq end as dq_prtloss_sale,           --当期收入
+       round(case when b.rq > a.year_mon then 0 else decode(a.prtloss_sale_tq,0,1,a.prtloss_sale_dq/a.prtloss_sale_tq-1) end,4)*100 as tb_prtloss_sale,--销售收入同比
+       case when b.rq > a.year_mon then 0 else a.prtloss_cost_dq end as dq_prtloss_cost,           --当期成本
+       round(case when b.rq > a.year_mon then 0 else decode(a.prtloss_cost_tq,0,1,a.prtloss_cost_dq/a.prtloss_cost_tq-1) end,4)*100 as tb_prtloss_cost,--销售成本同比
+       case when b.rq > a.year_mon then 0 else a.prtloss_before end as dq_prtloss_before,          --当期利润总额
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_before,0,1,a.prtloss_before/a.tq_prtloss_before-1) end,4)*100 as tb_prtloss_before, --利润总额同比
+       case when b.rq > a.year_mon then 0 else a.prtloss_expense end as dq_prtloss_expense,        --当期三项费用合计
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_expense,0,1,a.prtloss_expense/a.tq_prtloss_expense-1) end,4)*100 as tb_prtloss_expense,  --三项费用同比
+       case when b.rq > a.year_mon then 0 else a.prtloss_net_dq end as dq_prtloss_net,             --当期净利润
+       round(case when b.rq > a.year_mon then 0 else decode(a.prtloss_net_tq,0,1,a.prtloss_net_dq/a.prtloss_net_tq-1) end,4)*100 as tb_prtloss_net,  --净利润同比
+       case when b.rq > a.year_mon then 0 else a.prtloss_gross end as dq_prtloss_gross,            --当期毛利润
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_gross,0,1,a.prtloss_gross/a.tq_prtloss_gross-1) end,4)*100 as tb_prtloss_gross, --毛利润同比
+       case when b.rq > a.year_mon then 0 else a.prtloss_operate end as dq_prtloss_operate,        --当期营业利润
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_operate,0,1,a.prtloss_operate/a.tq_prtloss_operate-1) end,4)*100 as tb_prtloss_operate,  --营业利润同比
+       case when b.rq > a.year_mon then 0 else a.dq_other_prtloss end as dq_other_prtloss,         --当期其他利润
+       round(case when b.rq > a.year_mon then 0 else decode(a.tq_other_prtloss,0,1,a.dq_other_prtloss/a.tq_other_prtloss-1) end,4)*100 as tb_other_prtloss --其他利润同比
+    from edw_fct_l1_dupont_detail a,
+       htd_ods.dci_dim_org b
+    where a.org_code = b.org_code
+    and b.org_code = #{searchDTO.userId}
+    and a.dtime = #{searchDTO.endTime}
+  </select>
+</mapper>

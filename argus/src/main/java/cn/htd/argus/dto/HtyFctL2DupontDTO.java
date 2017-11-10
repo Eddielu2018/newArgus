@@ -15,17 +15,23 @@ public class HtyFctL2DupontDTO {
 
     private BigDecimal tqCurrentRatio;
 
+    private BigDecimal tbCurrentRatio;
+
     private BigDecimal snCurrentRatio;
 
     private BigDecimal dqQuickRatio;
 
     private BigDecimal tqQuickRatio;
 
+    private BigDecimal tbQuickRatio;
+
     private BigDecimal snQuickRatio;
 
     private BigDecimal dqDebtAssetsRatio;
 
     private BigDecimal tqDebtAssetsRatio;
+
+    private BigDecimal tbDebtAssetsRatio;
 
     private BigDecimal snDebtAssetsRatio;
 
@@ -39,11 +45,15 @@ public class HtyFctL2DupontDTO {
 
     private BigDecimal tqReceiveConvRatio;
 
+    private BigDecimal tbReceiveConvRatio;
+
     private BigDecimal snReceiveConvRatio;
 
     private BigDecimal dqReceiveConvDays;
 
     private BigDecimal tqReceiveConvDays;
+
+    private BigDecimal tbReceiveConvDays;
 
     private BigDecimal snReceiveConvDays;
 
@@ -99,11 +109,15 @@ public class HtyFctL2DupontDTO {
 
     private BigDecimal tqOperateCycle;
 
+    private BigDecimal tbOperateCycle;
+
     private BigDecimal snOperateCycle;
 
     private BigDecimal dqCashCycle;
 
     private BigDecimal tqCashCycle;
+
+    private BigDecimal tbCashCycle;
 
     private BigDecimal snCashCycle;
 
@@ -111,11 +125,15 @@ public class HtyFctL2DupontDTO {
 
     private BigDecimal tqRota;
 
+    private BigDecimal tbRota;
+
     private BigDecimal snRota;
 
     private BigDecimal dqRoe;
 
     private BigDecimal tqRoe;
+
+    private BigDecimal tbRoe;
 
     private BigDecimal snRoe;
 
@@ -123,11 +141,15 @@ public class HtyFctL2DupontDTO {
 
     private BigDecimal tqGrossProfitRatio;
 
+    private BigDecimal tbGrossProfitRatio;
+
     private BigDecimal snGrossProfitRatio;
 
     private BigDecimal dqSaleGrowthRatio;
 
     private BigDecimal tqSaleGrowthRatio;
+
+    private BigDecimal tbSaleGrowthRatio;
 
     private BigDecimal snSaleGrowthRatio;
 
@@ -135,11 +157,15 @@ public class HtyFctL2DupontDTO {
 
     private BigDecimal tqNetGrowthRatio;
 
+    private BigDecimal tbNetGrowthRatio;
+
     private BigDecimal snNetGrowthRatio;
 
     private BigDecimal dqOperateProfitRatio;
 
     private BigDecimal tqOperateProfitRatio;
+
+    private BigDecimal tbOperateProfitRatio;
 
     private BigDecimal snOperateProfitRatio;
 
@@ -147,13 +173,21 @@ public class HtyFctL2DupontDTO {
 
     private BigDecimal tqSaleNetRatio;
 
+    private BigDecimal tbSaleNetRatio;
+
     private BigDecimal snSaleNetRatio;
 
     private BigDecimal dqThirdRatio;
 
     private BigDecimal tqThirdRatio;
 
+    private BigDecimal tbThirdRatio;
+
     private BigDecimal snThirdRatio;
+
+    private BigDecimal dqQycs;
+
+    private BigDecimal tbQycs;
 
     private String lvl;
 
@@ -792,4 +826,141 @@ public class HtyFctL2DupontDTO {
     public void setEtlTime(String etlTime) {
         this.etlTime = etlTime == null ? null : etlTime.trim();
     }
+
+    public BigDecimal getTbCurrentRatio() {
+        return tbCurrentRatio;
+    }
+
+    public void setTbCurrentRatio(BigDecimal tbCurrentRatio) {
+        this.tbCurrentRatio = tbCurrentRatio;
+    }
+
+    public BigDecimal getTbQuickRatio() {
+        return tbQuickRatio;
+    }
+
+    public void setTbQuickRatio(BigDecimal tbQuickRatio) {
+        this.tbQuickRatio = tbQuickRatio;
+    }
+
+    public BigDecimal getTbDebtAssetsRatio() {
+        return tbDebtAssetsRatio;
+    }
+
+    public void setTbDebtAssetsRatio(BigDecimal tbDebtAssetsRatio) {
+        this.tbDebtAssetsRatio = tbDebtAssetsRatio;
+    }
+
+    public BigDecimal getTbReceiveConvRatio() {
+        return tbReceiveConvRatio;
+    }
+
+    public void setTbReceiveConvRatio(BigDecimal tbReceiveConvRatio) {
+        this.tbReceiveConvRatio = tbReceiveConvRatio;
+    }
+
+    public BigDecimal getTbReceiveConvDays() {
+        return tbReceiveConvDays;
+    }
+
+    public void setTbReceiveConvDays(BigDecimal tbReceiveConvDays) {
+        this.tbReceiveConvDays = tbReceiveConvDays;
+    }
+
+    public BigDecimal getTbOperateCycle() {
+        return tbOperateCycle;
+    }
+
+    public void setTbOperateCycle(BigDecimal tbOperateCycle) {
+        this.tbOperateCycle = tbOperateCycle;
+    }
+
+    public BigDecimal getTbCashCycle() {
+        return tbCashCycle;
+    }
+
+    public void setTbCashCycle(BigDecimal tbCashCycle) {
+        this.tbCashCycle = tbCashCycle;
+    }
+
+    public BigDecimal getTbRota() {
+        return tbRota;
+    }
+
+    public void setTbRota(BigDecimal tbRota) {
+        this.tbRota = tbRota;
+    }
+
+    public BigDecimal getTbRoe() {
+        return tbRoe;
+    }
+
+    public void setTbRoe(BigDecimal tbRoe) {
+        this.tbRoe = tbRoe;
+    }
+
+    public BigDecimal getTbGrossProfitRatio() {
+        return tbGrossProfitRatio;
+    }
+
+    public void setTbGrossProfitRatio(BigDecimal tbGrossProfitRatio) {
+        this.tbGrossProfitRatio = tbGrossProfitRatio;
+    }
+
+    public BigDecimal getTbSaleGrowthRatio() {
+        return tbSaleGrowthRatio;
+    }
+
+    public void setTbSaleGrowthRatio(BigDecimal tbSaleGrowthRatio) {
+        this.tbSaleGrowthRatio = tbSaleGrowthRatio;
+    }
+
+    public BigDecimal getTbNetGrowthRatio() {
+        return tbNetGrowthRatio;
+    }
+
+    public void setTbNetGrowthRatio(BigDecimal tbNetGrowthRatio) {
+        this.tbNetGrowthRatio = tbNetGrowthRatio;
+    }
+
+    public BigDecimal getTbOperateProfitRatio() {
+        return tbOperateProfitRatio;
+    }
+
+    public void setTbOperateProfitRatio(BigDecimal tbOperateProfitRatio) {
+        this.tbOperateProfitRatio = tbOperateProfitRatio;
+    }
+
+    public BigDecimal getTbSaleNetRatio() {
+        return tbSaleNetRatio;
+    }
+
+    public void setTbSaleNetRatio(BigDecimal tbSaleNetRatio) {
+        this.tbSaleNetRatio = tbSaleNetRatio;
+    }
+
+    public BigDecimal getTbThirdRatio() {
+        return tbThirdRatio;
+    }
+
+    public void setTbThirdRatio(BigDecimal tbThirdRatio) {
+        this.tbThirdRatio = tbThirdRatio;
+    }
+
+    public BigDecimal getDqQycs() {
+        return dqQycs;
+    }
+
+    public void setDqQycs(BigDecimal dqQycs) {
+        this.dqQycs = dqQycs;
+    }
+
+    public BigDecimal getTbQycs() {
+        return tbQycs;
+    }
+
+    public void setTbQycs(BigDecimal tbQycs) {
+        this.tbQycs = tbQycs;
+    }
+
 }

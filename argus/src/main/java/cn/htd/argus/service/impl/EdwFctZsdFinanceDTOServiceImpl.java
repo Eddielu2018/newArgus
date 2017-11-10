@@ -1,24 +1,21 @@
 package cn.htd.argus.service.impl;
 
 import cn.htd.argus.bean.HtyFctSaleSearchDTO;
-import cn.htd.argus.mappers.HtyFctL2DupontDTOMapper;
-import cn.htd.argus.dto.HtyFctL2DupontDTO;
-import cn.htd.argus.service.HtyFctL2DupontDTOService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.htd.argus.dto.EdwFctZsdFinanceDTO;
+import cn.htd.argus.mappers.EdwFctZsdFinanceDTOMapper;
+import cn.htd.argus.service.EdwFctZsdFinanceDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Created by wangtp on 2017/10/31.
+ * Created by wangtp on 2017/11/9.
  */
-public class HtyFctL2DupontDTOServiceImpl implements HtyFctL2DupontDTOService {
-    private Logger logger = LoggerFactory.getLogger(HtyFctL2DupontDTOServiceImpl.class);
+public class EdwFctZsdFinanceDTOServiceImpl implements EdwFctZsdFinanceDTOService {
 
     @Autowired
-    private HtyFctL2DupontDTOMapper dao;
+    private EdwFctZsdFinanceDTOMapper dao;
 
     @Override
-    public HtyFctL2DupontDTO select(String userId, String endTime) {
+    public EdwFctZsdFinanceDTO select(String userId, String endTime) {
         if (userId == null) {
             throw new IllegalArgumentException("userId id is null");
         }
@@ -32,7 +29,7 @@ public class HtyFctL2DupontDTOServiceImpl implements HtyFctL2DupontDTOService {
     }
 
     @Override
-    public HtyFctL2DupontDTO selectTb(String userId, String endTime) {
+    public EdwFctZsdFinanceDTO selectSupport(String userId, String endTime) {
         if (userId == null) {
             throw new IllegalArgumentException("userId id is null");
         }
@@ -42,6 +39,6 @@ public class HtyFctL2DupontDTOServiceImpl implements HtyFctL2DupontDTOService {
         HtyFctSaleSearchDTO dto = new HtyFctSaleSearchDTO();
         dto.setEndTime(endTime);
         dto.setUserId(userId);
-        return dao.selectTb(dto);
+        return dao.selectSupport(dto);
     }
 }
