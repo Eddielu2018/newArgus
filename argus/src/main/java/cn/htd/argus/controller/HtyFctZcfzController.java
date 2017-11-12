@@ -5,6 +5,7 @@ import cn.htd.argus.dto.*;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
 import cn.htd.argus.util.ArithUtil;
+import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.RestResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +51,11 @@ public class HtyFctZcfzController {
         RestResult result = new RestResult();
         logger.info("调用(HtyFctZcfzController.dupontAll)首页页头估值获得入参，userId=" + userId+"，endTime="+endTime);
         try {
+
+            if(endTime == null){
+                endTime = DateUtil.getNextDay(new Date());
+            }
+
             DupontAllDTO dupontAllDTO = new DupontAllDTO();
             DupontRadarDTO dupontRadarDTO = null;
             //1.雷达
@@ -88,6 +95,11 @@ public class HtyFctZcfzController {
         logger.info("调用(HtyFctZcfzController.financeAll)首页页头估值获得入参，userId=" + userId+"，endTime="+endTime);
 
         try {
+
+            if(endTime == null){
+                endTime = DateUtil.getNextDay(new Date());
+            }
+
             EdwFctZsdFinanceDTO edwFctZsdFinanceDTO = this.edwFctZsdFinanceDTOService.select(userId,endTime);
             EdwFctL2OkrKpiFinanceDTO edwFctL2OkrKpiFinanceDTO = this.edwFctL2OkrKpiFinanceDTOService.selectFinance(userId, endTime);
             FinanceDTO financeDTO = getFinanceDTO(edwFctZsdFinanceDTO, edwFctL2OkrKpiFinanceDTO);
@@ -116,6 +128,11 @@ public class HtyFctZcfzController {
         logger.info("调用(HtyFctZcfzController.supportAll)首页页头估值获得入参，userId=" + userId+"，endTime="+endTime);
 
         try {
+
+            if(endTime == null){
+                endTime = DateUtil.getNextDay(new Date());
+            }
+
             EdwFctZsdFinanceDTO edwFctZsdFinanceDTO = this.edwFctZsdFinanceDTOService.selectSupport(userId, endTime);
             FinanceSupportDTO financeSupportDTO = getFinanceSupportDTO(edwFctZsdFinanceDTO);
 

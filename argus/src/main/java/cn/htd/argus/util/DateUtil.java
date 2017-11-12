@@ -22,6 +22,21 @@ public class DateUtil {
 
 
 	/***
+	 * 获取前一天日期
+	 * @return
+	 */
+	public static String getNextDay(Date date) {
+		Calendar cale = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String firstday;
+		cale = Calendar.getInstance();
+		cale.setTime(date);
+		cale.add(Calendar.DAY_OF_MONTH, -1);  //设置为前一天
+		firstday = format.format(cale.getTime());
+		return firstday;
+	}
+
+	/***
 	 * 获取当月第一天
 	 * @return
 	 */
