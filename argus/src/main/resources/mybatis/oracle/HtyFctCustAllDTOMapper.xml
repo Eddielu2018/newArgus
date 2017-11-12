@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.htd.argus.dao.HtyFctCustAllDTOMapper" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctCustAllDTOMapper" >
   <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctCustAllDto" >
-    <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="date_key" property="dateKey" jdbcType="VARCHAR" />
     <result column="cust_rq" property="custRq" jdbcType="VARCHAR" />
     <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
@@ -36,143 +35,32 @@
     <result column="is_dk" property="isDk" jdbcType="VARCHAR" />
     <result column="expire_time" property="expireTime" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    ID, date_key, cust_rq, cust_code, cust_name, org_code, org_sname, org_fname,
-     area_procode, area_proname, area_citycode, area_cityname,
-     area_countycode, area_countyname, area_towncode, area_townname, cust_managercode,
-     cust_managername, amt_all, amt_online, amt_online_boss, amt_online_b2b,
-     amt_online_vms, amt_dk, qty_b2b, qty_boss, qty_hzg, qty_fs, is_cust,
-     is_hy, is_vip, is_dk, expire_time 
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from hty_fct_cust_all
-    where ID = #{id,jdbcType=BIGINT}
-  </select>
     <select id="queryCityAndProByUserId" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctUserBeHaviorSearchDTO">
         SELECT
         area_proname,area_cityname
-        FROM hty_fct_cust_all
+        FROM HTD_HTY.hty_fct_cust_all
         <where>
             <if test="userId != null">
                 and org_code = #{userId}
             </if>
+             and ROWNUM = 1 
         </where>
-        ORDER BY id DESC
-        LIMIT 1
+        ORDER BY DATE_KEY DESC
     </select>
-  <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
-    select
-    <include refid="Base_Column_List" />
-    <where>
-      <if test="id != null">
-        and ID = #{id}
-      </if>
-      <if test="dateKey != null">
-        and date_key = #{dateKey}
-      </if>
-      <if test="custRq != null">
-        and cust_rq = #{custRq}
-      </if>
-      <if test="custCode != null">
-        and cust_code = #{custCode}
-      </if>
-      <if test="custName != null">
-        and cust_name = #{custName}
-      </if>
-      <if test="orgCode != null">
-        and org_code = #{orgCode}
-      </if>
-      <if test="orgSname != null">
-        and org_sname = #{orgSname}
-      </if>
-      <if test="orgFname != null">
-        and org_fname = #{orgFname}
-      </if>
-      <if test="areaProCode != null">
-        and area_procode = #{areaProCode}
-      </if>
-      <if test="areaProName != null">
-        and area_proname = #{areaProName}
-      </if>
-      <if test="areaCityCode != null">
-        and area_citycode = #{areaCityCode}
-      </if>
-      <if test="areaCityName != null">
-        and area_cityname = #{areaCityName}
-      </if>
-      <if test="areaCountyCode != null">
-        and area_countycode = #{areaCountyCode}
-      </if>
-      <if test="areaCountyName != null">
-        and area_countyname = #{areaCountyName}
-      </if>
-      <if test="areaTownCode != null">
-        and area_towncode = #{areaTownCode}
-      </if>
-      <if test="areaTownName != null">
-        and area_townname = #{areaTownName}
-      </if>
-      <if test="custManagerCode != null">
-        and cust_managercode = #{custManagerCode}
-      </if>
-      <if test="custManagerName != null">
-        and cust_managername = #{custManagerName}
-      </if>
-      <if test="amtAll != null">
-        and amt_all = #{amtAll}
-      </if>
-      <if test="amtOnline != null">
-        and amt_online = #{amtOnline}
-      </if>
-      <if test="amtOnlineBoss != null">
-        and amt_online_boss = #{amtOnlineBoss}
-      </if>
-      <if test="amtOnlineB2b != null">
-        and amt_online_b2b = #{amtOnlineB2b}
-      </if>
-      <if test="amtOnlineVms != null">
-        and amt_online_vms = #{amtOnlineVms}
-      </if>
-      <if test="amtDk != null">
-        and amt_dk = #{amtDk}
-      </if>
-      <if test="qtyB2b != null">
-        and qty_b2b = #{qtyB2b}
-      </if>
-      <if test="qtyBoss != null">
-        and qty_boss = #{qtyBoss}
-      </if>
-      <if test="qtyHzg != null">
-        and qty_hzg = #{qtyHzg}
-      </if>
-      <if test="qtyFs != null">
-        and qty_fs = #{qtyFs}
-      </if>
-      <if test="isCust != null">
-      	 and is_cust = #{isCust}
-      </if>
-      <if test="isHy != null">
-      	 and is_hy = #{isHy}
-      </if>
-      <if test="isVip != null">
-        and is_vip = #{isVip}
-      </if>
-      <if test="isDk != null">
-        and is_dk = #{isDk}
-      </if>
-    </where>
-  </select>
   <select id="selectByNoPair" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustInDto" >
   	select 
-  	ID, date_key, cust_rq, cust_code, cust_name, org_code, org_sname, org_fname,
-     area_procode, area_proname, area_citycode, area_cityname,
-     area_countycode, area_countyname, area_towncode, area_townname, cust_managercode,
-     cust_managername,sum(amt_all) as amt_all,sum(amt_online) as amt_online, amt_online_boss, amt_online_b2b,
-     amt_online_vms,sum(amt_dk) as amt_dk,sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,sum(qty_hzg) as qty_hzg, qty_fs, is_cust,
-     is_hy, is_vip, is_dk, expire_time 
-    from hty_fct_cust_all
+  	max(date_key) as date_key, max(cust_rq) as cust_rq, max(cust_code) as cust_code,
+  	 max(cust_name) as cust_name, max(org_code) as org_code, max(org_sname) as org_sname,
+  	 max(org_fname) as org_fname,max(area_procode) as area_procode, max(area_proname) as area_proname,
+     max(area_citycode) as area_citycode, max(area_cityname) as area_cityname,
+     max(area_countycode) as area_countycode, max(area_countyname) as area_countyname, 
+     max(area_towncode) as area_towncode, max(area_townname) as area_townname, max(cust_managercode) as cust_managercode,
+     max(cust_managername) as cust_managername,sum(amt_all) as amt_all,sum(amt_online) as amt_online,
+      max(amt_online_boss) as amt_online_boss, max(amt_online_b2b) as amt_online_b2b,
+     max(amt_online_vms) as amt_online_vms,sum(amt_dk) as amt_dk,sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,sum(qty_hzg) as qty_hzg,
+      max(qty_fs) as qty_fs, max(is_cust) as is_cust,
+     max(is_hy) as is_hy, max(is_vip) as is_vip, max(is_dk) as is_dk, max(expire_time) as expire_time
+    from HTD_HTY.hty_fct_cust_all
     <where>
    		<if test="userId != null">
         	and org_code = #{userId}
@@ -291,14 +179,14 @@
   	SELECT sum(amt_all) as amt_all,sum(amt_online) as amt_online,sum(qty_b2b) 
   	as qty_b2b,sum(qty_boss)as qty_boss,SUM(qty_hzg) as qty_hzg,sum(amt_dk) 
   	as amt_dk,sum(amt_online_boss) as amt_online_boss,sum(amt_online_b2b) 
-  	as amt_online_b2b,sum(amt_online_vms) as amt_online_vms FROM hty_fct_cust_all 
+  	as amt_online_b2b,sum(amt_online_vms) as amt_online_vms FROM HTD_HTY.hty_fct_cust_all 
   	where org_code=#{userId} and date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
   	<choose>
   		<when test="type == 0">
-  			and is_cust = "是" 
+  			and is_cust = '是' 
   		</when>
   		<when test="type == 1">
-  			and is_hy = "是" 
+  			and is_hy = '是' 
   		</when>
   		<when test="type == 2">
   			and is_vip = 1 
@@ -307,154 +195,150 @@
   </select>
   
   <select id="selectForAmtAll" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
-  	select u.amtAllNum from (  
-	select t.amtAll, t.ORG_CODE ,(@rowNum:=@rowNum+1) as amtAllNum from 
-	(select a.amtAll, a.ORG_CODE from 
-	(SELECT sum(amt_all) as amtAll, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
-	<choose>
+ 	SELECT ROWNUM from (
+	SELECT  sum(amt_all) as amtAll,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
+	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	 <choose>
   		<when test="type == 0">
-  			and is_cust = "是" 
+  			and is_cust = '是' 
   		</when>
   		<when test="type == 1">
-  			and is_hy = "是"
+  			and is_hy = '是'
   		</when>
   		<when test="type == 2">
   			and is_vip = 1 
   		</when>
   	</choose>
-	 and ORG_CODE in 
-	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.amtAll DESC ) t,(select (@rowNum :=0) ) b 
- 	) u where u.ORG_CODE = #{userId} 
+	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
+		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
+	GROUP BY ORG_CODE ORDER BY amtAll DESC
+	) where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForAmtOnline" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
-  	select u.amtOnlineNum from (  
-	select t.amtOnline, t.ORG_CODE ,(@rowNum:=@rowNum+1) as amtOnlineNum from 
-	(select a.amtOnline, a.ORG_CODE from 
-	(SELECT sum(amt_online) as amtOnline, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
-	<choose>
+ 	SELECT ROWNUM from (
+	SELECT  sum(amt_online) as amtOnline,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
+	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	 <choose>
   		<when test="type == 0">
-  			and is_cust = "是"
+  			and is_cust = '是' 
   		</when>
   		<when test="type == 1">
-  			and is_hy = "是" 
+  			and is_hy = '是'
   		</when>
   		<when test="type == 2">
   			and is_vip = 1 
   		</when>
   	</choose>
-	 and ORG_CODE in 
-	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.amtOnline DESC ) t,(select (@rowNum :=0) ) b 
- 	) u where u.ORG_CODE = #{userId} 
+	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
+		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
+	GROUP BY ORG_CODE ORDER BY amtOnline DESC
+	) where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForQtyB2b" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
-  	select u.qtyB2bNum from (  
-	select t.qtyB2b, t.ORG_CODE ,(@rowNum:=@rowNum+1) as qtyB2bNum from 
-	(select a.qtyB2b, a.ORG_CODE from 
-	(SELECT sum(qty_b2b) as qtyB2b, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
-	<choose>
+ 	SELECT ROWNUM from (
+	SELECT  sum(qty_b2b) as qtyB2b,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
+	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	 <choose>
   		<when test="type == 0">
-  			and is_cust = "是" 
+  			and is_cust = '是' 
   		</when>
   		<when test="type == 1">
-  			and is_hy = "是" 
+  			and is_hy = '是'
   		</when>
   		<when test="type == 2">
   			and is_vip = 1 
   		</when>
   	</choose>
-	 and ORG_CODE in 
-	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.qtyB2b DESC ) t,(select (@rowNum :=0) ) b 
- 	) u where u.ORG_CODE = #{userId} 
+	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
+		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
+	GROUP BY ORG_CODE ORDER BY qtyB2b DESC
+	) where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForQtyBoss" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
-  	select u.qtyBossNum from (  
-	select t.qtyBoss, t.ORG_CODE ,(@rowNum:=@rowNum+1) as qtyBossNum from 
-	(select a.qtyBoss, a.ORG_CODE from 
-	(SELECT sum(qty_boss) as qtyBoss, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
-	<choose>
+ 	SELECT ROWNUM from (
+	SELECT  sum(qty_boss) as qtyBoss,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
+	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	 <choose>
   		<when test="type == 0">
-  			and is_cust = "是" 
+  			and is_cust = '是' 
   		</when>
   		<when test="type == 1">
-  			and is_hy = "是" 
+  			and is_hy = '是'
   		</when>
   		<when test="type == 2">
   			and is_vip = 1 
   		</when>
   	</choose>
-	 and ORG_CODE in 
-	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.qtyBoss DESC ) t,(select (@rowNum :=0) ) b 
- 	) u where u.ORG_CODE = #{userId}
+	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
+		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
+	GROUP BY ORG_CODE ORDER BY qtyBoss DESC
+	) where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForQtyHzg" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
-  	select u.qtyHzgNum from (  
-	select t.qtyHzg, t.ORG_CODE ,(@rowNum:=@rowNum+1) as qtyHzgNum from 
-	(select a.qtyHzg, a.ORG_CODE from 
-	(SELECT sum(qty_hzg) as qtyHzg, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
-	<choose>
+ 	SELECT ROWNUM from (
+	SELECT  sum(qty_hzg) as qtyHzg,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
+	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	 <choose>
   		<when test="type == 0">
-  			and is_cust = "是" 
+  			and is_cust = '是' 
   		</when>
   		<when test="type == 1">
-  			and is_hy = "是" 
+  			and is_hy = '是'
   		</when>
   		<when test="type == 2">
   			and is_vip = 1 
   		</when>
   	</choose>
-	 and ORG_CODE in 
-	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.qtyHzg DESC ) t,(select (@rowNum :=0) ) b 
- 	) u where u.ORG_CODE = #{userId}
+	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
+		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
+	GROUP BY ORG_CODE ORDER BY qtyHzg DESC
+	) where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForAmtDk" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
-  	select u.amtDkNum from (  
-	select t.amtDk, t.ORG_CODE ,(@rowNum:=@rowNum+1) as amtDkNum from 
-	(select a.amtDk, a.ORG_CODE from 
-	(SELECT sum(amt_dk) as amtDk, ORG_CODE FROM hty_fct_cust_all where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
-	<choose>
+ 	SELECT ROWNUM from (
+	SELECT  sum(amt_dk) as amtDk,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
+	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+	 <choose>
   		<when test="type == 0">
-  			and is_cust = "是" 
+  			and is_cust = '是' 
   		</when>
   		<when test="type == 1">
-  			and is_hy = "是" 
+  			and is_hy = '是'
   		</when>
   		<when test="type == 2">
   			and is_vip = 1 
   		</when>
   	</choose>
-	 and ORG_CODE in 
-	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId})) GROUP by ORG_CODE) a ORDER BY a.amtDk DESC ) t,(select (@rowNum :=0) ) b 
- 	) u where u.ORG_CODE = #{userId}
+	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
+		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
+	GROUP BY ORG_CODE ORDER BY amtDk DESC
+	) where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForPair" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
-  	select sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,org_code,cust_code from hty_fct_cust_all 
+  	select sum(qty_b2b) as qty_b2b, 
+  	sum(qty_boss) as qty_boss, max(org_code) as org_code,max(cust_code) as cust_code 
+  	from HTD_HTY.hty_fct_cust_all 
   	where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
   	<choose>
   		<when test="type == 0">
-  			and is_cust = "是" 
+  			and is_cust = '是' 
   		</when>
   		<when test="type == 1">
-  			and is_hy = "是" 
+  			and is_hy = '是' 
   		</when>
   		<when test="type == 2">
   			and is_vip = 1 
   		</when>
   	</choose>
   	 and ORG_CODE in 
-	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{userId}))
+	(SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
+	(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId}))
   	 GROUP BY cust_code
   </select>
   
@@ -462,21 +346,22 @@
     select 
     cust_name,amt_all,amt_online,qty_b2b,qty_boss,qty_hzg,amt_dk,qty_fs,expire_time
     ,area_proname,area_cityname,area_countyname,area_townname,cust_managername 
-    from hty_fct_cust_all where date_key = #{dateKey} and org_code = #{orgCode}
+    from HTD_HTY.hty_fct_cust_all where date_key = #{dateKey} and org_code = #{orgCode}
     <if test="isHy != null">
      and is_hy = #{isHy} 
     </if>
     <if test="isVip != null">
      and is_vip = #{isVip} 
     </if>
+    <if test="outType == 1">
+  	  and ROWNUM &gt;=1 and ROWNUM &lt;=10 
+  	</if>
     order by amt_all desc ,amt_online desc,qty_b2b desc ,qty_boss desc,qty_hzg desc,amt_dk desc
-  <if test="outType == 1">
-  	 limit 10
-  </if>
+  
   </select>
   
   <select id="selectSumAmt" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
-  	SELECT sum(amt_all) FROM hty_fct_cust_all where org_code=#{orgCode} and date_key=#{dateKey};
+  	SELECT sum(amt_all) FROM HTD_HTY.hty_fct_cust_all where org_code=#{orgCode} and date_key=#{dateKey};
   </select>
  
 </mapper>

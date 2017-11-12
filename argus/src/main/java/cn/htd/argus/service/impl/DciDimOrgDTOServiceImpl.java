@@ -1,7 +1,7 @@
 package cn.htd.argus.service.impl;
 
 import cn.htd.argus.bean.HtyFctCustAnalysisInDTO;
-import cn.htd.argus.dao.DciDimOrgDTOMapper;
+import cn.htd.argus.mappers.DciDimOrgDTOMapper;
 import cn.htd.argus.dto.DciDimOrgDTO;
 import cn.htd.argus.service.DciDimOrgDTOService;
 import org.slf4j.Logger;
@@ -18,24 +18,6 @@ public class DciDimOrgDTOServiceImpl implements DciDimOrgDTOService{
 
     @Autowired
     private DciDimOrgDTOMapper dao;
-
-    @Override
-    public DciDimOrgDTO selectByPrimaryKey(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("userId id is null");
-        }
-        return dao.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public DciDimOrgDTO select(DciDimOrgDTO dto) {
-        List<DciDimOrgDTO> result = dao.select(dto);
-
-        if (result == null || result.isEmpty()) {
-            return null;
-        }
-        return result.get(0);
-    }
 
 	@Override
 	public int selectAllNum() {
