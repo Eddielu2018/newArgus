@@ -12,10 +12,6 @@ import cn.htd.argus.dto.HtyFctCustAllDto;
  */
 public interface HtyFctCustAllDTOService {
 
-    HtyFctCustAllDto selectByPrimaryKey(Long id);
-
-    HtyFctCustAllDto select(HtyFctCustAllDto dto);
-
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
 
     Integer selectForAmtAll(String userId,String startTime,String endTime,int type,Integer regionOrg);

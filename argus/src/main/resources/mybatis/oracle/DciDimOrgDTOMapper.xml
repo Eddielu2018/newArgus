@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.htd.argus.mappers.DciDimOrgDTOMapper">
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.DciDimOrgDTO">
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="ORG_SNAME" jdbcType="VARCHAR" property="orgSname" />
+    <result column="ORG_PCODE" jdbcType="VARCHAR" property="orgPcode" />
+    <result column="ORG_PSNAME" jdbcType="VARCHAR" property="orgPsname" />
+    <result column="ORG_XZCODE" jdbcType="VARCHAR" property="orgXzcode" />
+    <result column="ORG_XZ" jdbcType="VARCHAR" property="orgXz" />
+  </resultMap>
+
+  <select id="selectAllNum" resultType="int" >
+    select count(1) from HTD_ODS.dci_dim_org
+  </select>
+  
+  <select id="selectRegionNum" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO">
+    SELECT count(1) from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
+	(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId})
+  </select>
+  
+  <select id="selectRegionNumWithOutCust" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO">
+    SELECT count(1) from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
+	(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId}) and c.ORG_CODE &lt;&gt; #{userId}
+  </select>
+</mapper>

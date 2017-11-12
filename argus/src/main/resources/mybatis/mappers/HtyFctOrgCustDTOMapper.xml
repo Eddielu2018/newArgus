@@ -107,8 +107,8 @@
 	select ORG_CODE,YEAR_NEWCUSTNUM,YEAR_MON 
 	from hty_fct_org_cust  
 	where YEAR_MON = #{yearMon} and ORG_CODE in 
-	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode}))
+	(SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_XZCODE = 
+	(SELECT d.ORG_XZCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode}))
 	order by hty_fct_org_cust.YEAR_NEWCUSTNUM desc ) t,(select (@rowNum :=0) ) b 
 	) u where u.ORG_CODE = #{orgCode}
   </select>
@@ -119,8 +119,8 @@
   
   <select id="selectAvgBrach" resultType="java.lang.Integer" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
    SELECT cast(avg(YEAR_NEWCUSTNUM) as decimal(20,2)) as avgNum FROM hty_fct_org_cust where YEAR_MON=#{yearMon} 
-   and ORG_CODE in (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE=#{orgCode}))
+   and ORG_CODE in (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_XZCODE = 
+	(SELECT d.ORG_XZCODE from DCI_DIM_ORG d  where d.ORG_CODE=#{orgCode}))
   </select>
   
   <select id="selectCompanySortHead" resultType="String" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
@@ -131,8 +131,8 @@
   <select id="selectCompanySortBrach" resultType="String" parameterType="cn.htd.argus.dto.HtyFctOrgSaleDTO" >
    SELECT org.ORG_SNAME FROM hty_fct_org_cust sale,DCI_DIM_ORG org where sale.YEAR_MON=#{yearMon} 
    and org.ORG_CODE=sale.ORG_CODE and sale.ORG_CODE in 
-   (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_PCODE = 
-	(SELECT d.ORG_PCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode})) 
+   (SELECT c.ORG_CODE from DCI_DIM_ORG c where c.ORG_XZCODE = 
+	(SELECT d.ORG_XZCODE from DCI_DIM_ORG d  where d.ORG_CODE = #{orgCode})) 
    ORDER BY sale.YEAR_NEWCUSTNUM DESC LIMIT 0,10
   </select>
   
