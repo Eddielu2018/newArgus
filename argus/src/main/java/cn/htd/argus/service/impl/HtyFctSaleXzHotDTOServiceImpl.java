@@ -3,7 +3,7 @@ package cn.htd.argus.service.impl;
 import cn.htd.argus.bean.BrandSortDTO;
 import cn.htd.argus.bean.HtyFctSaleSearchDTO;
 import cn.htd.argus.bean.SaleHotDTO;
-import cn.htd.argus.dao.HtyFctSaleXzHotDTOMapper;
+import cn.htd.argus.mappers.HtyFctSaleXzHotDTOMapper;
 import cn.htd.argus.dto.HtyFctSaleXzHotDTO;
 import cn.htd.argus.service.HtyFctSaleXzHotDTOService;
 import cn.htd.common.Pager;
@@ -19,20 +19,6 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
 
     @Autowired
     private HtyFctSaleXzHotDTOMapper dao;
-
-    @Override
-    public HtyFctSaleXzHotDTO selectByOrgCode(String userId) {
-        if (userId == null) {
-            throw new IllegalArgumentException("userId id is null");
-        }
-        HtyFctSaleXzHotDTO dto = new HtyFctSaleXzHotDTO();
-        return null;
-    }
-
-    @Override
-    public Long queryPageCount(HtyFctSaleSearchDTO searchDTO) {
-        return dao.queryPageCount(searchDTO);
-    }
 
     @Override
     public Long queryPageSumCount(HtyFctSaleSearchDTO searchDTO) {

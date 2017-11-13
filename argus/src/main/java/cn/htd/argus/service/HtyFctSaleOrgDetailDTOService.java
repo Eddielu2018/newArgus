@@ -12,9 +12,9 @@ import java.util.List;
  * Created by wangtp on 2017/10/10.
  */
 public interface HtyFctSaleOrgDetailDTOService {
-    HtyFctSaleOrgDetailDTO selectByOrgCode(String userId);
-
-    Long queryPageCount(HtyFctSaleSearchDTO searchDTO);
+//    HtyFctSaleOrgDetailDTO selectByOrgCode(String userId);
+//
+//    Long queryPageCount(HtyFctSaleSearchDTO searchDTO);
 
     Long queryPageSumCount(HtyFctSaleSearchDTO searchDTO);
 
