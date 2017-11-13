@@ -1,6 +1,7 @@
 package cn.htd.argus.bean;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.htd.argus.dto.HtyFctSaleCityProdDTO;
@@ -25,7 +26,11 @@ public class UserBeHaviorSearchDTO {
     List<BigDecimal> b2bSaleCityProdNumList;
 	// 漏斗转化
     List<String> b2bConvFunnelList;
-    List<BigDecimal> b2bConvFunnelNumList;
+        //百分比
+    List<String> b2bSaleCityProdperCentList;
+        //数量
+        List<BigDecimal> b2bConvFunnelNumList;
+
     //复购
     List<String> b2bRepeatBuyList;
     List<BigDecimal> b2bRepeatBuyNumList;
@@ -101,13 +106,6 @@ public class UserBeHaviorSearchDTO {
         this.b2bConvFunnelList = b2bConvFunnelList;
     }
 
-    public List<BigDecimal> getB2bConvFunnelNumList() {
-        return b2bConvFunnelNumList;
-    }
-
-    public void setB2bConvFunnelNumList(List<BigDecimal> b2bConvFunnelNumList) {
-        this.b2bConvFunnelNumList = b2bConvFunnelNumList;
-    }
 
     public List<String> getB2bRepeatBuyList() {
         return b2bRepeatBuyList;
@@ -123,5 +121,21 @@ public class UserBeHaviorSearchDTO {
 
     public void setB2bRepeatBuyNumList(List<BigDecimal> b2bRepeatBuyNumList) {
         this.b2bRepeatBuyNumList = b2bRepeatBuyNumList;
+    }
+
+    public List<String> getB2bSaleCityProdperCentList() {
+        return b2bSaleCityProdperCentList;
+    }
+
+    public void setB2bSaleCityProdperCentList(List<String> b2bSaleCityProdperCentList) {
+        this.b2bSaleCityProdperCentList = b2bSaleCityProdperCentList;
+    }
+
+    public List<BigDecimal> getB2bConvFunnelNumList() {
+        return b2bConvFunnelNumList;
+    }
+
+    public void setB2bConvFunnelNumList(List<BigDecimal> b2bConvFunnelNumList) {
+        this.b2bConvFunnelNumList = b2bConvFunnelNumList;
     }
 }
