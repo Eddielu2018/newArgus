@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctSaleOrgDetailDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctSaleOrgDetailDTO" >
+    <result column="DATE_KEY" property="dateKey" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="PL_CODE" property="plCode" jdbcType="VARCHAR" />
+    <result column="PL_NAME" property="plName" jdbcType="VARCHAR" />
+    <result column="PP_CODE" property="ppCode" jdbcType="VARCHAR" />
+    <result column="PP_NAME" property="ppName" jdbcType="VARCHAR" />
+    <result column="PROD_CODE" property="prodCode" jdbcType="VARCHAR" />
+    <result column="PROD_NAME" property="prodName" jdbcType="VARCHAR" />
+    <result column="XS_AMT" property="xsAmt" jdbcType="DECIMAL" />
+    <result column="XS_QTY" property="xsQty" jdbcType="DECIMAL" />
+    <result column="MAX_XS_AMT" property="maxXsAmt" jdbcType="DECIMAL" />
+    <result column="MIN_XS_AMT" property="minXsAmt" jdbcType="DECIMAL" />
+    <result column="XS_DD" property="xsDd" jdbcType="DECIMAL" />
+    <result column="M_JC_QTY" property="mJcQty" jdbcType="DECIMAL" />
+    <result column="rowNo" property="rowNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DATE_KEY, ORG_CODE, PL_CODE, PL_NAME, PP_CODE, PP_NAME, PROD_CODE, PROD_NAME, 
+    XS_AMT, XS_QTY, MAX_XS_AMT, MIN_XS_AMT, XS_DD, M_JC_QTY
+  </sql>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.prodCode != null and searchDTO.prodCode != '' ">
+        and  PROD_CODE = #{searchDTO.prodCode}
+      </if>
+      <if test="searchDTO.prodName != null and searchDTO.prodName != '' ">
+        and PROD_NAME like CONCAT('%',#{searchDTO.prodName},'%')
+      </if>
+      <if test="searchDTO.plCode != null and searchDTO.plCode != '' ">
+        and  PL_CODE = #{searchDTO.plCode}
+      </if>
+      <if test="searchDTO.ppCode != null and searchDTO.ppCode != '' ">
+        and  PP_CODE = #{searchDTO.ppCode}
+      </if>
+      <if test="searchDTO.startTime != null and searchDTO.startTime != ''">
+        <![CDATA[ and DATE_KEY >= #{searchDTO.startTime} ]]>
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != ''">
+        <![CDATA[ and DATE_KEY <= #{searchDTO.endTime} ]]>
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryBurstSumPage" resultMap="BaseResultMap">
+    SELECT
+    MAX (PROD_NAME) as PROD_NAME,
+	MAX (PROD_CODE) as PROD_CODE,
+	MAX (PP_NAME) as PP_NAME,
+	MAX (PL_NAME) as PL_NAME,
+	MAX (M_JC_QTY) asM_JC_QTY,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    MAX(MAX_XS_AMT) AS MAX_XS_AMT,
+    MIN(MIN_XS_AMT) AS MIN_XS_AMT,
+    SUM(XS_DD) AS XS_DD
+    FROM
+    HTD_HTY.hty_fct_sale_org_detail
+    <include refid="where"/>
+     and ROWNUM &gt;= #{pager.pageOffset} and ROWNUM &lt; #{pager.pageOffset}+#{pager.rows} 
+    GROUP BY
+    PROD_CODE
+    ORDER BY
+    XS_AMT DESC
+  </select>
+
+  <select id="queryStopSumPage" resultMap="BaseResultMap">
+    SELECT
+    MAX (PROD_NAME) as PROD_NAME,
+	MAX (PROD_CODE) as PROD_CODE,
+	MAX (PP_NAME) as PP_NAME,
+	MAX (PL_NAME) as PL_NAME,
+	MAX (M_JC_QTY) asM_JC_QTY,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    MAX(MAX_XS_AMT) AS MAX_XS_AMT,
+    MIN(MIN_XS_AMT) AS MIN_XS_AMT,
+    SUM(XS_DD) AS XS_DD
+    FROM
+    HTD_HTY.hty_fct_sale_org_detail
+    <include refid="where"/>
+     and ROWNUM &gt;= #{pager.pageOffset} and ROWNUM &lt; #{pager.pageOffset}+#{pager.rows} 
+    GROUP BY
+    PROD_CODE
+    ORDER BY
+    XS_AMT ASC
+  </select>
+
+  <select id="queryPageSumCount" resultType="long">
+    SELECT COUNT(1) FROM (SELECT
+    COUNT(1)
+    FROM
+    HTD_HTY.hty_fct_sale_org_detail
+    <include refid="where"/>
+    GROUP BY
+    PROD_CODE) a
+
+  </select>
+
+  <select id="selectByProdCode" resultMap="BaseResultMap">
+    SELECT
+    MAX (PROD_NAME) as PROD_NAME,
+	MAX (PROD_CODE) as PROD_CODE,
+	MAX (PP_NAME) as PP_NAME,
+	MAX (PL_NAME) as PL_NAME,
+	MAX (M_JC_QTY) asM_JC_QTY,
+    SUM(XS_AMT) AS XS_AMT,
+    SUM(XS_QTY) AS XS_QTY,
+    MAX(MAX_XS_AMT) AS MAX_XS_AMT,
+    MIN(MIN_XS_AMT) AS MIN_XS_AMT,
+    SUM(XS_DD) AS XS_DD
+    FROM
+    HTD_HTY.hty_fct_sale_org_detail
+    <include refid="where"/>
+    GROUP BY
+    PROD_CODE
+  </select>
+
+  <select id="queryBurstPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from HTD_HTY.hty_fct_sale_org_detail
+    <include refid="where"/>
+    and ROWNUM &gt;= #{pager.pageOffset} and ROWNUM &lt; #{pager.pageOffset}+#{pager.rows} 
+    ORDER BY XS_AMT DESC
+  </select>
+
+  <select id="queryStopPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from HTD_HTY.hty_fct_sale_org_detail
+    <include refid="where"/>
+    and ROWNUM &gt;= #{pager.pageOffset} and ROWNUM &lt; #{pager.pageOffset}+#{pager.rows} 
+    ORDER BY XS_AMT ASC
+  </select>
+
+  <!-- 查询所有品牌-->
+  <select id="queryBrand" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    PP_CODE,
+    PP_NAME
+    FROM
+    HTD_HTY.hty_fct_sale_org_detail
+    WHERE PL_CODE = #{plCode}
+    ORDER BY
+    PP_CODE
+  </select>
+
+  <!-- 查询所有品类-->
+  <select id="queryCategory" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    PL_CODE,
+    PL_NAME
+    FROM
+    HTD_HTY.hty_fct_sale_org_detail
+    ORDER BY
+    PL_CODE
+  </select>
+
+</mapper>

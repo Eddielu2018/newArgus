@@ -3,7 +3,7 @@ package cn.htd.argus.service.impl;
 import cn.htd.argus.bean.BrandSortDTO;
 import cn.htd.argus.bean.HtyFctSaleSearchDTO;
 import cn.htd.argus.bean.SaleDetailDTO;
-import cn.htd.argus.dao.HtyFctSaleOrgDetailDTOMapper;
+import cn.htd.argus.mappers.HtyFctSaleOrgDetailDTOMapper;
 import cn.htd.argus.dto.HtyFctSaleOrgDetailDTO;
 import cn.htd.argus.service.HtyFctSaleOrgDetailDTOService;
 import cn.htd.argus.util.ArithUtil;
@@ -22,20 +22,20 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
     @Autowired
     private HtyFctSaleOrgDetailDTOMapper dao;
 
-    @Override
-    public HtyFctSaleOrgDetailDTO selectByOrgCode(String userId) {
-        if (userId == null) {
-            throw new IllegalArgumentException("userId id is null");
-        }
-        HtyFctSaleOrgDetailDTO dto = new HtyFctSaleOrgDetailDTO();
-        dto.setOrgCode(userId);
-        return dao.selectByOrgCode(dto);
-    }
-
-    @Override
-    public Long queryPageCount(HtyFctSaleSearchDTO searchDTO) {
-        return dao.queryPageCount(searchDTO);
-    }
+//    @Override
+//    public HtyFctSaleOrgDetailDTO selectByOrgCode(String userId) {
+//        if (userId == null) {
+//            throw new IllegalArgumentException("userId id is null");
+//        }
+//        HtyFctSaleOrgDetailDTO dto = new HtyFctSaleOrgDetailDTO();
+//        dto.setOrgCode(userId);
+//        return dao.selectByOrgCode(dto);
+//    }
+//
+//    @Override
+//    public Long queryPageCount(HtyFctSaleSearchDTO searchDTO) {
+//        return dao.queryPageCount(searchDTO);
+//    }
 
     @Override
     public Long queryPageSumCount(HtyFctSaleSearchDTO searchDTO) {
