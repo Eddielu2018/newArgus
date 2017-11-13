@@ -1,9 +1,8 @@
 package cn.htd.argus.controller;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.*;
 
 import cn.htd.argus.dto.*;
 import cn.htd.argus.service.*;
@@ -55,6 +54,7 @@ public class HtyFctUserBeHaviorController {
      * @param
      * @return
      */
+
     @RequestMapping("/behavior/whole")
     public RestResult HtyFctUserBeHavior(
             @RequestParam(value = "startTime", required = false) String startTime,
@@ -88,10 +88,11 @@ public class HtyFctUserBeHaviorController {
             List<BigDecimal> b2bItemAccessNumList=new ArrayList<BigDecimal>();
             List<String> b2bConvFunnelList=new ArrayList<String>();
             List<BigDecimal> b2bConvFunnelNumList=new ArrayList<BigDecimal>();
+            List<String> b2bSaleCityProdperCentList=new ArrayList<String>();
             List<String> b2bRepeatBuyList=new ArrayList<String>();
             List<BigDecimal> b2bRepeatBuyNumList=new ArrayList<BigDecimal>();
             List<String> b2bSaleCityProdyList=new ArrayList<String>();
-            List<BigDecimal> b2bSaleCityProdNumList=new ArrayList<BigDecimal>();
+            List<BigDecimal> b2bSaleCityProdyNumList=new ArrayList<BigDecimal>();
 
             HtyFctXwB2bLndPageDTO htyFctXwB2bLndPage=new HtyFctXwB2bLndPageDTO();
             HtyFctXwB2bSearchKeyDTO htyFctXwB2bSearchKey=new HtyFctXwB2bSearchKeyDTO();
@@ -107,16 +108,7 @@ public class HtyFctUserBeHaviorController {
                 List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO= htyFctXwB2bLndPageDTOService
                         .queryAllAccessQty(htyFctUserBeHaviorSearchDTO);
                 if(htyFctXwB2bLndPageDTO.size()>0){
-                    for (HtyFctXwB2bLndPageDTO b2bLndPage:htyFctXwB2bLndPageDTO){
-                        b2bLndPageNumList.add(b2bLndPage.getAccessQty());
-                        if(b2bLndPage.getPageTitle().length()>20){
-                          String  str= b2bLndPage.getPageTitle().substring(0,20);
-                            b2bLndPageList.add(str);
-                        }
-                        else {
-                        b2bLndPageList.add(b2bLndPage.getPageTitle());
-                        }
-                    }
+                    splitPageTittle(htyFctXwB2bLndPageDTO,b2bLndPageNumList,b2bLndPageList);
                     userBeHaviorSearchDTO.setB2bLndPageList(b2bLndPageList);
                     userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
                 }
@@ -146,12 +138,16 @@ public class HtyFctUserBeHaviorController {
                 // 1漏斗购买
                 List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTO = htyFctXwB2bConvFunnelDTOService
                         .queryStepSequenceNum(htyFctUserBeHaviorSearchDTO);
-                if(htyFctXwB2bConvFunnelDTO.size()>0){
-                    for (HtyFctXwB2bConvFunnelDTO b2bConvFunnel:htyFctXwB2bConvFunnelDTO){
+                if (htyFctXwB2bConvFunnelDTO.size() > 0) {
+                    for (HtyFctXwB2bConvFunnelDTO b2bConvFunnel : htyFctXwB2bConvFunnelDTO) {
                         b2bConvFunnelList.add(b2bConvFunnel.getStepName());
                         b2bConvFunnelNumList.add(b2bConvFunnel.getStepSequence());
                     }
+                    //百分比
+                    perCent(b2bConvFunnelNumList,b2bSaleCityProdperCentList);
+                    //返回值
                     userBeHaviorSearchDTO.setB2bConvFunnelList(b2bConvFunnelList);
+                    userBeHaviorSearchDTO.setB2bSaleCityProdperCentList(b2bSaleCityProdperCentList);
                     userBeHaviorSearchDTO.setB2bConvFunnelNumList(b2bConvFunnelNumList);
                 }
                 // 2重复购买
@@ -172,10 +168,10 @@ public class HtyFctUserBeHaviorController {
                 if(htyFctSaleCityProdDTO.size()>0){
                     for (HtyFctSaleCityProdDTO saleCityProd:htyFctSaleCityProdDTO){
                         b2bSaleCityProdyList.add(saleCityProd.getProdName());
-                        b2bSaleCityProdNumList.add(saleCityProd.getXsQty());
+                        b2bSaleCityProdyNumList.add(saleCityProd.getXsQty());
                     }
                     userBeHaviorSearchDTO.setB2bSaleCityProdyList(b2bSaleCityProdyList);
-                    userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdNumList);
+                    userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdyNumList);
                 }
             }
             //省查询
@@ -196,16 +192,7 @@ public class HtyFctUserBeHaviorController {
                 htyFctXwB2bLndPage.setProvinceName(proName);
                 List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO= htyFctXwB2bLndPageDTOService.queryByProNameAndCityName(htyFctXwB2bLndPage, htyFctUserBeHaviorSearchDTO);
                 if(htyFctXwB2bLndPageDTO.size()>0){
-                    for (HtyFctXwB2bLndPageDTO b2bLndPage:htyFctXwB2bLndPageDTO){
-                        b2bLndPageNumList.add(b2bLndPage.getAccessQty());
-                        if(b2bLndPage.getPageTitle().length()>20){
-                            String  str= b2bLndPage.getPageTitle().substring(0,20);
-                            b2bLndPageList.add(str);
-                        }
-                        else {
-                            b2bLndPageList.add(b2bLndPage.getPageTitle());
-                        }
-                    }
+                    splitPageTittle(htyFctXwB2bLndPageDTO,b2bLndPageNumList,b2bLndPageList);
                     userBeHaviorSearchDTO.setB2bLndPageList(b2bLndPageList);
                     userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
                 }
@@ -224,12 +211,16 @@ public class HtyFctUserBeHaviorController {
                 // 1漏斗购买、
                 htyFctXwB2bConvFunnel.setProvinceName(proName);
                 List<HtyFctXwB2bConvFunnelDTO>htyFctXwB2bConvFunnelDTO=htyFctXwB2bConvFunnelDTOService.queryByProAndCity(htyFctXwB2bConvFunnel,htyFctUserBeHaviorSearchDTO);
-                if(htyFctXwB2bConvFunnelDTO.size()>0){
-                    for (HtyFctXwB2bConvFunnelDTO b2bConvFunnel:htyFctXwB2bConvFunnelDTO){
+                if (htyFctXwB2bConvFunnelDTO.size() > 0) {
+                    for (HtyFctXwB2bConvFunnelDTO b2bConvFunnel : htyFctXwB2bConvFunnelDTO) {
                         b2bConvFunnelList.add(b2bConvFunnel.getStepName());
                         b2bConvFunnelNumList.add(b2bConvFunnel.getStepSequence());
                     }
+                    //百分比
+                    perCent(b2bConvFunnelNumList,b2bSaleCityProdperCentList);
+                    //返回值
                     userBeHaviorSearchDTO.setB2bConvFunnelList(b2bConvFunnelList);
+                    userBeHaviorSearchDTO.setB2bSaleCityProdperCentList(b2bSaleCityProdperCentList);
                     userBeHaviorSearchDTO.setB2bConvFunnelNumList(b2bConvFunnelNumList);
                 }
                 // 2重复购买
@@ -249,10 +240,10 @@ public class HtyFctUserBeHaviorController {
                 if(htyFctSaleCityProdDTO.size()>0){
                     for (HtyFctSaleCityProdDTO saleCityProd:htyFctSaleCityProdDTO){
                         b2bSaleCityProdyList.add(saleCityProd.getProdName());
-                        b2bSaleCityProdNumList.add(saleCityProd.getXsQty());
+                        b2bSaleCityProdyNumList.add(saleCityProd.getXsQty());
                     }
                     userBeHaviorSearchDTO.setB2bSaleCityProdyList(b2bSaleCityProdyList);
-                    userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdNumList);
+                    userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdyNumList);
                 }
             }
             //市查询
@@ -273,16 +264,7 @@ public class HtyFctUserBeHaviorController {
                 htyFctXwB2bLndPage.setCityName(cityName);
                 List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO = htyFctXwB2bLndPageDTOService.queryByProNameAndCityName(htyFctXwB2bLndPage, htyFctUserBeHaviorSearchDTO);
                 if (htyFctXwB2bLndPageDTO.size() > 0) {
-                    for (HtyFctXwB2bLndPageDTO b2bLndPage : htyFctXwB2bLndPageDTO) {
-                        b2bLndPageNumList.add(b2bLndPage.getAccessQty());
-                        if(b2bLndPage.getPageTitle().length()>20){
-                            String  str= b2bLndPage.getPageTitle().substring(0,20);
-                            b2bLndPageList.add(str);
-                        }
-                        else {
-                            b2bLndPageList.add(b2bLndPage.getPageTitle());
-                        }
-                    }
+                    splitPageTittle(htyFctXwB2bLndPageDTO,b2bLndPageNumList,b2bLndPageList);
                     userBeHaviorSearchDTO.setB2bLndPageList(b2bLndPageList);
                     userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
                 }
@@ -306,7 +288,11 @@ public class HtyFctUserBeHaviorController {
                         b2bConvFunnelList.add(b2bConvFunnel.getStepName());
                         b2bConvFunnelNumList.add(b2bConvFunnel.getStepSequence());
                     }
+                    //百分比
+                    perCent(b2bConvFunnelNumList,b2bSaleCityProdperCentList);
+                    //返回值
                     userBeHaviorSearchDTO.setB2bConvFunnelList(b2bConvFunnelList);
+                    userBeHaviorSearchDTO.setB2bSaleCityProdperCentList(b2bSaleCityProdperCentList);
                     userBeHaviorSearchDTO.setB2bConvFunnelNumList(b2bConvFunnelNumList);
                 }
                 // 2重复购买
@@ -326,10 +312,10 @@ public class HtyFctUserBeHaviorController {
                 if (htyFctSaleCityProdDTO.size() > 0) {
                     for (HtyFctSaleCityProdDTO saleCityProd : htyFctSaleCityProdDTO) {
                         b2bSaleCityProdyList.add(saleCityProd.getProdName());
-                        b2bSaleCityProdNumList.add(saleCityProd.getXsQty());
+                        b2bSaleCityProdyNumList.add(saleCityProd.getXsQty());
                     }
                     userBeHaviorSearchDTO.setB2bSaleCityProdyList(b2bSaleCityProdyList);
-                    userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdNumList);
+                    userBeHaviorSearchDTO.setB2bSaleCityProdNumList(b2bSaleCityProdyNumList);
                 }
             }
             // 组装到 result里  响应的返回数据
@@ -342,5 +328,35 @@ public class HtyFctUserBeHaviorController {
             result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
         }
         return result;
+    }
+    public void perCent(List<BigDecimal> b2bConvFunnelNumList,List<String> b2bSaleCityProdperCentList
+    ){
+        BigDecimal num1=null;
+        BigDecimal num2=null;
+        BigDecimal num3=null;
+        for(ListIterator it=b2bConvFunnelNumList.listIterator();it.hasNext();){
+            num1=(BigDecimal)it.next();
+            if(it.nextIndex()==1){
+                num2=num1;
+            }else {
+                num3=num1.divide(num2,4, RoundingMode.HALF_UP);
+                num2=num1;
+                NumberFormat percent = NumberFormat.getPercentInstance();
+                percent.setMaximumFractionDigits(2);
+                b2bSaleCityProdperCentList.add(percent.format(num3.doubleValue()));
+            }
+        }
+    }
+    public void splitPageTittle(List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO,List<BigDecimal> b2bLndPageNumList,List<String> b2bLndPageList){
+        for (HtyFctXwB2bLndPageDTO b2bLndPage : htyFctXwB2bLndPageDTO) {
+            b2bLndPageNumList.add(b2bLndPage.getAccessQty());
+            if(b2bLndPage.getPageTitle().length()>20){
+                String  str= b2bLndPage.getPageTitle().substring(0,20);
+                b2bLndPageList.add(str);
+            }
+            else {
+                b2bLndPageList.add(b2bLndPage.getPageTitle());
+            }
+        }
     }
 }
