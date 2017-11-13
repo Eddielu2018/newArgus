@@ -307,7 +307,7 @@ public class HtyFctUserBeHaviorController {
                     userBeHaviorSearchDTO.setB2bRepeatBuyNumList(b2bRepeatBuyNumList);
                 }
                 // 成交单品
-                htyFctSaleCityProd.setCustProName(cityName);
+                htyFctSaleCityProd.setCustCityName(cityName);
                 List<HtyFctSaleCityProdDTO> htyFctSaleCityProdDTO = htyFctSaleCityProdDTOService.queryProAndCity(htyFctSaleCityProd, htyFctUserBeHaviorSearchDTO);
                 if (htyFctSaleCityProdDTO.size() > 0) {
                     for (HtyFctSaleCityProdDTO saleCityProd : htyFctSaleCityProdDTO) {
