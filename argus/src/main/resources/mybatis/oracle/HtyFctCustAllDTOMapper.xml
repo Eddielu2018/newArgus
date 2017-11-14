@@ -360,6 +360,39 @@
   
   </select>
   
+  <select id="selectForManagerYear" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
+    select 
+    Max(cust_name) as cust_name,Max(cust_code) as cust_code,sum(amt_all) as amt_all,sum(amt_online) as amt_online 
+    from HTD_HTY.hty_fct_cust_all where date_key &gt;= #{dateKey} and org_code = #{orgCode}
+    <if test="isHy != null">
+     and is_hy = #{isHy} 
+    </if>
+    <if test="isVip != null">
+     and is_vip = #{isVip} 
+    </if>
+    <if test="outType == 1">
+  	  and ROWNUM &gt;=1 and ROWNUM &lt;=10 
+  	</if>
+  	group by cust_code 
+    order by amt_all desc ,amt_online desc
+  </select>
+  
+  <select id="selectForManagerAll" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
+    select 
+    Max(cust_code) as cust_code,sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,
+    sum(qty_hzg) as qty_hzg,sum(amt_dk) as amt_dk,sum(qty_fs) as qty_fs
+    from HTD_HTY.hty_fct_cust_all 
+    <where>
+    <if test="isHy != null">
+     and is_hy = #{isHy} 
+    </if>
+    <if test="isVip != null">
+     and is_vip = #{isVip} 
+    </if>
+  	</where>
+    group by cust_code
+  </select>
+  
   <select id="selectSumAmt" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
   	SELECT sum(amt_all) FROM HTD_HTY.hty_fct_cust_all where org_code=#{orgCode} and date_key=#{dateKey};
   </select>

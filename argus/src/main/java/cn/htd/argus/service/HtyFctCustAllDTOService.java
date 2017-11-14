@@ -30,6 +30,10 @@ public interface HtyFctCustAllDTOService {
 
     List<HtyFctCustAllDto> selectForManager(String userId,String dateTime,Integer aliveType,Integer vipType,String outType);
 
+    List<HtyFctCustAllDto> selectForManagerYear(String userId,String dateTime,Integer aliveType,Integer vipType,String outType);
+    
+    List<HtyFctCustAllDto> selectForManagerAll(String userId,String dateTime,Integer aliveType,Integer vipType,String outType);
+    
     BigDecimal selectSumAmt(String userId,String dateTime);
 
     List<HtyFctCustAllDto> selectForPair(String userId,String startTime,String endTime,int type);

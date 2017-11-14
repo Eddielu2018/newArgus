@@ -258,4 +258,64 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
     public HtyFctCustAllDto queryCityAndProByUserId(HtyFctUserBeHaviorSearchDTO htyFctUserBeHaviorSearchDTO) {
         return dao.queryCityAndProByUserId(htyFctUserBeHaviorSearchDTO);
     }
+
+	@Override
+	public List<HtyFctCustAllDto> selectForManagerYear(String userId, String dateTime, Integer aliveType,
+			Integer vipType, String outType) {
+		if (userId == null) {
+            throw new IllegalArgumentException("userId is null");
+        }
+        if (dateTime == null) {
+            throw new IllegalArgumentException("startTime is null");
+        }
+        HtyFctCustAllDto dto = new HtyFctCustAllDto();
+        dto.setOrgCode(userId);
+        dto.setDateKey(dateTime);
+        dto.setOutType(outType);
+        if(aliveType != null){
+	        if(aliveType == 1){
+	            dto.setIsHy("是");
+	        }else if(aliveType == 0){
+	            dto.setIsHy("否");
+	        }
+        }
+        if(vipType != null){
+	        if(vipType == 1){
+	            dto.setIsVip("1");
+	        }else if(vipType == 0){
+	            dto.setIsVip("0");
+	        }
+        }
+        return dao.selectForManagerYear(dto);
+	}
+
+	@Override
+	public List<HtyFctCustAllDto> selectForManagerAll(String userId, String dateTime, Integer aliveType,
+			Integer vipType, String outType) {
+		if (userId == null) {
+            throw new IllegalArgumentException("userId is null");
+        }
+        if (dateTime == null) {
+            throw new IllegalArgumentException("startTime is null");
+        }
+        HtyFctCustAllDto dto = new HtyFctCustAllDto();
+        dto.setOrgCode(userId);
+        dto.setDateKey(dateTime);
+        dto.setOutType(outType);
+        if(aliveType != null){
+	        if(aliveType == 1){
+	            dto.setIsHy("是");
+	        }else if(aliveType == 0){
+	            dto.setIsHy("否");
+	        }
+        }
+        if(vipType != null){
+	        if(vipType == 1){
+	            dto.setIsVip("1");
+	        }else if(vipType == 0){
+	            dto.setIsVip("0");
+	        }
+        }
+        return dao.selectForManagerAll(dto);
+	}
 }

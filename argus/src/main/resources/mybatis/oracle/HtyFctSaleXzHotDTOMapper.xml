@@ -38,6 +38,8 @@
   </sql>
 
   <select id="querySumPage" resultMap="BaseResultMap">
+  	select * FROM(
+	select t.*,rownum as rn from (
     SELECT
     MAX(PROD_CODE) as PROD_CODE,
     MAX(PROD_NAME) as PROD_NAME,
@@ -51,9 +53,9 @@
     FROM
     HTD_HTY.hty_fct_sale_xz_hot
     <include refid="where"/>
-     and ROWNUM &gt;= #{pager.pageOffset} and ROWNUM &lt; #{pager.pageOffset}+#{pager.rows} 
     GROUP BY
-    PROD_CODE
+    PROD_CODE) t )
+    where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
   </select>
 
   <select id="queryPageSumCount" resultType="long">
