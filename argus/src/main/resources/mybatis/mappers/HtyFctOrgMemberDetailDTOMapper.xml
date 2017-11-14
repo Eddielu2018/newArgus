@@ -55,7 +55,7 @@
   <!-- 单月销售列表 -->
   <select id="selectWithName" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgMemberDetailDTO" >
    select
-   	date_key, org_code, cust_code, xs_amt, xs_qty, last_date, cust_name
+   	<include refid="Base_Column_List" />
     from hty_fct_member_org_detail
   	where date_key = #{dateKey} and org_code = #{orgCode} 
   	<choose>
@@ -66,7 +66,7 @@
   			order by xs_qty desc
   		</when>
   		<when test="sortType == 2">
-  			order by last_date desc
+  			order by if(ISNULL(last_date),1,0),last_date
   		</when>
   	</choose>
   	<if test="outType == 1">LIMIT 10</if>

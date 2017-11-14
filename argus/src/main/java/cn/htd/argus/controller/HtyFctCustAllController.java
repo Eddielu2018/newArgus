@@ -1043,7 +1043,9 @@ public class HtyFctCustAllController {
     			dto.setCustCode(member.getCustCode());
     			dto.setCustName(member.getCustName());
     			if(type == 0){
-    				dto.setXsAmt(member.getXsAmt());
+    				if(member.getXsAmt() != null){
+    					dto.setXsAmt(new BigDecimal(MathUtil.getWanDouble(member.getXsAmt())));
+    				}
     				if(member.getXsAmt() != null && member.getXsAmt().doubleValue()>=0){
         				dto.setSellPoint(String.valueOf(MathUtil.getPairToDouble(member.getXsAmt(), allAmt)));
         			}else{
