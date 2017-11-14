@@ -397,7 +397,7 @@ public class HtyFctZcfzController {
             }else{
                 financeDTO.setYs90RatioState("1");
             }
-            if(edwFctL2OkrKpiFinanceDTO.getHk15BgtRatio().compareTo(list.get(2).getcValue3()) == -1){
+            if(edwFctL2OkrKpiFinanceDTO.getHk15BgtRatio().compareTo(list.get(2).getcValue3()) != -1){
                 financeDTO.setHk15BgtRatioState("0");
                 score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
                 num = num - 1;
