@@ -14,7 +14,7 @@ public class SaleCompareDTO {
 
     private BigDecimal xsLr;
 
-    private String xsRanking;
+    private Integer xsRanking;
 
     //上期
     private BigDecimal upperXsAmt;
@@ -25,7 +25,7 @@ public class SaleCompareDTO {
 
     private BigDecimal upperXsLr;
 
-    private String upperXsRanking;
+    private Integer upperXsRanking;
 
     //同比
     private BigDecimal xsAmtAn;
@@ -81,14 +81,6 @@ public class SaleCompareDTO {
         this.xsLr = xsLr;
     }
 
-    public String getXsRanking() {
-        return xsRanking;
-    }
-
-    public void setXsRanking(String xsRanking) {
-        this.xsRanking = xsRanking;
-    }
-
     public BigDecimal getUpperXsAmt() {
         return upperXsAmt;
     }
@@ -119,14 +111,6 @@ public class SaleCompareDTO {
 
     public void setUpperXsLr(BigDecimal upperXsLr) {
         this.upperXsLr = upperXsLr;
-    }
-
-    public String getUpperXsRanking() {
-        return upperXsRanking;
-    }
-
-    public void setUpperXsRanking(String upperXsRanking) {
-        this.upperXsRanking = upperXsRanking;
     }
 
     public BigDecimal getXsAmtAn() {
@@ -207,5 +191,21 @@ public class SaleCompareDTO {
 
     public void setXsRankingSort(String xsRankingSort) {
         this.xsRankingSort = xsRankingSort;
+    }
+
+    public Integer getXsRanking() {
+        return xsRanking;
+    }
+
+    public void setXsRanking(Integer xsRanking) {
+        this.xsRanking = xsRanking;
+    }
+
+    public Integer getUpperXsRanking() {
+        return upperXsRanking;
+    }
+
+    public void setUpperXsRanking(Integer upperXsRanking) {
+        this.upperXsRanking = upperXsRanking;
     }
 }

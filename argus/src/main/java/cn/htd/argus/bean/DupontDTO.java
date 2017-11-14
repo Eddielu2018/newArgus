@@ -60,7 +60,7 @@ public class DupontDTO {
     //平均资产总额
     private BigDecimal dqAvgAssets;
     private BigDecimal tbAvgAssets;
-    //销售收入
+    //资产总额
     private BigDecimal dqTotalAssets;
     private BigDecimal tbTotalAssets;
     //非流动资产

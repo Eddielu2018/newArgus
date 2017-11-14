@@ -21,7 +21,7 @@ public class HtyFctSaleOrgAllDTO {
 
     private BigDecimal xsLr;
 
-    private String ranking;
+    private Integer ranking;
 
     public Long getId() {
         return id;
@@ -95,11 +95,11 @@ public class HtyFctSaleOrgAllDTO {
         this.xsLr = xsLr;
     }
 
-    public String getRanking() {
+    public Integer getRanking() {
         return ranking;
     }
 
-    public void setRanking(String ranking) {
+    public void setRanking(Integer ranking) {
         this.ranking = ranking;
     }
 }

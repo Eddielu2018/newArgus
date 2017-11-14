@@ -11,7 +11,7 @@
     <result column="XS_ZY_SR" property="xsZySr" jdbcType="DECIMAL" />
     <result column="XS_ML" property="xsMl" jdbcType="DECIMAL" />
     <result column="XS_LR" property="xsLr" jdbcType="DECIMAL" />
-    <result column="rowNo" property="ranking" jdbcType="VARCHAR" />
+    <result column="rowNo" property="ranking" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, DATE_KEY, ORG_CODE, XS_AMT, XS_QTY, XS_ZH_ML, XS_ZY_SR, XS_ML, XS_LR

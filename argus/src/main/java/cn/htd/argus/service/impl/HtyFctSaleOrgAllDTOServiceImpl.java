@@ -67,17 +67,15 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
         //当前时间段
         HtyFctSaleOrgAllDTO htyFctSaleOrgAllDTO1 = dao.selectByOrgSearchDTO(searchDTO);
         if(htyFctSaleOrgAllDTO1 != null){
-            if(StringUtils.isNotEmpty(htyFctSaleOrgAllDTO1.getRanking())){
-                dto.setXsRanking(htyFctSaleOrgAllDTO1.getRanking());
-            }
+            dto.setXsRanking(htyFctSaleOrgAllDTO1.getRanking());
             if(htyFctSaleOrgAllDTO1.getXsLr() != null){
-                dto.setXsLr(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsLr().doubleValue(),10000,4));
+                dto.setXsLr(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsLr().doubleValue(),10000,2));
             }
             if(htyFctSaleOrgAllDTO1.getXsMl() != null){
                 dto.setXsMl(htyFctSaleOrgAllDTO1.getXsMl());
             }
             if(htyFctSaleOrgAllDTO1.getXsAmt() != null){
-                dto.setXsAmt(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsAmt().doubleValue(),10000,4));
+                dto.setXsAmt(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsAmt().doubleValue(),10000,2));
             }
             if(htyFctSaleOrgAllDTO1.getXsQty() != null){
                 dto.setXsQty(htyFctSaleOrgAllDTO1.getXsQty());
@@ -85,9 +83,8 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
         }
 
         if(StringUtils.isNotEmpty(startTime)&&StringUtils.isNotEmpty(endTime)){
-            Integer i = DateUtil.monthRangeDate(startTime,endTime);
-            startTime = DateUtil.dateFormat(startTime,i);
-            endTime = DateUtil.dateFormat(endTime,i);
+            startTime = DateUtil.dateFormat(startTime,12);
+            endTime = DateUtil.dateFormat(endTime,12);
             searchDTO.setEndTime(endTime);
             searchDTO.setStartTime(startTime);
 
@@ -153,7 +150,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
 
             //排名排序
             if(dto.getXsRanking() != null && dto.getUpperXsRanking() != null){
-                dto.setXsRankingSort(dto.getXsRanking().compareTo(dto.getUpperXsRanking())>0 ? "1":"0");
+                dto.setXsRankingSort(dto.getXsRanking()>(dto.getUpperXsRanking()) ? "1":"0");
             }
         }
 
