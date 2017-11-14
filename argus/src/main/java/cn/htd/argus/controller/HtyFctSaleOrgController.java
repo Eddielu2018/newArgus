@@ -3,6 +3,7 @@ package cn.htd.argus.controller;
 import cn.htd.argus.bean.*;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
+import cn.htd.argus.util.DateTimeUtil;
 import cn.htd.argus.util.RestResult;
 import cn.htd.common.Pager;
 import com.alibaba.dubbo.common.utils.StringUtils;
@@ -76,6 +77,10 @@ public class HtyFctSaleOrgController {
             HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
             //endTime = DateUtil.conversionDate(endTime);
             //startTime = DateUtil.conversionDate(startTime);
+            if(startTime == null && endTime == null){
+                endTime = DateTimeUtil.getTodayChar6();
+                startTime = DateTimeUtil.getTodayChar6();
+            }
             if(StringUtils.isNotEmpty(startTime)){
                 searchDTO.setStartTime(startTime);
             }
@@ -196,6 +201,9 @@ public class HtyFctSaleOrgController {
         logger.info("调用(HtyFctSaleOrgController.saleXzList)行业销售趋势入参，userId="+userId+",endTime="+endTime+",xzSort="+xzSort);
         RestResult result = new RestResult();
         try {
+            if(endTime == null){
+                endTime = DateTimeUtil.getTodayChar6();
+            }
 
             SaleXzListDTO dto = new SaleXzListDTO();
             List<SaleXzsDTO> saleXzDTOs = htyFctSaleOrgXzDTOService.selectByMonthDTO(userId, endTime, dateType);
@@ -271,6 +279,11 @@ public class HtyFctSaleOrgController {
         logger.info("调用(HtyFctSaleOrgController.saleProdList)品牌品类销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",prodSort="+prodSort);
         RestResult result = new RestResult();
         try {
+            if(startTime == null && endTime == null){
+                endTime = DateTimeUtil.getTodayChar6();
+                startTime = DateTimeUtil.getTodayChar6();
+            }
+
             SaleProdListDTO saleProdListDTO = new SaleProdListDTO();
             Pager pager = new Pager();
             if(page != null && rows != null){
@@ -321,6 +334,12 @@ public class HtyFctSaleOrgController {
         logger.info("调用(HtyFctSaleOrgController.saleProdList)商品销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",detailSort="+detailSort);
         RestResult result = new RestResult();
         try {
+
+            if(startTime == null && endTime == null){
+                endTime = DateTimeUtil.getTodayChar6();
+                startTime = DateTimeUtil.getTodayChar6();
+            }
+
             SaleDetailListDTO saleDetailListDTO = new SaleDetailListDTO();
             HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
             Pager pager = new Pager();
@@ -388,6 +407,11 @@ public class HtyFctSaleOrgController {
         logger.info("调用(HtyFctSaleOrgController.saleProdList)爆款销售分析入参，plCode="+plCode+",startTime="+startTime+",endTime="+endTime+",ppCode="+ppCode);
         RestResult result = new RestResult();
         try {
+            if(startTime == null && endTime == null){
+                endTime = DateTimeUtil.getTodayChar6();
+                startTime = DateTimeUtil.getTodayChar6();
+            }
+
             SaleHotListDTO saleHotListDTO = new SaleHotListDTO();
             HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
 
