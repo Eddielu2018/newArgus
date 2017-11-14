@@ -1,6 +1,7 @@
 package cn.htd.argus.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class HtyFctCustAllDto {
 	 private Long id;

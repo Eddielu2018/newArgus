@@ -102,5 +102,39 @@ public class HtyFctOrgMemberDetailDTOServiceImpl implements HtyFctOrgMemberDetai
 		dto.setEndTime(endTime);
 		return dao.selectSumAmtSixMonth(dto);
 	}
+	@Override
+	public List<HtyFctOrgMemberDetailDTO> selectSixMonthsFrequency(String userId, String startTime, String endTime) {
+		if (userId == null) {
+            throw new IllegalArgumentException("custCode is null");
+        }
+		if (startTime == null) {
+            throw new IllegalArgumentException("startTime is null");
+        }
+		if (endTime == null) {
+            throw new IllegalArgumentException("endTime is null");
+        }
+		HtyFctOrgMemberSixMonthDTO dto = new HtyFctOrgMemberSixMonthDTO();
+		dto.setCustCode(userId);
+		dto.setStartTime(startTime);
+		dto.setEndTime(endTime);
+		return dao.selectSixMonthsFrequency(dto);
+	}
+	@Override
+	public List<HtyFctOrgMemberDetailDTO> selectSixMonthsInterval(String userId, String startTime, String endTime) {
+		if (userId == null) {
+            throw new IllegalArgumentException("custCode is null");
+        }
+		if (startTime == null) {
+            throw new IllegalArgumentException("startTime is null");
+        }
+		if (endTime == null) {
+            throw new IllegalArgumentException("endTime is null");
+        }
+		HtyFctOrgMemberSixMonthDTO dto = new HtyFctOrgMemberSixMonthDTO();
+		dto.setCustCode(userId);
+		dto.setStartTime(startTime);
+		dto.setEndTime(endTime);
+		return dao.selectSixMonthsInterval(dto);
+	}
     
 }

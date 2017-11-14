@@ -195,7 +195,8 @@
   </select>
   
   <select id="selectForAmtAll" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
- 	SELECT ROWNUM from (
+ 	SELECT rm from(
+	SELECT t.*,ROWNUM as rm from (
 	SELECT  sum(amt_all) as amtAll,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
 	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
 	 <choose>
@@ -212,11 +213,12 @@
 	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
 		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
 	GROUP BY ORG_CODE ORDER BY amtAll DESC
-	) where ORG_CODE = #{userId} 
+	) t )where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForAmtOnline" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
- 	SELECT ROWNUM from (
+ 	SELECT rm from(
+	SELECT t.*,ROWNUM as rm from (
 	SELECT  sum(amt_online) as amtOnline,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
 	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
 	 <choose>
@@ -233,11 +235,12 @@
 	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
 		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
 	GROUP BY ORG_CODE ORDER BY amtOnline DESC
-	) where ORG_CODE = #{userId} 
+	) t )where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForQtyB2b" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
- 	SELECT ROWNUM from (
+ 	SELECT rm from(
+	SELECT t.*,ROWNUM as rm from (
 	SELECT  sum(qty_b2b) as qtyB2b,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
 	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
 	 <choose>
@@ -254,11 +257,12 @@
 	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
 		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
 	GROUP BY ORG_CODE ORDER BY qtyB2b DESC
-	) where ORG_CODE = #{userId} 
+	) t )where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForQtyBoss" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
- 	SELECT ROWNUM from (
+ 	SELECT rm from(
+	SELECT t.*,ROWNUM as rm from (
 	SELECT  sum(qty_boss) as qtyBoss,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
 	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
 	 <choose>
@@ -275,11 +279,12 @@
 	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
 		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
 	GROUP BY ORG_CODE ORDER BY qtyBoss DESC
-	) where ORG_CODE = #{userId} 
+	) t )where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForQtyHzg" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
- 	SELECT ROWNUM from (
+ 	SELECT rm from(
+	SELECT t.*,ROWNUM as rm from (
 	SELECT  sum(qty_hzg) as qtyHzg,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
 	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
 	 <choose>
@@ -296,11 +301,12 @@
 	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
 		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
 	GROUP BY ORG_CODE ORDER BY qtyHzg DESC
-	) where ORG_CODE = #{userId} 
+	) t )where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForAmtDk" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
- 	SELECT ROWNUM from (
+ 	SELECT rm from(
+	SELECT t.*,ROWNUM as rm from (
 	SELECT  sum(amt_dk) as amtDk,max(ORG_CODE) as  ORG_CODE FROM HTD_HTY.hty_fct_cust_all
 	 where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
 	 <choose>
@@ -317,7 +323,7 @@
 	and ORG_CODE in  (SELECT c.ORG_CODE from HTD_ODS.DCI_DIM_ORG c where c.ORG_XZCODE = 
 		(SELECT d.ORG_XZCODE from HTD_ODS.DCI_DIM_ORG d  where d.ORG_CODE = #{userId} )) 
 	GROUP BY ORG_CODE ORDER BY amtDk DESC
-	) where ORG_CODE = #{userId} 
+	) t )where ORG_CODE = #{userId} 
   </select>
   
   <select id="selectForPair" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustAnalysisInDTO" >
@@ -343,6 +349,7 @@
   </select>
   
   <select id="selectForManager" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
+     select * from(
     select 
     cust_name,amt_all,amt_online,qty_b2b,qty_boss,qty_hzg,amt_dk,qty_fs,expire_time
     ,area_proname,area_cityname,area_countyname,area_townname,cust_managername 
@@ -353,28 +360,28 @@
     <if test="isVip != null">
      and is_vip = #{isVip} 
     </if>
-    <if test="outType == 1">
-  	  and ROWNUM &gt;=1 and ROWNUM &lt;=10 
+    order by amt_all desc ,amt_online desc,qty_b2b desc ,qty_boss desc,qty_hzg desc,amt_dk desc)
+  	<if test="outType == 1">
+  	  where ROWNUM &gt;=1 and ROWNUM &lt;=10 
   	</if>
-    order by amt_all desc ,amt_online desc,qty_b2b desc ,qty_boss desc,qty_hzg desc,amt_dk desc
-  
   </select>
   
   <select id="selectForManagerYear" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
+    select * from(
     select 
     Max(cust_name) as cust_name,Max(cust_code) as cust_code,sum(amt_all) as amt_all,sum(amt_online) as amt_online 
-    from HTD_HTY.hty_fct_cust_all where date_key &gt;= #{dateKey} and org_code = #{orgCode}
+    from HTD_HTY.hty_fct_cust_all where date_key &gt;=#{dateKey} and org_code = #{orgCode}
     <if test="isHy != null">
      and is_hy = #{isHy} 
     </if>
     <if test="isVip != null">
      and is_vip = #{isVip} 
     </if>
-    <if test="outType == 1">
-  	  and ROWNUM &gt;=1 and ROWNUM &lt;=10 
-  	</if>
   	group by cust_code 
-    order by amt_all desc ,amt_online desc
+    order by amt_all desc ,amt_online desc)
+     <if test="outType == 1">
+  	  where ROWNUM &gt;=1 and ROWNUM &lt;=10 
+  	</if>
   </select>
   
   <select id="selectForManagerAll" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >
@@ -382,14 +389,22 @@
     Max(cust_code) as cust_code,sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,
     sum(qty_hzg) as qty_hzg,sum(amt_dk) as amt_dk,sum(qty_fs) as qty_fs
     from HTD_HTY.hty_fct_cust_all 
-    <where>
+    where cust_code in 
+   (select cust_code from(
+    select 
+    Max(cust_name) as cust_name,Max(cust_code) as cust_code,sum(amt_all) as amt_all,sum(amt_online) as amt_online 
+    from HTD_HTY.hty_fct_cust_all where date_key &gt;=#{dateKey} and org_code = #{orgCode}
     <if test="isHy != null">
      and is_hy = #{isHy} 
     </if>
     <if test="isVip != null">
      and is_vip = #{isVip} 
     </if>
-  	</where>
+  	group by cust_code 
+    order by amt_all desc ,amt_online desc)
+     <if test="outType == 1">
+  	  where ROWNUM &gt;=1 and ROWNUM &lt;=10 
+  	</if>)
     group by cust_code
   </select>
   
