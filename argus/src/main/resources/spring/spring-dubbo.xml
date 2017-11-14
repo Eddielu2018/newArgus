@@ -8,13 +8,12 @@
     http://www.springframework.org/schema/context/spring-context-3.0.xsd    
 	http://code.alibabatech.com/schema/dubbo        
 	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-	
-	<import resource="spring-resource.xml"/>
-	<import resource="spring-datasource.xml"/>
-	<import resource="spring-mybatis.xml"/>
-	<import resource="spring-service.xml"/>
-	<import resource="spring-dubbo.xml"/>
-	<import resource="spring-redis.xml"/>
-	<import resource="spring-rabbitmq.xml"/>
-	<import resource="spring-job.xml"/>
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="middleware_superboss" />
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" register="false"/>
+	<dubbo:reference id="userExportService" interface="cn.htd.usercenter.service.UserExportService" version="${zookeeper.version}" check="false"/>
+	<dubbo:reference id="memberBaseInfoService" interface="cn.htd.membercenter.service.MemberBaseInfoService" version="${zookeeper.version}" check="false"/>
 </beans>

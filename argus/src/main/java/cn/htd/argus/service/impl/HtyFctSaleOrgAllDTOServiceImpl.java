@@ -11,7 +11,6 @@ import com.alibaba.dubbo.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,7 +71,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
                 dto.setXsLr(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsLr().doubleValue(),10000,2));
             }
             if(htyFctSaleOrgAllDTO1.getXsMl() != null){
-                dto.setXsMl(htyFctSaleOrgAllDTO1.getXsMl());
+                dto.setXsMl(ArithUtil.mul(htyFctSaleOrgAllDTO1.getXsMl().doubleValue(),100));
             }
             if(htyFctSaleOrgAllDTO1.getXsAmt() != null){
                 dto.setXsAmt(ArithUtil.div(htyFctSaleOrgAllDTO1.getXsAmt().doubleValue(),10000,2));
@@ -106,7 +105,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
                 BigDecimal xsAmt =ArithUtil.sub(dto.getUpperXsAmt().doubleValue(),dto.getXsAmt().doubleValue());
                 if(dto.getUpperXsAmt().intValue() != 0){
                     xsAmt = ArithUtil.div(xsAmt.doubleValue(),dto.getUpperXsAmt().doubleValue(),4);
-                    dto.setXsAmtAn(xsAmt);
+                    dto.setXsAmtAn(ArithUtil.mul(xsAmt.doubleValue(),100));
                 }else{
                     dto.setXsAmtAn(null);
                 }
@@ -118,7 +117,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
                 BigDecimal xsLr = ArithUtil.sub(dto.getXsLr().doubleValue(),dto.getUpperXsLr().doubleValue());
                 if(dto.getUpperXsLr().intValue() != 0){
                     xsLr = ArithUtil.div(xsLr.doubleValue(),dto.getUpperXsLr().doubleValue(),4);
-                    dto.setXsLrAn(xsLr);
+                    dto.setXsLrAn(ArithUtil.mul(xsLr.doubleValue(),100));
                 }else{
                     dto.setXsLrAn(null);
                 }
@@ -131,7 +130,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
 
                 if(dto.getUpperXsQty().intValue() != 0){
                     xsQty = ArithUtil.div(xsQty.doubleValue(),dto.getUpperXsQty() , 4);
-                    dto.setXsQtyAn(xsQty);
+                    dto.setXsQtyAn(ArithUtil.mul(xsQty.doubleValue(),100));
                 }
                 dto.setXsQtySort(dto.getXsQty().intValue() > dto.getUpperXsQty().intValue() ? "1":"0");
             }
@@ -141,7 +140,7 @@ public class HtyFctSaleOrgAllDTOServiceImpl implements HtyFctSaleOrgAllDTOServic
                 BigDecimal xsMl = ArithUtil.sub(dto.getXsMl().doubleValue(),dto.getUpperXsMl().doubleValue());
                 if(dto.getUpperXsMl().intValue() != 0){
                     xsMl = ArithUtil.div(xsMl.doubleValue(),dto.getUpperXsMl().doubleValue(),4);
-
+                    dto.setXsMlAn(ArithUtil.mul(xsMl.doubleValue(),100));
                 }else{
                     dto.setXsMlAn(xsMl);
                 }

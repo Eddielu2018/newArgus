@@ -6,8 +6,10 @@ package cn.htd.argus.emuns;
 public enum ResultCodeEnum {
     SUCCESS("1", "成功！"),
     FAIL("0", "失败！"),
+    LOGIN_SUCCESS("2","登录成功！"),
     ERROR_SERVER_EXCEPTION("1001", "服务器错误！"),
     ERROR_IS_NOT_MENBER("2001", "数据不存在！"),
+    LOGIN_FAIL("8001","登录失败！"),
     LOGIN_TIMEOUT("9001", "登录超时！");
 
     private String code;
