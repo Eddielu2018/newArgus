@@ -86,6 +86,12 @@ public class HtyFctCustAllController {
         	}
         	if((searchStartTime != null && !"".equals(searchStartTime)) && (searchEndTime != null && !"".equals(searchEndTime))){
         		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
+        		SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
+            	String newTime = newDf.format(new Date()); 
+        		int pairTime = DateTimeUtil.getMonthSpace("201704",newTime);
+        		if(step > pairTime){
+        			step = pairTime;
+        		}
         	}
         	allDto = setString(allDto,step);
         	HtyFctCustInDto inDto = new HtyFctCustInDto();
@@ -256,15 +262,15 @@ public class HtyFctCustAllController {
 	    		Double t1 = dto.getAmtAll().doubleValue()/(10000*step);
 	    		if(t1 <= HtyFctCustUtil.T1_1){
 	    			T1_1++;
-	    		}else if(t1 > HtyFctCustUtil.T1_1 && t1 <= HtyFctCustUtil.T1_2){
+	    		}else if(t1 > HtyFctCustUtil.T1_1 && t1 <= HtyFctCustUtil.T1_2*step){
 	    			T1_2++;
-	    		}else if(t1 > HtyFctCustUtil.T1_2 && t1 <= HtyFctCustUtil.T1_3){
+	    		}else if(t1 > HtyFctCustUtil.T1_2*step && t1 <= HtyFctCustUtil.T1_3*step){
 	    			T1_3++;
-	    		}else if(t1 > HtyFctCustUtil.T1_3 && t1 <= HtyFctCustUtil.T1_4){
+	    		}else if(t1 > HtyFctCustUtil.T1_3*step && t1 <= HtyFctCustUtil.T1_4*step){
 	    			T1_4++;
-	    		}else if(t1 > HtyFctCustUtil.T1_4 && t1 <= HtyFctCustUtil.T1_5){
+	    		}else if(t1 > HtyFctCustUtil.T1_4*step && t1 <= HtyFctCustUtil.T1_5*step){
 	    			T1_5++;
-	    		}else if(t1 > HtyFctCustUtil.T1_5){
+	    		}else if(t1 > HtyFctCustUtil.T1_5*step){
 	    			T1_6++;
 	    		}
     		}else{
@@ -275,15 +281,15 @@ public class HtyFctCustAllController {
 	    		Double t2 = dto.getAmtOnline().doubleValue()/(10000*step);
 	    		if(t2 <= HtyFctCustUtil.T2_1){
 	    			T2_1++;
-	    		}else if(t2 > HtyFctCustUtil.T2_1 && t2 <= HtyFctCustUtil.T2_2){
+	    		}else if(t2 > HtyFctCustUtil.T2_1 && t2 <= HtyFctCustUtil.T2_2*step){
 	    			T2_2++;
-	    		}else if(t2 > HtyFctCustUtil.T2_2 && t2 <= HtyFctCustUtil.T2_3){
+	    		}else if(t2 > HtyFctCustUtil.T2_2*step && t2 <= HtyFctCustUtil.T2_3*step){
 	    			T2_3++;
-	    		}else if(t2 > HtyFctCustUtil.T2_3 && t2 <= HtyFctCustUtil.T2_4){
+	    		}else if(t2 > HtyFctCustUtil.T2_3*step && t2 <= HtyFctCustUtil.T2_4*step){
 	    			T2_4++;
-	    		}else if(t2 > HtyFctCustUtil.T2_4 && t2 <= HtyFctCustUtil.T2_5){
+	    		}else if(t2 > HtyFctCustUtil.T2_4*step && t2 <= HtyFctCustUtil.T2_5*step){
 	    			T2_5++;
-	    		}else if(t2 > HtyFctCustUtil.T2_5){
+	    		}else if(t2 > HtyFctCustUtil.T2_5*step){
 	    			T2_6++;
 	    		}
     		}else{
@@ -294,15 +300,15 @@ public class HtyFctCustAllController {
 	    		Integer t3 = dto.getQtyB2b().intValue();
 	    		if(t3 <= HtyFctCustUtil.T3_1){
 	    			T3_1++;
-	    		}else if(t3 > HtyFctCustUtil.T3_1 && t3 <= HtyFctCustUtil.T3_2){
+	    		}else if(t3 > HtyFctCustUtil.T3_1 && t3 <= HtyFctCustUtil.T3_2*step){
 	    			T3_2++;
-	    		}else if(t3 > HtyFctCustUtil.T3_2 && t3 <= HtyFctCustUtil.T3_3){
+	    		}else if(t3 > HtyFctCustUtil.T3_2*step && t3 <= HtyFctCustUtil.T3_3*step){
 	    			T3_3++;
-	    		}else if(t3 > HtyFctCustUtil.T3_3 && t3 <= HtyFctCustUtil.T3_4){
+	    		}else if(t3 > HtyFctCustUtil.T3_3*step && t3 <= HtyFctCustUtil.T3_4*step){
 	    			T3_4++;
-	    		}else if(t3 > HtyFctCustUtil.T3_4 && t3 <= HtyFctCustUtil.T3_5){
+	    		}else if(t3 > HtyFctCustUtil.T3_4*step && t3 <= HtyFctCustUtil.T3_5*step){
 	    			T3_5++;
-	    		}else if(t3 > HtyFctCustUtil.T3_5){
+	    		}else if(t3 > HtyFctCustUtil.T3_5*step){
 	    			T3_6++;
 	    		}
     		}else{
@@ -313,15 +319,15 @@ public class HtyFctCustAllController {
 	    		Integer t4 = dto.getQtyBoss().intValue();
 	    		if(t4 <= HtyFctCustUtil.T4_1){
 	    			T4_1++;
-	    		}else if(t4 > HtyFctCustUtil.T4_1 && t4 <= HtyFctCustUtil.T4_2){
+	    		}else if(t4 > HtyFctCustUtil.T4_1 && t4 <= HtyFctCustUtil.T4_2*step){
 	    			T4_2++;
-	    		}else if(t4 > HtyFctCustUtil.T4_2 && t4 <= HtyFctCustUtil.T4_3){
+	    		}else if(t4 > HtyFctCustUtil.T4_2*step && t4 <= HtyFctCustUtil.T4_3*step){
 	    			T4_3++;
-	    		}else if(t4 > HtyFctCustUtil.T4_3 && t4 <= HtyFctCustUtil.T4_4){
+	    		}else if(t4 > HtyFctCustUtil.T4_3*step && t4 <= HtyFctCustUtil.T4_4*step){
 	    			T4_4++;
-	    		}else if(t4 > HtyFctCustUtil.T4_4 && t4 <= HtyFctCustUtil.T4_5){
+	    		}else if(t4 > HtyFctCustUtil.T4_4*step && t4 <= HtyFctCustUtil.T4_5*step){
 	    			T4_5++;
-	    		}else if(t4 > HtyFctCustUtil.T4_5){
+	    		}else if(t4 > HtyFctCustUtil.T4_5*step){
 	    			T4_6++;
 	    		}
     		}else{
@@ -332,15 +338,15 @@ public class HtyFctCustAllController {
 	    		Integer t5 = dto.getQtyHzg().intValue();
 	    		if(t5 <= HtyFctCustUtil.T5_1){
 	    			T5_1++;
-	    		}else if(t5 > HtyFctCustUtil.T5_1 && t5 <= HtyFctCustUtil.T5_2){
+	    		}else if(t5 > HtyFctCustUtil.T5_1 && t5 <= HtyFctCustUtil.T5_2*step){
 	    			T5_2++;
-	    		}else if(t5 > HtyFctCustUtil.T5_2 && t5 <= HtyFctCustUtil.T5_3){
+	    		}else if(t5 > HtyFctCustUtil.T5_2*step && t5 <= HtyFctCustUtil.T5_3*step){
 	    			T5_3++;
-	    		}else if(t5 > HtyFctCustUtil.T5_3 && t5 <= HtyFctCustUtil.T5_4){
+	    		}else if(t5 > HtyFctCustUtil.T5_3*step && t5 <= HtyFctCustUtil.T5_4*step){
 	    			T5_4++;
-	    		}else if(t5 > HtyFctCustUtil.T5_4 && t5 <= HtyFctCustUtil.T5_5){
+	    		}else if(t5 > HtyFctCustUtil.T5_4*step && t5 <= HtyFctCustUtil.T5_5*step){
 	    			T5_5++;
-	    		}else if(t5 > HtyFctCustUtil.T5_5){
+	    		}else if(t5 > HtyFctCustUtil.T5_5*step){
 	    			T5_6++;
 	    		}
     		}else{
@@ -351,15 +357,15 @@ public class HtyFctCustAllController {
 	    		Double t6 = dto.getAmtDk().doubleValue()/(10000*step);
 	    		if(t6 <= HtyFctCustUtil.T6_1){
 	    			T6_1++;
-	    		}else if(t6 > HtyFctCustUtil.T6_1 && t6 <= HtyFctCustUtil.T6_2){
+	    		}else if(t6 > HtyFctCustUtil.T6_1 && t6 <= HtyFctCustUtil.T6_2*step){
 	    			T6_2++;
-	    		}else if(t6 > HtyFctCustUtil.T6_2 && t6 <= HtyFctCustUtil.T6_3){
+	    		}else if(t6 > HtyFctCustUtil.T6_2*step && t6 <= HtyFctCustUtil.T6_3*step){
 	    			T6_3++;
-	    		}else if(t6 > HtyFctCustUtil.T6_3 && t6 <= HtyFctCustUtil.T6_4){
+	    		}else if(t6 > HtyFctCustUtil.T6_3*step && t6 <= HtyFctCustUtil.T6_4*step){
 	    			T6_4++;
-	    		}else if(t6 > HtyFctCustUtil.T6_4 && t6 <= HtyFctCustUtil.T6_5){
+	    		}else if(t6 > HtyFctCustUtil.T6_4*step && t6 <= HtyFctCustUtil.T6_5*step){
 	    			T6_5++;
-	    		}else if(t6 > HtyFctCustUtil.T6_5){
+	    		}else if(t6 > HtyFctCustUtil.T6_5*step){
 	    			T6_6++;
 	    		}
     		}else{
@@ -535,6 +541,12 @@ public class HtyFctCustAllController {
         	int step = 1;
         	if(searchStartTime != null && searchEndTime != null){
         		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
+        		SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
+            	String newTime = newDf.format(new Date()); 
+        		int pairTime = DateTimeUtil.getMonthSpace("201704",newTime);
+        		if(step > pairTime){
+        			step = pairTime;
+        		}
         	}
         	List<String> list = new ArrayList<String>();
         	HtyFctCustAllOutDTO allDto = new HtyFctCustAllOutDTO();
@@ -604,7 +616,6 @@ public class HtyFctCustAllController {
         try {
         	HtyFctCustAnalysisInOutDTO custAllDto = new HtyFctCustAnalysisInOutDTO();
         	Integer regionOrg = dciDimOrgDTOService.selectRegionNum(userId);
-        	Integer regionNoOrg = dciDimOrgDTOService.selectRegionNumWithOutCust(userId);
         	//上部数据
         	SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
         	String newTime = newDf.format(new Date()); 
@@ -636,6 +647,60 @@ public class HtyFctCustAllController {
         		custAllDto.setQtyBossNum(temp4>99?99:temp4);
         		custAllDto.setQtyHzgNum(temp5>99?99:temp5);
         		custAllDto.setAmtDkNum(temp6>99?99:temp6);
+        	}
+        	//右下圈
+        	List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+        	Map<String,String> map1 = new HashMap<String,String>();
+            Map<String,String> map2 = new HashMap<String,String>();
+            Map<String,String> map3 = new HashMap<String,String>();
+            Map<String,String> map4 = new HashMap<String,String>();
+	        map1.put("name", "超级老板采购");
+	        map2.put("name", "商城采购");
+	        map4.put("name", "VMS采购");
+	        map3.put("name", "线下采购");
+	        if(custUpDto != null){
+	        	map1.put("value", custUpDto.getAmtOnlineBoss()!=null?custUpDto.getAmtOnlineBoss().toString():"0");
+	        	 map2.put("value", custUpDto.getAmtOnlineB2b()!=null?custUpDto.getAmtOnlineB2b().toString():"0");
+	        	 map4.put("value", custUpDto.getAmtOnlineVms()!=null?custUpDto.getAmtOnlineVms().toString():"0");
+	        	
+	        	if(custUpDto.getAmtAll() != null && custUpDto.getAmtOnline() !=null){
+	        		map3.put("value", MathUtil.getDouble(custUpDto.getAmtAll().doubleValue()-custUpDto.getAmtOnline().doubleValue()));
+	        	}else{
+	        		map3.put("value", null);
+	        	}
+	        }
+	        list.add(map1);
+	        list.add(map2);
+	        list.add(map3);
+	        list.add(map4);
+        	custAllDto.setMap(list);
+        	result.setData(custAllDto);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+        } catch (Exception e) {
+        	logger.error("用户分析" + e);
+        	result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+        	result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+        }
+     return result;
+	}
+	
+	@RequestMapping("/cust/AnalysisVertical")
+    public RestResult indexForAnalysisVertical(@RequestParam(value = "userId", required = true) String userId,
+    		@RequestParam(value = "startTime", required = false) String startTime,
+    		@RequestParam(value = "endTime", required = false) String endTime,
+    		@RequestParam(value = "type", required = true) int type,
+    		@RequestParam(value = "bossType", required = true) int bossType){
+		RestResult result = new RestResult();
+        logger.info("调用(HtyFctCustAllDTOService.indexForAnalysisVertical)用户分析竖图");
+        try {
+        	HtyFctCustAnalysisInOutDTO custAllDto = new HtyFctCustAnalysisInOutDTO();
+        	Integer regionNoOrg = dciDimOrgDTOService.selectRegionNumWithOutCust(userId);
+        	SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
+        	String newTime = newDf.format(new Date()); 
+        	if(startTime == null || endTime == null){
+        		startTime = newTime;
+        		endTime = newTime;
         	}
         	//左下图表
         	int level = 1;
@@ -784,37 +849,11 @@ public class HtyFctCustAllController {
         		custAllDto.setListDate(listDate);
         		custAllDto.setListPair(listPair);
         	}
-        	//右下圈
-        	List<Map<String,String>> list = new ArrayList<Map<String,String>>();
-        	Map<String,String> map1 = new HashMap<String,String>();
-            Map<String,String> map2 = new HashMap<String,String>();
-            Map<String,String> map3 = new HashMap<String,String>();
-            Map<String,String> map4 = new HashMap<String,String>();
-	        map1.put("name", "超级老板采购");
-	        map2.put("name", "商城采购");
-	        map4.put("name", "VMS采购");
-	        map3.put("name", "线下采购");
-	        if(custUpDto != null){
-	        	map1.put("value", custUpDto.getAmtOnlineBoss()!=null?custUpDto.getAmtOnlineBoss().toString():"0");
-	        	 map2.put("value", custUpDto.getAmtOnlineB2b()!=null?custUpDto.getAmtOnlineB2b().toString():"0");
-	        	 map4.put("value", custUpDto.getAmtOnlineVms()!=null?custUpDto.getAmtOnlineVms().toString():"0");
-	        	
-	        	if(custUpDto.getAmtAll() != null && custUpDto.getAmtOnline() !=null){
-	        		map3.put("value", MathUtil.getDouble(custUpDto.getAmtAll().doubleValue()-custUpDto.getAmtOnline().doubleValue()));
-	        	}else{
-	        		map3.put("value", null);
-	        	}
-	        }
-	        list.add(map1);
-	        list.add(map2);
-	        list.add(map3);
-	        list.add(map4);
-        	custAllDto.setMap(list);
         	result.setData(custAllDto);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
             result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
         } catch (Exception e) {
-        	logger.error("用户分析" + e);
+        	logger.error("用户分析竖图" + e);
         	result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
         	result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
         }
@@ -831,6 +870,7 @@ public class HtyFctCustAllController {
 	    try {
 	        SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
 	        String newTime = newDf.format(new Date()); 
+	        String newYear = DateUtil.dateFormat(newTime, 12).substring(0, 4);
 	        if(time == null ){
 	        	time = newTime;
 	        }
@@ -851,7 +891,27 @@ public class HtyFctCustAllController {
 	        		isVip = 1;
 	        	}
 	        }
-	        List<HtyFctCustAllDto> list = htyFctCustAllDTOService.selectForManager(userId, time, isHy, isVip,"1");
+	        List<HtyFctCustAllDto> list = null;
+	        if(pageType == 0){
+	        	//取年
+	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, newYear, isHy, isVip,"1");
+	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, newYear, isHy, isVip,"1");
+	        	if(list != null && tempAll != null && list.size()>0 && tempAll.size()>0){
+	        		for(HtyFctCustAllDto dto : list){
+	        			for(HtyFctCustAllDto temp : tempAll){
+	        				if(dto.getCustCode().equals(temp.getCustCode())){
+	        					dto.setQtyB2b(temp.getQtyB2b());
+	        					dto.setQtyBoss(temp.getQtyBoss());
+	        					dto.setQtyHzg(temp.getQtyHzg());
+	        					dto.setQtyFs(temp.getQtyFs());
+	        					dto.setAmtDk(temp.getAmtDk());
+	        				}
+	        			}
+	        		}
+	        	}
+	        }else{
+	        	list = htyFctCustAllDTOService.selectForManager(userId, time, isHy, isVip,"1");
+	        }
 	        if(list != null && list.size()>0){
 		        for(HtyFctCustAllDto dto : list){
 		        	if(dto.getAmtAll() == null){
@@ -1042,7 +1102,28 @@ public class HtyFctCustAllController {
 		logger.info("调用(HtyFctCustAllDTOService.indexForManagerExcle)用户管理导出");
 		byte[] content = null;
 		try {
-	        List<HtyFctCustAllDto> list = htyFctCustAllDTOService.selectForManager(userId, time, aliveType, pageType,"0");
+			List<HtyFctCustAllDto> list = null;
+			if(pageType == 0){
+	        	//取年
+	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, time, aliveType, pageType,"0");
+	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, time, aliveType, pageType,"0");
+	        	if(list != null && tempAll != null && list.size()>0 && tempAll.size()>0){
+	        		for(HtyFctCustAllDto dto : list){
+	        			for(HtyFctCustAllDto temp : tempAll){
+	        				if(dto.getCustCode().equals(temp.getCustCode())){
+	        					dto.setQtyB2b(temp.getQtyB2b());
+	        					dto.setQtyBoss(temp.getQtyBoss());
+	        					dto.setQtyHzg(temp.getQtyHzg());
+	        					dto.setQtyFs(temp.getQtyFs());
+	        					dto.setAmtDk(temp.getAmtDk());
+	        					break;
+	        				}
+	        			}
+	        		}
+	        	}
+	        }else{
+	        	list = htyFctCustAllDTOService.selectForManager(userId, time, aliveType, pageType,"0");
+	        }
 	        if(list != null && list.size()>0){
 		        for(HtyFctCustAllDto dto : list){
 		        	if(dto.getAmtAll() == null){
@@ -1198,6 +1279,7 @@ public class HtyFctCustAllController {
 		SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
 		String time = request.getParameter("time");
         String newTime = newDf.format(new Date()); 
+        String newYear = DateUtil.dateFormat(newTime, 12).substring(0, 4);
         if(time == null ){
         	time = newTime;
         }
@@ -1207,7 +1289,12 @@ public class HtyFctCustAllController {
 		}else{
 			filename = "VIPAlive.xlsx";
 		}
-		byte[] buffer = indexForManagerExcle(userId,aliveType,pageType,time);
+		byte[] buffer = null;
+		if(pageType == 0){
+			buffer = indexForManagerExcle(userId,aliveType,pageType,newYear);
+		}else{
+			buffer = indexForManagerExcle(userId,aliveType,pageType,time);
+		}
 		response.reset();  
 		response.addHeader("Content-Disposition", "attachment;filename="  
                 + new String(filename.getBytes()));  

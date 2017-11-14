@@ -50,6 +50,8 @@
   </sql>
 
   <select id="queryBurstSumPage" resultMap="BaseResultMap">
+  	select * FROM(
+	select t.*,rownum as rn from (
     SELECT
     MAX (PROD_NAME) as PROD_NAME,
 	MAX (PROD_CODE) as PROD_CODE,
@@ -63,15 +65,17 @@
     SUM(XS_DD) AS XS_DD
     FROM
     HTD_HTY.hty_fct_sale_org_detail
-    <include refid="where"/>
-     and ROWNUM &gt;= #{pager.pageOffset} and ROWNUM &lt; #{pager.pageOffset}+#{pager.rows} 
+  	<include refid="where"/>
     GROUP BY
     PROD_CODE
     ORDER BY
-    XS_AMT DESC
+    XS_AMT DESC) t )
+    where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
   </select>
 
   <select id="queryStopSumPage" resultMap="BaseResultMap">
+  	select * FROM(
+	select t.*,rownum as rn from (
     SELECT
     MAX (PROD_NAME) as PROD_NAME,
 	MAX (PROD_CODE) as PROD_CODE,
@@ -85,12 +89,12 @@
     SUM(XS_DD) AS XS_DD
     FROM
     HTD_HTY.hty_fct_sale_org_detail
-    <include refid="where"/>
-     and ROWNUM &gt;= #{pager.pageOffset} and ROWNUM &lt; #{pager.pageOffset}+#{pager.rows} 
+  	<include refid="where"/>
     GROUP BY
     PROD_CODE
     ORDER BY
-    XS_AMT ASC
+    XS_AMT ASC) t )
+    where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
   </select>
 
   <select id="queryPageSumCount" resultType="long">
@@ -124,21 +128,25 @@
   </select>
 
   <select id="queryBurstPage" resultMap="BaseResultMap">
+  	select * FROM(
+	select t.*,rownum as rn from (
     select
     <include refid="Base_Column_List" />
     from HTD_HTY.hty_fct_sale_org_detail
     <include refid="where"/>
-    and ROWNUM &gt;= #{pager.pageOffset} and ROWNUM &lt; #{pager.pageOffset}+#{pager.rows} 
-    ORDER BY XS_AMT DESC
+    ORDER BY XS_AMT DESC) t )
+    where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
   </select>
 
   <select id="queryStopPage" resultMap="BaseResultMap">
+  	select * FROM(
+	select t.*,rownum as rn from (
     select
     <include refid="Base_Column_List" />
     from HTD_HTY.hty_fct_sale_org_detail
     <include refid="where"/>
-    and ROWNUM &gt;= #{pager.pageOffset} and ROWNUM &lt; #{pager.pageOffset}+#{pager.rows} 
-    ORDER BY XS_AMT ASC
+    ORDER BY XS_AMT ASC) t )
+    where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
   </select>
 
   <!-- 查询所有品牌-->
