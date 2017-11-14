@@ -52,43 +52,58 @@
       </if>
     </where>
   </select>
+  <!-- 单月销售列表 -->
   <select id="selectWithName" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgMemberDetailDTO" >
    select
-   	mem.date_key, mem.org_code, mem.cust_code, mem.xs_amt, mem.xs_qty, mem.last_date, mem.cust_name
-    from hty_fct_member_org_detail mem 
-  	where mem.date_key = #{dateKey} and mem.org_code = #{orgCode} 
+   	date_key, org_code, cust_code, xs_amt, xs_qty, last_date, cust_name
+    from hty_fct_member_org_detail
+  	where date_key = #{dateKey} and org_code = #{orgCode} 
   	<choose>
   		<when test="sortType == 0">
-  			order by mem.xs_amt desc
+  			order by xs_amt desc
   		</when>
   		<when test="sortType == 1">
-  			order by mem.xs_qty desc
+  			order by xs_qty desc
   		</when>
   		<when test="sortType == 2">
-  			order by mem.last_date desc
+  			order by last_date desc
   		</when>
   	</choose>
   	<if test="outType == 1">LIMIT 10</if>
   </select>
-  
+  <!-- 六月频次列表 -->
+  <select id="selectSixMonthsFrequency" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctOrgMemberSixMonthDTO" >
+   select 
+   SUM(xs_qty) as xs_qty,cust_code,cust_name 
+    from hty_fct_member_org_detail
+  	where  date_key &gt;= #{startTime} and date_key &lt;= #{endTime} and org_code = #{custCode}  GROUP BY cust_code ORDER BY xs_qty DESC LIMIT 10
+  </select>
+  <!-- 六月间隔列表 -->
+  <select id="selectSixMonthsInterval" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctOrgMemberSixMonthDTO" >
+   select 
+  	max(last_date) as last_date,cust_code,cust_name 
+    from hty_fct_member_org_detail
+  	where  date_key &gt;= #{startTime} and date_key &lt;= #{endTime} and org_code = #{custCode}  GROUP BY cust_code ORDER BY last_date DESC LIMIT 10
+  </select>
+  <!-- 六月单店销售列表 -->
    <select id="selectSixMonth" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctOrgMemberSixMonthDTO" >
    select
    <include refid="Base_Column_List" />
     from hty_fct_member_org_detail
   	where  date_key &gt;= #{startTime} and date_key &lt;= #{endTime} and cust_code = #{custCode} 
   </select>
-  
+  <!-- 六月销售列表 -->
   <select id="selectSixMonthsAll" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctOrgMemberSixMonthDTO" >
    select 
    SUM(xs_amt) as xs_amt,cust_code,cust_name 
     from hty_fct_member_org_detail
   	where  date_key &gt;= #{startTime} and date_key &lt;= #{endTime} and org_code = #{custCode}  GROUP BY cust_code ORDER BY xs_amt DESC LIMIT 10
   </select>
-  
+  <!-- 单月销售总数 -->
   <select id="selectSumAmt" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.dto.HtyFctOrgMemberDetailDTO" >
   	SELECT sum(xs_amt) FROM hty_fct_member_org_detail where org_code=#{orgCode} and date_key=#{dateKey} and xs_amt &gt;= 0;
   </select>
-  
+  <!-- 六月销售总数 -->
   <select id="selectSumAmtSixMonth" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.bean.HtyFctOrgMemberSixMonthDTO" >
   	SELECT sum(xs_amt) FROM hty_fct_member_org_detail where org_code=#{custCode} and date_key &gt;= #{startTime} and date_key &lt;= #{endTime}  and xs_amt &gt;= 0;
   </select>

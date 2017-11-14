@@ -86,12 +86,6 @@ public class HtyFctCustAllController {
         	}
         	if((searchStartTime != null && !"".equals(searchStartTime)) && (searchEndTime != null && !"".equals(searchEndTime))){
         		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
-        		SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
-            	String newTime = newDf.format(new Date()); 
-        		int pairTime = DateTimeUtil.getMonthSpace("201704",newTime);
-        		if(step > pairTime){
-        			step = pairTime;
-        		}
         	}
         	allDto = setString(allDto,step);
         	HtyFctCustInDto inDto = new HtyFctCustInDto();
@@ -541,12 +535,6 @@ public class HtyFctCustAllController {
         	int step = 1;
         	if(searchStartTime != null && searchEndTime != null){
         		step = DateTimeUtil.getMonthSpace(searchStartTime,searchEndTime);
-        		SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
-            	String newTime = newDf.format(new Date()); 
-        		int pairTime = DateTimeUtil.getMonthSpace("201704",newTime);
-        		if(step > pairTime){
-        			step = pairTime;
-        		}
         	}
         	List<String> list = new ArrayList<String>();
         	HtyFctCustAllOutDTO allDto = new HtyFctCustAllOutDTO();
@@ -870,7 +858,7 @@ public class HtyFctCustAllController {
 	    try {
 	        SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
 	        String newTime = newDf.format(new Date()); 
-	        String newYear = DateUtil.dateFormat(newTime, 12).substring(0, 4);
+	        String newYear = DateUtil.dateFormat(newTime, 12);
 	        if(time == null ){
 	        	time = newTime;
 	        }
@@ -949,7 +937,7 @@ public class HtyFctCustAllController {
 	    	//取列表
 	    	List<HtyFctOrgMemberDetailDTO> memberList = htyFctOrgMemberDetailDTOService.selectWithName(userId, dateTime, sortType,1);
 	    	//解析列表
-	    	result.setData(getMothList(memberList,allAmt,1));
+	    	result.setData(getMothList(memberList,allAmt));
 	        result.setCode(ResultCodeEnum.SUCCESS.getCode());
 	        result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
 	    } catch (Exception e) {
@@ -962,7 +950,8 @@ public class HtyFctCustAllController {
 	
 	@RequestMapping("/cust/banner")
 	public RestResult indexForMonthBanner(@RequestParam(value = "userId", required = true) String userId,
-			@RequestParam(value = "custCode", required = true) String custCode){
+			@RequestParam(value = "custCode", required = true) String custCode,
+			@RequestParam(value = "sortType", required = true) int sortType){
 		RestResult result = new RestResult();
 	    logger.info("调用(HtyFctCustAllDTOService.indexForMonth)用户管理月分析");
 	    try {
@@ -973,17 +962,35 @@ public class HtyFctCustAllController {
 	    	//取当月销售量
 	    	BigDecimal allAmt = htyFctOrgMemberDetailDTOService.selectSumAmtSixMonth(userId, sixMonth, today);
 	    	//取列表
-	    	List<HtyFctOrgMemberDetailDTO> memberList = htyFctOrgMemberDetailDTOService.selectSixMonthsAll(userId, sixMonth, today);
+	    	List<HtyFctOrgMemberDetailDTO> memberList = null;
+	    	if(sortType == 0){
+	    		memberList = htyFctOrgMemberDetailDTOService.selectSixMonthsAll(userId, sixMonth, today);
+	    	}else if(sortType == 1){
+	    		memberList = htyFctOrgMemberDetailDTOService.selectSixMonthsFrequency(userId, sixMonth, today);
+	    	}else if(sortType == 2){
+	    		memberList = htyFctOrgMemberDetailDTOService.selectSixMonthsInterval(userId, sixMonth, today);
+	    	}
+	    	//单店六月
 	    	List<HtyFctOrgMemberDetailDTO> custList = htyFctOrgMemberDetailDTOService.selectSixMonth(custCode, sixMonth, today);
 	    	//解析列表
-	    	dto.setSortList(getMothList(memberList,allAmt,0));
+	    	dto.setSortList(getMothListForBanner(memberList,allAmt,sortType));
 	    	List<String> listName = new ArrayList<String>();
 	    	List<String> listDate = new ArrayList<String>();
 	    	if(custList != null && custList.size()>0){
 	    		for(HtyFctOrgMemberDetailDTO member: custList){
 	    			listName.add(member.getDateKey());
-	    			if(member.getXsQty() != null){
-	    				listDate.add(String.valueOf(member.getXsQty()));
+	    			if(sortType == 0){
+	    				if(member.getXsAmt() != null){
+		    				listDate.add(String.valueOf(member.getXsAmt()));
+		    			}
+	    			}else if(sortType == 1){
+	    				if(member.getXsQty() != null){
+	    					listDate.add(String.valueOf(member.getXsQty()));
+	    				}
+	    			}else if(sortType == 2){
+	    				if(member.getXsAmt() != null){
+		    				listDate.add(String.valueOf(member.getXsAmt()));
+		    			}
 	    			}
 	    		}
 	    	}
@@ -1000,7 +1007,7 @@ public class HtyFctCustAllController {
 	 return result;
 	}
 	
-	private List<HtyFctOrgMemberMothOutDTO> getMothList(List<HtyFctOrgMemberDetailDTO> memberList,BigDecimal allAmt,int type) throws ParseException{
+	private List<HtyFctOrgMemberMothOutDTO> getMothList(List<HtyFctOrgMemberDetailDTO> memberList,BigDecimal allAmt) throws ParseException{
 		List<HtyFctOrgMemberMothOutDTO> list = new ArrayList<HtyFctOrgMemberMothOutDTO>();
 		if(allAmt != null && memberList != null && memberList.size()>0){
     		for(HtyFctOrgMemberDetailDTO member : memberList){
@@ -1008,14 +1015,45 @@ public class HtyFctCustAllController {
     			dto.setCustCode(member.getCustCode());
     			dto.setCustName(member.getCustName());
     			dto.setXsAmt(member.getXsAmt());
+    			dto.setXsQty(member.getXsQty().intValue());
     			if(member.getXsAmt() != null && member.getXsAmt().doubleValue()>=0){
     				dto.setSellPoint(String.valueOf(MathUtil.getPairToDouble(member.getXsAmt(), allAmt)));
     			}else{
     				dto.setSellPoint("0");
     			}
-    			if(type == 1){
-	    			dto.setLastDate(member.getLastDate());
-	    			if(member.getLastDate() != null){
+	    		dto.setLastDate(member.getLastDate());
+	    		if(member.getLastDate() != null){
+		    		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+					Date start = sdf.parse(member.getLastDate());
+					dto.setLastTime(DateUtil.getTowTimeDays(start, new Date()));
+	    		}else{
+	    			dto.setLastTime(null);
+	    		}
+    			list.add(dto);
+    		}
+    	}
+		return list;
+	}
+	
+	private List<HtyFctOrgMemberMothOutDTO> getMothListForBanner(List<HtyFctOrgMemberDetailDTO> memberList,BigDecimal allAmt,int type) throws ParseException{
+		List<HtyFctOrgMemberMothOutDTO> list = new ArrayList<HtyFctOrgMemberMothOutDTO>();
+		if(allAmt != null && memberList != null && memberList.size()>0){
+    		for(HtyFctOrgMemberDetailDTO member : memberList){
+    			HtyFctOrgMemberMothOutDTO dto = new HtyFctOrgMemberMothOutDTO();
+    			dto.setCustCode(member.getCustCode());
+    			dto.setCustName(member.getCustName());
+    			if(type == 0){
+    				dto.setXsAmt(member.getXsAmt());
+    				if(member.getXsAmt() != null && member.getXsAmt().doubleValue()>=0){
+        				dto.setSellPoint(String.valueOf(MathUtil.getPairToDouble(member.getXsAmt(), allAmt)));
+        			}else{
+        				dto.setSellPoint("0");
+        			}
+    			}else if(type == 1){
+    				dto.setXsQty(member.getXsQty().intValue());
+    			}else if(type == 2){
+    				dto.setLastDate(member.getLastDate());
+    				if(member.getLastDate() != null){
 		    			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 						Date start = sdf.parse(member.getLastDate());
 						dto.setLastTime(DateUtil.getTowTimeDays(start, new Date()));
@@ -1037,7 +1075,7 @@ public class HtyFctCustAllController {
     	//取列表
     	List<HtyFctOrgMemberDetailDTO> memberList = htyFctOrgMemberDetailDTOService.selectWithName(userId, dateTime, sortType,0);
     	try {
-			List<HtyFctOrgMemberMothOutDTO> list = getMothList(memberList,allAmt,1);
+			List<HtyFctOrgMemberMothOutDTO> list = getMothList(memberList,allAmt);
 			XSSFWorkbook  book = new XSSFWorkbook();
 		    XSSFSheet sheet = book.createSheet("sheet1");
 		    XSSFRow firstRow = sheet.createRow(0);
@@ -1279,7 +1317,7 @@ public class HtyFctCustAllController {
 		SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
 		String time = request.getParameter("time");
         String newTime = newDf.format(new Date()); 
-        String newYear = DateUtil.dateFormat(newTime, 12).substring(0, 4);
+        String newYear = DateUtil.dateFormat(newTime, 12);
         if(time == null ){
         	time = newTime;
         }

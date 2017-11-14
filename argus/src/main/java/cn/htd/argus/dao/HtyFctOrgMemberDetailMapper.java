@@ -20,6 +20,10 @@ public interface HtyFctOrgMemberDetailMapper {
     
     List<HtyFctOrgMemberDetailDTO> selectSixMonthsAll(HtyFctOrgMemberSixMonthDTO model);
     
+    List<HtyFctOrgMemberDetailDTO> selectSixMonthsFrequency(HtyFctOrgMemberSixMonthDTO model);
+    
+    List<HtyFctOrgMemberDetailDTO> selectSixMonthsInterval(HtyFctOrgMemberSixMonthDTO model);
+    
     BigDecimal selectSumAmtSixMonth(HtyFctOrgMemberSixMonthDTO model);
     
     BigDecimal selectSumAmt(HtyFctOrgMemberDetailDTO model);

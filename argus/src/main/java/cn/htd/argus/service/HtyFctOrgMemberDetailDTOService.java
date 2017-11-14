@@ -20,6 +20,10 @@ public interface HtyFctOrgMemberDetailDTOService {
     
     List<HtyFctOrgMemberDetailDTO> selectSixMonthsAll(String userId,String startTime,String endTime);
     
+    List<HtyFctOrgMemberDetailDTO> selectSixMonthsFrequency(String userId,String startTime,String endTime);
+    
+    List<HtyFctOrgMemberDetailDTO> selectSixMonthsInterval(String userId,String startTime,String endTime);
+    
     BigDecimal selectSumAmtSixMonth(String userId,String startTime,String endTime);
     
     BigDecimal selectSumAmt(String userId,String dateTime);

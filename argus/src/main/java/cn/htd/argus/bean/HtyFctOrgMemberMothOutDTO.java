@@ -6,6 +6,7 @@ public class HtyFctOrgMemberMothOutDTO {
 	private String custCode;
 	private String custName;
 	private BigDecimal xsAmt;
+	private Integer xsQty;
 	private String sellPoint;
 	private String lastDate;
 	private Integer lastTime;
@@ -44,6 +45,12 @@ public class HtyFctOrgMemberMothOutDTO {
 	}
 	public void setCustCode(String custCode) {
 		this.custCode = custCode;
+	}
+	public Integer getXsQty() {
+		return xsQty;
+	}
+	public void setXsQty(Integer xsQty) {
+		this.xsQty = xsQty;
 	}
 	
 }
