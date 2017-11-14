@@ -42,8 +42,8 @@
 			ORG_CODE,
 			SUM(XS_AMT) AS XS_AMT,
 			SUM(XS_QTY) AS XS_QTY,
-			MAX (XS_ML) AS XS_ML,
-			MAX (XS_LR) AS XS_LR,
+			MAX(XS_ML) AS XS_ML,
+			SUM(XS_LR) AS XS_LR,
 			(@rowNum :=@rowNum + 1) AS rowNo
 		FROM
 			hty_fct_sale_org_all,
