@@ -48,6 +48,7 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
         List<HtyFctSaleOrgDetailDTO> list = new ArrayList<HtyFctSaleOrgDetailDTO>();
         List<SaleDetailDTO> dtos = new ArrayList<SaleDetailDTO>();
         Pager pager1 = new Pager();
+        BigDecimal zero = new BigDecimal(0);
         if("0".equals(searchDTO.getXsAmt())){
             list = dao.queryBurstSumPage(searchDTO, pager);
         }else if("1".equals(searchDTO.getXsAmt())){
@@ -90,9 +91,9 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                     if(htyFctSaleOrgDetailDTO.getXsAmt().intValue() != 0){
                         BigDecimal salesRing = ArithUtil.sub(i.getXsAmt().doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue());
                         salesRing = ArithUtil.mul(salesRing.doubleValue(),100);
-                        dto.setSalesRing(ArithUtil.div(salesRing.doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().abs().doubleValue(),2));
+                        dto.setSalesRing(ArithUtil.div(salesRing.doubleValue(), htyFctSaleOrgDetailDTO.getXsAmt().abs().doubleValue(), 2));
                     }else{
-                        dto.setSalesRing(null);
+                        dto.setSalesRing(zero);
                     }
                 }
                 //滞销

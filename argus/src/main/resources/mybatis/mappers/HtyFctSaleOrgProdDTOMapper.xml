@@ -53,7 +53,8 @@
     PL_CODE
     ORDER BY
     PP_CODE,
-    PL_CODE
+    PL_CODE,
+    XS_AMT DESC
     limit #{pager.pageOffset},#{pager.rows}
   </select>
 
@@ -75,7 +76,8 @@
     PL_CODE
     ORDER BY
     PL_CODE,
-    PP_CODE
+    PP_CODE,
+    XS_AMT DESC
     limit #{pager.pageOffset},#{pager.rows}
   </select>
 

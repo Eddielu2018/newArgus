@@ -12,10 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,6 +81,7 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
 
     @Override
     public List<SaleProdDTO> queryPage(String userId, String sort, String startTime, String endTime, Pager pager) {
+        BigDecimal zero = new BigDecimal(0);
         if (userId == null) {
             throw new IllegalArgumentException("userId id is null");
         }
@@ -109,26 +108,28 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
                 dto.setPlName(i.getPlName());
                 dto.setPpName(i.getPpName());
                 //销售单价 XS_AMT/XS_QTY
-                if(i.getXsQty().intValue() >0){
+                if(i.getXsQty().intValue() != 0){
                     dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 2));
                 }else{
-                    dto.setXsPrice(null);
+                    dto.setXsPrice(zero);
                 }
                 dto.setXsQty(i.getXsQty());
                 dto.setXsAmt(i.getXsAmt());
                 //销售金额占比XS_AMT/XS_AMT_ALL
                 if(i.getXsAmtAll().intValue() != 0){
-                    dto.setXsRatio(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsAmtAll().doubleValue(), 2));
+                    BigDecimal xsRatio = ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsAmtAll().doubleValue(), 4);
+                    dto.setXsRatio(ArithUtil.mul(xsRatio.doubleValue(), 100));
                 }else {
-                    dto.setXsRatio(null);
+                    dto.setXsRatio(zero);
                 }
                 //平均毛利XS_SR-XS_CB
                 dto.setXsAvg(ArithUtil.sub(i.getXsSr().doubleValue(), i.getXsCb().doubleValue()));
                 //平均毛利率（XS_SR-XS_CB）/XS_SR
                 if(i.getXsSr().intValue() != 0){
-                    dto.setXsAvgRatio(ArithUtil.div(dto.getXsAvg().doubleValue(), i.getXsSr().doubleValue(), 2));
+                    BigDecimal xsAvgRatio =ArithUtil.div(dto.getXsAvg().doubleValue(), i.getXsSr().doubleValue(), 4);
+                    dto.setXsAvgRatio(ArithUtil.mul(xsAvgRatio.doubleValue(), 100));
                 }else{
-                    dto.setXsAvgRatio(null);
+                    dto.setXsAvgRatio(zero);
                 }
                 dtos.add(dto);
             }
