@@ -1,7 +1,6 @@
 package cn.htd.argus.controller;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -69,7 +68,8 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForHandle)首页页头估值获得入参，userId="+userId);
         try {
-            HtyFctOrgValueDTO htyFctOrgValueDTO = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
+        	String yearMonth = getNowMonthWithOut01();
+            HtyFctOrgValueDTO htyFctOrgValueDTO = this.htyFctOrgValueDTOService.selectByOrgCode(userId,yearMonth);
             if(htyFctOrgValueDTO != null){
             	HtyFctOrgValueDTO maxHty = this.htyFctOrgValueDTOService.selectOrgMax(htyFctOrgValueDTO.getYearmon());
                 htyFctOrgValueDTO.setMaxZhnl(maxHty.getZhnl());
@@ -132,10 +132,11 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForWhole)首页左下获取入参，userId="+userId);
         try {
+        	String yearMonth = getNowMonthWithOut01();
         	HtyFctOrgWholeDTO allDto = new HtyFctOrgWholeDTO();
-        	HtyFctOrgIncomeDTO htyFctOrgIncomeDTO= this.htyFctOrgIncomeDTOService.selectByOrgCode(userId);
-        	HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId);
-        	HtyFctOrgCustDTO htyFctOrgCustDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId);
+        	HtyFctOrgIncomeDTO htyFctOrgIncomeDTO= this.htyFctOrgIncomeDTOService.selectByOrgCode(userId,yearMonth);
+        	HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId,yearMonth);
+        	HtyFctOrgCustDTO htyFctOrgCustDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId,yearMonth);
         	//左侧公共
         	allDto.setWholeLeft(getLeft(htyFctOrgIncomeDTO,htyFctOrgSaleDTO,htyFctOrgCustDTO,date));
         	//顶部
@@ -180,7 +181,7 @@ public class HtyFctOrgController {
         		map1.put("name", "线上交易金额");
         		map2.put("name", "非线上交易金额");
         		map1.put("value", allDto.getWholeTop().get(0).getNum().toString());
-        		map2.put("value", ""+(allDto.getWholeTop().get(1).getNum().doubleValue()+allDto.getWholeTop().get(2).getNum().doubleValue()));
+        		map2.put("value", ""+(allDto.getWholeLeft().get(1).getNum().doubleValue()-allDto.getWholeTop().get(0).getNum().doubleValue()));
         		wholePiclist.add(map1);
         		wholePiclist.add(map2);
         	}else if(type == 2){
@@ -275,25 +276,25 @@ public class HtyFctOrgController {
 			map.put("date", incomeList.getYearDate().substring(4));
 			if(kind == 0){
 				if(incomeList.getBusincomeAmt()!=null){
-					map.put("value", incomeList.getBusincomeAmt().toString());
+					map.put("value", String.valueOf(incomeList.getBusincomeAmt().intValue()));
 				}else{
 					map.put("value", null);
 				}
 			}else if(kind == 1){
 				if(incomeList.getInvoicingAmt()!=null){
-					map.put("value", incomeList.getInvoicingAmt().toString());
+					map.put("value", String.valueOf(incomeList.getInvoicingAmt().intValue()));
 				}else{
 					map.put("value", null);
 				}
 			}else if(kind == 2){
 				if(incomeList.getServiceAmt()!=null){
-					map.put("value", incomeList.getServiceAmt().toString());
+					map.put("value", String.valueOf(incomeList.getServiceAmt().intValue()));
 				}else{
 					map.put("value", null);
 				}
 			}else if(kind == 3){
 				if(incomeList.getFinanceAmt()!=null){
-					map.put("value", incomeList.getFinanceAmt().toString());
+					map.put("value", String.valueOf(incomeList.getFinanceAmt().intValue()));
 				}else{
 					map.put("value", null);
 				}
@@ -310,25 +311,25 @@ public class HtyFctOrgController {
 			map.put("date", incomeList.getYearDate().substring(4));
 			if(kind == 0){
 				if(incomeList.getSaleAmt()!=null){
-					map.put("value", incomeList.getSaleAmt().toString());
+					map.put("value", String.valueOf(incomeList.getSaleAmt().intValue()));
 				}else{
 					map.put("value", null);
 				}
 			}else if(kind == 1){
 				if(incomeList.getOnlineSaleamt()!=null){
-					map.put("value", incomeList.getOnlineSaleamt().toString());
+					map.put("value", String.valueOf(incomeList.getOnlineSaleamt().intValue()));
 				}else{
 					map.put("value", null);
 				}
 			}else if(kind == 2){
 				if(incomeList.getProdSaleamt()!=null){
-					map.put("value", incomeList.getProdSaleamt().toString());
+					map.put("value", String.valueOf(incomeList.getProdSaleamt().intValue()));
 				}else{
 					map.put("value", null);
 				}
 			}else if(kind == 3){
 				if(incomeList.getNonprodSaleamt()!=null){
-					map.put("value", incomeList.getNonprodSaleamt().toString());
+					map.put("value", String.valueOf(incomeList.getNonprodSaleamt().intValue()));
 				}else{
 					map.put("value", null);
 				}
@@ -380,45 +381,45 @@ public class HtyFctOrgController {
     		map.put("date", income.getYearMon());
     		if(kind == 0){
     			if(income.getMonBusincomeAmt()!=null){
-    				map.put("value", income.getMonBusincomeAmt().toString());
+    				map.put("value", String.valueOf(income.getMonBusincomeAmt().intValue()));
     			}else{
 					map.put("value", null);
 				}
     			if(income.getLastMonBusincomeAmt()!=null){
-    				map.put("pair", income.getLastMonBusincomeAmt().toString());
+    				map.put("pair", String.valueOf(income.getLastMonBusincomeAmt().intValue()));
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 1){
     			if(income.getMonInvoicingAmt()!=null){
-    				map.put("value", income.getMonInvoicingAmt().toString());
+    				map.put("value", String.valueOf(income.getMonInvoicingAmt().intValue()));
     			}else{
 					map.put("value", null);
 				}
     			if(income.getLastMonInvoicingAmt()!=null){
-    				map.put("pair", income.getLastMonInvoicingAmt().toString());
+    				map.put("pair", String.valueOf(income.getLastMonInvoicingAmt().intValue()));
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 2){
     			if(income.getMonServiceAmt()!=null){
-    				map.put("value", income.getMonServiceAmt().toString());
+    				map.put("value", String.valueOf(income.getMonServiceAmt().intValue()));
     			}else{
 					map.put("value", null);
 				}
     			if(income.getLastMonServiceAmt()!=null){
-    				map.put("pair", income.getLastMonServiceAmt().toString());
+    				map.put("pair", String.valueOf(income.getLastMonServiceAmt().intValue()));
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 3){
     			if(income.getMonFinanceAmt()!=null){
-    				map.put("value", income.getMonFinanceAmt().toString());
+    				map.put("value", String.valueOf(income.getMonFinanceAmt().intValue()));
     			}else{
 					map.put("value", null);
 				}
     			if(income.getLastMonFinanceAmt()!=null){
-    				map.put("pair", income.getLastMonFinanceAmt().toString());
+    				map.put("pair", String.valueOf(income.getLastMonFinanceAmt().intValue()));
     			}else{
 					map.put("pair", null);
 				}
@@ -435,45 +436,45 @@ public class HtyFctOrgController {
     		map.put("date", sale.getYearMon());
     		if(kind == 0){
     			if(sale.getMonAmt()!=null){
-    				map.put("value", sale.getMonAmt().toString());
+    				map.put("value", String.valueOf(sale.getMonAmt().intValue()));
     			}else{
 					map.put("value", null);
 				}
     			if(sale.getLastmonAmt()!=null){
-    				map.put("pair", sale.getLastmonAmt().toString());
+    				map.put("pair", String.valueOf(sale.getLastmonAmt().intValue()));
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 1){
     			if(sale.getMonOnlineSaleamt()!=null){
-    				map.put("value", sale.getMonOnlineSaleamt().toString());
+    				map.put("value", String.valueOf(sale.getMonOnlineSaleamt().intValue()));
     			}else{
 					map.put("value", null);
 				}
     			if(sale.getLastmonOnlineSaleamt()!=null){
-    				map.put("pair", sale.getLastmonOnlineSaleamt().toString());
+    				map.put("pair", String.valueOf(sale.getLastmonOnlineSaleamt().intValue()));
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 2){
     			if(sale.getMonWaitSaleamt()!=null){
-    				map.put("value", sale.getMonWaitSaleamt().toString());
+    				map.put("value", String.valueOf(sale.getMonWaitSaleamt().intValue()));
     			}else{
 					map.put("value", null);
 				}
     			if(sale.getLastmonWaitSaleamt()!=null){
-    				map.put("pair", sale.getLastmonWaitSaleamt().toString());
+    				map.put("pair", String.valueOf(sale.getLastmonWaitSaleamt().intValue()));
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 3){
     			if(sale.getMonSpSaleamt()!=null){
-    				map.put("value", sale.getMonSpSaleamt().toString());
+    				map.put("value", String.valueOf(sale.getMonSpSaleamt().intValue()));
     			}else{
 					map.put("value", null);
 				}
     			if(sale.getLastmonSpSaleamt()!=null){
-    				map.put("pair", sale.getLastmonSpSaleamt().toString());
+    				map.put("pair", String.valueOf(sale.getLastmonSpSaleamt().intValue()));
     			}else{
 					map.put("pair", null);
 				}
@@ -661,7 +662,8 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForWholeBusiness)首页当月/年总营业获取入参，userId="+userId);
         try {
-            HtyFctOrgIncomeDTO htyFctOrgIncomeDTO= this.htyFctOrgIncomeDTOService.selectByOrgCode(userId);
+        	String yearMonth = getNowMonthWithOut01();
+            HtyFctOrgIncomeDTO htyFctOrgIncomeDTO= this.htyFctOrgIncomeDTOService.selectByOrgCode(userId,yearMonth);
             if(htyFctOrgIncomeDTO != null){
                 result.setData(htyFctOrgIncomeDTO);
                 result.setCode(ResultCodeEnum.SUCCESS.getCode());
@@ -688,7 +690,8 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForWholeMoney)首页当月/年总金额获取入参，userId="+userId);
         try {
-        	HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId);
+        	String yearMonth = getNowMonthWithOut01();
+        	HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId,yearMonth);
             if(htyFctOrgSaleDTO != null){
                 result.setData(htyFctOrgSaleDTO);
                 result.setCode(ResultCodeEnum.SUCCESS.getCode());
@@ -715,7 +718,8 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForWholeMember)首页当月/年总会员获取入参，userId="+userId);
         try {
-        	HtyFctOrgCustDTO htyFctOrgCustDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId);
+        	String yearMonth = getNowMonthWithOut01();
+        	HtyFctOrgCustDTO htyFctOrgCustDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId,yearMonth);
             if(htyFctOrgCustDTO != null){
                 result.setData(htyFctOrgCustDTO);
                 result.setCode(ResultCodeEnum.SUCCESS.getCode());
@@ -732,6 +736,15 @@ public class HtyFctOrgController {
         return result;
     }
     
+    private String getNowMonthWithOut01(){
+    	String yearWithDate = DateUtil.getCurDateStr1("yyyyMMdd");
+    	String yearDate = DateUtil.getCurDateStr1("yyyyMM");
+    	if("01".equals(yearWithDate.substring(yearWithDate.length()-2, yearWithDate.length()))){
+    		yearDate = DateUtil.getAfterDate(new Date(),-1,"yyyyMM");
+    	}
+    	return yearDate;
+    }
+    
     /**
      * 首页当月折线图
      * @param userId
@@ -742,11 +755,7 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForWholeMonth)首页当月折线图获取入参，userId="+userId);
         try {
-        	String yearWithDate = DateUtil.getCurDateStr1("yyyyMMdd");
-        	String yearDate = DateUtil.getCurDateStr1("yyyyMM");
-        	if("01".equals(yearWithDate.substring(yearWithDate.length()-2, yearWithDate.length()))){
-        		yearDate = DateUtil.getAfterDate(new Date(),-1,"yyyyMM");
-        	}
+        	String yearDate = getNowMonthWithOut01();
         	List<HtyFctOrgCustIncomeSaleDTO> list = this.htyFctOrgCustIncomeSaleDTOService.selectMonth(yearDate, userId);
             if(list != null){
                 result.setData(list);
@@ -870,18 +879,18 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForWholeWholeSort)首页最新排序获取入参，userId="+userId);
         try {
+        	String yearMonth = getNowMonthWithOut01();
         	HtyFctOrgSortDTO allDto = new HtyFctOrgSortDTO();
-        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
-        	String yearDate = dto.getYearmon();
+        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId,yearMonth);
         	allDto.setValueHead(dto.getZtpm());
         	allDto.setValueBranch(dto.getFbpm());
-        	HtyFctOrgSortDTO idto = this.htyFctOrgIncomeDTOService.selectSort(userId, yearDate);
+        	HtyFctOrgSortDTO idto = this.htyFctOrgIncomeDTOService.selectSort(userId, yearMonth);
         	allDto.setIncomeHead(idto.getIncomeHead());
         	allDto.setIncomeBrach(idto.getIncomeBrach());
-        	HtyFctOrgSortDTO sdto = this.htyFctOrgSaleDTOService.selectSort(userId, yearDate);
+        	HtyFctOrgSortDTO sdto = this.htyFctOrgSaleDTOService.selectSort(userId, yearMonth);
         	allDto.setSaleHead(sdto.getSaleHead());
         	allDto.setSaleBrach(sdto.getSaleBrach());
-        	HtyFctOrgSortDTO mdto = this.htyFctOrgCustDTOService.selectSort(userId, yearDate);
+        	HtyFctOrgSortDTO mdto = this.htyFctOrgCustDTOService.selectSort(userId, yearMonth);
         	allDto.setMemeberHead(mdto.getMemeberHead());
         	allDto.setMemeberBrach(mdto.getMemeberBrach());
             result.setData(allDto);
@@ -906,10 +915,11 @@ public class HtyFctOrgController {
         logger.info("调用(HtyPctOrgController.indexForBox)首页弹框获取入参，userId="+userId);
         try {
         	HtyFctOrgAvgDTO allDto = new HtyFctOrgAvgDTO();
-        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
+        	String yearMonth = getNowMonthWithOut01();
+        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId,yearMonth);
         	String yearDate = dto.getYearmon();
         	if(1 == type || 2 == type){
-        		HtyFctOrgIncomeDTO htyFctOrgIncomeDTO = this.htyFctOrgIncomeDTOService.selectByOrgCode(userId);
+        		HtyFctOrgIncomeDTO htyFctOrgIncomeDTO = this.htyFctOrgIncomeDTOService.selectByOrgCode(userId,yearMonth);
             	allDto.setCompanyNow(htyFctOrgIncomeDTO.getYearBusincomeAmt());
             	HtyFctOrgSortDTO sdto = this.htyFctOrgIncomeDTOService.selectSort(userId, yearDate);
             	allDto.setHeadAvg(this.htyFctOrgIncomeDTOService.selectAvgHead(yearDate));
@@ -922,7 +932,7 @@ public class HtyFctOrgController {
             		allDto.setCompanyList(this.htyFctOrgIncomeDTOService.selectCompanySortHead(yearDate));
             	}
         	}else if(3 == type || 4 == type){
-        		HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId);
+        		HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId,yearMonth);
             	allDto.setCompanyNow(htyFctOrgSaleDTO.getYearAmt());
             	HtyFctOrgSortDTO sdto = this.htyFctOrgSaleDTOService.selectSort(userId, yearDate);
             	allDto.setHeadAvg(this.htyFctOrgSaleDTOService.selectAvgHead(yearDate));
@@ -935,7 +945,7 @@ public class HtyFctOrgController {
             		allDto.setCompanyList(this.htyFctOrgSaleDTOService.selectCompanySortHead(yearDate));
             	}
         	}else if(5 == type || 6 == type){
-        		HtyFctOrgCustDTO htyFctOrgIncomeDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId);
+        		HtyFctOrgCustDTO htyFctOrgIncomeDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId,yearMonth);
             	allDto.setCompanyNow(new BigDecimal(htyFctOrgIncomeDTO.getYearNewcustnum()));
             	HtyFctOrgSortDTO sdto = this.htyFctOrgCustDTOService.selectSort(userId, yearDate);
             	allDto.setHeadAvg(new BigDecimal(this.htyFctOrgCustDTOService.selectAvgHead(yearDate)));
@@ -969,10 +979,11 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForBoxSale)首页金额弹框获取入参，userId="+userId);
         try {
+        	String yearMonth = getNowMonthWithOut01();
         	HtyFctOrgSaleAvgDTO allDto = new HtyFctOrgSaleAvgDTO();
-        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
+        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId,yearMonth);
         	String yearDate = dto.getYearmon();
-        	HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId);
+        	HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId,yearMonth);
         	allDto.setSalePrice(htyFctOrgSaleDTO.getYearAmt());
         	HtyFctOrgSortDTO sdto = this.htyFctOrgSaleDTOService.selectSort(userId, yearDate);
         	allDto.setHeadSort(sdto.getSaleHead());
@@ -1002,10 +1013,11 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForBoxBusiness)首页经营弹框获取入参，userId="+userId);
         try {
+        	String yearMonth = getNowMonthWithOut01();
         	HtyFctOrgBusinessAvgDTO allDto = new HtyFctOrgBusinessAvgDTO();
-        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
+        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId,yearMonth);
         	String yearDate = dto.getYearmon();
-        	HtyFctOrgIncomeDTO htyFctOrgIncomeDTO = this.htyFctOrgIncomeDTOService.selectByOrgCode(userId);
+        	HtyFctOrgIncomeDTO htyFctOrgIncomeDTO = this.htyFctOrgIncomeDTOService.selectByOrgCode(userId,yearMonth);
         	allDto.setBusinessIncome(htyFctOrgIncomeDTO.getYearBusincomeAmt());
         	HtyFctOrgSortDTO sdto = this.htyFctOrgIncomeDTOService.selectSort(userId, yearDate);
         	allDto.setHeadSort(sdto.getSaleHead());
@@ -1035,10 +1047,11 @@ public class HtyFctOrgController {
         RestResult result = new RestResult();
         logger.info("调用(HtyPctOrgController.indexForBoxMember)首页会员弹框获取入参，userId="+userId);
         try {
+        	String yearMonth = getNowMonthWithOut01();
         	HtyFctOrgMemberAvgDTO allDto = new HtyFctOrgMemberAvgDTO();
-        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId);
+        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId,yearMonth);
         	String yearDate = dto.getYearmon();
-        	HtyFctOrgCustDTO htyFctOrgIncomeDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId);
+        	HtyFctOrgCustDTO htyFctOrgIncomeDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId,yearMonth);
         	allDto.setMemberNum(htyFctOrgIncomeDTO.getYearNewcustnum());
         	HtyFctOrgSortDTO sdto = this.htyFctOrgCustDTOService.selectSort(userId, yearDate);
         	allDto.setHeadSort(sdto.getSaleHead());

@@ -112,43 +112,43 @@
   <select id="selectTb" resultMap="BaseResultMap">
     select round(case when b.rq > a.year_mon then 0 else a.dq_assets_conv_ratio end,4)*100 as dq_assets_conv_ratio,   --当期资产周转率
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_assets_conv_ratio,0,1,a.dq_assets_conv_ratio/a.tq_assets_conv_ratio-1) end,4)*100 as tb_assets_conv_ratio, --资产周转率同比
-       case when b.rq > a.year_mon then 0 else a.dq_avg_assets end as dq_avg_assets,    --当期平均资产
+       round((case when b.rq > a.year_mon then 0 else a.dq_avg_assets end)/10000,2) as dq_avg_assets,    --当期平均资产
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_avg_assets,0,1,a.dq_avg_assets/a.tq_avg_assets-1) end,4)*100 as tb_avg_assets,       --平均资产同比
-       case when b.rq > a.year_mon then 0 else a.total_assets end as dq_total_assets,              --当期资产总额
+       round((case when b.rq > a.year_mon then 0 else a.total_assets end)/10000,2) as dq_total_assets,              --当期资产总额
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_total_assets,0,1,a.total_assets/a.tq_total_assets-1) end,4)*100 as tb_total_assets,  --资产总额同比
-       case when b.rq > a.year_mon then 0 else a.dq_long_assets end as dq_long_assets,             --当期非流动资产
+       round((case when b.rq > a.year_mon then 0 else a.dq_long_assets end)/10000,2) as dq_long_assets,             --当期非流动资产
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_long_assets,0,1,a.dq_long_assets/a.tq_long_assets) end,4)*100 as tb_long_assets,     --非流动资产同比
-       case when b.rq > a.year_mon then 0 else a.current_assets end as dq_current_assets,          --当期流动资产
+       round((case when b.rq > a.year_mon then 0 else a.current_assets end)/10000,2) as dq_current_assets,          --当期流动资产
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_current_assets,0,1,a.current_assets/a.tq_current_assets-1) end,4)*100 as tb_current_assets,             --流动资产同比
-       case when b.rq > a.year_mon then 0 else a.dq_money_funds end as dq_money_funds,             --当期货币资金
+       round((case when b.rq > a.year_mon then 0 else a.dq_money_funds end)/10000,2) as dq_money_funds,             --当期货币资金
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_money_funds,0,1,a.dq_money_funds/a.tq_money_funds-1) end,4)*100 tb_money_funds,                         --货币资金同比
-       case when b.rq > a.year_mon then 0 else a.open_deposit_payable end as dq_deposit_payable,   --当期预付账款
+       round((case when b.rq > a.year_mon then 0 else a.open_deposit_payable end)/10000,2) as dq_deposit_payable,   --当期预付账款
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_deposit_payable,0,1,a.open_deposit_payable/a.tq_deposit_payable-1) end,4)*100 as tb_deposit_payable,    --预付账款同比
-       case when b.rq > a.year_mon then 0 else a.total_liabilities end as dq_liabilities,          --当期负债
+       round((case when b.rq > a.year_mon then 0 else a.total_liabilities end)/10000,2) as dq_liabilities,          --当期负债
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_total_liabilities,0,1,a.total_liabilities/a.tq_total_liabilities-1) end,4)*100 as tb_total_liabilities, --负债同比
-       case when b.rq > a.year_mon then 0 else a.dq_long_liabilities end as dq_long_liabilities,   --当期非流动负债
+       round((case when b.rq > a.year_mon then 0 else a.dq_long_liabilities end)/10000,2) as dq_long_liabilities,   --当期非流动负债
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_long_liabilities,0,1,a.dq_long_liabilities/a.tq_long_liabilities-1) end,4)*100 as tb_long_liabilities,  --非流动负债同比
-       case when b.rq > a.year_mon then 0 else a.current_liabilities end as dq_current_liabilities,--当期流动负债
+       round((case when b.rq > a.year_mon then 0 else a.current_liabilities end)/10000,2) as dq_current_liabilities,--当期流动负债
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_current_liabilities,0,1,a.current_liabilities/a.tq_current_liabilities-1) end,4)*100 as tb_current_liabilities, --流动负债同比
-       case when b.rq > a.year_mon then 0 else a.open_inventory end as dq_inventory,               --当期存货
+       round((case when b.rq > a.year_mon then 0 else a.open_inventory end)/10000,2) as dq_inventory,               --当期存货
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_inventory,0,1,a.open_inventory/a.tq_inventory-1) end,4)*100 as tb_inventory,       --存货同比
-       case when b.rq > a.year_mon then 0 else a.open_receivables end as dq_receivables,           --当期应收账款
+       round((case when b.rq > a.year_mon then 0 else a.open_receivables end)/10000 ,2)as dq_receivables,           --当期应收账款
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_receivables,0,1,a.open_receivables/a.tq_receivables-1) end,4)*100 as tb_receivables,  --应收账款同比
-       case when b.rq > a.year_mon then 0 else a.prtloss_sale_dq end as dq_prtloss_sale,           --当期收入
+       round((case when b.rq > a.year_mon then 0 else a.prtloss_sale_dq end)/10000,2) as dq_prtloss_sale,           --当期收入
        round(case when b.rq > a.year_mon then 0 else decode(a.prtloss_sale_tq,0,1,a.prtloss_sale_dq/a.prtloss_sale_tq-1) end,4)*100 as tb_prtloss_sale,--销售收入同比
-       case when b.rq > a.year_mon then 0 else a.prtloss_cost_dq end as dq_prtloss_cost,           --当期成本
+       round((case when b.rq > a.year_mon then 0 else a.prtloss_cost_dq end)/10000,2) as dq_prtloss_cost,           --当期成本
        round(case when b.rq > a.year_mon then 0 else decode(a.prtloss_cost_tq,0,1,a.prtloss_cost_dq/a.prtloss_cost_tq-1) end,4)*100 as tb_prtloss_cost,--销售成本同比
-       case when b.rq > a.year_mon then 0 else a.prtloss_before end as dq_prtloss_before,          --当期利润总额
+       round((case when b.rq > a.year_mon then 0 else a.prtloss_before end)/10000,2) as dq_prtloss_before,          --当期利润总额
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_before,0,1,a.prtloss_before/a.tq_prtloss_before-1) end,4)*100 as tb_prtloss_before, --利润总额同比
-       case when b.rq > a.year_mon then 0 else a.prtloss_expense end as dq_prtloss_expense,        --当期三项费用合计
+       round((case when b.rq > a.year_mon then 0 else a.prtloss_expense end)/10000,2) as dq_prtloss_expense,        --当期三项费用合计
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_expense,0,1,a.prtloss_expense/a.tq_prtloss_expense-1) end,4)*100 as tb_prtloss_expense,  --三项费用同比
-       case when b.rq > a.year_mon then 0 else a.prtloss_net_dq end as dq_prtloss_net,             --当期净利润
+       round((case when b.rq > a.year_mon then 0 else a.prtloss_net_dq end)/10000,2) as dq_prtloss_net,             --当期净利润
        round(case when b.rq > a.year_mon then 0 else decode(a.prtloss_net_tq,0,1,a.prtloss_net_dq/a.prtloss_net_tq-1) end,4)*100 as tb_prtloss_net,  --净利润同比
-       case when b.rq > a.year_mon then 0 else a.prtloss_gross end as dq_prtloss_gross,            --当期毛利润
+       round((case when b.rq > a.year_mon then 0 else a.prtloss_gross end)/10000,2) as dq_prtloss_gross,            --当期毛利润
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_gross,0,1,a.prtloss_gross/a.tq_prtloss_gross-1) end,4)*100 as tb_prtloss_gross, --毛利润同比
-       case when b.rq > a.year_mon then 0 else a.prtloss_operate end as dq_prtloss_operate,        --当期营业利润
+       round((case when b.rq > a.year_mon then 0 else a.prtloss_operate end)/10000,2) as dq_prtloss_operate,        --当期营业利润
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_operate,0,1,a.prtloss_operate/a.tq_prtloss_operate-1) end,4)*100 as tb_prtloss_operate,  --营业利润同比
-       case when b.rq > a.year_mon then 0 else a.dq_other_prtloss end as dq_other_prtloss,         --当期其他利润
+       round((case when b.rq > a.year_mon then 0 else a.dq_other_prtloss end)/10000,2) as dq_other_prtloss,         --当期其他利润
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_other_prtloss,0,1,a.dq_other_prtloss/a.tq_other_prtloss-1) end,4)*100 as tb_other_prtloss --其他利润同比
     from edw_fct_l1_dupont_detail a,
        htd_ods.dci_dim_org b
