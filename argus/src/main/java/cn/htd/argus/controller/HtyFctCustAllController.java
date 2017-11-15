@@ -1352,11 +1352,28 @@ public class HtyFctCustAllController {
 		}else{
 			filename = "VIPAlive.xlsx";
 		}
+		Integer isVip = null;
+        Integer isHy = null;
+        if(pageType == 0){
+        	if(aliveType == 0){
+        		isVip = 0;
+        		isHy = 0;
+        	}else if(aliveType == 1){
+        		isHy = 1;
+        	}
+        }else if(pageType == 1){
+        	if(aliveType == 0){
+        		isVip = 0;
+        		isHy = 1;
+        	}else if(aliveType == 1){
+        		isVip = 1;
+        	}
+        }
 		byte[] buffer = null;
 		if(pageType == 0){
-			buffer = indexForManagerExcle(userId,aliveType,pageType,newYear,newTime);
+			buffer = indexForManagerExcle(userId,isHy,isVip,newYear,newTime);
 		}else{
-			buffer = indexForManagerExcle(userId,aliveType,pageType,time,newTime);
+			buffer = indexForManagerExcle(userId,isHy,isVip,time,newTime);
 		}
 		response.reset();  
 		response.addHeader("Content-Disposition", "attachment;filename="  
