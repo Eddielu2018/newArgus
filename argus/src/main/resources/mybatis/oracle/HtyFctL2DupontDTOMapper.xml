@@ -151,23 +151,23 @@
     round(decode(tq_gross_profit_ratio,0,1,dq_gross_profit_ratio/tq_gross_profit_ratio-1),4)*100 as tb_gross_profit_ratio,  --销售毛利率同比
     round(dq_debt_assets_ratio,4)*100 as dq_debt_assets_ratio,     --当期资产负债率
     round(decode(tq_debt_assets_ratio,0,1,dq_debt_assets_ratio/tq_debt_assets_ratio-1),4)*100 as tb_debt_assets_ratio,      --资产负债率同比
-    round(dq_operate_cycle*100,4) as dq_operate_cycle,         --当期营业周期
+    round(dq_operate_cycle,2) as dq_operate_cycle,         --当期营业周期
     round(decode(tq_operate_cycle,0,1,dq_operate_cycle/tq_operate_cycle-1),4)*100 as tb_operate_cycle,                      --营业周期同比
     round(dq_sale_growth_ratio*100,4) as dq_sale_growth_ratio,     --当期主营业务收入增长率
     round(decode(tq_sale_growth_ratio,0,1,dq_sale_growth_ratio/tq_sale_growth_ratio-1),4)*100 as tb_sale_growth_ratio,      --业务收入增长率同比
     round(dq_operate_profit_ratio,4)*100 as dq_operate_profit_ratio,  --当期营业利润率
     round(decode(tq_operate_profit_ratio,0,1,dq_operate_profit_ratio/tq_operate_profit_ratio-1),4)*100 as tb_operate_profit_ratio, --营业利润率同比
-    round(dq_current_ratio,4)*100 as dq_current_ratio,            --当期流动比率
+    round(dq_current_ratio,2) as dq_current_ratio,            --当期流动比率
     round(decode(tq_current_ratio,0,1,dq_current_ratio/tq_current_ratio-1),4)*100 as tb_current_ratio,    --流动比率同比
-    round(dq_cash_cycle,4)*100 as dq_cash_cycle,                  --当期现金周期
+    round(dq_cash_cycle,2) as dq_cash_cycle,                  --当期现金周期
     round(decode(tq_cash_cycle,0,1,dq_cash_cycle/tq_cash_cycle-1),4)*100 as tb_cash_cycle,                --现金周期同比
     round(dq_net_growth_ratio,4)*100 as dq_net_growth_ratio,      --当期净利润增长率
     round(decode(tq_net_growth_ratio,0,1,dq_net_growth_ratio/tq_net_growth_ratio-1),4)*100 as tb_net_growth_ratio,  --净利润增长率同比
     round(dq_third_ratio,4)*100 as dq_third_ratio,                --当期三项费用比重
     round(decode(tq_third_ratio,0,1,dq_third_ratio/tq_third_ratio-1),4)*100 as tb_third_ratio,    --三项费用比重同比
-    round(dq_quick_ratio,4)*100 as dq_quick_ratio,                --当期速动比率
+    round(dq_quick_ratio,2) as dq_quick_ratio,                --当期速动比率
     round(decode(tq_quick_ratio,0,1,dq_quick_ratio/tq_quick_ratio-1),4)*100 as tb_quick_ratio,    --当期速动比率同比
-    round(dq_receive_conv_days,4)*100 as dq_receive_conv_days,    --当期应收账款周转率
+    round(dq_receive_conv_days,2) as dq_receive_conv_days,    --当期应收账款周转率
     round(decode(tq_receive_conv_days,0,1,dq_receive_conv_days/tq_receive_conv_days-1),4)*100 as tb_receive_conv_days --当期应收账款周转率同比
     from edw_fct_l2_dupont
     <include refid="where"/>
