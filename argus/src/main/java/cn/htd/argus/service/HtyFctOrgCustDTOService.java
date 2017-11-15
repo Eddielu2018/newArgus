@@ -15,7 +15,7 @@ public interface HtyFctOrgCustDTOService {
 
     HtyFctOrgCustDTO select(HtyFctOrgCustDTO dto);
     
-    HtyFctOrgCustDTO selectByOrgCode(String userId);
+    HtyFctOrgCustDTO selectByOrgCode(String userId,String yearMon);
     
     List<HtyFctOrgCustDTO> selectYear(String userId,String yearMon);
     

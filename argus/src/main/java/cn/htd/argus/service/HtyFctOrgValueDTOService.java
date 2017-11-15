@@ -12,7 +12,7 @@ public interface HtyFctOrgValueDTOService {
 
     HtyFctOrgValueDTO select(HtyFctOrgValueDTO dto);
 
-    HtyFctOrgValueDTO selectByOrgCode(String userId);
+    HtyFctOrgValueDTO selectByOrgCode(String userId,String yearMon);
     
     HtyFctOrgSortDTO selectSort(String userId,String yearMon);
     

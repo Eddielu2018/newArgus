@@ -94,7 +94,7 @@
     			<when test="dimension == 0">
     				<choose>
     					<when test="kind == 0">
-    						and amt_all &lt;= #{start}
+    						and (amt_all &lt;= #{start} or amt_all is null)
     					</when>
     					<when test="kind == 5">
     						and amt_all &gt; #{end}
@@ -107,7 +107,7 @@
     			<when test="dimension == 1">
     				<choose>
     					<when test="kind == 0">
-    						and amt_online &lt;= #{start}
+    						and (amt_online &lt;= #{start} or amt_online is null)
     					</when>
     					<when test="kind == 5">
     						and amt_online &gt; #{end}
@@ -120,7 +120,7 @@
     			<when test="dimension == 2">
     				<choose>
     					<when test="kind == 0">
-    						and qty_b2b &lt;= #{start}
+    						and (qty_b2b &lt;= #{start} or qty_b2b is null)
     					</when>
     					<when test="kind == 5">
     						and qty_b2b &gt; #{end}
@@ -133,7 +133,7 @@
     			<when test="dimension == 3">
     				<choose>
     					<when test="kind == 0">
-    						and qty_boss &lt;= #{start}
+    						and (qty_boss &lt;= #{start} or qty_boss is null)
     					</when>
     					<when test="kind == 5">
     						and qty_boss &gt; #{end}
@@ -146,7 +146,7 @@
     			<when test="dimension == 4">
     				<choose>
     					<when test="kind == 0">
-    						and qty_hzg &lt;= #{start}
+    						and (qty_hzg &lt;= #{start} or qty_hzg is null)
     					</when>
     					<when test="kind == 5">
     						and qty_hzg &gt; #{end}
@@ -159,7 +159,7 @@
     			<when test="dimension == 5">
     				<choose>
     					<when test="kind == 0">
-    						and amt_dk &lt;= #{start}
+    						and (amt_dk &lt;= #{start} or amt_dk is null)
     					</when>
     					<when test="kind == 5">
     						and amt_dk &gt; #{end}

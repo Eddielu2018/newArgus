@@ -37,12 +37,16 @@ public class HtyFctOrgValueDTOServiceImpl implements HtyFctOrgValueDTOService{
     }
 
     @Override
-    public HtyFctOrgValueDTO selectByOrgCode(String userId) {
+    public HtyFctOrgValueDTO selectByOrgCode(String userId,String yearMon) {
         if (userId == null) {
             throw new IllegalArgumentException("userId id is null");
         }
+        if (yearMon == null) {
+            throw new IllegalArgumentException("yearMon id is null");
+        }
         HtyFctOrgValueDTO dto = new HtyFctOrgValueDTO();
         dto.setOrgCode(userId);
+        dto.setYearmon(yearMon);
         return dao.selectByOrgCode(dto);
     }
 

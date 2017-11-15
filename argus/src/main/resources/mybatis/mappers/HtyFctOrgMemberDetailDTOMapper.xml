@@ -83,7 +83,7 @@
    select 
   	max(last_date) as last_date,cust_code,cust_name 
     from hty_fct_member_org_detail
-  	where  date_key &gt;= #{startTime} and date_key &lt;= #{endTime} and org_code = #{custCode}  GROUP BY cust_code ORDER BY last_date DESC LIMIT 10
+  	where  date_key &gt;= #{startTime} and date_key &lt;= #{endTime} and org_code = #{custCode}  GROUP BY cust_code ORDER BY if(ISNULL(last_date),1,0),last_date LIMIT 10
   </select>
   <!-- 六月单店销售列表 -->
    <select id="selectSixMonth" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctOrgMemberSixMonthDTO" >
