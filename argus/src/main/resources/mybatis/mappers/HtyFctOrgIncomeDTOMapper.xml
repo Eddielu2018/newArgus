@@ -40,7 +40,7 @@
     select
     <include refid="Base_Column_List" />
     from hty_fct_org_income
-    where ORG_CODE = #{orgCode} order by YEAR_MON desc limit 1
+    where ORG_CODE = #{orgCode} and YEAR_MON=#{yearMon}
   </select>
 
   <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgIncomeDTO" >

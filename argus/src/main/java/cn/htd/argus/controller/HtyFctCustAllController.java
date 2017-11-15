@@ -121,7 +121,7 @@ public class HtyFctCustAllController {
         		inDto.setDimension(dimension);
         		inPairDto.setDimension(dimension);
         		inDto.setKind(pairFirstDimension);
-        		inPairDto.setKind(pairFirstDimension);
+        		inPairDto.setKind(pairSecondDimension);
         		Integer[] temp1 = setSqlStep(dimension,pairFirstDimension);
         		inDto.setStart(Integer.valueOf(temp1[0]));
         		inDto.setEnd(Integer.valueOf(temp1[1]));
@@ -253,7 +253,7 @@ public class HtyFctCustAllController {
     	for(HtyFctCustAllDto dto : list){
     		//整体采购
     		if(dto.getAmtAll() != null){
-	    		Double t1 = dto.getAmtAll().doubleValue()/(10000*step);
+	    		Double t1 = dto.getAmtAll().doubleValue()/(10000);
 	    		if(t1 <= HtyFctCustUtil.T1_1){
 	    			T1_1++;
 	    		}else if(t1 > HtyFctCustUtil.T1_1 && t1 <= HtyFctCustUtil.T1_2*step){
@@ -272,7 +272,7 @@ public class HtyFctCustAllController {
     		}
     		//线上采购
     		if(dto.getAmtOnline() != null){
-	    		Double t2 = dto.getAmtOnline().doubleValue()/(10000*step);
+	    		Double t2 = dto.getAmtOnline().doubleValue()/(10000);
 	    		if(t2 <= HtyFctCustUtil.T2_1){
 	    			T2_1++;
 	    		}else if(t2 > HtyFctCustUtil.T2_1 && t2 <= HtyFctCustUtil.T2_2*step){
@@ -348,7 +348,7 @@ public class HtyFctCustAllController {
     		}
     		//贷款金额
     		if(dto.getAmtDk() != null){
-	    		Double t6 = dto.getAmtDk().doubleValue()/(10000*step);
+	    		Double t6 = dto.getAmtDk().doubleValue()/(10000);
 	    		if(t6 <= HtyFctCustUtil.T6_1){
 	    			T6_1++;
 	    		}else if(t6 > HtyFctCustUtil.T6_1 && t6 <= HtyFctCustUtil.T6_2*step){
@@ -1023,9 +1023,9 @@ public class HtyFctCustAllController {
     			}
 	    		dto.setLastDate(member.getLastDate());
 	    		if(member.getLastDate() != null){
-		    		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		    		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 					Date start = sdf.parse(member.getLastDate());
-					dto.setLastTime(DateUtil.getTowTimeDays(start, new Date()));
+					dto.setLastTime(DateUtil.daysBetween(start, new Date()));
 	    		}else{
 	    			dto.setLastTime(null);
 	    		}
@@ -1056,9 +1056,9 @@ public class HtyFctCustAllController {
     			}else if(type == 2){
     				dto.setLastDate(member.getLastDate());
     				if(member.getLastDate() != null){
-		    			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		    			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 						Date start = sdf.parse(member.getLastDate());
-						dto.setLastTime(DateUtil.getTowTimeDays(start, new Date()));
+						dto.setLastTime(DateUtil.daysBetween(start, new Date()));
 	    			}else{
 	    				dto.setLastTime(null);
 	    			}

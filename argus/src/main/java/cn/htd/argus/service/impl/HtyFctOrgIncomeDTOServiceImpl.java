@@ -42,12 +42,16 @@ public class HtyFctOrgIncomeDTOServiceImpl implements HtyFctOrgIncomeDTOService{
     }
 
     @Override
-    public HtyFctOrgIncomeDTO selectByOrgCode(String userId) {
+    public HtyFctOrgIncomeDTO selectByOrgCode(String userId,String yearMon) {
         if (userId == null) {
             throw new IllegalArgumentException("userId id is null");
         }
+        if (yearMon == null) {
+            throw new IllegalArgumentException("yearMon id is null");
+        }
         HtyFctOrgIncomeDTO dto = new HtyFctOrgIncomeDTO();
         dto.setOrgCode(userId);
+        dto.setYearMon(yearMon);
         return dao.selectByOrgCode(dto);
     }
 
