@@ -108,7 +108,7 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
                 dto.setPlName(i.getPlName());
                 dto.setPpName(i.getPpName());
                 //销售单价 XS_AMT/XS_QTY
-                if(i.getXsQty().intValue() >0){
+                if(i.getXsQty().intValue() != 0){
                     dto.setXsPrice(ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsQty().doubleValue(), 2));
                 }else{
                     dto.setXsPrice(zero);
@@ -118,7 +118,7 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
                 //销售金额占比XS_AMT/XS_AMT_ALL
                 if(i.getXsAmtAll().intValue() != 0){
                     BigDecimal xsRatio = ArithUtil.div(i.getXsAmt().doubleValue(), i.getXsAmtAll().doubleValue(), 4);
-                    dto.setXsRatio(ArithUtil.mul(xsRatio.doubleValue(),100));
+                    dto.setXsRatio(ArithUtil.mul(xsRatio.doubleValue(), 100));
                 }else {
                     dto.setXsRatio(zero);
                 }
@@ -127,7 +127,7 @@ public class HtyFctSaleOrgProdDTOServiceImpl implements HtyFctSaleOrgProdDTOServ
                 //平均毛利率（XS_SR-XS_CB）/XS_SR
                 if(i.getXsSr().intValue() != 0){
                     BigDecimal xsAvgRatio =ArithUtil.div(dto.getXsAvg().doubleValue(), i.getXsSr().doubleValue(), 4);
-                    dto.setXsAvgRatio(ArithUtil.mul(xsAvgRatio.doubleValue(),100));
+                    dto.setXsAvgRatio(ArithUtil.mul(xsAvgRatio.doubleValue(), 100));
                 }else{
                     dto.setXsAvgRatio(zero);
                 }
