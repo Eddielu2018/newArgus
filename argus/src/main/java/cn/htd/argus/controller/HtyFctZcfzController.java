@@ -296,7 +296,7 @@ public class HtyFctZcfzController {
                 score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
                 num = num - 1;
             }else{
-                financeSupportDTO.setTiecardmemberRatioState("0");
+                financeSupportDTO.setTiecardmemberRatioState("1");
             }
         }
         //参考值
