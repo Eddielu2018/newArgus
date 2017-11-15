@@ -14,6 +14,10 @@ public interface HtyFctCustAllDTOService {
 
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
 
+    List<HtyFctCustAllDto> selectByForDimension(HtyFctCustInDto inDto);
+    
+    Integer selectByForDimensionNum(HtyFctCustInDto inDto);
+    
     Integer selectForAmtAll(String userId,String startTime,String endTime,int type,Integer regionOrg);
 
     HtyFctCustAllDto selectForAnalysis(String userId,String startTime,String endTime,int type,String nowTime);

@@ -322,4 +322,14 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
         }
         return dao.selectForManagerAll(dto);
 	}
+
+	@Override
+	public List<HtyFctCustAllDto> selectByForDimension(HtyFctCustInDto inDto) {
+		return dao.selectByForDimension(inDto);
+	}
+
+	@Override
+	public Integer selectByForDimensionNum(HtyFctCustInDto inDto) {
+		return dao.selectByForDimensionNum(inDto);
+	}
 }

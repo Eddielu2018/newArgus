@@ -128,21 +128,44 @@ public class HtyFctCustAllController {
         		Integer[] temp2 = setSqlStep(dimension,pairSecondDimension);
         		inPairDto.setStart(Integer.valueOf(temp2[0]));
         		inPairDto.setEnd(Integer.valueOf(temp2[1]));
+        		inDto.setSearchStartTime(searchStartTime);
+        		inDto.setSearchEndTime(searchEndTime);
+        		inPairDto.setSearchStartTime(searchStartTime);
+        		inPairDto.setSearchEndTime(searchEndTime);
         	}
-        	List<HtyFctCustAllDto> firstList = htyFctCustAllDTOService.selectByNoPair(inDto);
-        	allDto = setNum(allDto,firstList,step);
+        	List<HtyFctCustAllDto> firstList = null;
+        	if(type == 2){
+        		Integer temp = htyFctCustAllDTOService.selectByForDimensionNum(inDto);
+        		if(temp != null && temp >0){
+        			firstList = htyFctCustAllDTOService.selectByForDimension(inDto);
+        		}
+        	}else{
+        		firstList = htyFctCustAllDTOService.selectByNoPair(inDto);
+        	}
+        	if(firstList != null && firstList.size()>0){
+        		allDto = setNum(allDto,firstList,step);
+        	}
         	List<HtyFctCustAllDto> secondList = null;
         	if(type != 0){
         		//有对比
-	        	secondList = htyFctCustAllDTOService.selectByNoPair(inPairDto);
+        		if(type == 2){
+        			Integer temp = htyFctCustAllDTOService.selectByForDimensionNum(inPairDto);
+            		if(temp != null && temp >0){
+            			secondList = htyFctCustAllDTOService.selectByForDimension(inPairDto);
+            		}
+        		}else{
+        			secondList = htyFctCustAllDTOService.selectByNoPair(inPairDto);
+            	}
 	        	HtyFctCustAllOutDTO pairDto = new HtyFctCustAllOutDTO();
-	        	pairDto = setNum(pairDto,secondList,step);
-	        	allDto.setChartPair1(pairDto.getChartDate1());
-	        	allDto.setChartPair2(pairDto.getChartDate2());
-	        	allDto.setChartPair3(pairDto.getChartDate3());
-	        	allDto.setChartPair4(pairDto.getChartDate4());
-	        	allDto.setChartPair5(pairDto.getChartDate5());
-	        	allDto.setChartPair6(pairDto.getChartDate6());
+	        	if(secondList != null && secondList.size() >0){
+		        	pairDto = setNum(pairDto,secondList,step);
+		        	allDto.setChartPair1(pairDto.getChartDate1());
+		        	allDto.setChartPair2(pairDto.getChartDate2());
+		        	allDto.setChartPair3(pairDto.getChartDate3());
+		        	allDto.setChartPair4(pairDto.getChartDate4());
+		        	allDto.setChartPair5(pairDto.getChartDate5());
+		        	allDto.setChartPair6(pairDto.getChartDate6());
+	        	}
         	}
         	result.setData(allDto);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
@@ -981,7 +1004,7 @@ public class HtyFctCustAllController {
 	    			listName.add(member.getDateKey());
 	    			if(sortType == 0){
 	    				if(member.getXsAmt() != null){
-		    				listDate.add(String.valueOf(member.getXsAmt()));
+		    				listDate.add(MathUtil.getWanDouble(member.getXsAmt()));
 		    			}
 	    			}else if(sortType == 1){
 	    				if(member.getXsQty() != null){
@@ -989,7 +1012,7 @@ public class HtyFctCustAllController {
 	    				}
 	    			}else if(sortType == 2){
 	    				if(member.getXsAmt() != null){
-		    				listDate.add(String.valueOf(member.getXsAmt()));
+		    				listDate.add(MathUtil.getWanDouble(member.getXsAmt()));
 		    			}
 	    			}
 	    		}

@@ -29,7 +29,7 @@
     select
     <include refid="Base_Column_List" />
     from hty_fct_org_value
-    where ORG_CODE = #{orgCode} and YEARMON = #{yearmon}
+    where ORG_CODE = #{orgCode} group by YEARMON desc LIMIT 1
   </select>
 
   <select id="select" resultMap="BaseResultMap" parameterType="cn.htd.argus.dto.HtyFctOrgValueDTO" >

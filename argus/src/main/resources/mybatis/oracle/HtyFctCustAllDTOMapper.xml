@@ -89,89 +89,195 @@
     	<if test="searchStartTime != null and searchEndTime != null">
     		and date_key &gt;= #{searchStartTime} and date_key &lt;= #{searchEndTime} 
     	</if>
-    	<if test="dimension != null and start != null and end != null and kind != null">
-    		<choose>
-    			<when test="dimension == 0">
-    				<choose>
-    					<when test="kind == 0">
-    						and (amt_all &lt;= #{start} or amt_all is null)
-    					</when>
-    					<when test="kind == 5">
-    						and amt_all &gt; #{end}
-    					</when>
-    					<otherwise>
-    						and amt_all &gt; #{start} and amt_all &lt;= #{end}
-    					</otherwise>
-    				</choose>
-    			</when>
-    			<when test="dimension == 1">
-    				<choose>
-    					<when test="kind == 0">
-    						and (amt_online &lt;= #{start} or amt_online is null)
-    					</when>
-    					<when test="kind == 5">
-    						and amt_online &gt; #{end}
-    					</when>
-    					<otherwise>
-    						and amt_online &gt; #{start} and amt_online &lt;= #{end}
-    					</otherwise>
-    				</choose>
-    			</when>
-    			<when test="dimension == 2">
-    				<choose>
-    					<when test="kind == 0">
-    						and (qty_b2b &lt;= #{start} or qty_b2b is null)
-    					</when>
-    					<when test="kind == 5">
-    						and qty_b2b &gt; #{end}
-    					</when>
-    					<otherwise>
-    						and qty_b2b &gt; #{start} and qty_b2b &lt;= #{end}
-    					</otherwise>
-    				</choose>
-    			</when>
-    			<when test="dimension == 3">
-    				<choose>
-    					<when test="kind == 0">
-    						and (qty_boss &lt;= #{start} or qty_boss is null)
-    					</when>
-    					<when test="kind == 5">
-    						and qty_boss &gt; #{end}
-    					</when>
-    					<otherwise>
-    						and qty_boss &gt; #{start} and qty_boss &lt;= #{end}
-    					</otherwise>
-    				</choose>
-    			</when>
-    			<when test="dimension == 4">
-    				<choose>
-    					<when test="kind == 0">
-    						and (qty_hzg &lt;= #{start} or qty_hzg is null)
-    					</when>
-    					<when test="kind == 5">
-    						and qty_hzg &gt; #{end}
-    					</when>
-    					<otherwise>
-    						and qty_hzg &gt; #{start} and qty_hzg &lt;= #{end}
-    					</otherwise>
-    				</choose>
-    			</when>
-    			<when test="dimension == 5">
-    				<choose>
-    					<when test="kind == 0">
-    						and (amt_dk &lt;= #{start} or amt_dk is null)
-    					</when>
-    					<when test="kind == 5">
-    						and amt_dk &gt; #{end}
-    					</when>
-    					<otherwise>
-    						and amt_dk &gt; #{start} and amt_dk &lt;= #{end}
-    					</otherwise>
-    				</choose>
-    			</when>
-    		</choose>
-    	</if>
     </where>
+     group by cust_code
+  </select>
+  
+  <select id="selectByForDimensionNum" resultType="java.lang.Integer" parameterType="cn.htd.argus.bean.HtyFctCustInDto" >
+   	  select count(1) from HTD_HTY.hty_fct_cust_all 
+    where org_code = #{userId} 
+	and date_key &gt;= #{searchStartTime} and date_key &lt;= #{searchEndTime} 
+    				<choose>
+		    			<when test="dimension == 0">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (amt_all &lt;= #{start} or amt_all is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and amt_all &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and amt_all &gt; #{start} and amt_all &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 1">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (amt_online &lt;= #{start} or amt_online is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and amt_online &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and amt_online &gt; #{start} and amt_online &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 2">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (qty_b2b &lt;= #{start} or qty_b2b is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and qty_b2b &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and qty_b2b &gt; #{start} and qty_b2b &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 3">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (qty_boss &lt;= #{start} or qty_boss is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and qty_boss &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and qty_boss &gt; #{start} and qty_boss &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 4">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (qty_hzg &lt;= #{start} or qty_hzg is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and qty_hzg &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and qty_hzg &gt; #{start} and qty_hzg &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 5">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (amt_dk &lt;= #{start} or amt_dk is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and amt_dk &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and amt_dk &gt; #{start} and amt_dk &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    		</choose>
+  </select>
+  
+  <select id="selectByForDimension" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctCustInDto" >
+  	select 
+  	max(date_key) as date_key, max(cust_rq) as cust_rq, max(cust_code) as cust_code,
+  	 max(cust_name) as cust_name, max(org_code) as org_code, max(org_sname) as org_sname,
+  	 max(org_fname) as org_fname,max(area_procode) as area_procode, max(area_proname) as area_proname,
+     max(area_citycode) as area_citycode, max(area_cityname) as area_cityname,
+     max(area_countycode) as area_countycode, max(area_countyname) as area_countyname, 
+     max(area_towncode) as area_towncode, max(area_townname) as area_townname, max(cust_managercode) as cust_managercode,
+     max(cust_managername) as cust_managername,sum(amt_all) as amt_all,sum(amt_online) as amt_online,
+      max(amt_online_boss) as amt_online_boss, max(amt_online_b2b) as amt_online_b2b,
+     max(amt_online_vms) as amt_online_vms,sum(amt_dk) as amt_dk,sum(qty_b2b) as qty_b2b,sum(qty_boss) as qty_boss,sum(qty_hzg) as qty_hzg,
+      max(qty_fs) as qty_fs, max(is_cust) as is_cust,
+     max(is_hy) as is_hy, max(is_vip) as is_vip, max(is_dk) as is_dk, max(expire_time) as expire_time 
+    from HTD_HTY.hty_fct_cust_all 
+    where date_key &gt;= #{searchStartTime} and date_key &lt;= #{searchEndTime} 
+    and cust_code in(
+    select cust_code from HTD_HTY.hty_fct_cust_all 
+    where org_code = #{userId} 
+	and date_key &gt;= #{searchStartTime} and date_key &lt;= #{searchEndTime} 
+    				<choose>
+		    			<when test="dimension == 0">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (amt_all &lt;= #{start} or amt_all is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and amt_all &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and amt_all &gt; #{start} and amt_all &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 1">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (amt_online &lt;= #{start} or amt_online is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and amt_online &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and amt_online &gt; #{start} and amt_online &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 2">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (qty_b2b &lt;= #{start} or qty_b2b is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and qty_b2b &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and qty_b2b &gt; #{start} and qty_b2b &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 3">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (qty_boss &lt;= #{start} or qty_boss is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and qty_boss &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and qty_boss &gt; #{start} and qty_boss &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 4">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (qty_hzg &lt;= #{start} or qty_hzg is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and qty_hzg &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and qty_hzg &gt; #{start} and qty_hzg &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    			<when test="dimension == 5">
+		    				<choose>
+		    					<when test="kind == 0">
+		    						and (amt_dk &lt;= #{start} or amt_dk is null)
+		    					</when>
+		    					<when test="kind == 5">
+		    						and amt_dk &gt; #{end}
+		    					</when>
+		    					<otherwise>
+		    						and amt_dk &gt; #{start} and amt_dk &lt;= #{end}
+		    					</otherwise>
+		    				</choose>
+		    			</when>
+		    		</choose>)
      group by cust_code
   </select>
   
@@ -403,10 +509,8 @@
      and is_vip = #{isVip} 
     </if>
     order by amt_all desc ,amt_online desc)
-     <if test="outType == 1">
-  	  where ROWNUM &gt;=1 and ROWNUM &lt;=10 
-  	</if>)
-    group by cust_code
+    )
+    group by cust_code 
   </select>
   
   <select id="selectSumAmt" resultType="java.math.BigDecimal" parameterType="cn.htd.argus.dto.HtyFctCustAllDto" >

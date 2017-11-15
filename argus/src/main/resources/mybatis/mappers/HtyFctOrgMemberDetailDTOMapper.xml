@@ -90,7 +90,7 @@
    select
    <include refid="Base_Column_List" />
     from hty_fct_member_org_detail
-  	where  date_key &gt;= #{startTime} and date_key &lt;= #{endTime} and cust_code = #{custCode} 
+  	where  date_key &gt;= #{startTime} and date_key &lt;= #{endTime} and cust_code = #{custCode} GROUP BY date_key
   </select>
   <!-- 六月销售列表 -->
   <select id="selectSixMonthsAll" resultMap="BaseResultMap" parameterType="cn.htd.argus.bean.HtyFctOrgMemberSixMonthDTO" >

@@ -32,7 +32,7 @@
         and  PROD_CODE = #{searchDTO.prodCode}
       </if>
       <if test="searchDTO.prodName != null and searchDTO.prodName != '' ">
-        and PROD_NAME like CONCAT('%',#{searchDTO.prodName},'%')
+        and PROD_NAME LIKE '%'||#{searchDTO.prodName}||'%'
       </if>
       <if test="searchDTO.plCode != null and searchDTO.plCode != '' ">
         and  PL_CODE = #{searchDTO.plCode}

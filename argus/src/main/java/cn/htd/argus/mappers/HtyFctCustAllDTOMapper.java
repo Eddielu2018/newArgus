@@ -11,7 +11,11 @@ import cn.htd.argus.dto.HtyFctCustAllDto;
 public interface HtyFctCustAllDTOMapper {
 
     List<HtyFctCustAllDto> selectByNoPair(HtyFctCustInDto inDto);
+    
+    List<HtyFctCustAllDto> selectByForDimension(HtyFctCustInDto inDto);
 
+    Integer selectByForDimensionNum(HtyFctCustInDto inDto);
+    
     Integer selectForAmtAll(HtyFctCustAnalysisInDTO inDto);
 
     HtyFctCustAllDto selectForAnalysis(HtyFctCustAnalysisInDTO inDto);
