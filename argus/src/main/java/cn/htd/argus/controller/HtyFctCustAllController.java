@@ -905,7 +905,7 @@ public class HtyFctCustAllController {
 	        List<HtyFctCustAllDto> list = null;
 	        if(pageType == 0){
 	        	//取年
-	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, newYear, isHy, isVip,"1");
+	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, newYear, isHy, isVip,"1",newTime);
 	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, newTime, isHy, isVip,"1");
 	        	if(list != null && tempAll != null && list.size()>0 && tempAll.size()>0){
 	        		for(HtyFctCustAllDto dto : list){
@@ -1168,7 +1168,7 @@ public class HtyFctCustAllController {
 			List<HtyFctCustAllDto> list = null;
 			if(pageType == 0){
 	        	//取年
-	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, time, aliveType, pageType,"0");
+	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, time, aliveType, pageType,"0",newTime);
 	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, newTime, aliveType, pageType,"0");
 	        	if(list != null && tempAll != null && list.size()>0 && tempAll.size()>0){
 	        		for(HtyFctCustAllDto dto : list){
