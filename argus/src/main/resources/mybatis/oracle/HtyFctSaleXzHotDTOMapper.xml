@@ -54,7 +54,9 @@
     HTD_HTY.hty_fct_sale_xz_hot
     <include refid="where"/>
     GROUP BY
-    PROD_CODE) t )
+    PROD_CODE
+    ORDER BY
+    XS_QTY DESC ) t )
     where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
   </select>
 

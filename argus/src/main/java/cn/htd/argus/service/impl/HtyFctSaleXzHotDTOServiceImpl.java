@@ -6,6 +6,8 @@ import cn.htd.argus.bean.SaleHotDTO;
 import cn.htd.argus.mappers.HtyFctSaleXzHotDTOMapper;
 import cn.htd.argus.dto.HtyFctSaleXzHotDTO;
 import cn.htd.argus.service.HtyFctSaleXzHotDTOService;
+import cn.htd.argus.util.ArithUtil;
+import cn.htd.argus.util.DateUtil;
 import cn.htd.common.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,6 +31,7 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
     public List<SaleHotDTO> queryPage(HtyFctSaleSearchDTO searchDTO, Pager pager) {
         List<SaleHotDTO> dtos = new ArrayList<SaleHotDTO>();
         List<HtyFctSaleXzHotDTO> list = dao.querySumPage(searchDTO, pager);
+        Integer num = DateUtil.monthRangeDate(searchDTO.getStartTime(), searchDTO.getEndTime());
        if(list != null){
            for(HtyFctSaleXzHotDTO i: list){
                SaleHotDTO dto = new SaleHotDTO();
@@ -38,7 +41,9 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
                dto.setMinXsAmt(i.getMinXsAmt());
                dto.setProdName(i.getProdName());
                dto.setProdCode(i.getProdCode());
-               dto.setQtyAvg(i.getXsQty());
+               if(i.getXsQty().intValue() != 0){
+                   dto.setQtyAvg(ArithUtil.div(i.getXsQty().doubleValue(),num.doubleValue(),0));
+               }
                dtos.add(dto);
            }
        }else{
