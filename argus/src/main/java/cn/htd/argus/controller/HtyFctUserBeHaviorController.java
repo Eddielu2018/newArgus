@@ -340,6 +340,7 @@ public class HtyFctUserBeHaviorController {
             num1=(BigDecimal)it.next();
             if(it.nextIndex()==1){
                 num2=num1;
+                b2bSaleCityProdperCentList.add("100%");
             }else {
                 num3=num1.divide(num2,4, RoundingMode.HALF_UP);
                 num2=num1;
