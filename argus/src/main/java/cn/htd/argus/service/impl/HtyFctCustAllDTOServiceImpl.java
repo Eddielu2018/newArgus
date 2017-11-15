@@ -265,7 +265,7 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
 
 	@Override
 	public List<HtyFctCustAllDto> selectForManagerYear(String userId, String dateTime, Integer aliveType,
-			Integer vipType, String outType) {
+			Integer vipType, String outType,String newTime) {
 		if (userId == null) {
             throw new IllegalArgumentException("userId is null");
         }
@@ -276,6 +276,7 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
         dto.setOrgCode(userId);
         dto.setDateKey(dateTime);
         dto.setOutType(outType);
+        dto.setNewTime(newTime);
         if(aliveType != null){
 	        if(aliveType == 1){
 	            dto.setIsHy("是");

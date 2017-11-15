@@ -38,6 +38,7 @@ public class HtyFctCustAllDto {
 	 private String isDk;
 	 private String outType;
 	 private String expireTime;
+	 private String newTime;
     public Long getId() {
 		return id;
 	}
@@ -241,6 +242,12 @@ public class HtyFctCustAllDto {
 	}
 	public void setExpireTime(String expireTime) {
 		this.expireTime = expireTime;
+	}
+	public String getNewTime() {
+		return newTime;
+	}
+	public void setNewTime(String newTime) {
+		this.newTime = newTime;
 	}
 	
 }
