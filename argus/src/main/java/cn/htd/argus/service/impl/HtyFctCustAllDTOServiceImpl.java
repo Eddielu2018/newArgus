@@ -53,7 +53,7 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
     }
 
     @Override
-    public HtyFctCustAllDto selectForAnalysis(String userId, String startTime, String endTime, int type) {
+    public HtyFctCustAllDto selectForAnalysis(String userId, String startTime, String endTime, int type,String nowTime) {
         if (userId == null) {
             throw new IllegalArgumentException("userId is null");
         }
@@ -63,11 +63,15 @@ public class HtyFctCustAllDTOServiceImpl implements HtyFctCustAllDTOService{
         if (endTime == null) {
             throw new IllegalArgumentException("endTime is null");
         }
+        if (nowTime == null) {
+            throw new IllegalArgumentException("nowTime is null");
+        }
         HtyFctCustAnalysisInDTO inDto = new HtyFctCustAnalysisInDTO();
         inDto.setUserId(userId);
         inDto.setStartTime(startTime);
         inDto.setEndTime(endTime);
         inDto.setType(type);
+        inDto.setNowTime(nowTime);
         return dao.selectForAnalysis(inDto);
     }
 

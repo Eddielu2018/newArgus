@@ -8,6 +8,7 @@ public class HtyFctCustAnalysisInDTO {
 	private int type;
 	private int avgType;
 	private int bossType;
+	private String nowTime;
 	public String getStartTime() {
 		return startTime;
 	}
@@ -43,6 +44,12 @@ public class HtyFctCustAnalysisInDTO {
 	}
 	public void setBossType(int bossType) {
 		this.bossType = bossType;
+	}
+	public String getNowTime() {
+		return nowTime;
+	}
+	public void setNowTime(String nowTime) {
+		this.nowTime = nowTime;
 	}
 	
 }

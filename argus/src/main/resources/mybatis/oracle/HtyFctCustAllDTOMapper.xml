@@ -180,16 +180,18 @@
   	as qty_b2b,sum(qty_boss)as qty_boss,SUM(qty_hzg) as qty_hzg,sum(amt_dk) 
   	as amt_dk,sum(amt_online_boss) as amt_online_boss,sum(amt_online_b2b) 
   	as amt_online_b2b,sum(amt_online_vms) as amt_online_vms FROM HTD_HTY.hty_fct_cust_all 
-  	where org_code=#{userId} and date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
+  	where date_key &gt;= #{startTime} and date_key &lt;= #{endTime} 
   	<choose>
   		<when test="type == 0">
-  			and is_cust = '是' 
+  			and is_cust = '是' and org_code=#{userId}
   		</when>
   		<when test="type == 1">
-  			and is_hy = '是' 
+  			and cust_code in (select cust_code from HTD_HTY.hty_fct_cust_all
+  			 where date_key = #{nowTime} and is_hy = '是' and org_code=#{userId})
   		</when>
   		<when test="type == 2">
-  			and is_vip = 1 
+  			and cust_code in (select cust_code from HTD_HTY.hty_fct_cust_all
+  			 where date_key = #{nowTime} and is_vip = 1 and org_code=#{userId})
   		</when>
   	</choose>
   </select>
@@ -392,15 +394,14 @@
     where cust_code in 
    (select cust_code from(
     select 
-    Max(cust_name) as cust_name,Max(cust_code) as cust_code,sum(amt_all) as amt_all,sum(amt_online) as amt_online 
-    from HTD_HTY.hty_fct_cust_all where date_key &gt;=#{dateKey} and org_code = #{orgCode}
+    cust_code
+    from HTD_HTY.hty_fct_cust_all where date_key = #{dateKey} and org_code = #{orgCode}
     <if test="isHy != null">
      and is_hy = #{isHy} 
     </if>
     <if test="isVip != null">
      and is_vip = #{isVip} 
     </if>
-  	group by cust_code 
     order by amt_all desc ,amt_online desc)
      <if test="outType == 1">
   	  where ROWNUM &gt;=1 and ROWNUM &lt;=10 
