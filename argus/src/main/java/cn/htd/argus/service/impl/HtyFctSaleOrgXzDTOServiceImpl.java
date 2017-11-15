@@ -128,8 +128,7 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
                 //3毛利率
                 if(i.getXsZySr().intValue() != 0 && i.getOrgNum().intValue() >0){
                     BigDecimal rate = ArithUtil.div(i.getXsZhMl().doubleValue(), i.getXsZySr().doubleValue(), 2);
-                    rate = ArithUtil.mul(rate.doubleValue(),100);
-                    dto.setRate(ArithUtil.div(rate.doubleValue(), i.getOrgNum().doubleValue(), 2));
+                    dto.setRate(ArithUtil.mul(rate.doubleValue(),100));
 
                     BigDecimal rateXz = ArithUtil.div(i.getXsZhMlXz().doubleValue(), i.getXsZySrXz().doubleValue(), 2);
                     rateXz = ArithUtil.mul(rateXz.doubleValue(),100);

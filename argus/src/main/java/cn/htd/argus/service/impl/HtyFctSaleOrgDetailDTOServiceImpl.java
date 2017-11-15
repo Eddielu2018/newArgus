@@ -7,6 +7,7 @@ import cn.htd.argus.mappers.HtyFctSaleOrgDetailDTOMapper;
 import cn.htd.argus.dto.HtyFctSaleOrgDetailDTO;
 import cn.htd.argus.service.HtyFctSaleOrgDetailDTOService;
 import cn.htd.argus.util.ArithUtil;
+import cn.htd.argus.util.DateUtil;
 import cn.htd.common.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -80,12 +81,16 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                 dto.setXsDd(i.getXsDd());
 
                 //轮比
-                searchDTO.setProdCode(i.getProdCode());
-                HtyFctSaleOrgDetailDTO htyFctSaleOrgDetailDTO = dao.selectByProdCode(searchDTO);
+                dto1.setProdCode(i.getProdCode());
+                Integer num = DateUtil.monthRangeDate(dto1.getStartTime(),dto1.getEndTime());
+                dto1.setEndTime(DateUtil.dateFormat(dto1.getEndTime(),num));
+                dto1.setStartTime(DateUtil.dateFormat(dto1.getStartTime(), num));
+                HtyFctSaleOrgDetailDTO htyFctSaleOrgDetailDTO = dao.selectByProdCode(dto1);
                 if(htyFctSaleOrgDetailDTO != null){
                     if(htyFctSaleOrgDetailDTO.getXsAmt().intValue() != 0){
                         BigDecimal salesRing = ArithUtil.sub(i.getXsAmt().doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue());
-                        dto.setSalesRing(ArithUtil.div(salesRing.doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().doubleValue(),4));
+                        salesRing = ArithUtil.mul(salesRing.doubleValue(),100);
+                        dto.setSalesRing(ArithUtil.div(salesRing.doubleValue(),htyFctSaleOrgDetailDTO.getXsAmt().abs().doubleValue(),2));
                     }else{
                         dto.setSalesRing(null);
                     }

@@ -37,11 +37,16 @@
     </select>
     <!--客户的复购  支付成功后隔一天再购买-->
     <select id="queryByPaySuccessNextDay" resultMap="BaseResultMap" >
-        select
-        <include refid="base"/>
-        from hty_fct_xw_b2b_conv_funnel
+        SELECT
+        '复购人数' AS step_name,
+        COUNT(step_sequence) AS step_sequence
+        FROM (
+        SELECT
+        step_name, step_sequence, cust_id,
+        COUNT(DISTINCT date_key) AS buy_date_qty
+        FROM ( SELECT step_name, step_sequence,cust_id,date_key from HTY_FCT_XW_B2B_CONV_FUNNEL
         <where>
-            AND STEP_NAME='支付成功'
+            step_sequence = 4
             <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
                 <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
             </if>
@@ -49,8 +54,26 @@
                 <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
             </if>
         </where>
-        group by STEP_SEQUENCE
-        HAVING count(DISTINCT DATE_KEY)>1  limit 10
+        ) bought
+        GROUP BY step_name, step_sequence, cust_id
+        ) a
+        WHERE buy_date_qty > 1
+        UNION ALL
+        SELECT
+        '购买人数' AS step_name,
+        COUNT(DISTINCT cust_id) AS step_sequence
+        FROM ( SELECT step_name, step_sequence,cust_id from HTY_FCT_XW_B2B_CONV_FUNNEL
+        <where>
+            step_sequence = 4
+            <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+                <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+                <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
+            </if>
+        </where>
+        ) bought
+        GROUP BY step_name, step_sequence
     </select>
     <select id="queryByProAndCity" resultMap="BaseResultMap" >
         SELECT
@@ -75,11 +98,15 @@
     </select>
     <select id="queryByProAndCityRepeat" resultMap="BaseResultMap">
         SELECT
-        <include refid="base"/>
-        from
-        hty_fct_xw_b2b_conv_funnel
+        '复购人数' AS step_name,
+        COUNT(step_sequence) AS step_sequence
+        FROM (
+        SELECT
+        step_name, step_sequence, cust_id,
+        COUNT(DISTINCT date_key) AS buy_date_qty
+        FROM ( SELECT step_name, step_sequence,cust_id,date_key from HTY_FCT_XW_B2B_CONV_FUNNEL
         <where>
-            AND STEP_NAME='支付成功'
+            step_sequence = 4
             <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
                 <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
             </if>
@@ -93,7 +120,31 @@
                 and CITY_NAME=#{htyFctXwB2bConvFunnelDTO.cityName}
             </if>
         </where>
-        group by STEP_SEQUENCE
-        HAVING count(DISTINCT DATE_KEY)>1  limit 10
+        ) bought
+        GROUP BY step_name, step_sequence, cust_id
+        ) a
+        WHERE buy_date_qty > 1
+        UNION ALL
+        SELECT
+        '购买人数' AS step_name,
+        COUNT(DISTINCT cust_id) AS step_sequence
+        FROM ( SELECT step_name, step_sequence,cust_id from HTY_FCT_XW_B2B_CONV_FUNNEL
+        <where>
+            step_sequence = 4
+            <if test="htyUserBeHaviorSearchDTO.startTime !=null and htyUserBeHaviorSearchDTO.startTime !=''">
+                <![CDATA[and DATE_KEY >=#{htyUserBeHaviorSearchDTO.startTime}]]>
+            </if>
+            <if test="htyUserBeHaviorSearchDTO.endTime !=null and htyUserBeHaviorSearchDTO.endTime!=''">
+                <![CDATA[and DATE_KEY<=#{htyUserBeHaviorSearchDTO.endTime}]]>
+            </if>
+            <if test="htyFctXwB2bConvFunnelDTO.provinceName!=null">
+                and PROVINCE_NAME =#{htyFctXwB2bConvFunnelDTO.provinceName}
+            </if>
+            <if test="htyFctXwB2bConvFunnelDTO.cityName!=null">
+                and CITY_NAME=#{htyFctXwB2bConvFunnelDTO.cityName}
+            </if>
+        </where>
+        ) bought
+        GROUP BY step_name, step_sequence
     </select>
 </mapper>

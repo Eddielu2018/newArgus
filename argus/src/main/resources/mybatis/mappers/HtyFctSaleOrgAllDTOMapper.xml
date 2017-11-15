@@ -30,30 +30,39 @@
 
   <select id="selectByOrgSearchDTO" resultMap="BaseResultMap">
     SELECT
-	u.ORG_CODE,
-	u.XS_AMT,
-	u.XS_QTY,
-	u.XS_ML,
-	u.XS_LR,
-	u.rowNo
+    c.ORG_CODE,
+    c.XS_AMT,
+    c.XS_QTY,
+    c.XS_ML,
+    c.XS_LR,
+    c.rowNo
     FROM
-	(
-		SELECT
-			ORG_CODE,
-			SUM(XS_AMT) AS XS_AMT,
-			SUM(XS_QTY) AS XS_QTY,
-			MAX(XS_ML) AS XS_ML,
-			SUM(XS_LR) AS XS_LR,
-			(@rowNum :=@rowNum + 1) AS rowNo
-		FROM
-			hty_fct_sale_org_all,
-			(SELECT(@rowNum := 0)) b
+      (
+      SELECT
+      u.ORG_CODE,
+      u.XS_AMT,
+      u.XS_QTY,
+      u.XS_ML,
+      u.XS_LR,
+      (@rowNum :=@rowNum + 1) AS rowNo
+      FROM
+        (
+        SELECT
+        ORG_CODE,
+        SUM(XS_AMT) AS XS_AMT,
+        SUM(XS_QTY) AS XS_QTY,
+        MAX(XS_ML) AS XS_ML,
+        SUM(XS_LR) AS XS_LR
+        FROM
+        hty_fct_sale_org_all
         <include refid="where"/>
-		GROUP BY
-			ORG_CODE
-		ORDER BY
-			XS_AMT
-	) u
+        GROUP BY
+        ORG_CODE
+        ORDER BY
+        XS_AMT DESC
+        ) u,
+      (SELECT(@rowNum := 0)) b
+      ) c
     WHERE
 	ORG_CODE = #{searchDTO.userId}
   </select>
