@@ -2,6 +2,7 @@ package cn.htd.argus.controller;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import cn.htd.argus.dto.*;
@@ -77,8 +78,8 @@ public class HtyFctUserBeHaviorController {
                 htyFctUserBeHaviorSearchDTO.setEndTime(endTime);
             }
             if ("".equals(startTime)&&"".equals(endTime)||startTime==null&&endTime==null){
-                htyFctUserBeHaviorSearchDTO.setStartTime(DateTimeUtil.getTodayChar8());
-                htyFctUserBeHaviorSearchDTO.setEndTime(DateTimeUtil.getTodayChar8());
+                htyFctUserBeHaviorSearchDTO.setStartTime( DateUtil.getCurFirstDay());
+                htyFctUserBeHaviorSearchDTO.setEndTime(DateUtil.getCurLastDay());
             }
             List<String> b2bLndPageList=new ArrayList<String>();
             List<BigDecimal> b2bLndPageNumList=new ArrayList<BigDecimal>();
@@ -249,8 +250,9 @@ public class HtyFctUserBeHaviorController {
             //市查询
             if("2".equals(radio)) {
                 String cityName= htyFctCustAllDTO.getAreaCityName();
+                String cityNameSub=cityName.substring(0,2);
                 //关键词
-                htyFctXwB2bSearchKey.setCityName(cityName);
+                htyFctXwB2bSearchKey.setCityName(cityNameSub);
                 List<HtyFctXwB2bSearchKeyDTO> htyFctXwB2bSearchKeyDTO = htyFctXwB2bSearchKeyDTOService.queryByNameSearchKey(htyFctXwB2bSearchKey, htyFctUserBeHaviorSearchDTO);
                 if (htyFctXwB2bSearchKeyDTO.size() > 0) {
                     for (HtyFctXwB2bSearchKeyDTO b2bSearchKey : htyFctXwB2bSearchKeyDTO) {
@@ -261,7 +263,7 @@ public class HtyFctUserBeHaviorController {
                     userBeHaviorSearchDTO.setB2bSearchKeyNumList(b2bSearchKeyNumList);
                 }
                 //落地页
-                htyFctXwB2bLndPage.setCityName(cityName);
+                htyFctXwB2bLndPage.setCityName(cityNameSub);
                 List<HtyFctXwB2bLndPageDTO> htyFctXwB2bLndPageDTO = htyFctXwB2bLndPageDTOService.queryByProNameAndCityName(htyFctXwB2bLndPage, htyFctUserBeHaviorSearchDTO);
                 if (htyFctXwB2bLndPageDTO.size() > 0) {
                     splitPageTittle(htyFctXwB2bLndPageDTO,b2bLndPageNumList,b2bLndPageList);
@@ -269,7 +271,7 @@ public class HtyFctUserBeHaviorController {
                     userBeHaviorSearchDTO.setB2bLndPageNumList(b2bLndPageNumList);
                 }
                 //单品访问量
-                htyFctXwB2bItemAccess.setCityName(cityName);
+                htyFctXwB2bItemAccess.setCityName(cityNameSub);
                 List<HtyFctXwB2bItemAccessDTO> htyFctXwB2bItemAccessDTO = htyFctXwB2bItemAccessDTOService.queryByProAndCity(htyFctXwB2bItemAccess, htyFctUserBeHaviorSearchDTO);
                 if (htyFctXwB2bItemAccessDTO.size() > 0) {
                     for (HtyFctXwB2bItemAccessDTO b2bItemAccess : htyFctXwB2bItemAccessDTO) {
@@ -281,7 +283,7 @@ public class HtyFctUserBeHaviorController {
                 }
                 // 漏斗转换及复购
                 // 1漏斗购买、
-                htyFctXwB2bConvFunnel.setCityName(cityName);
+                htyFctXwB2bConvFunnel.setCityName(cityNameSub);
                 List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTO = htyFctXwB2bConvFunnelDTOService.queryByProAndCity(htyFctXwB2bConvFunnel, htyFctUserBeHaviorSearchDTO);
                 if (htyFctXwB2bConvFunnelDTO.size() > 0) {
                     for (HtyFctXwB2bConvFunnelDTO b2bConvFunnel : htyFctXwB2bConvFunnelDTO) {
@@ -296,7 +298,7 @@ public class HtyFctUserBeHaviorController {
                     userBeHaviorSearchDTO.setB2bConvFunnelNumList(b2bConvFunnelNumList);
                 }
                 // 2重复购买
-                htyFctXwB2bConvFunnelRePeat.setCityName(cityName);
+                htyFctXwB2bConvFunnelRePeat.setCityName(cityNameSub);
                 List<HtyFctXwB2bConvFunnelDTO> htyFctXwB2bConvFunnelDTORepeatBuy = htyFctXwB2bConvFunnelDTOService.queryByProAndCityRepeat(htyFctXwB2bConvFunnelRePeat, htyFctUserBeHaviorSearchDTO);
                 if (htyFctXwB2bConvFunnelDTORepeatBuy.size() > 0) {
                     for (HtyFctXwB2bConvFunnelDTO repeatBuy : htyFctXwB2bConvFunnelDTORepeatBuy) {
