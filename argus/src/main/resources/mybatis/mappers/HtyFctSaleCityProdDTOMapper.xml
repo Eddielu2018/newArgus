@@ -60,7 +60,7 @@
                 AND  cust_proname=#{htyFctSaleCityProdDTO.custProName}
             </if>
             <if test="htyFctSaleCityProdDTO.custCityName!=null">
-                AND cust_city=#{htyFctSaleCityProdDTO.custCityName}
+                AND cust_cityName=#{htyFctSaleCityProdDTO.custCityName}
             </if>
         </where>
         group by PROD_NAME
