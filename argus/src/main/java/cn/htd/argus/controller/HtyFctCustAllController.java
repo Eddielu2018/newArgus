@@ -1161,12 +1161,12 @@ public class HtyFctCustAllController {
 		return content;
 	}
 	
-	private byte[] indexForManagerExcle(String userId,int aliveType,int pageType,String time,String newTime){
+	private byte[] indexForManagerExcle(String userId,Integer aliveType,Integer pageType,String time,String newTime,Integer type){
 		logger.info("调用(HtyFctCustAllDTOService.indexForManagerExcle)用户管理导出");
 		byte[] content = null;
 		try {
 			List<HtyFctCustAllDto> list = null;
-			if(pageType == 0){
+			if(type == 0){
 	        	//取年
 	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, time, aliveType, pageType,"0",newTime);
 	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, newTime, aliveType, pageType,"0");
@@ -1201,7 +1201,7 @@ public class HtyFctCustAllController {
 	        XSSFSheet sheet = book.createSheet("sheet1");
 	        XSSFRow firstRow = sheet.createRow(0);
 	        XSSFCell[] firstCell = null;
-	        if(pageType == 0){
+	        if(type == 0){
 	        	 firstCell = new XSSFCell[9];
 	        	 for(int i = 0 ;i < firstCell.length;i++){
 	        		 firstCell[i] = firstRow.createCell(i);
@@ -1234,7 +1234,7 @@ public class HtyFctCustAllController {
 	        		HtyFctCustAllDto cust = list.get(i);
 	        		XSSFRow row = sheet.createRow(i+1);
 	        		XSSFCell[] cell = null;
-	        		if(pageType == 0){
+	        		if(type == 0){
 	        			cell = new XSSFCell[9];
 	        			for(int b = 0 ;b < cell.length;b++){
 	    	        		cell[b] = row.createCell(b);
@@ -1371,9 +1371,9 @@ public class HtyFctCustAllController {
         }
 		byte[] buffer = null;
 		if(pageType == 0){
-			buffer = indexForManagerExcle(userId,isHy,isVip,newYear,newTime);
+			buffer = indexForManagerExcle(userId,isHy,isVip,newYear,newTime,pageType);
 		}else{
-			buffer = indexForManagerExcle(userId,isHy,isVip,time,newTime);
+			buffer = indexForManagerExcle(userId,isHy,isVip,time,newTime,pageType);
 		}
 		response.reset();  
 		response.addHeader("Content-Disposition", "attachment;filename="  
