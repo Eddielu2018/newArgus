@@ -16,7 +16,7 @@ public interface HtyFctCustAllDTOService {
 
     Integer selectForAmtAll(String userId,String startTime,String endTime,int type,Integer regionOrg);
 
-    HtyFctCustAllDto selectForAnalysis(String userId,String startTime,String endTime,int type);
+    HtyFctCustAllDto selectForAnalysis(String userId,String startTime,String endTime,int type,String nowTime);
 
     Integer selectForAmtOnline(String userId,String startTime,String endTime,int type,Integer regionOrg);
 

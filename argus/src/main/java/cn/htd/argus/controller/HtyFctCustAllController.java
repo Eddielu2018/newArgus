@@ -611,7 +611,7 @@ public class HtyFctCustAllController {
         		startTime = newTime;
         		endTime = newTime;
         	}
-        	HtyFctCustAllDto custUpDto = htyFctCustAllDTOService.selectForAnalysis(userId, startTime, endTime, type);
+        	HtyFctCustAllDto custUpDto = htyFctCustAllDTOService.selectForAnalysis(userId, startTime, endTime, type,newTime);
         	if(custUpDto != null){
         		if(custUpDto.getAmtAll() != null){
         			custAllDto.setAmtAll(new BigDecimal(MathUtil.getWanDouble(custUpDto.getAmtAll())));
@@ -883,7 +883,7 @@ public class HtyFctCustAllController {
 	        if(pageType == 0){
 	        	//取年
 	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, newYear, isHy, isVip,"1");
-	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, newYear, isHy, isVip,"1");
+	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, newTime, isHy, isVip,"1");
 	        	if(list != null && tempAll != null && list.size()>0 && tempAll.size()>0){
 	        		for(HtyFctCustAllDto dto : list){
 	        			for(HtyFctCustAllDto temp : tempAll){
@@ -1138,7 +1138,7 @@ public class HtyFctCustAllController {
 		return content;
 	}
 	
-	private byte[] indexForManagerExcle(String userId,int aliveType,int pageType,String time){
+	private byte[] indexForManagerExcle(String userId,int aliveType,int pageType,String time,String newTime){
 		logger.info("调用(HtyFctCustAllDTOService.indexForManagerExcle)用户管理导出");
 		byte[] content = null;
 		try {
@@ -1146,7 +1146,7 @@ public class HtyFctCustAllController {
 			if(pageType == 0){
 	        	//取年
 	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, time, aliveType, pageType,"0");
-	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, time, aliveType, pageType,"0");
+	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, newTime, aliveType, pageType,"0");
 	        	if(list != null && tempAll != null && list.size()>0 && tempAll.size()>0){
 	        		for(HtyFctCustAllDto dto : list){
 	        			for(HtyFctCustAllDto temp : tempAll){
@@ -1331,9 +1331,9 @@ public class HtyFctCustAllController {
 		}
 		byte[] buffer = null;
 		if(pageType == 0){
-			buffer = indexForManagerExcle(userId,aliveType,pageType,newYear);
+			buffer = indexForManagerExcle(userId,aliveType,pageType,newYear,newTime);
 		}else{
-			buffer = indexForManagerExcle(userId,aliveType,pageType,time);
+			buffer = indexForManagerExcle(userId,aliveType,pageType,time,newTime);
 		}
 		response.reset();  
 		response.addHeader("Content-Disposition", "attachment;filename="  
