@@ -72,11 +72,67 @@ public class HtyFctOrgController {
             HtyFctOrgValueDTO htyFctOrgValueDTO = this.htyFctOrgValueDTOService.selectByOrgCode(userId,yearMonth);
             if(htyFctOrgValueDTO != null){
             	HtyFctOrgValueDTO maxHty = this.htyFctOrgValueDTOService.selectOrgMax(htyFctOrgValueDTO.getYearmon());
-                htyFctOrgValueDTO.setMaxZhnl(maxHty.getZhnl());
-                htyFctOrgValueDTO.setMaxPsgz(maxHty.getPsgz());
-                htyFctOrgValueDTO.setMaxPegz(maxHty.getPegz());
-                htyFctOrgValueDTO.setMaxPbgz(maxHty.getPbgz());
-                htyFctOrgValueDTO.setMaxCvmgz(maxHty.getCvmgz());
+            	htyFctOrgValueDTO.setMaxZhnl(new BigDecimal(100));
+            	htyFctOrgValueDTO.setMaxPsgz(new BigDecimal(100));
+                htyFctOrgValueDTO.setMaxPegz(new BigDecimal(100));
+                htyFctOrgValueDTO.setMaxPbgz(new BigDecimal(100));
+                htyFctOrgValueDTO.setMaxCvmgz(new BigDecimal(100));
+                //计算雷达图区间
+                if(maxHty.getZhnl() != null && maxHty.getZhnl().doubleValue() != 0){
+                	double numZhnl = htyFctOrgValueDTO.getZhnl().doubleValue()/maxHty.getZhnl().doubleValue();
+                	if(numZhnl <= 10){
+                		numZhnl = 10;
+                	}else if(numZhnl >= 95){
+                		numZhnl = 95;
+                	}
+                	htyFctOrgValueDTO.setNowZhnl(new BigDecimal(numZhnl));
+                }else{
+                	htyFctOrgValueDTO.setNowZhnl(new BigDecimal(10));
+                }
+                if(maxHty.getPsgz() != null && maxHty.getPsgz().doubleValue() != 0){
+                	double numPsgz = htyFctOrgValueDTO.getPsgz().doubleValue()/maxHty.getPsgz().doubleValue();
+                	if(numPsgz <= 10){
+                		numPsgz = 10;
+                	}else if(numPsgz >= 95){
+                		numPsgz = 95;
+                	}
+                	htyFctOrgValueDTO.setNowPsgz(new BigDecimal(numPsgz));
+                }else{
+                	htyFctOrgValueDTO.setNowPsgz(new BigDecimal(10));
+                }
+                if(maxHty.getPegz() != null && maxHty.getPegz().doubleValue() != 0){
+                	double numPegz = htyFctOrgValueDTO.getPegz().doubleValue()/maxHty.getPegz().doubleValue();
+                	if(numPegz <= 10){
+                		numPegz = 10;
+                	}else if(numPegz >= 95){
+                		numPegz = 95;
+                	}
+                	htyFctOrgValueDTO.setNowPegz(new BigDecimal(numPegz));
+                }else{
+                	htyFctOrgValueDTO.setNowPegz(new BigDecimal(10));
+                }
+                if(maxHty.getPbgz() != null && maxHty.getPbgz().doubleValue() != 0){
+                	double numPbgz = htyFctOrgValueDTO.getPbgz().doubleValue()/maxHty.getPbgz().doubleValue();
+                	if(numPbgz <= 10){
+                		numPbgz = 10;
+                	}else if(numPbgz >= 95){
+                		numPbgz = 95;
+                	}
+                	htyFctOrgValueDTO.setNowPbgz(new BigDecimal(numPbgz));
+                }else{
+                	htyFctOrgValueDTO.setNowPbgz(new BigDecimal(10));
+                }
+                if(maxHty.getCvmgz() != null && maxHty.getCvmgz().doubleValue() != 0){
+                	double numCvmgz = htyFctOrgValueDTO.getCvmgz().doubleValue()/maxHty.getCvmgz().doubleValue();
+                	if(numCvmgz <= 10){
+                		numCvmgz = 10;
+                	}else if(numCvmgz >= 95){
+                		numCvmgz = 95;
+                	}
+                	htyFctOrgValueDTO.setCvmgz(new BigDecimal(numCvmgz));
+                }else{
+                	htyFctOrgValueDTO.setCvmgz(new BigDecimal(10));
+                }
             	Double sort = MathUtil.getPairToDouble(new BigDecimal(htyFctOrgValueDTO.getZtpm()), new BigDecimal(dciDimOrgDTOService.selectAllNum()));
             	if(htyFctOrgValueDTO.getZtpm() >= 1 && htyFctOrgValueDTO.getZtpm() <=10){
             		htyFctOrgValueDTO.setStarNum(new BigDecimal(4.5));
