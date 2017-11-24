@@ -37,6 +37,16 @@ public class HtyFctOrgValueDTO {
     
     private BigDecimal maxCvmgz;
     
+    private BigDecimal nowZhnl;
+    
+    private BigDecimal nowPbgz;
+    
+    private BigDecimal nowPsgz;
+    
+    private BigDecimal nowPegz;
+    
+    private BigDecimal nowCvmgz;
+    
     
     public Long getId() {
         return id;
@@ -172,6 +182,46 @@ public class HtyFctOrgValueDTO {
 
 	public void setMaxCvmgz(BigDecimal maxCvmgz) {
 		this.maxCvmgz = maxCvmgz;
+	}
+
+	public BigDecimal getNowZhnl() {
+		return nowZhnl;
+	}
+
+	public void setNowZhnl(BigDecimal nowZhnl) {
+		this.nowZhnl = nowZhnl;
+	}
+
+	public BigDecimal getNowPbgz() {
+		return nowPbgz;
+	}
+
+	public void setNowPbgz(BigDecimal nowPbgz) {
+		this.nowPbgz = nowPbgz;
+	}
+
+	public BigDecimal getNowPsgz() {
+		return nowPsgz;
+	}
+
+	public void setNowPsgz(BigDecimal nowPsgz) {
+		this.nowPsgz = nowPsgz;
+	}
+
+	public BigDecimal getNowPegz() {
+		return nowPegz;
+	}
+
+	public void setNowPegz(BigDecimal nowPegz) {
+		this.nowPegz = nowPegz;
+	}
+
+	public BigDecimal getNowCvmgz() {
+		return nowCvmgz;
+	}
+
+	public void setNowCvmgz(BigDecimal nowCvmgz) {
+		this.nowCvmgz = nowCvmgz;
 	}
 	
 }
