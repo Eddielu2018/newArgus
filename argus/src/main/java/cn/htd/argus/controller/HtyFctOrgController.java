@@ -79,59 +79,59 @@ public class HtyFctOrgController {
                 htyFctOrgValueDTO.setMaxCvmgz(new BigDecimal(100));
                 //计算雷达图区间
                 if(maxHty.getZhnl() != null && maxHty.getZhnl().doubleValue() != 0 && htyFctOrgValueDTO.getZhnl() != null){
-                	double numZhnl = htyFctOrgValueDTO.getZhnl().doubleValue()/maxHty.getZhnl().doubleValue();
+                	double numZhnl = htyFctOrgValueDTO.getZhnl().doubleValue()/maxHty.getZhnl().doubleValue()*100;
                 	if(numZhnl <= 10){
                 		numZhnl = 10;
                 	}else if(numZhnl >= 95){
                 		numZhnl = 95;
                 	}
-                	htyFctOrgValueDTO.setNowZhnl(new BigDecimal(numZhnl));
+                	htyFctOrgValueDTO.setNowZhnl(new BigDecimal((int)numZhnl));
                 }else{
                 	htyFctOrgValueDTO.setNowZhnl(new BigDecimal(10));
                 }
                 if(maxHty.getPsgz() != null && maxHty.getPsgz().doubleValue() != 0 && htyFctOrgValueDTO.getPsgz() != null){
-                	double numPsgz = htyFctOrgValueDTO.getPsgz().doubleValue()/maxHty.getPsgz().doubleValue();
+                	double numPsgz = htyFctOrgValueDTO.getPsgz().doubleValue()/maxHty.getPsgz().doubleValue()*100;
                 	if(numPsgz <= 10){
                 		numPsgz = 10;
                 	}else if(numPsgz >= 95){
                 		numPsgz = 95;
                 	}
-                	htyFctOrgValueDTO.setNowPsgz(new BigDecimal(numPsgz));
+                	htyFctOrgValueDTO.setNowPsgz(new BigDecimal((int)numPsgz));
                 }else{
                 	htyFctOrgValueDTO.setNowPsgz(new BigDecimal(10));
                 }
                 if(maxHty.getPegz() != null && maxHty.getPegz().doubleValue() != 0 && htyFctOrgValueDTO.getPegz() != null){
-                	double numPegz = htyFctOrgValueDTO.getPegz().doubleValue()/maxHty.getPegz().doubleValue();
+                	double numPegz = htyFctOrgValueDTO.getPegz().doubleValue()/maxHty.getPegz().doubleValue()*100;
                 	if(numPegz <= 10){
                 		numPegz = 10;
                 	}else if(numPegz >= 95){
                 		numPegz = 95;
                 	}
-                	htyFctOrgValueDTO.setNowPegz(new BigDecimal(numPegz));
+                	htyFctOrgValueDTO.setNowPegz(new BigDecimal((int)numPegz));
                 }else{
                 	htyFctOrgValueDTO.setNowPegz(new BigDecimal(10));
                 }
                 if(maxHty.getPbgz() != null && maxHty.getPbgz().doubleValue() != 0 && htyFctOrgValueDTO.getPbgz() != null){
-                	double numPbgz = htyFctOrgValueDTO.getPbgz().doubleValue()/maxHty.getPbgz().doubleValue();
+                	double numPbgz = htyFctOrgValueDTO.getPbgz().doubleValue()/maxHty.getPbgz().doubleValue()*100;
                 	if(numPbgz <= 10){
                 		numPbgz = 10;
                 	}else if(numPbgz >= 95){
                 		numPbgz = 95;
                 	}
-                	htyFctOrgValueDTO.setNowPbgz(new BigDecimal(numPbgz));
+                	htyFctOrgValueDTO.setNowPbgz(new BigDecimal((int)numPbgz));
                 }else{
                 	htyFctOrgValueDTO.setNowPbgz(new BigDecimal(10));
                 }
                 if(maxHty.getCvmgz() != null && maxHty.getCvmgz().doubleValue() != 0 && htyFctOrgValueDTO.getCvmgz() != null){
-                	double numCvmgz = htyFctOrgValueDTO.getCvmgz().doubleValue()/maxHty.getCvmgz().doubleValue();
+                	double numCvmgz = htyFctOrgValueDTO.getCvmgz().doubleValue()/maxHty.getCvmgz().doubleValue()*100;
                 	if(numCvmgz <= 10){
                 		numCvmgz = 10;
                 	}else if(numCvmgz >= 95){
                 		numCvmgz = 95;
                 	}
-                	htyFctOrgValueDTO.setCvmgz(new BigDecimal(numCvmgz));
+                	htyFctOrgValueDTO.setNowCvmgz(new BigDecimal((int)numCvmgz));
                 }else{
-                	htyFctOrgValueDTO.setCvmgz(new BigDecimal(10));
+                	htyFctOrgValueDTO.setNowCvmgz(new BigDecimal(10));
                 }
             	Double sort = MathUtil.getPairToDouble(new BigDecimal(htyFctOrgValueDTO.getZtpm()), new BigDecimal(dciDimOrgDTOService.selectAllNum()));
             	if(htyFctOrgValueDTO.getZtpm() >= 1 && htyFctOrgValueDTO.getZtpm() <=10){
