@@ -53,9 +53,9 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
     }
 
     @Override
-    public List<BrandSortDTO> queryBrand(String plCode) {
+    public List<BrandSortDTO> queryBrandByCategory(String plCode) {
         List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
-        List<HtyFctSaleXzHotDTO> list1 = dao.queryBrand(plCode);
+        List<HtyFctSaleXzHotDTO> list1 = dao.queryBrandByCategory(plCode);
         if(list1 != null){
             for(HtyFctSaleXzHotDTO i:list1){
                 BrandSortDTO dto = new BrandSortDTO();
@@ -73,6 +73,40 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
     public List<BrandSortDTO> queryCategory() {
         List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
         List<HtyFctSaleXzHotDTO> list1 = dao.queryCategory();
+        if(list1 != null){
+            for(HtyFctSaleXzHotDTO i:list1){
+                BrandSortDTO dto = new BrandSortDTO();
+                dto.setBrandName(i.getPlName());
+                dto.setSortNum(i.getPlCode());
+                list.add(dto);
+            }
+        }else{
+            return null;
+        }
+        return list;
+    }
+
+    @Override
+    public List<BrandSortDTO> queryCategoryByBrand(String ppCode) {
+        List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
+        List<HtyFctSaleXzHotDTO> list1 = dao.queryCategoryByBrand(ppCode);
+        if(list1 != null){
+            for(HtyFctSaleXzHotDTO i:list1){
+                BrandSortDTO dto = new BrandSortDTO();
+                dto.setBrandName(i.getPpName());
+                dto.setSortNum(i.getPpCode());
+                list.add(dto);
+            }
+        }else{
+            return null;
+        }
+        return list;
+    }
+
+    @Override
+    public List<BrandSortDTO> queryBrand() {
+        List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
+        List<HtyFctSaleXzHotDTO> list1 = dao.queryBrand();
         if(list1 != null){
             for(HtyFctSaleXzHotDTO i:list1){
                 BrandSortDTO dto = new BrandSortDTO();

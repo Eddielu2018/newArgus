@@ -70,8 +70,7 @@
     PROD_CODE) a
   </select>
 
-  <!-- 查询所有品牌-->
-  <select id="queryBrand" resultMap="BaseResultMap">
+  <select id="queryBrandByCategory" resultMap="BaseResultMap">
     SELECT DISTINCT
     PP_CODE,
     PP_NAME
@@ -89,6 +88,28 @@
     PL_NAME
     FROM
     HTD_HTY.hty_fct_sale_xz_hot
+    ORDER BY
+    PL_CODE
+  </select>
+
+  <!-- 查询所有品牌-->
+  <select id="queryBrand" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    PP_CODE,
+    PP_NAME
+    FROM
+    HTD_HTY.hty_fct_sale_xz_hot
+    ORDER BY
+    PP_CODE
+  </select>
+
+  <select id="queryCategoryByBrand" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    PL_CODE,
+    PL_NAME
+    FROM
+    HTD_HTY.hty_fct_sale_xz_hot
+    WHERE PP_CODE = #{ppCode}
     ORDER BY
     PL_CODE
   </select>

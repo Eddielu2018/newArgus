@@ -20,7 +20,11 @@ public interface HtyFctSaleOrgDetailDTOService {
 
     List<SaleDetailDTO> queryPage(HtyFctSaleSearchDTO searchDTO,Pager pager);
 
-    List<BrandSortDTO> queryBrand(String plCode);
+    List<BrandSortDTO> queryBrandByCategory(String plCode);
 
     List<BrandSortDTO> queryCategory();
+
+    List<BrandSortDTO> queryBrand();
+
+    List<BrandSortDTO> queryCategoryByBrand(String ppCode);
 }

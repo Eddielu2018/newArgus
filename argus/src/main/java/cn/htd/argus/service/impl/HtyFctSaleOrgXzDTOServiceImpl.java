@@ -6,6 +6,7 @@ import cn.htd.argus.dao.HtyFctSaleOrgXzDTOMapper;
 import cn.htd.argus.dto.HtyFctSaleOrgXzDTO;
 import cn.htd.argus.service.HtyFctSaleOrgXzDTOService;
 import cn.htd.argus.util.ArithUtil;
+import cn.htd.argus.util.DateTimeUtil;
 import cn.htd.argus.util.DateUtil;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +93,6 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
                     list.add(htyFctSaleOrgXzDTO);
                 }
             }
-
         }else if("0".equals(dateType)){
             //月
             if(StringUtils.isNotEmpty(endTime)){
@@ -102,6 +102,24 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
             }
             param.setEndTime(endTime);
             list = dao.selectByMonthSearchDTO(param);
+        }else if("2".equals(dateType)){
+            //季
+            if(StringUtils.isNotEmpty(endTime)){
+                endTime  = endTime.substring(0, 6);
+            }else{
+                endTime = DateUtil.getCurDateStr1("yyyyMM");
+            }
+            String lastTime = DateUtil.getLastMonthChar7(endTime);
+            String startTime = DateUtil.getLastMonthChar7(lastTime);
+            param.setEndTime(startTime);
+            HtyFctSaleOrgXzDTO htyFctSaleOrgXzDTO = dao.selectByYearSearchDTO(param);
+            param.setEndTime(lastTime);
+            HtyFctSaleOrgXzDTO htyFctSaleOrgXzDTO2 = dao.selectByYearSearchDTO(param);
+            param.setEndTime(endTime);
+            HtyFctSaleOrgXzDTO htyFctSaleOrgXzDTO3 = dao.selectByYearSearchDTO(param);
+            list.add(htyFctSaleOrgXzDTO);
+            list.add(htyFctSaleOrgXzDTO2);
+            list.add(htyFctSaleOrgXzDTO3);
         }
 
         List<SaleXzsDTO> dtos = new ArrayList<SaleXzsDTO>();
