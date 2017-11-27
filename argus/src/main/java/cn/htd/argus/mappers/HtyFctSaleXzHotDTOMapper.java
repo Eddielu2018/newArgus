@@ -13,7 +13,11 @@ public interface HtyFctSaleXzHotDTOMapper {
 
     List<HtyFctSaleXzHotDTO> querySumPage(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO, @Param("pager") Pager pager);
 
-    List<HtyFctSaleXzHotDTO> queryBrand(String plCode);
+    List<HtyFctSaleXzHotDTO> queryBrandByCategory(String plCode);
 
     List<HtyFctSaleXzHotDTO> queryCategory();
+
+    List<HtyFctSaleXzHotDTO> queryBrand();
+
+    List<HtyFctSaleXzHotDTO> queryCategoryByBrand(String ppCode);
 }

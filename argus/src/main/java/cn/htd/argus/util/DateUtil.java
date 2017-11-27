@@ -20,6 +20,24 @@ public class DateUtil {
 	public static final String FORMAT_SS = "yyyy-MM-dd HH:mm:ss";
 	public static final String FORMAT_DD = "yyyy-MM-dd";
 
+	/**
+	 * 获取上个月
+	 * @param custTime
+	 * @return
+	 */
+	public static String getLastMonthChar7(String custTime)
+	{
+		SimpleDateFormat format =  new SimpleDateFormat("yyyyMM");
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(format.parse(custTime));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		c.add(Calendar.MONTH, -1);
+		String time = format.format(c.getTime());
+		return time;
+	}
 
 	/***
 	 * 获取前一天日期
