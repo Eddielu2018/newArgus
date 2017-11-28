@@ -972,46 +972,44 @@ public class HtyFctOrgController {
         try {
         	HtyFctOrgAvgDTO allDto = new HtyFctOrgAvgDTO();
         	String yearMonth = getNowMonthWithOut01();
-        	HtyFctOrgValueDTO dto = this.htyFctOrgValueDTOService.selectByOrgCode(userId,yearMonth);
-        	String yearDate = dto.getYearmon();
         	if(1 == type || 2 == type){
         		HtyFctOrgIncomeDTO htyFctOrgIncomeDTO = this.htyFctOrgIncomeDTOService.selectByOrgCode(userId,yearMonth);
             	allDto.setCompanyNow(htyFctOrgIncomeDTO.getYearBusincomeAmt());
-            	HtyFctOrgSortDTO sdto = this.htyFctOrgIncomeDTOService.selectSort(userId, yearDate);
-            	allDto.setHeadAvg(this.htyFctOrgIncomeDTOService.selectAvgHead(yearDate));
-            	allDto.setBrachAvg(this.htyFctOrgIncomeDTOService.selectAvgBrach(userId, yearDate));
+            	HtyFctOrgSortDTO sdto = this.htyFctOrgIncomeDTOService.selectSort(userId, yearMonth);
+            	allDto.setHeadAvg(this.htyFctOrgIncomeDTOService.selectAvgHead(yearMonth));
+            	allDto.setBrachAvg(this.htyFctOrgIncomeDTOService.selectAvgBrach(userId, yearMonth));
             	if(1 == type){
             		allDto.setSortNum(sdto.getIncomeBrach());
-            		allDto.setCompanyList(this.htyFctOrgIncomeDTOService.selectCompanySortBrach(userId, yearDate));
+            		allDto.setCompanyList(this.htyFctOrgIncomeDTOService.selectCompanySortBrach(userId, yearMonth));
             	}else{
             		allDto.setSortNum(sdto.getIncomeHead());
-            		allDto.setCompanyList(this.htyFctOrgIncomeDTOService.selectCompanySortHead(yearDate));
+            		allDto.setCompanyList(this.htyFctOrgIncomeDTOService.selectCompanySortHead(yearMonth));
             	}
         	}else if(3 == type || 4 == type){
         		HtyFctOrgSaleDTO htyFctOrgSaleDTO = this.htyFctOrgSaleDTOService.selectByOrgCode(userId,yearMonth);
             	allDto.setCompanyNow(htyFctOrgSaleDTO.getYearAmt());
-            	HtyFctOrgSortDTO sdto = this.htyFctOrgSaleDTOService.selectSort(userId, yearDate);
-            	allDto.setHeadAvg(this.htyFctOrgSaleDTOService.selectAvgHead(yearDate));
-            	allDto.setBrachAvg(this.htyFctOrgSaleDTOService.selectAvgBrach(userId, yearDate));
+            	HtyFctOrgSortDTO sdto = this.htyFctOrgSaleDTOService.selectSort(userId, yearMonth);
+            	allDto.setHeadAvg(this.htyFctOrgSaleDTOService.selectAvgHead(yearMonth));
+            	allDto.setBrachAvg(this.htyFctOrgSaleDTOService.selectAvgBrach(userId, yearMonth));
             	if(3 == type){
             		allDto.setSortNum(sdto.getSaleBrach());
-            		allDto.setCompanyList(this.htyFctOrgSaleDTOService.selectCompanySortBrach(userId, yearDate));
+            		allDto.setCompanyList(this.htyFctOrgSaleDTOService.selectCompanySortBrach(userId, yearMonth));
             	}else{
             		allDto.setSortNum(sdto.getSaleHead());
-            		allDto.setCompanyList(this.htyFctOrgSaleDTOService.selectCompanySortHead(yearDate));
+            		allDto.setCompanyList(this.htyFctOrgSaleDTOService.selectCompanySortHead(yearMonth));
             	}
         	}else if(5 == type || 6 == type){
         		HtyFctOrgCustDTO htyFctOrgIncomeDTO = this.htyFctOrgCustDTOService.selectByOrgCode(userId,yearMonth);
             	allDto.setCompanyNow(new BigDecimal(htyFctOrgIncomeDTO.getYearNewcustnum()));
-            	HtyFctOrgSortDTO sdto = this.htyFctOrgCustDTOService.selectSort(userId, yearDate);
-            	allDto.setHeadAvg(new BigDecimal(this.htyFctOrgCustDTOService.selectAvgHead(yearDate)));
-            	allDto.setBrachAvg(new BigDecimal(this.htyFctOrgCustDTOService.selectAvgBrach(userId, yearDate)));
+            	HtyFctOrgSortDTO sdto = this.htyFctOrgCustDTOService.selectSort(userId, yearMonth);
+            	allDto.setHeadAvg(new BigDecimal(this.htyFctOrgCustDTOService.selectAvgHead(yearMonth)));
+            	allDto.setBrachAvg(new BigDecimal(this.htyFctOrgCustDTOService.selectAvgBrach(userId, yearMonth)));
             	if(5 == type){
             		allDto.setSortNum(sdto.getMemeberBrach());
-            		allDto.setCompanyList(this.htyFctOrgCustDTOService.selectCompanySortBrach(userId, yearDate));
+            		allDto.setCompanyList(this.htyFctOrgCustDTOService.selectCompanySortBrach(userId, yearMonth));
             	}else{
             		allDto.setSortNum(sdto.getMemeberHead());
-            		allDto.setCompanyList(this.htyFctOrgCustDTOService.selectCompanySortHead(yearDate));
+            		allDto.setCompanyList(this.htyFctOrgCustDTOService.selectCompanySortHead(yearMonth));
             	}
         	}
             result.setData(allDto);
