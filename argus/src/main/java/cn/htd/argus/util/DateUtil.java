@@ -21,6 +21,68 @@ public class DateUtil {
 	public static final String FORMAT_DD = "yyyy-MM-dd";
 
 	/**
+	 * 当前季度的开始时间
+	 *
+	 * @return
+	 */
+	public static String getCurrentQuarterStartTime() {
+		Calendar c = Calendar.getInstance();
+		int currentMonth = c.get(Calendar.MONTH) + 1;
+		SimpleDateFormat format =  new SimpleDateFormat("yyyyMM");
+		Date now = null;
+		String time =null;
+		try {
+			if (currentMonth >= 1 && currentMonth <= 3)
+				c.set(Calendar.MONTH, 0);
+			else if (currentMonth >= 4 && currentMonth <= 6)
+				c.set(Calendar.MONTH, 3);
+			else if (currentMonth >= 7 && currentMonth <= 9)
+				c.set(Calendar.MONTH, 4);
+			else if (currentMonth >= 10 && currentMonth <= 12)
+				c.set(Calendar.MONTH, 9);
+			c.set(Calendar.DATE, 1);
+			now = format.parse(format.format(c.getTime()));
+			time = format.format(now.getTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return time;
+	}
+
+	/**
+	 * 当前季度的结束时间
+	 *
+	 * @return
+	 */
+	public static String getCurrentQuarterEndTime() {
+		Calendar c = Calendar.getInstance();
+		int currentMonth = c.get(Calendar.MONTH) + 1;
+		SimpleDateFormat format =  new SimpleDateFormat("yyyyMM");
+		Date now = null;
+		String time =null;
+		try {
+			if (currentMonth >= 1 && currentMonth <= 3) {
+				c.set(Calendar.MONTH, 2);
+				c.set(Calendar.DATE, 31);
+			} else if (currentMonth >= 4 && currentMonth <= 6) {
+				c.set(Calendar.MONTH, 5);
+				c.set(Calendar.DATE, 30);
+			} else if (currentMonth >= 7 && currentMonth <= 9) {
+				c.set(Calendar.MONTH, 8);
+				c.set(Calendar.DATE, 30);
+			} else if (currentMonth >= 10 && currentMonth <= 12) {
+				c.set(Calendar.MONTH, 11);
+				c.set(Calendar.DATE, 31);
+			}
+			now = format.parse(format.format(c.getTime()));
+			time = format.format(now.getTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return time;
+	}
+
+	/**
 	 * 获取上个月
 	 * @param custTime
 	 * @return

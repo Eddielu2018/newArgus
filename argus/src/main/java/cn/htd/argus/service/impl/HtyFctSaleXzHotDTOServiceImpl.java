@@ -93,8 +93,8 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
         if(list1 != null){
             for(HtyFctSaleXzHotDTO i:list1){
                 BrandSortDTO dto = new BrandSortDTO();
-                dto.setBrandName(i.getPpName());
-                dto.setSortNum(i.getPpCode());
+                dto.setBrandName(i.getPlName());
+                dto.setSortNum(i.getPlCode());
                 list.add(dto);
             }
         }else{
@@ -110,8 +110,8 @@ public class HtyFctSaleXzHotDTOServiceImpl implements HtyFctSaleXzHotDTOService{
         if(list1 != null){
             for(HtyFctSaleXzHotDTO i:list1){
                 BrandSortDTO dto = new BrandSortDTO();
-                dto.setBrandName(i.getPlName());
-                dto.setSortNum(i.getPlCode());
+                dto.setBrandName(i.getPpName());
+                dto.setSortNum(i.getPpCode());
                 list.add(dto);
             }
         }else{

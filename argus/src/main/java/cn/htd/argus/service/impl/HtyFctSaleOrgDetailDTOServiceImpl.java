@@ -160,8 +160,8 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
         if(list1 != null){
             for(HtyFctSaleOrgDetailDTO i:list1){
                 BrandSortDTO dto = new BrandSortDTO();
-                dto.setBrandName(i.getPlName());
-                dto.setSortNum(i.getPlCode());
+                dto.setBrandName(i.getPpName());
+                dto.setSortNum(i.getPpCode());
                 list.add(dto);
             }
         }else{
@@ -176,10 +176,10 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
         List<HtyFctSaleOrgDetailDTO> list1 = dao.queryCategoryByBrand(ppCode);
         if(list1 != null){
             for(HtyFctSaleOrgDetailDTO i:list1){
-                if(i.getPpName() != null){
+                if(i.getPlName() != null){
                     BrandSortDTO dto = new BrandSortDTO();
-                    dto.setBrandName(i.getPpName());
-                    dto.setSortNum(i.getPpCode());
+                    dto.setBrandName(i.getPlName());
+                    dto.setSortNum(i.getPlCode());
                     list.add(dto);
                 }
             }

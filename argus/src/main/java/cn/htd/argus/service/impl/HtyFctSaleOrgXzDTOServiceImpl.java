@@ -117,9 +117,39 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
             HtyFctSaleOrgXzDTO htyFctSaleOrgXzDTO2 = dao.selectByYearSearchDTO(param);
             param.setEndTime(endTime);
             HtyFctSaleOrgXzDTO htyFctSaleOrgXzDTO3 = dao.selectByYearSearchDTO(param);
-            list.add(htyFctSaleOrgXzDTO);
-            list.add(htyFctSaleOrgXzDTO2);
-            list.add(htyFctSaleOrgXzDTO3);
+            if(htyFctSaleOrgXzDTO != null){
+                htyFctSaleOrgXzDTO.setDateKey(startTime);
+                list.add(htyFctSaleOrgXzDTO);
+            }else{
+                HtyFctSaleOrgXzDTO htyFctSaleOrgXzDTO4 = new HtyFctSaleOrgXzDTO();
+                htyFctSaleOrgXzDTO4.setDateKey(startTime);
+                htyFctSaleOrgXzDTO4.setXsAmt(new BigDecimal(0));
+                htyFctSaleOrgXzDTO4.setOrgNum(0);
+                htyFctSaleOrgXzDTO4.setCnt(0);
+                list.add(htyFctSaleOrgXzDTO4);
+            }
+            if(htyFctSaleOrgXzDTO2 != null){
+                htyFctSaleOrgXzDTO2.setDateKey(lastTime);
+                list.add(htyFctSaleOrgXzDTO2);
+            }else{
+                HtyFctSaleOrgXzDTO htyFctSaleOrgXzDTO5 = new HtyFctSaleOrgXzDTO();
+                htyFctSaleOrgXzDTO5.setDateKey(lastTime);
+                htyFctSaleOrgXzDTO5.setXsAmt(new BigDecimal(0));
+                htyFctSaleOrgXzDTO5.setOrgNum(0);
+                htyFctSaleOrgXzDTO5.setCnt(0);
+                list.add(htyFctSaleOrgXzDTO5);
+            }
+            if(htyFctSaleOrgXzDTO3 != null){
+                htyFctSaleOrgXzDTO3.setDateKey(endTime);
+                list.add(htyFctSaleOrgXzDTO3);
+            }else{
+                HtyFctSaleOrgXzDTO htyFctSaleOrgXzDTO6 = new HtyFctSaleOrgXzDTO();
+                htyFctSaleOrgXzDTO6.setDateKey(endTime);
+                htyFctSaleOrgXzDTO6.setXsAmt(new BigDecimal(0));
+                htyFctSaleOrgXzDTO6.setOrgNum(0);
+                htyFctSaleOrgXzDTO6.setCnt(0);
+                list.add(htyFctSaleOrgXzDTO6);
+            }
         }
 
         List<SaleXzsDTO> dtos = new ArrayList<SaleXzsDTO>();
@@ -130,7 +160,7 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
                 //1销售额
                 dto.setXsAmt(i.getXsAmt());
                 if(i.getOrgNum().intValue() >0){
-                    dto.setXsAmtXz(ArithUtil.div(i.getXsAmtXz().doubleValue(), i.getOrgNum().doubleValue(), 2));
+                    dto.setXsAmtXz(ArithUtil.div(i.getXsAmtXz().doubleValue(), i.getOrgNum().doubleValue(), 4));
                 }else{
                     dto.setXsAmtXz(new BigDecimal(0));
                 }
@@ -138,19 +168,19 @@ public class HtyFctSaleOrgXzDTOServiceImpl implements HtyFctSaleOrgXzDTOService{
                 //2订单数
                 dto.setCnt(i.getCnt());
                 if(i.getOrgNum().intValue() >0 ){
-                    dto.setCntXz(ArithUtil.div(i.getCntXz().doubleValue(), i.getOrgNum().doubleValue(), 2));
+                    dto.setCntXz(ArithUtil.div(i.getCntXz().doubleValue(), i.getOrgNum().doubleValue(), 4));
                 }else{
                     dto.setCntXz(new BigDecimal(0));
                 }
 
                 //3毛利率
-                if(i.getXsZySr().intValue() != 0 && i.getOrgNum().intValue() >0){
-                    BigDecimal rate = ArithUtil.div(i.getXsZhMl().doubleValue(), i.getXsZySr().doubleValue(), 2);
+                if(i.getXsZySr() != null && i.getXsZySr().intValue() != 0 && i.getOrgNum().intValue() >0){
+                    BigDecimal rate = ArithUtil.div(i.getXsZhMl().doubleValue(), i.getXsZySr().doubleValue(), 4);
                     dto.setRate(ArithUtil.mul(rate.doubleValue(),100));
 
-                    BigDecimal rateXz = ArithUtil.div(i.getXsZhMlXz().doubleValue(), i.getXsZySrXz().doubleValue(), 2);
+                    BigDecimal rateXz = ArithUtil.div(i.getXsZhMlXz().doubleValue(), i.getXsZySrXz().doubleValue(), 4);
                     rateXz = ArithUtil.mul(rateXz.doubleValue(),100);
-                    dto.setRateXz(ArithUtil.div(rateXz.doubleValue(), i.getOrgNum().doubleValue(), 2));
+                    dto.setRateXz(ArithUtil.div(rateXz.doubleValue(), i.getOrgNum().doubleValue(), 4));
                 }else{
                     dto.setRate(new BigDecimal(0));
                     dto.setRateXz(new BigDecimal(0));
