@@ -1419,11 +1419,11 @@ public class HtyFctCustAllController {
 		}else{
 			buffer = indexForManagerExcle(userId,isHy,isVip,time,newTime,pageType);
 		}
-		response.reset();  
-		response.addHeader("Content-Disposition", "attachment;filename="  
-                + new String(filename.getBytes()));  
-		response.addHeader("Content-Length", "" + buffer.length);  
 		try {
+			response.reset();
+			response.addHeader("Content-Disposition", "attachment;filename="
+					+ new String(filename.getBytes(),"ISO-8859-1"));
+			response.addHeader("Content-Length", "" + buffer.length);
 			OutputStream toClient = new BufferedOutputStream(  
 			        response.getOutputStream());
 			response.setContentType("application/vnd.ms-excel;charset=uft-8");
