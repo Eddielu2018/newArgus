@@ -4,6 +4,7 @@ import cn.htd.argus.bean.*;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
 import cn.htd.argus.util.DateTimeUtil;
+import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.RestResult;
 import cn.htd.common.Pager;
 import com.alibaba.dubbo.common.utils.StringUtils;
@@ -50,7 +51,7 @@ public class HtyFctSaleOrgController {
      * @param prodSort 品牌品类排序 排序 0：品牌  1：品类
      * @param detailSort 商品销售排序 0:爆款  1：滞销款
      * @param listSort 列表类型 0：品牌  1：商品  2：爆款
-     * @param dateType 查询的时间类型 0：月  1：年
+     * @param dateType 查询的时间类型 0：月  1：年　2：季
      * @param prodName 商品名称
      * @param plCode 品类Code
      * @param ppCode 品牌Code
@@ -77,9 +78,14 @@ public class HtyFctSaleOrgController {
             HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
             //endTime = DateUtil.conversionDate(endTime);
             //startTime = DateUtil.conversionDate(startTime);
-            if(startTime == null && endTime == null){
-                endTime = DateTimeUtil.getTodayChar6();
-                startTime = DateTimeUtil.getTodayChar6();
+            if(startTime == null || endTime == null || startTime == "" || endTime == ""){
+                if("2".equals(dateType)){
+                    startTime = DateUtil.getCurrentQuarterStartTime();
+                    endTime = DateUtil.getCurrentQuarterEndTime();
+                }else{
+                    endTime = DateTimeUtil.getTodayChar6();
+                    startTime = DateTimeUtil.getTodayChar6();
+                }
             }
             if(StringUtils.isNotEmpty(startTime)){
                 searchDTO.setStartTime(startTime);
@@ -201,8 +207,12 @@ public class HtyFctSaleOrgController {
         logger.info("调用(HtyFctSaleOrgController.saleXzList)行业销售趋势入参，userId="+userId+",endTime="+endTime+",xzSort="+xzSort);
         RestResult result = new RestResult();
         try {
-            if(endTime == null){
-                endTime = DateTimeUtil.getTodayChar6();
+            if(endTime == null || endTime == "" ){
+                if("2".equals(dateType)){
+                    endTime = DateUtil.getCurrentQuarterEndTime();
+                }else{
+                    endTime = DateTimeUtil.getTodayChar6();
+                }
             }
 
             SaleXzListDTO dto = new SaleXzListDTO();
@@ -279,7 +289,7 @@ public class HtyFctSaleOrgController {
         logger.info("调用(HtyFctSaleOrgController.saleProdList)品牌品类销售分析入参，userId="+userId+",startTime="+startTime+",endTime="+endTime+",prodSort="+prodSort);
         RestResult result = new RestResult();
         try {
-            if(startTime == null && endTime == null){
+            if(startTime == null || endTime == null || startTime == "" || endTime == ""){
                 endTime = DateTimeUtil.getTodayChar6();
                 startTime = DateTimeUtil.getTodayChar6();
             }
@@ -335,7 +345,7 @@ public class HtyFctSaleOrgController {
         RestResult result = new RestResult();
         try {
 
-            if(startTime == null && endTime == null){
+            if(startTime == null || endTime == null || startTime == "" || endTime == ""){
                 endTime = DateTimeUtil.getTodayChar6();
                 startTime = DateTimeUtil.getTodayChar6();
             }
@@ -407,7 +417,7 @@ public class HtyFctSaleOrgController {
         logger.info("调用(HtyFctSaleOrgController.saleProdList)爆款销售分析入参，plCode="+plCode+",startTime="+startTime+",endTime="+endTime+",ppCode="+ppCode);
         RestResult result = new RestResult();
         try {
-            if(startTime == null && endTime == null){
+            if(startTime == null || endTime == null || startTime == "" || endTime == ""){
                 endTime = DateTimeUtil.getTodayChar6();
                 startTime = DateTimeUtil.getTodayChar6();
             }
@@ -455,12 +465,12 @@ public class HtyFctSaleOrgController {
      * 获取商品品类
      * @return
      */
-    @RequestMapping("/sale/detail/query/category")
-    public RestResult saleDetailQueryCategory() {
+    @RequestMapping("/sale/detail/query/brand")
+    public RestResult saleDetailQueryBrand() {
         RestResult result = new RestResult();
         try {
             //1.销售商品品牌品类
-            List<BrandSortDTO> detailCategory = this.htyFctSaleOrgDetailDTOService.queryCategory();
+            List<BrandSortDTO> detailCategory = this.htyFctSaleOrgDetailDTOService.queryBrand();
 
             result.setData(detailCategory);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
@@ -477,12 +487,12 @@ public class HtyFctSaleOrgController {
      * 获取爆款品类
      * @return
      */
-    @RequestMapping("/sale/hot/query/category")
-    public RestResult saleHotQueryCategory() {
+    @RequestMapping("/sale/hot/query/brand")
+    public RestResult saleHotQueryBrand() {
         RestResult result = new RestResult();
         try {
             //2:销售爆款品牌品来
-            List<BrandSortDTO> hotCategory = this.htyFctSaleXzHotDTOService.queryCategory();
+            List<BrandSortDTO> hotCategory = this.htyFctSaleXzHotDTOService.queryBrand();
 
             result.setData(hotCategory);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
@@ -497,20 +507,20 @@ public class HtyFctSaleOrgController {
 
     /**
      * 获取品牌
-     * @param plCode
+     * @param ppCode
      * @param type 类型1：商品   2：爆款
      * @return
      */
-    @RequestMapping("/sale/query/brand")
-    public RestResult saleQueryBrand(@RequestParam(value = "plCode", required = true) String plCode,
+    @RequestMapping("/sale/query/category")
+    public RestResult saleQueryCategory(@RequestParam(value = "ppCode", required = true) String ppCode,
                                      @RequestParam(value = "type", required = true) String type) {
         RestResult result = new RestResult();
         try {
             List<BrandSortDTO> brandList = new ArrayList<BrandSortDTO>();
             if("1".equals(type)){
-                brandList = this.htyFctSaleOrgDetailDTOService.queryBrand(plCode);
+                brandList = this.htyFctSaleOrgDetailDTOService.queryCategoryByBrand(ppCode);
             }else if("2".equals(type)){
-                brandList = this.htyFctSaleXzHotDTOService.queryBrand(plCode);
+                brandList = this.htyFctSaleXzHotDTOService.queryCategoryByBrand(ppCode);
             }
             result.setData(brandList);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());

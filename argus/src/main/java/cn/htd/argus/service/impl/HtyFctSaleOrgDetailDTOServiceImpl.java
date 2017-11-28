@@ -118,9 +118,9 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
     }
 
     @Override
-    public List<BrandSortDTO> queryBrand(String plCode) {
+    public List<BrandSortDTO> queryBrandByCategory(String plCode) {
         List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
-        List<HtyFctSaleOrgDetailDTO> list1 = dao.queryBrand(plCode);
+        List<HtyFctSaleOrgDetailDTO> list1 = dao.queryBrandByCategory(plCode);
         if(list1 != null){
             for(HtyFctSaleOrgDetailDTO i:list1){
                 if(i.getPpName() != null){
@@ -146,6 +146,42 @@ public class HtyFctSaleOrgDetailDTOServiceImpl implements HtyFctSaleOrgDetailDTO
                 dto.setBrandName(i.getPlName());
                 dto.setSortNum(i.getPlCode());
                 list.add(dto);
+            }
+        }else{
+            return null;
+        }
+        return list;
+    }
+
+    @Override
+    public List<BrandSortDTO> queryBrand() {
+        List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
+        List<HtyFctSaleOrgDetailDTO> list1 = dao.queryBrand();
+        if(list1 != null){
+            for(HtyFctSaleOrgDetailDTO i:list1){
+                BrandSortDTO dto = new BrandSortDTO();
+                dto.setBrandName(i.getPpName());
+                dto.setSortNum(i.getPpCode());
+                list.add(dto);
+            }
+        }else{
+            return null;
+        }
+        return list;
+    }
+
+    @Override
+    public List<BrandSortDTO> queryCategoryByBrand(String ppCode) {
+        List<BrandSortDTO> list = new ArrayList<BrandSortDTO>();
+        List<HtyFctSaleOrgDetailDTO> list1 = dao.queryCategoryByBrand(ppCode);
+        if(list1 != null){
+            for(HtyFctSaleOrgDetailDTO i:list1){
+                if(i.getPlName() != null){
+                    BrandSortDTO dto = new BrandSortDTO();
+                    dto.setBrandName(i.getPlName());
+                    dto.setSortNum(i.getPlCode());
+                    list.add(dto);
+                }
             }
         }else{
             return null;

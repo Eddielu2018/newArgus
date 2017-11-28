@@ -244,13 +244,15 @@ public class HtyFctZcfzController {
         BigDecimal score = new BigDecimal(0);
         //权重得分
         BigDecimal weight = new BigDecimal(16.7);
+
+        BigDecimal value = new BigDecimal(100);
         //需要关注数量
         Integer num = 6;
         if(edwFctZsdFinanceDTO != null){
             //实际值
-            financeSupportDTO.setWhiteRatio(edwFctZsdFinanceDTO.getWhiteRatio());
-            financeSupportDTO.setActWhiteRatio(edwFctZsdFinanceDTO.getActWhiteRatio());
-            financeSupportDTO.setWhiteLoanRatio(edwFctZsdFinanceDTO.getWhiteLoanRatio());
+            financeSupportDTO.setWhiteRatio(edwFctZsdFinanceDTO.getWhiteRatio().compareTo(value) == -1 ? edwFctZsdFinanceDTO.getWhiteRatio(): value);
+            financeSupportDTO.setActWhiteRatio(edwFctZsdFinanceDTO.getActWhiteRatio().compareTo(value) == -1 ? edwFctZsdFinanceDTO.getActWhiteRatio(): value);
+            financeSupportDTO.setWhiteLoanRatio(edwFctZsdFinanceDTO.getWhiteLoanRatio().compareTo(value) == -1 ? edwFctZsdFinanceDTO.getWhiteLoanRatio(): value);
             financeSupportDTO.setMonNewTicketRatio(edwFctZsdFinanceDTO.getMonNewTicketRatio());
             financeSupportDTO.setFinancialexpensesRatio(edwFctZsdFinanceDTO.getFinancialexpensesRatio());
             financeSupportDTO.setTiecardmemberRatio(edwFctZsdFinanceDTO.getTiecardmemberRatio());

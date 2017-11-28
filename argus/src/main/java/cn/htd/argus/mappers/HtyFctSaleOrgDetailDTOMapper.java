@@ -21,7 +21,11 @@ public interface HtyFctSaleOrgDetailDTOMapper {
 
     List<HtyFctSaleOrgDetailDTO> queryStopSumPage(@Param("searchDTO") HtyFctSaleSearchDTO htyFctSaleSearchDTO, @Param("pager") Pager pager);
 
-    List<HtyFctSaleOrgDetailDTO> queryBrand(String plCode);
+    List<HtyFctSaleOrgDetailDTO> queryBrandByCategory(String plCode);
 
     List<HtyFctSaleOrgDetailDTO> queryCategory();
+
+    List<HtyFctSaleOrgDetailDTO> queryCategoryByBrand(String ppCode);
+
+    List<HtyFctSaleOrgDetailDTO> queryBrand();
 }

@@ -7,11 +7,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -870,12 +866,26 @@ public class HtyFctCustAllController {
         }
      return result;
 	}
-	
+
+	/**
+	 * 活跃会员分析
+	 * @param userId
+	 * @param aliveType
+	 * @param pageType
+	 * @param time
+	 * @param amtType 整体采购
+	 * @param hzgType 商品上架
+	 * @param fsType 粉丝
+	 * @return
+	 */
 	@RequestMapping("/cust/manager")
 	public RestResult indexForManager(@RequestParam(value = "userId", required = true) String userId,
 		@RequestParam(value = "aliveType", required = true) int aliveType,
 		@RequestParam(value = "pageType", required = true) int pageType,
-		@RequestParam(value = "time", required = false) String time){
+		@RequestParam(value = "time", required = false) String time,
+		@RequestParam(value = "amtType", required = true) String amtType,
+		@RequestParam(value = "hzgType", required = true) String hzgType,
+		@RequestParam(value = "fsType", required = true) String fsType){
 		RestResult result = new RestResult();
 	    logger.info("调用(HtyFctCustAllDTOService.indexForManager)用户管理");
 	    try {
@@ -933,6 +943,32 @@ public class HtyFctCustAllController {
 		        	}
 		        }
 	        }
+
+			Iterator<HtyFctCustAllDto> it1 = list.iterator();
+			while(it1.hasNext()){
+				HtyFctCustAllDto dto = it1.next();
+				//整体采购额小于10000
+				if("1".equals(amtType)){
+					if(dto.getAmtAll().compareTo(new BigDecimal(10000)) == -1){
+						it1.remove();
+						continue;
+					}
+				}
+				//商品上架数小于10
+				if("1".equals(hzgType)){
+					if(dto.getQtyHzg().compareTo(new BigDecimal(10)) == -1){
+						it1.remove();
+						continue;
+					}
+				}
+				if("1".equals(fsType)){
+					if(dto.getQtyFs().compareTo(new BigDecimal(10)) == -1){
+						it1.remove();
+						continue;
+					}
+				}
+			}
+
 	        result.setData(list);
 	        result.setCode(ResultCodeEnum.SUCCESS.getCode());
 	        result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
@@ -1348,9 +1384,17 @@ public class HtyFctCustAllController {
         }
 		String filename = "";
 		if(pageType == 0){
-			filename = "custAlive.xlsx";
+			if(aliveType == 0){
+				filename = "高潜活跃会员店名单.xlsx";
+			}else{
+				filename = "活跃会员店名单.xlsx";
+			}
 		}else{
-			filename = "VIPAlive.xlsx";
+			if(aliveType == 0){
+				filename = "高潜VIP会员店名单.xlsx";
+			}else{
+				filename = "VIP会员店名单.xlsx";
+			}
 		}
 		Integer isVip = null;
         Integer isHy = null;
@@ -1375,11 +1419,11 @@ public class HtyFctCustAllController {
 		}else{
 			buffer = indexForManagerExcle(userId,isHy,isVip,time,newTime,pageType);
 		}
-		response.reset();  
-		response.addHeader("Content-Disposition", "attachment;filename="  
-                + new String(filename.getBytes()));  
-		response.addHeader("Content-Length", "" + buffer.length);  
 		try {
+			response.reset();
+			response.addHeader("Content-Disposition", "attachment;filename="
+					+ new String(filename.getBytes(),"ISO-8859-1"));
+			response.addHeader("Content-Length", "" + buffer.length);
 			OutputStream toClient = new BufferedOutputStream(  
 			        response.getOutputStream());
 			response.setContentType("application/vnd.ms-excel;charset=uft-8");
