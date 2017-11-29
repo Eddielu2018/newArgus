@@ -312,13 +312,13 @@ public class HtyFctOrgController {
         		}
         	}
 
-			wholeIncomeRatio.add(String.valueOf(allDto.getWholeLeft().get(0).getNum()));
+			wholeIncomeRatio.add(String.valueOf(allDto.getWholeLeft().get(0).getNum().setScale(2)));
 			if(date == 0){
-				wholeIncomeRatio.add(String.valueOf(htyFctOrgIncomeDTO.getMonExpenseCost()));
+				wholeIncomeRatio.add(String.valueOf(htyFctOrgIncomeDTO.getMonExpenseCost().setScale(2)));
 			}else{
-				wholeIncomeRatio.add(String.valueOf(htyFctOrgIncomeDTO.getYearExpenseCost()));
+				wholeIncomeRatio.add(String.valueOf(htyFctOrgIncomeDTO.getYearExpenseCost().setScale(2)));
 			}
-			wholeIncomeRatio.add(String.valueOf(allDto.getWholeTop().get(0).getNum()));
+			wholeIncomeRatio.add(String.valueOf(allDto.getWholeTop().get(0).getNum().setScale(2)));
         	logger.info("==================================================000000000000003");
 			allDto.setWholeIncomeRatio(wholeIncomeRatio);
         	allDto.setWholeBottom(wholeBottom);
