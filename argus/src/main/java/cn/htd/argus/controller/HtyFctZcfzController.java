@@ -110,7 +110,7 @@ public class HtyFctZcfzController {
         } catch (Exception e) {
             logger.error("风险提示" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
-            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
         }
         return result;
     }
@@ -142,7 +142,7 @@ public class HtyFctZcfzController {
         } catch (Exception e) {
             logger.error("业务支持" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
-            result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
         }
         return result;
     }

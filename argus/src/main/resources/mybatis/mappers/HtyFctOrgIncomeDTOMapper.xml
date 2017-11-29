@@ -21,12 +21,14 @@
     <result column="YEAR_FINANCE_AMT" property="yearFinanceAmt" jdbcType="DECIMAL" />
     <result column="LAST_MON_FINANCE_AMT" property="lastMonFinanceAmt" jdbcType="DECIMAL" />
     <result column="LAST_YEAR_FINANCE_AMT" property="lastYearFinanceAmt" jdbcType="DECIMAL" />
+    <result column="MON_EXPENSE_COST" property="monExpenseCost" jdbcType="DECIMAL" />
+    <result column="YEAR_EXPENSE_COST" property="yearExpenseCost" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, YEAR_MON, ORG_CODE, MON_BUSINCOME_AMT, LAST_MON_BUSINCOME_AMT, YEAR_BUSINCOME_AMT, 
     LASTYEAR_BUSINCOME_AMT, MON_INVOICING_AMT, YEAR_INVOICING_AMT, LAST_MON_INVOICING_AMT, 
     LAST_YEAR_INVOICING_AMT, MON_SERVICE_AMT, YEAR_SERVICE_AMT, LAST_MON_SERVICE_AMT, 
-    LAST_YEAR_SERVICE_AMT, MON_FINANCE_AMT, YEAR_FINANCE_AMT, LAST_MON_FINANCE_AMT, LAST_YEAR_FINANCE_AMT
+    LAST_YEAR_SERVICE_AMT, MON_FINANCE_AMT, YEAR_FINANCE_AMT, LAST_MON_FINANCE_AMT, LAST_YEAR_FINANCE_AMT, MON_EXPENSE_COST, YEAR_EXPENSE_COST
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

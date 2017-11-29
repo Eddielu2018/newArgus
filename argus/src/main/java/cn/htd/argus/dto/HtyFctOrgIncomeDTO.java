@@ -41,6 +41,10 @@ public class HtyFctOrgIncomeDTO {
 
     private BigDecimal lastYearFinanceAmt;
 
+    private BigDecimal monExpenseCost;
+
+    private BigDecimal yearExpenseCost;
+
     public Long getId() {
         return id;
     }
@@ -191,5 +195,21 @@ public class HtyFctOrgIncomeDTO {
 
     public void setLastYearFinanceAmt(BigDecimal lastYearFinanceAmt) {
         this.lastYearFinanceAmt = lastYearFinanceAmt;
+    }
+
+    public BigDecimal getMonExpenseCost() {
+        return monExpenseCost;
+    }
+
+    public void setMonExpenseCost(BigDecimal monExpenseCost) {
+        this.monExpenseCost = monExpenseCost;
+    }
+
+    public BigDecimal getYearExpenseCost() {
+        return yearExpenseCost;
+    }
+
+    public void setYearExpenseCost(BigDecimal yearExpenseCost) {
+        this.yearExpenseCost = yearExpenseCost;
     }
 }

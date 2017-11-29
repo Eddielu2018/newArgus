@@ -213,10 +213,10 @@ public class HtyFctOrgController {
     		nameMap4.put("value", "3");
         	if(type == 0){
         		//营业
-        		nameMap1.put("label", "总营业收入");
-        		nameMap2.put("label", "进销存营业收入");
-        		nameMap3.put("label", "服务营业收入");
-        		nameMap4.put("label", "金融营业收入");
+				nameMap1.put("label", "总营业收入");
+				nameMap2.put("label", "税前利润总额");
+				nameMap3.put("label", "综合毛利率");
+				nameMap4.put("label", "成本费用利用率");
         		//顶部展示
         		map1.put("name", "进销存营业收入");
         		map2.put("name", "服务营业收入");
@@ -271,6 +271,7 @@ public class HtyFctOrgController {
         	List<String> wholeBottomDate = new ArrayList<String>();
         	List<String> wholeBottom = new ArrayList<String>();
         	List<String> wholeBottomPair = new ArrayList<String>();
+			List<String> wholeIncomeRatio = new ArrayList<String>();
         	String yearWithDate = DateUtil.getCurDateStr1("yyyyMM");
         	String yearDate = DateUtil.getCurDateStr1("yyyy");
         	if("01".equals(yearWithDate.substring(yearWithDate.length()-2, yearWithDate.length()))){
@@ -310,7 +311,16 @@ public class HtyFctOrgController {
         			wholeBottomPair.add(btMap.get("pair"));
         		}
         	}
+
+			wholeIncomeRatio.add(String.valueOf(allDto.getWholeLeft().get(0).getNum()));
+			if(date == 0){
+				wholeIncomeRatio.add(String.valueOf(htyFctOrgIncomeDTO.getMonExpenseCost()));
+			}else{
+				wholeIncomeRatio.add(String.valueOf(htyFctOrgIncomeDTO.getYearExpenseCost()));
+			}
+			wholeIncomeRatio.add(String.valueOf(allDto.getWholeTop().get(0).getNum()));
         	logger.info("==================================================000000000000003");
+			allDto.setWholeIncomeRatio(wholeIncomeRatio);
         	allDto.setWholeBottom(wholeBottom);
         	allDto.setWholeBottomDate(wholeBottomDate);
         	allDto.setWholeBottomPair(wholeBottomPair);
@@ -627,17 +637,17 @@ public class HtyFctOrgController {
     		//营业
     		if(date == 0){
     			//按月
-	    		baseFirst.setName("月进销存营业收入");
-	    		baseSencond.setName("月服务营业收入");
-	    		baseThird.setName("月金融营业收入");
+	    		baseFirst.setName("月税前利润总额");
+	    		baseSencond.setName("月综合毛利率");
+	    		baseThird.setName("月成本费用利用率");
 	    		baseFirst = getBaseNum(baseFirst, htyFctOrgIncomeDTO.getMonInvoicingAmt(), htyFctOrgIncomeDTO.getLastMonInvoicingAmt());
 	    		baseSencond = getBaseNum(baseSencond, htyFctOrgIncomeDTO.getMonServiceAmt(), htyFctOrgIncomeDTO.getLastMonServiceAmt());
 	    		baseThird = getBaseNum(baseThird, htyFctOrgIncomeDTO.getMonFinanceAmt(), htyFctOrgIncomeDTO.getLastMonFinanceAmt());
     		}else{
     			//按年
-    			baseFirst.setName("年进销存营业收入");
-	    		baseSencond.setName("年服务营业收入");
-	    		baseThird.setName("年金融营业收入");
+    			baseFirst.setName("年税前利润总额");
+	    		baseSencond.setName("年综合毛利率");
+	    		baseThird.setName("年成本费用利用率");
 	    		baseFirst = getBaseNum(baseFirst, htyFctOrgIncomeDTO.getYearInvoicingAmt(), htyFctOrgIncomeDTO.getLastYearInvoicingAmt());
 	    		baseSencond = getBaseNum(baseSencond, htyFctOrgIncomeDTO.getYearServiceAmt(), htyFctOrgIncomeDTO.getLastYearServiceAmt());
 	    		baseThird = getBaseNum(baseThird, htyFctOrgIncomeDTO.getYearFinanceAmt(), htyFctOrgIncomeDTO.getLastYearFinanceAmt());

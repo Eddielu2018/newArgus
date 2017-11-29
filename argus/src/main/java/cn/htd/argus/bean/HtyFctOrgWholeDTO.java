@@ -8,6 +8,7 @@ public class HtyFctOrgWholeDTO {
 	private List<BaseNumDTO> wholeLeft;
 	private List<BaseNumDTO> wholeTop;
 	private List<Map<String,String>> wholeName;
+	private List<String> wholeIncomeRatio;
 	private List<String> wholeBottom;
 	private List<String> wholeBottomDate;
 	private List<String> wholeBottomPair;
@@ -53,5 +54,13 @@ public class HtyFctOrgWholeDTO {
 	}
 	public void setWholeBottomPair(List<String> wholeBottomPair) {
 		this.wholeBottomPair = wholeBottomPair;
+	}
+
+	public List<String> getWholeIncomeRatio() {
+		return wholeIncomeRatio;
+	}
+
+	public void setWholeIncomeRatio(List<String> wholeIncomeRatio) {
+		this.wholeIncomeRatio = wholeIncomeRatio;
 	}
 }
