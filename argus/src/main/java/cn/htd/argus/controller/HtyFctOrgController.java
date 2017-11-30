@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.htd.argus.util.ArithUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -354,13 +355,13 @@ public class HtyFctOrgController {
 				}
 			}else if(kind == 2){
 				if(incomeList.getServiceAmt()!=null){
-					map.put("value", String.valueOf(incomeList.getServiceAmt().intValue()));
+					map.put("value", String.valueOf(ArithUtil.div(incomeList.getServiceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4).intValue()));
 				}else{
 					map.put("value", null);
 				}
 			}else if(kind == 3){
 				if(incomeList.getFinanceAmt()!=null){
-					map.put("value", String.valueOf(incomeList.getFinanceAmt().intValue()));
+					map.put("value", String.valueOf(ArithUtil.div(incomeList.getFinanceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4).intValue()));
 				}else{
 					map.put("value", null);
 				}
@@ -480,12 +481,12 @@ public class HtyFctOrgController {
 				}
     		}else if(kind == 3){
     			if(income.getMonFinanceAmt()!=null){
-    				map.put("value", String.valueOf(income.getMonFinanceAmt().intValue()));
+    				map.put("value", String.valueOf(ArithUtil.div(income.getMonFinanceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4).intValue()));
     			}else{
 					map.put("value", null);
 				}
     			if(income.getLastMonFinanceAmt()!=null){
-    				map.put("pair", String.valueOf(income.getLastMonFinanceAmt().intValue()));
+    				map.put("pair", String.valueOf(ArithUtil.div(income.getLastMonFinanceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4).intValue()));
     			}else{
 					map.put("pair", null);
 				}

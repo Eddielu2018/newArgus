@@ -944,32 +944,34 @@ public class HtyFctCustAllController {
 		        }
 	        }
 
-			Iterator<HtyFctCustAllDto> it1 = list.iterator();
-			while(it1.hasNext()){
-				HtyFctCustAllDto dto = it1.next();
-				//整体采购额小于10000
-				if("0".equals(amtType)){
-					if(dto.getAmtAll().compareTo(new BigDecimal(10000)) == -1){
-						it1.remove();
-						continue;
+			List<HtyFctCustAllDto> list1 = new ArrayList<>();
+			if("1".equals(amtType) || "1".equals(hzgType) || "1".equals(fsType)){
+				for(HtyFctCustAllDto dto:list){
+					if("1".equals(amtType)){
+						if(dto.getAmtAll().compareTo(new BigDecimal(10000)) == -1){
+							list1.add(dto);
+							continue;
+						}
+					}
+					//商品上架数小于10
+					if("1".equals(hzgType)){
+						if(dto.getQtyHzg().compareTo(new BigDecimal(10)) == -1){
+							list1.add(dto);
+							continue;
+						}
+					}
+					if("1".equals(fsType)){
+						if(dto.getQtyFs().compareTo(new BigDecimal(10)) == -1){
+							list1.add(dto);
+							continue;
+						}
 					}
 				}
-				//商品上架数小于10
-				if("0".equals(hzgType)){
-					if(dto.getQtyHzg().compareTo(new BigDecimal(10)) == -1){
-						it1.remove();
-						continue;
-					}
-				}
-				if("0".equals(fsType)){
-					if(dto.getQtyFs().compareTo(new BigDecimal(10)) == -1){
-						it1.remove();
-						continue;
-					}
-				}
+			}else{
+				list1 = list;
 			}
 
-	        result.setData(list);
+	        result.setData(list1);
 	        result.setCode(ResultCodeEnum.SUCCESS.getCode());
 	        result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
 	    } catch (Exception e) {
