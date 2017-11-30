@@ -355,13 +355,13 @@ public class HtyFctOrgController {
 				}
 			}else if(kind == 2){
 				if(incomeList.getServiceAmt()!=null){
-					map.put("value", ""+ArithUtil.div(incomeList.getServiceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4).intValue());
+					map.put("value", ""+ArithUtil.div(incomeList.getServiceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4));
 				}else{
 					map.put("value", null);
 				}
 			}else if(kind == 3){
 				if(incomeList.getFinanceAmt()!=null){
-					map.put("value", ""+ArithUtil.div(incomeList.getFinanceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4).intValue());
+					map.put("value", ""+ArithUtil.div(incomeList.getFinanceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4));
 				}else{
 					map.put("value", null);
 				}
@@ -475,18 +475,18 @@ public class HtyFctOrgController {
 					map.put("value", null);
 				}
     			if(income.getLastMonServiceAmt()!=null){
-    				map.put("pair", ""+ArithUtil.div(income.getLastMonServiceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4).intValue());
+    				map.put("pair", ""+ArithUtil.div(income.getLastMonServiceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4));
     			}else{
 					map.put("pair", null);
 				}
     		}else if(kind == 3){
     			if(income.getMonFinanceAmt()!=null){
-    				map.put("value", ""+ArithUtil.div(income.getMonFinanceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4).intValue());
+    				map.put("value", ""+ArithUtil.div(income.getMonFinanceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4));
     			}else{
 					map.put("value", null);
 				}
     			if(income.getLastMonFinanceAmt()!=null){
-    				map.put("pair", ""+ArithUtil.div(income.getLastMonFinanceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4).intValue());
+    				map.put("pair", ""+ArithUtil.div(income.getLastMonFinanceAmt().doubleValue(), new BigDecimal(100).doubleValue(), 4));
     			}else{
 					map.put("pair", null);
 				}

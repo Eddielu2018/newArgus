@@ -945,26 +945,46 @@ public class HtyFctCustAllController {
 	        }
 
 			List<HtyFctCustAllDto> list1 = new ArrayList<>();
-			if("1".equals(amtType) || "1".equals(hzgType) || "1".equals(fsType)){
-				for(HtyFctCustAllDto dto:list){
-					if("1".equals(amtType)){
-						if(dto.getAmtAll().compareTo(new BigDecimal(10000)) == -1){
-							list1.add(dto);
-							continue;
-						}
+			if("1".equals(amtType) && "0".equals(hzgType) && "0".equals(fsType)){
+				for(HtyFctCustAllDto dto:list) {
+					if (dto.getAmtAll().compareTo(new BigDecimal(10000)) == -1) {
+						list1.add(dto);
+						continue;
 					}
-					//商品上架数小于10
-					if("1".equals(hzgType)){
-						if(dto.getQtyHzg().compareTo(new BigDecimal(10)) == -1){
-							list1.add(dto);
-							continue;
-						}
+				}
+			}else if("0".equals(amtType) && "1".equals(hzgType) && "0".equals(fsType)){
+				for(HtyFctCustAllDto dto:list) {
+					if(dto.getQtyHzg().compareTo(new BigDecimal(10)) == -1){
+						list1.add(dto);
+						continue;
 					}
-					if("1".equals(fsType)){
-						if(dto.getQtyFs().compareTo(new BigDecimal(10)) == -1){
-							list1.add(dto);
-							continue;
-						}
+				}
+			}else if("0".equals(amtType) && "0".equals(hzgType) && "1".equals(fsType)){
+				for(HtyFctCustAllDto dto:list) {
+					if(dto.getQtyFs().compareTo(new BigDecimal(10)) == -1){
+						list1.add(dto);
+						continue;
+					}
+				}
+			}else if("1".equals(amtType) && "1".equals(hzgType) && "0".equals(fsType)){
+				for(HtyFctCustAllDto dto:list) {
+					if(dto.getQtyFs().compareTo(new BigDecimal(10)) != -1){
+						list1.add(dto);
+						continue;
+					}
+				}
+			}else if("1".equals(amtType) && "0".equals(hzgType) && "1".equals(fsType)){
+				for(HtyFctCustAllDto dto:list) {
+					if(dto.getQtyHzg().compareTo(new BigDecimal(10)) != -1){
+						list1.add(dto);
+						continue;
+					}
+				}
+			}else if("0".equals(amtType) && "1".equals(hzgType) && "1".equals(fsType)){
+				for(HtyFctCustAllDto dto:list) {
+					if(dto.getAmtAll().compareTo(new BigDecimal(10000)) != -1){
+						list1.add(dto);
+						continue;
 					}
 				}
 			}else if("0".equals(amtType) && "0".equals(hzgType) && "0".equals(fsType)){
