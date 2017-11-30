@@ -948,20 +948,20 @@ public class HtyFctCustAllController {
 			while(it1.hasNext()){
 				HtyFctCustAllDto dto = it1.next();
 				//整体采购额小于10000
-				if("1".equals(amtType)){
+				if("0".equals(amtType)){
 					if(dto.getAmtAll().compareTo(new BigDecimal(10000)) == -1){
 						it1.remove();
 						continue;
 					}
 				}
 				//商品上架数小于10
-				if("1".equals(hzgType)){
+				if("0".equals(hzgType)){
 					if(dto.getQtyHzg().compareTo(new BigDecimal(10)) == -1){
 						it1.remove();
 						continue;
 					}
 				}
-				if("1".equals(fsType)){
+				if("0".equals(fsType)){
 					if(dto.getQtyFs().compareTo(new BigDecimal(10)) == -1){
 						it1.remove();
 						continue;
