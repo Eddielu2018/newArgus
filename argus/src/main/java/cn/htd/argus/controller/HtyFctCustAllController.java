@@ -967,6 +967,8 @@ public class HtyFctCustAllController {
 						}
 					}
 				}
+			}else if("0".equals(amtType) && "0".equals(hzgType) && "0".equals(fsType)){
+
 			}else{
 				list1 = list;
 			}
