@@ -134,25 +134,94 @@
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_inventory,0,1,a.open_inventory/a.tq_inventory-1) end,4)*100 as tb_inventory,       --存货同比
        round((case when b.rq > a.year_mon then 0 else a.open_receivables end)/10000 ,2)as dq_receivables,           --当期应收账款
        round(case when b.rq > a.year_mon then 0 else decode(a.tq_receivables,0,1,a.open_receivables/a.tq_receivables-1) end,4)*100 as tb_receivables,  --应收账款同比
-       round((case when b.rq > a.year_mon then 0 else a.prtloss_sale_dq end)/10000,2) as dq_prtloss_sale,           --当期收入
-       round(case when b.rq > a.year_mon then 0 else decode(a.prtloss_sale_tq,0,1,a.prtloss_sale_dq/a.prtloss_sale_tq-1) end,4)*100 as tb_prtloss_sale,--销售收入同比
-       round((case when b.rq > a.year_mon then 0 else a.prtloss_cost_dq end)/10000,2) as dq_prtloss_cost,           --当期成本
-       round(case when b.rq > a.year_mon then 0 else decode(a.prtloss_cost_tq,0,1,a.prtloss_cost_dq/a.prtloss_cost_tq-1) end,4)*100 as tb_prtloss_cost,--销售成本同比
-       round((case when b.rq > a.year_mon then 0 else a.prtloss_before end)/10000,2) as dq_prtloss_before,          --当期利润总额
-       round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_before,0,1,a.prtloss_before/a.tq_prtloss_before-1) end,4)*100 as tb_prtloss_before, --利润总额同比
-       round((case when b.rq > a.year_mon then 0 else a.prtloss_expense end)/10000,2) as dq_prtloss_expense,        --当期三项费用合计
-       round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_expense,0,1,a.prtloss_expense/a.tq_prtloss_expense-1) end,4)*100 as tb_prtloss_expense,  --三项费用同比
-       round((case when b.rq > a.year_mon then 0 else a.prtloss_net_dq end)/10000,2) as dq_prtloss_net,             --当期净利润
-       round(case when b.rq > a.year_mon then 0 else decode(a.prtloss_net_tq,0,1,a.prtloss_net_dq/a.prtloss_net_tq-1) end,4)*100 as tb_prtloss_net,  --净利润同比
-       round((case when b.rq > a.year_mon then 0 else a.prtloss_gross end)/10000,2) as dq_prtloss_gross,            --当期毛利润
-       round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_gross,0,1,a.prtloss_gross/a.tq_prtloss_gross-1) end,4)*100 as tb_prtloss_gross, --毛利润同比
-       round((case when b.rq > a.year_mon then 0 else a.prtloss_operate end)/10000,2) as dq_prtloss_operate,        --当期营业利润
-       round(case when b.rq > a.year_mon then 0 else decode(a.tq_prtloss_operate,0,1,a.prtloss_operate/a.tq_prtloss_operate-1) end,4)*100 as tb_prtloss_operate,  --营业利润同比
-       round((case when b.rq > a.year_mon then 0 else a.dq_other_prtloss end)/10000,2) as dq_other_prtloss,         --当期其他利润
-       round(case when b.rq > a.year_mon then 0 else decode(a.tq_other_prtloss,0,1,a.dq_other_prtloss/a.tq_other_prtloss-1) end,4)*100 as tb_other_prtloss --其他利润同比
+      round(c.prtloss_sale_dq/10000,2) as dq_prtloss_sale,           --当期收入
+       round(decode(c.prtloss_sale_tq,0,1,c.prtloss_sale_dq/c.prtloss_sale_tq-1),4)*100 as tb_prtloss_sale,--销售收入同比
+       round(c.prtloss_cost_dq/10000,2) as dq_prtloss_cost,           --当期成本
+       round(decode(c.prtloss_cost_tq,0,1,c.prtloss_cost_dq/c.prtloss_cost_tq-1),4)*100 as tb_prtloss_cost,--销售成本同比
+       round(c.prtloss_before/10000,2) as dq_prtloss_before,          --当期利润总额
+       round(decode(c.tq_prtloss_before,0,1,c.prtloss_before/c.tq_prtloss_before-1),4)*100 as tb_prtloss_before, --利润总额同比
+       round(c.prtloss_expense/10000,2) as dq_prtloss_expense,        --当期三项费用合计
+       round(decode(c.tq_prtloss_expense,0,1,c.prtloss_expense/c.tq_prtloss_expense-1),4)*100 as tb_prtloss_expense,  --三项费用同比
+       round(c.prtloss_net_dq/10000,2) as dq_prtloss_net,             --当期净利润
+       round(decode(c.prtloss_net_tq,0,1,c.prtloss_net_dq/c.prtloss_net_tq-1),4)*100 as tb_prtloss_net,  --净利润同比
+       round(c.prtloss_gross/10000,2) as dq_prtloss_gross,            --当期毛利润
+       round(decode(c.tq_prtloss_gross,0,1,c.prtloss_gross/c.tq_prtloss_gross-1),4)*100 as tb_prtloss_gross, --毛利润同比
+       round(c.prtloss_operate/10000,2) as dq_prtloss_operate,        --当期营业利润
+       round(decode(c.tq_prtloss_operate,0,1,c.prtloss_operate/c.tq_prtloss_operate-1),4)*100 as tb_prtloss_operate,  --营业利润同比
+       round(c.dq_other_prtloss/10000,2) as dq_other_prtloss,         --当期其他利润
+       round(decode(c.tq_other_prtloss,0,1,c.dq_other_prtloss/c.tq_other_prtloss-1),4)*100 as tb_other_prtloss --其他利润同比
     from edw_fct_l1_dupont_detail a,
+       htd_ods.dci_dim_org b,
+       (select org_code,
+       sum(prtloss_sale_dq) as prtloss_sale_dq,
+       sum(prtloss_cost_dq) as prtloss_cost_dq,
+       sum(prtloss_gross) as prtloss_gross,
+       sum(prtloss_expense) as prtloss_expense,
+       sum(prtloss_operate) as prtloss_operate,
+       sum(prtloss_before) as prtloss_before,
+       sum(prtloss_net_dq) as prtloss_net_dq,
+       sum(dq_other_prtloss) as dq_other_prtloss,
+       sum(prtloss_sale_tq) as prtloss_sale_tq,
+       sum(prtloss_cost_tq) as prtloss_cost_tq,
+       sum(prtloss_net_tq) as prtloss_net_tq,
+       sum(tq_other_prtloss) as tq_other_prtloss,
+       sum(tq_prtloss_before) as tq_prtloss_before,
+       sum(tq_prtloss_expense) as tq_prtloss_expense,
+       sum(tq_prtloss_gross) as tq_prtloss_gross,
+       sum(tq_prtloss_operate) as tq_prtloss_operate
+  from (
+select a.org_code,
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '101' then a.dd_hj else 0 end) as prtloss_sale_dq,  --当期主营业务收入
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '102' then a.dd_hj else 0 end) as prtloss_cost_dq,  --当期主营业务成本
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '101' then a.dd_hj when subjbigcode = '102' then -a.dd_hj else 0 end)as prtloss_gross, --综合毛利/毛利润
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode in ('104','105','106') then a.dd_hj else 0 end) as prtloss_expense, --三项费用合计：销售费用(含专项)+管理费用(含专项)+财务费用
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '200' then a.dd_hj else 0 end) as prtloss_operate, --营业利润
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '400' then a.dd_hj else 0 end) as prtloss_before,  --税前利润/利润综合
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '600' then a.dd_hj else 0 end) as prtloss_net_dq,   --当期净利润
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode in ('108','109','301') then a.dd_hj when subjbigcode = '302' then -a.dd_hj else 0 end) as dq_other_prtloss, --当期其他利润
+       0 as prtloss_sale_tq,
+       0 as prtloss_cost_tq,
+       0 as prtloss_net_tq,
+       0 as tq_other_prtloss,
+       0 as tq_prtloss_before,
+       0 as tq_prtloss_expense,
+       0 as tq_prtloss_gross,
+       0 as tq_prtloss_operate
+  from htd_edw.edw_fct_l2_account_profitloss a,
        htd_ods.dci_dim_org b
+ where a.dtime between substr(#{searchDTO.endTime},1,4)||'0101' and #{searchDTO.endTime}
+   and a.org_code = b.org_code
+   and a.org_code = #{searchDTO.userId}
+   and a.subjbigcode in ('101','102','104','105','106','108','109','200','301','302','400','600')
+ group by a.org_code
+ union all
+select a.org_code,
+       0 as prtloss_sale_dq,  --当期主营业务收入
+       0 as prtloss_cost_dq,  --当期主营业务成本
+       0 as prtloss_gross, --综合毛利/毛利润
+       0 as prtloss_expense, --三项费用合计：销售费用(含专项)+管理费用(含专项)+财务费用
+       0 as prtloss_operate, --营业利润
+       0 as prtloss_before,  --税前利润/利润综合
+       0 as prtloss_net_dq,   --当期净利润
+       0 as dq_other_prtloss, --当期其他利润
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '101' then a.dd_hj else 0 end) as prtloss_sale_tq,
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '102' then a.dd_hj else 0 end) as prtloss_cost_tq,
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '600' then a.dd_hj else 0 end) as prtloss_net_tq,
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode in ('108','109','301') then a.dd_hj when subjbigcode = '302' then -a.dd_hj else 0 end) as tq_other_prtloss,
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '400' then a.dd_hj else 0 end) as tq_prtloss_before,
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode in ('104','105','106') then a.dd_hj else 0 end) as tq_prtloss_expense,
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '101' then a.dd_hj when subjbigcode = '102' then -a.dd_hj else 0 end) as tq_prtloss_gross,
+       sum(case when (b.rq is null or b.rq >= a.year_mon) and a.subjbigcode = '200' then a.dd_hj else 0 end) as tq_prtloss_operate
+  from htd_edw.edw_fct_l2_account_profitloss a,
+       htd_ods.dci_dim_org b
+ where a.dtime between to_char(add_months(to_date(#{searchDTO.endTime},'yyyymmdd'),-12),'yyyy')||'0101' and to_char(add_months(to_date(#{searchDTO.endTime},'yyyymmdd'),-12),'yyyymmdd')
+   and a.org_code = b.org_code
+   and a.org_code = #{searchDTO.userId}
+   and a.subjbigcode in ('101','102','104','105','106','108','109','200','301','302','400','600')
+ group by a.org_code)
+    group by org_code) c
     where a.org_code = b.org_code
+    and a.org_code = c.org_code
     and b.org_code = #{searchDTO.userId}
     and a.dtime = #{searchDTO.endTime}
   </select>

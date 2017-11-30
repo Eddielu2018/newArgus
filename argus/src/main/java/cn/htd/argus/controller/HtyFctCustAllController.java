@@ -890,8 +890,10 @@ public class HtyFctCustAllController {
 	    logger.info("调用(HtyFctCustAllDTOService.indexForManager)用户管理");
 	    try {
 	        SimpleDateFormat newDf = new SimpleDateFormat("yyyyMM");
-	        String newTime = newDf.format(new Date()); 
+	        String newTime = newDf.format(new Date());
 	        String newYear = DateUtil.dateFormat(newTime, 12);
+			BigDecimal ten = new BigDecimal(10);
+			BigDecimal num = new BigDecimal(10000);
 	        if(time == null ){
 	        	time = newTime;
 	        }
@@ -915,7 +917,7 @@ public class HtyFctCustAllController {
 	        List<HtyFctCustAllDto> list = null;
 	        if(pageType == 0){
 	        	//取年
-	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, newYear, isHy, isVip,"1",newTime);
+	        	list = htyFctCustAllDTOService.selectForManagerYear(userId, newYear, isHy, isVip,"0",newTime);
 	        	List<HtyFctCustAllDto> tempAll = htyFctCustAllDTOService.selectForManagerAll(userId, newTime, isHy, isVip,"1");
 	        	if(list != null && tempAll != null && list.size()>0 && tempAll.size()>0){
 	        		for(HtyFctCustAllDto dto : list){
@@ -931,66 +933,101 @@ public class HtyFctCustAllController {
 	        		}
 	        	}
 	        }else{
-	        	list = htyFctCustAllDTOService.selectForManager(userId, time, isHy, isVip,"1");
-	        }
-	        if(list != null && list.size()>0){
-		        for(HtyFctCustAllDto dto : list){
-		        	if(dto.getAmtAll() == null){
-		        		dto.setAmtAll(new BigDecimal(0));
-		        	}
-		        	if(dto.getAmtOnline() == null){
-		        		dto.setAmtOnline(new BigDecimal(0));
-		        	}
-		        }
+	        	list = htyFctCustAllDTOService.selectForManager(userId, time, isHy, isVip,"0");
 	        }
 
 			List<HtyFctCustAllDto> list1 = new ArrayList<>();
 			if("1".equals(amtType) && "0".equals(hzgType) && "0".equals(fsType)){
 				for(HtyFctCustAllDto dto:list) {
-					if (dto.getAmtAll().compareTo(new BigDecimal(10000)) == -1) {
+					if (dto.getAmtAll().compareTo(num) == -1 && dto.getQtyHzg().compareTo(ten) != -1 && dto.getQtyFs().compareTo(ten) != -1) {
 						list1.add(dto);
 						continue;
 					}
+				}
+				if(list1.size() >= 9){
+					list1 = list1.subList(0,10);
+				}else{
+					list1 = list1.subList(0,list1.size());
 				}
 			}else if("0".equals(amtType) && "1".equals(hzgType) && "0".equals(fsType)){
 				for(HtyFctCustAllDto dto:list) {
-					if(dto.getQtyHzg().compareTo(new BigDecimal(10)) == -1){
+					if(dto.getQtyHzg().compareTo(ten) == -1 && dto.getAmtAll().compareTo(num) != -1 && dto.getQtyFs().compareTo(ten) != -1){
 						list1.add(dto);
 						continue;
 					}
+				}
+				if(list1.size() >= 9){
+					list1 = list1.subList(0,10);
+				}else{
+					list1 = list1.subList(0,list1.size());
 				}
 			}else if("0".equals(amtType) && "0".equals(hzgType) && "1".equals(fsType)){
 				for(HtyFctCustAllDto dto:list) {
-					if(dto.getQtyFs().compareTo(new BigDecimal(10)) == -1){
+					if(dto.getQtyFs().compareTo(ten) == -1 && dto.getQtyHzg().compareTo(ten) != -1 && dto.getAmtAll().compareTo(num) != -1){
 						list1.add(dto);
 						continue;
 					}
+				}
+				if(list1.size() >= 9){
+					list1 = list1.subList(0,10);
+				}else{
+					list1 = list1.subList(0,list1.size());
 				}
 			}else if("1".equals(amtType) && "1".equals(hzgType) && "0".equals(fsType)){
 				for(HtyFctCustAllDto dto:list) {
-					if(dto.getQtyFs().compareTo(new BigDecimal(10)) != -1){
+					if((dto.getAmtAll().compareTo(num) == -1 || dto.getQtyHzg().compareTo(ten) == -1) && dto.getQtyFs().compareTo(ten) != -1){
 						list1.add(dto);
 						continue;
 					}
+				}
+				if(list1.size() >= 9){
+					list1 = list1.subList(0,10);
+				}else{
+					list1 = list1.subList(0,list1.size());
 				}
 			}else if("1".equals(amtType) && "0".equals(hzgType) && "1".equals(fsType)){
 				for(HtyFctCustAllDto dto:list) {
-					if(dto.getQtyHzg().compareTo(new BigDecimal(10)) != -1){
+					if((dto.getAmtAll().compareTo(num) == -1 || dto.getQtyFs().compareTo(ten) == -1) && dto.getQtyHzg().compareTo(ten) != -1){
 						list1.add(dto);
 						continue;
 					}
 				}
+				if(list1.size() >= 9){
+					list1 = list1.subList(0,10);
+				}else{
+					list1 = list1.subList(0,list1.size());
+				}
 			}else if("0".equals(amtType) && "1".equals(hzgType) && "1".equals(fsType)){
 				for(HtyFctCustAllDto dto:list) {
-					if(dto.getAmtAll().compareTo(new BigDecimal(10000)) != -1){
+					if((dto.getQtyHzg().compareTo(ten) == -1 || dto.getQtyFs().compareTo(ten) == -1) && dto.getAmtAll().compareTo(num) != -1){
 						list1.add(dto);
 						continue;
 					}
+				}
+				if(list1.size() >= 9){
+					list1 = list1.subList(0,10);
+				}else{
+					list1 = list1.subList(0,list1.size());
 				}
 			}else if("0".equals(amtType) && "0".equals(hzgType) && "0".equals(fsType)){
 
 			}else{
-				list1 = list;
+				if(list.size() >= 9){
+					list1 = list.subList(0,10);
+				}else{
+					list1 = list.subList(0,list.size());
+				}
+			}
+
+			if(list1 != null && list1.size()>0){
+				for(HtyFctCustAllDto dto : list1){
+					if(dto.getAmtAll() == null){
+						dto.setAmtAll(new BigDecimal(0));
+					}
+					if(dto.getAmtOnline() == null){
+						dto.setAmtOnline(new BigDecimal(0));
+					}
+				}
 			}
 
 	        result.setData(list1);

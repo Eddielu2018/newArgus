@@ -279,7 +279,7 @@ public class HtyFctOrgController {
         		yearDate = String.valueOf((Integer.valueOf(yearDate)-1));
         	}
         	logger.info("==================================================yearDate="+yearDate);
-        	List<HtyFctOrgCustIncomeSaleDTO> list = this.htyFctOrgCustIncomeSaleDTOService.selectMonth(yearWithDate, userId);
+        	List<HtyFctOrgCustIncomeSaleDTO> list = this.htyFctOrgCustIncomeSaleDTOService.selectMonth(yearMonth, userId);
         	if(type == 0){
         		//营业
         		List<HtyFctOrgIncomeDTO> incomeList = this.htyFctOrgIncomeDTOService.selectYear(userId,yearDate);
