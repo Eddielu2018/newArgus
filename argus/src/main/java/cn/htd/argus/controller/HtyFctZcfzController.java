@@ -434,7 +434,9 @@ public class HtyFctZcfzController {
             }else{
                 financeDTO.setBxPbRatioState("1");
             }
-            if(edwFctL2OkrKpiFinanceDTO.getPxDiffRatio().compareTo(ArithUtil.div(list.get(8).getcValue3().doubleValue(), new BigDecimal(100).doubleValue(), 0)) != -1){
+            BigDecimal x = ArithUtil.div(edwFctL2OkrKpiFinanceDTO.getPxDiffRatio().doubleValue(),list.get(8).getcValue3().doubleValue(),2);
+            x = ArithUtil.sub(x.doubleValue(),new BigDecimal(1).doubleValue());
+            if(x.compareTo(new BigDecimal(0.1)) != 1){
                 financeDTO.setPxDiffRatioState("0");
                 score = ArithUtil.add(score.doubleValue(), weight.doubleValue());
                 num = num - 1;
