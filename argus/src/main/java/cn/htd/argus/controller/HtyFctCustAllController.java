@@ -883,9 +883,9 @@ public class HtyFctCustAllController {
 		@RequestParam(value = "aliveType", required = true) int aliveType,
 		@RequestParam(value = "pageType", required = true) int pageType,
 		@RequestParam(value = "time", required = false) String time,
-		@RequestParam(value = "amtType", required = true) String amtType,
-		@RequestParam(value = "hzgType", required = true) String hzgType,
-		@RequestParam(value = "fsType", required = true) String fsType){
+		@RequestParam(value = "amtType", required = false) String amtType,
+		@RequestParam(value = "hzgType", required = false) String hzgType,
+		@RequestParam(value = "fsType", required = false) String fsType){
 		RestResult result = new RestResult();
 	    logger.info("调用(HtyFctCustAllDTOService.indexForManager)用户管理");
 	    try {
