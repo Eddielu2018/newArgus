@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctInventoryTurnsOrgDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctInventoryTurnsOrgDTO" >
+    <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
+    <result column="PROD_CODE" property="prodCode" jdbcType="VARCHAR" />
+    <result column="PROD_FNAME" property="prodFname" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV1" property="plCodeLv1" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV1" property="plNameLv1" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV2" property="plCodeLv2" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV2" property="plNameLv2" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV3" property="plCodeLv3" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV3" property="plNameLv3" jdbcType="VARCHAR" />
+    <result column="PP_CODE" property="ppCode" jdbcType="VARCHAR" />
+    <result column="PP_NAME" property="ppName" jdbcType="VARCHAR" />
+    <result column="STOCK_NUM_TRUE" property="stockNumTrue" jdbcType="DECIMAL" />
+    <result column="STOCK_AMT" property="stockAmt" jdbcType="DECIMAL" />
+    <result column="LOSS_AMT" property="lossAmt" jdbcType="DECIMAL" />
+    <result column="SHELVES_DATE" property="shelvesDate" jdbcType="VARCHAR" />
+    <result column="TURN_DAYS" property="turnDays" jdbcType="DECIMAL" />
+    <result column="STOCK_NUM" property="stockNum" jdbcType="DECIMAL" />
+    <result column="SHELVES_FLAG" property="shelvesFlag" jdbcType="VARCHAR" />
+    <result column="SALE_AMT_MON" property="saleAmtMon" jdbcType="DECIMAL" />
+    <result column="SALE_QVT_MON" property="saleQvtMon" jdbcType="DECIMAL" />
+    <result column="SALE_AMT_LMON" property="saleAmtLmon" jdbcType="DECIMAL" />
+    <result column="SALE_QVT_LMON" property="saleQvtLmon" jdbcType="DECIMAL" />
+    <result column="SALE_AVG" property="saleAvg" jdbcType="DECIMAL" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctInventoryTurnsOrgDTO" >
+    insert into HTY_FCT_INVENTORY_TURNS_ORG (STAT_DAY, ORG_CODE, ORG_FNAME, 
+      PROD_CODE, PROD_FNAME, PL_CODE_LV1, 
+      PL_NAME_LV1, PL_CODE_LV2, PL_NAME_LV2, 
+      PL_CODE_LV3, PL_NAME_LV3, PP_CODE, 
+      PP_NAME, STOCK_NUM_TRUE, STOCK_AMT, 
+      LOSS_AMT, SHELVES_DATE, TURN_DAYS, 
+      STOCK_NUM, SHELVES_FLAG, SALE_AMT_MON, 
+      SALE_QVT_MON, SALE_AMT_LMON, SALE_QVT_LMON, 
+      SALE_AVG)
+    values (#{statDay,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, #{orgFname,jdbcType=VARCHAR}, 
+      #{prodCode,jdbcType=VARCHAR}, #{prodFname,jdbcType=VARCHAR}, #{plCodeLv1,jdbcType=VARCHAR}, 
+      #{plNameLv1,jdbcType=VARCHAR}, #{plCodeLv2,jdbcType=VARCHAR}, #{plNameLv2,jdbcType=VARCHAR}, 
+      #{plCodeLv3,jdbcType=VARCHAR}, #{plNameLv3,jdbcType=VARCHAR}, #{ppCode,jdbcType=VARCHAR}, 
+      #{ppName,jdbcType=VARCHAR}, #{stockNumTrue,jdbcType=DECIMAL}, #{stockAmt,jdbcType=DECIMAL}, 
+      #{lossAmt,jdbcType=DECIMAL}, #{shelvesDate,jdbcType=VARCHAR}, #{turnDays,jdbcType=DECIMAL}, 
+      #{stockNum,jdbcType=DECIMAL}, #{shelvesFlag,jdbcType=VARCHAR}, #{saleAmtMon,jdbcType=DECIMAL}, 
+      #{saleQvtMon,jdbcType=DECIMAL}, #{saleAmtLmon,jdbcType=DECIMAL}, #{saleQvtLmon,jdbcType=DECIMAL}, 
+      #{saleAvg,jdbcType=DECIMAL})
+  </insert>
+</mapper>

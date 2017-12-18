@@ -42,4 +42,10 @@
     <bean id="edwFctl1DupontDetailDTOService" class="cn.htd.argus.service.impl.EdwFctl1DupontDetailDTOServiceImpl"/>
     <bean id="zeusConfigDTOService" class="cn.htd.argus.service.impl.ZeusConfigDTOServiceImpl"/>
 
+    <!-- 商品数据分析 -->
+    <bean id="htyFctInventoryTurnsOrgDTOService" class="cn.htd.argus.service.impl.HtyFctInventoryTurnsOrgDTOServiceImpl"/>
+    <bean id="htyFctProdAllOrgDTOService" class="cn.htd.argus.service.impl.HtyFctProdAllOrgDTOServiceImpl"/>
+    <bean id="htyFctSalePlAnalysisOrgDTOService" class="cn.htd.argus.service.impl.HtyFctSalePlAnalysisOrgDTOServiceImpl"/>
+    <bean id="htyFctSalePpAnalysisOrgDTOService" class="cn.htd.argus.service.impl.HtyFctSalePpAnalysisOrgDTOServiceImpl"/>
+
 </beans>
