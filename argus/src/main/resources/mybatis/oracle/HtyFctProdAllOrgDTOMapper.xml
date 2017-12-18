@@ -31,26 +31,31 @@
     <result column="SALE_AMT_ALL" property="saleAmtAll" jdbcType="DECIMAL" />
     <result column="SALE_AVG" property="saleAvg" jdbcType="DECIMAL" />
   </resultMap>
-  <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctProdAllOrgDTO" >
-    insert into HTY_FCT_PROD_ALL_ORG (STAT_DAY, ORG_CODE, ORG_FNAME, 
-      PROD_NUM, PROD_NUM_DOWN, PROD_NUM_SALE, 
-      PROD_NUM_BX, PROD_NUM_QY, PROD_NUM_WK, 
-      PROD_NUM_DOWN_WK, PROD_NUM_SALE_WK, PROD_NUM_BX_WK, 
-      PROD_NUM_QY_WK, PROD_CODE, PROD_FNAME, 
-      PP_CODE, PP_NAME, PL_CODE_LV1, 
-      PL_NAME_LV1, PL_CODE_LV2, PL_NAME_LV2, 
-      PL_CODE_LV3, PL_NAME_LV3, SALE_FLAG, 
-      SALE_AMT_YEAR, SALE_QVT_YEAR, SALE_AMT_ALL, 
-      SALE_AVG)
-    values (#{statDay,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, #{orgFname,jdbcType=VARCHAR}, 
-      #{prodNum,jdbcType=DECIMAL}, #{prodNumDown,jdbcType=DECIMAL}, #{prodNumSale,jdbcType=DECIMAL}, 
-      #{prodNumBx,jdbcType=DECIMAL}, #{prodNumQy,jdbcType=DECIMAL}, #{prodNumWk,jdbcType=DECIMAL}, 
-      #{prodNumDownWk,jdbcType=DECIMAL}, #{prodNumSaleWk,jdbcType=DECIMAL}, #{prodNumBxWk,jdbcType=DECIMAL}, 
-      #{prodNumQyWk,jdbcType=DECIMAL}, #{prodCode,jdbcType=VARCHAR}, #{prodFname,jdbcType=VARCHAR}, 
-      #{ppCode,jdbcType=VARCHAR}, #{ppName,jdbcType=VARCHAR}, #{plCodeLv1,jdbcType=VARCHAR}, 
-      #{plNameLv1,jdbcType=VARCHAR}, #{plCodeLv2,jdbcType=VARCHAR}, #{plNameLv2,jdbcType=VARCHAR}, 
-      #{plCodeLv3,jdbcType=VARCHAR}, #{plNameLv3,jdbcType=VARCHAR}, #{saleFlag,jdbcType=VARCHAR}, 
-      #{saleAmtYear,jdbcType=DECIMAL}, #{saleQvtYear,jdbcType=DECIMAL}, #{saleAmtAll,jdbcType=DECIMAL}, 
-      #{saleAvg,jdbcType=DECIMAL})
-  </insert>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and  STAT_DAY = #{searchDTO.endTime}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectAllHead" resultMap="BaseResultMap">
+    SELECT PROD_NUM AS PROD_NUM,  --商品总数
+    round(decode(PROD_NUM_WK,0,1,PROD_NUM/PROD_NUM_WK-1),4)*100 as PROD_NUM_WK, --商品总数环比
+    PROD_NUM_DOWN AS PROD_NUM_DOWN, --下架商品
+    round(decode(PROD_NUM_DOWN_WK,0,1,PROD_NUM_DOWN/PROD_NUM_DOWN_WK-1),4)*100 as PROD_NUM_DOWN_WK, --下架商品环比
+    PROD_NUM_SALE AS PROD_NUM_SALE, --有销售记录商品
+    round(decode(PROD_NUM_SALE_WK,0,1,PROD_NUM_SALE/PROD_NUM_SALE_WK-1),4)*100 as PROD_NUM_SALE_WK, --有销售记录商品环比
+    PROD_NUM_BX AS PROD_NUM_BX, --包厢上架数
+    round(decode(PROD_NUM_BX_WK,0,1,PROD_NUM_BX/PROD_NUM_BX_WK-1),4)*100 as PROD_NUM_SALE_WK, --包厢上架数环比
+    PROD_NUM_QY AS PROD_NUM_QY, --区域上架数
+    round(decode(PROD_NUM_QY_WK,0,1,PROD_NUM_QY/PROD_NUM_QY_WK-1),4)*100 as PROD_NUM_SALE_WK --区域上架数环比
+    FROM HTD_HTY.HTY_FCT_PROD_ALL_ORG
+    <include refid="where"/>
+  </select>
+
 </mapper>
