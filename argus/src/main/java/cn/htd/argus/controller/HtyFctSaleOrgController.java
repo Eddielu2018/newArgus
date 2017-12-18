@@ -83,8 +83,8 @@ public class HtyFctSaleOrgController {
                     startTime = DateUtil.getCurrentQuarterStartTime();
                     endTime = DateUtil.getCurrentQuarterEndTime();
                 }else{
-                    endTime = DateTimeUtil.getTodayChar6();
-                    startTime = DateTimeUtil.getTodayChar6();
+                    endTime = DateUtil.getNowMonthWithOut01();
+                    startTime = DateUtil.getNowMonthWithOut01();
                 }
             }
             if(StringUtils.isNotEmpty(startTime)){
@@ -211,7 +211,7 @@ public class HtyFctSaleOrgController {
                 if("2".equals(dateType)){
                     endTime = DateUtil.getCurrentQuarterEndTime();
                 }else{
-                    endTime = DateTimeUtil.getTodayChar6();
+                    endTime = DateUtil.getNowMonthWithOut01();
                 }
             }
 
