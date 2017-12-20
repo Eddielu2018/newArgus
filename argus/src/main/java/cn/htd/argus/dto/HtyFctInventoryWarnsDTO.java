@@ -3,46 +3,47 @@ package cn.htd.argus.dto;
 import java.math.BigDecimal;
 
 public class HtyFctInventoryWarnsDTO {
+    //统计日期
     private String statDay;
-
+    //平台公司代码
     private String orgCode;
-
+    //平台公司名称
     private String orgFname;
-
+    //商品编码
     private String prodCode;
-
+    //商品名称
     private String prodFname;
-
+    //商品一级类目代码
     private String plCodeLv1;
-
+    //商品一级类目名称
     private String plNameLv1;
-
+    //商品二级类目代码
     private String plCodeLv2;
-
+    //商品二级类目代码
     private String plNameLv2;
-
+    //商品三级类目代码
     private String plCodeLv3;
-
+    //商品三级类目名称
     private String plNameLv3;
-
+    //品牌代码
     private String ppCode;
-
+    //品牌名称
     private String ppName;
-
+    //显示库存
     private BigDecimal stockNum;
-
+    //实际库存数量
     private BigDecimal stockNumTrue;
-
+    //上架类型
     private String shelvesFlag;
-
+    //当月销售金额
     private BigDecimal saleAmtMon;
-
+    //当月销售数量
     private BigDecimal saleQvtMon;
-
+    //上月月销售金额
     private BigDecimal saleAmtLmon;
-
+    //上月月销售数量
     private BigDecimal saleQvtLmon;
-
+    //月环比
     private BigDecimal saleAvg;
 
     public String getStatDay() {

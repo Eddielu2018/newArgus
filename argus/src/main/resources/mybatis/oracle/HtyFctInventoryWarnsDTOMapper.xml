@@ -57,7 +57,7 @@
           (
             SELECT * FROM HTD_HTY.HTY_FCT_INVENTORY_WARNS_ORG
             <include refid="where"/>
-            ORDER BY ORG_CODE ASC
+            ORDER BY STOCK_NUM_TRUE ASC
           ) T
       )
     where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}

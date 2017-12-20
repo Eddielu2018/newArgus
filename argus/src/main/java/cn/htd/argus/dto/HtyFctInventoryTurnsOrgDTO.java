@@ -39,19 +39,6 @@ public class HtyFctInventoryTurnsOrgDTO {
 
     private BigDecimal turnDays;
 
-    private BigDecimal stockNum;
-
-    private String shelvesFlag;
-
-    private BigDecimal saleAmtMon;
-
-    private BigDecimal saleQvtMon;
-
-    private BigDecimal saleAmtLmon;
-
-    private BigDecimal saleQvtLmon;
-
-    private BigDecimal saleAvg;
 
     public String getStatDay() {
         return statDay;
@@ -197,59 +184,4 @@ public class HtyFctInventoryTurnsOrgDTO {
         this.turnDays = turnDays;
     }
 
-    public BigDecimal getStockNum() {
-        return stockNum;
-    }
-
-    public void setStockNum(BigDecimal stockNum) {
-        this.stockNum = stockNum;
-    }
-
-    public String getShelvesFlag() {
-        return shelvesFlag;
-    }
-
-    public void setShelvesFlag(String shelvesFlag) {
-        this.shelvesFlag = shelvesFlag == null ? null : shelvesFlag.trim();
-    }
-
-    public BigDecimal getSaleAmtMon() {
-        return saleAmtMon;
-    }
-
-    public void setSaleAmtMon(BigDecimal saleAmtMon) {
-        this.saleAmtMon = saleAmtMon;
-    }
-
-    public BigDecimal getSaleQvtMon() {
-        return saleQvtMon;
-    }
-
-    public void setSaleQvtMon(BigDecimal saleQvtMon) {
-        this.saleQvtMon = saleQvtMon;
-    }
-
-    public BigDecimal getSaleAmtLmon() {
-        return saleAmtLmon;
-    }
-
-    public void setSaleAmtLmon(BigDecimal saleAmtLmon) {
-        this.saleAmtLmon = saleAmtLmon;
-    }
-
-    public BigDecimal getSaleQvtLmon() {
-        return saleQvtLmon;
-    }
-
-    public void setSaleQvtLmon(BigDecimal saleQvtLmon) {
-        this.saleQvtLmon = saleQvtLmon;
-    }
-
-    public BigDecimal getSaleAvg() {
-        return saleAvg;
-    }
-
-    public void setSaleAvg(BigDecimal saleAvg) {
-        this.saleAvg = saleAvg;
-    }
 }

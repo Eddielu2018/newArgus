@@ -20,32 +20,56 @@
     <result column="LOSS_AMT" property="lossAmt" jdbcType="DECIMAL" />
     <result column="SHELVES_DATE" property="shelvesDate" jdbcType="VARCHAR" />
     <result column="TURN_DAYS" property="turnDays" jdbcType="DECIMAL" />
-    <result column="STOCK_NUM" property="stockNum" jdbcType="DECIMAL" />
-    <result column="SHELVES_FLAG" property="shelvesFlag" jdbcType="VARCHAR" />
-    <result column="SALE_AMT_MON" property="saleAmtMon" jdbcType="DECIMAL" />
-    <result column="SALE_QVT_MON" property="saleQvtMon" jdbcType="DECIMAL" />
-    <result column="SALE_AMT_LMON" property="saleAmtLmon" jdbcType="DECIMAL" />
-    <result column="SALE_QVT_LMON" property="saleQvtLmon" jdbcType="DECIMAL" />
-    <result column="SALE_AVG" property="saleAvg" jdbcType="DECIMAL" />
   </resultMap>
-  <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctInventoryTurnsOrgDTO" >
-    insert into HTY_FCT_INVENTORY_TURNS_ORG (STAT_DAY, ORG_CODE, ORG_FNAME, 
-      PROD_CODE, PROD_FNAME, PL_CODE_LV1, 
-      PL_NAME_LV1, PL_CODE_LV2, PL_NAME_LV2, 
-      PL_CODE_LV3, PL_NAME_LV3, PP_CODE, 
-      PP_NAME, STOCK_NUM_TRUE, STOCK_AMT, 
-      LOSS_AMT, SHELVES_DATE, TURN_DAYS, 
-      STOCK_NUM, SHELVES_FLAG, SALE_AMT_MON, 
-      SALE_QVT_MON, SALE_AMT_LMON, SALE_QVT_LMON, 
-      SALE_AVG)
-    values (#{statDay,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, #{orgFname,jdbcType=VARCHAR}, 
-      #{prodCode,jdbcType=VARCHAR}, #{prodFname,jdbcType=VARCHAR}, #{plCodeLv1,jdbcType=VARCHAR}, 
-      #{plNameLv1,jdbcType=VARCHAR}, #{plCodeLv2,jdbcType=VARCHAR}, #{plNameLv2,jdbcType=VARCHAR}, 
-      #{plCodeLv3,jdbcType=VARCHAR}, #{plNameLv3,jdbcType=VARCHAR}, #{ppCode,jdbcType=VARCHAR}, 
-      #{ppName,jdbcType=VARCHAR}, #{stockNumTrue,jdbcType=DECIMAL}, #{stockAmt,jdbcType=DECIMAL}, 
-      #{lossAmt,jdbcType=DECIMAL}, #{shelvesDate,jdbcType=VARCHAR}, #{turnDays,jdbcType=DECIMAL}, 
-      #{stockNum,jdbcType=DECIMAL}, #{shelvesFlag,jdbcType=VARCHAR}, #{saleAmtMon,jdbcType=DECIMAL}, 
-      #{saleQvtMon,jdbcType=DECIMAL}, #{saleAmtLmon,jdbcType=DECIMAL}, #{saleQvtLmon,jdbcType=DECIMAL}, 
-      #{saleAvg,jdbcType=DECIMAL})
-  </insert>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and  STAT_DAY = #{searchDTO.endTime}
+      </if>
+    </where>
+    <choose>
+      <when test="searchDTO.range == 0">
+        and TURN_DAYS &gt; 0 and TURN_DAYS &lt;= 30
+      </when>
+      <when test="searchDTO.range == 1">
+        and TURN_DAYS &gt; 0 and TURN_DAYS &lt;= 60
+      </when>
+      <when test="searchDTO.range == 2">
+        and TURN_DAYS &gt; 0 and TURN_DAYS &lt;= 90
+      </when>
+      <when test="searchDTO.range == 3">
+        and TURN_DAYS &gt; 0 and TURN_DAYS &lt;= 180
+      </when>
+      <when test="searchDTO.range == 4">
+        and TURN_DAYS &gt; 180
+      </when>
+    </choose>
+  </sql>
+
+  <select id="queryInventoryTurns" resultMap="BaseResultMap">
+    SELECT * FROM
+      (
+        SELECT T.*, ROWNUM AS rn FROM
+          (
+            SELECT * FROM HTD_HTY.HTY_FCT_INVENTORY_TURNS_ORG
+            <include refid="where"/>
+            ORDER BY TURN_DAYS ASC
+          ) T
+      )
+    where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
+  </select>
+
+  <select id="queryInventoryTurnsCount" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM (SELECT
+    COUNT(1)
+    FROM
+    HTD_HTY.HTY_FCT_INVENTORY_TURNS_ORG
+    <include refid="where"/>
+    GROUP BY ORG_CODE)a
+  </select>
+
 </mapper>

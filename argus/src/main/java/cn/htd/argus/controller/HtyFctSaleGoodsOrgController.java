@@ -2,7 +2,9 @@ package cn.htd.argus.controller;
 
 import cn.htd.argus.bean.GoodsAllBottomDTO;
 import cn.htd.argus.bean.GoodsAllHeadDTO;
+import cn.htd.argus.bean.GoodsTurnsDTO;
 import cn.htd.argus.bean.GoodsWarningDTO;
+import cn.htd.argus.dto.HtyFctInventoryTurnsOrgDTO;
 import cn.htd.argus.dto.HtyFctInventoryWarnsDTO;
 import cn.htd.argus.dto.HtyFctProdAllOrgDTO;
 import cn.htd.argus.dto.HtyFctProdDetailOrgDTO;
@@ -103,7 +105,7 @@ public class HtyFctSaleGoodsOrgController {
                 pager.setRows(rows);
                 pager.setPage(page);
             }
-            Integer num = htyFctProdDetailOrgDTOService.queryAllBottomCount(userId,endTime);
+            Integer num = htyFctProdDetailOrgDTOService.queryAllBottomCount(userId, endTime);
             if(num != null && num >0){
                 List<HtyFctProdDetailOrgDTO> list = htyFctProdDetailOrgDTOService.queryAllBottom(userId,endTime,pager);
                 if(list != null && list.size() >0 ){
@@ -151,9 +153,9 @@ public class HtyFctSaleGoodsOrgController {
                 pager.setRows(rows);
                 pager.setPage(page);
             }
-            Integer num = htyFctInventoryWarnsDTOService.queryInventoryWarnsCount(userId,endTime,range);
+            Integer num = htyFctInventoryWarnsDTOService.queryInventoryWarnsCount(userId, endTime, range);
             if(num != null && num >0){
-                List<HtyFctInventoryWarnsDTO> list = htyFctInventoryWarnsDTOService.queryInventoryWarns(userId,endTime,pager,range);
+                List<HtyFctInventoryWarnsDTO> list = htyFctInventoryWarnsDTOService.queryInventoryWarns(userId, endTime, pager, range);
                 if(list != null && list.size() >0 ){
                     dto.setNum(num);
                     dto.setList(list);
@@ -172,6 +174,58 @@ public class HtyFctSaleGoodsOrgController {
             }
         } catch (Exception e) {
             logger.error("库存预警分析" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
+        }
+        return result;
+    }
+
+    /**
+     * 商品库存滞销分析
+     * @param userId
+     * @param endTime
+     * @param page
+     * @param rows
+     * @param range 0：30天内   1：60天内   2：90天内   3：180天内   4：超过180天
+     * @return
+     */
+    @RequestMapping("/goods/inventory/turns")
+    public RestResult goodsInventoryTurns(@RequestParam(value = "userId", required = true) String userId,
+                                            @RequestParam(value = "endTime", required = true) String endTime,
+                                            @RequestParam(value = "page", required = false) Integer page,
+                                            @RequestParam(value = "rows", required = false) Integer rows,
+                                            @RequestParam(value = "range", required = true) String range) {
+        logger.info("调用(HtyFctSaleGoodsOrgController.goodsInventoryTurns)商品销售分析入参,userId="+userId+",endTime="+endTime+",page="+page+",rows="+rows+",range="+range);
+        RestResult result = new RestResult();
+        try {
+            Pager pager = new Pager();
+            GoodsTurnsDTO dto = new GoodsTurnsDTO();
+            if(page != null && rows != null){
+                pager.setRows(rows);
+                pager.setPage(page);
+            }
+            Integer num = htyFctInventoryTurnsOrgDTOService.queryInventoryTurnsCount(userId, endTime, range);
+            List<HtyFctInventoryTurnsOrgDTO> list1 = htyFctInventoryTurnsOrgDTOService.queryInventoryTurns(userId, endTime, pager, range);
+            if(num != null && num >0){
+                List<HtyFctInventoryTurnsOrgDTO> list = htyFctInventoryTurnsOrgDTOService.queryInventoryTurns(userId, endTime, pager, range);
+                if(list != null && list.size() >0 ){
+                    dto.setNum(num);
+                    dto.setList(list);
+                    result.setData(dto);
+                    result.setCode(ResultCodeEnum.SUCCESS.getCode());
+                    result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+                }else{
+                    result.setCode(ResultCodeEnum.ERROR_IS_NOT_MENBER.getCode());
+                    result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
+                }
+            }else{
+                dto.setNum(num);
+                result.setData(dto);
+                result.setCode(ResultCodeEnum.SUCCESS.getCode());
+                result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+            }
+        } catch (Exception e) {
+            logger.error("商品库存滞销分析" + e);
             result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
             result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
         }
