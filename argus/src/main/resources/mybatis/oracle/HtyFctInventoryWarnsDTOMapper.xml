@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctInventoryWarnsDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctInventoryWarnsDTO" >
+    <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
+    <result column="PROD_CODE" property="prodCode" jdbcType="VARCHAR" />
+    <result column="PROD_FNAME" property="prodFname" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV1" property="plCodeLv1" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV1" property="plNameLv1" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV2" property="plCodeLv2" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV2" property="plNameLv2" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV3" property="plCodeLv3" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV3" property="plNameLv3" jdbcType="VARCHAR" />
+    <result column="PP_CODE" property="ppCode" jdbcType="VARCHAR" />
+    <result column="PP_NAME" property="ppName" jdbcType="VARCHAR" />
+    <result column="STOCK_NUM" property="stockNum" jdbcType="DECIMAL" />
+    <result column="STOCK_NUM_TRUE" property="stockNumTrue" jdbcType="DECIMAL" />
+    <result column="SHELVES_FLAG" property="shelvesFlag" jdbcType="VARCHAR" />
+    <result column="SALE_AMT_MON" property="saleAmtMon" jdbcType="DECIMAL" />
+    <result column="SALE_QVT_MON" property="saleQvtMon" jdbcType="DECIMAL" />
+    <result column="SALE_AMT_LMON" property="saleAmtLmon" jdbcType="DECIMAL" />
+    <result column="SALE_QVT_LMON" property="saleQvtLmon" jdbcType="DECIMAL" />
+    <result column="SALE_AVG" property="saleAvg" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and  STAT_DAY = #{searchDTO.endTime}
+      </if>
+    </where>
+    <choose>
+      <when test="searchDTO.range == 0">
+        and STOCK_NUM_TRUE &gt; 0 and STOCK_NUM_TRUE &lt;= 5
+      </when>
+      <when test="searchDTO.range == 1">
+        and STOCK_NUM_TRUE &gt; 5 and STOCK_NUM_TRUE &lt;= 10
+      </when>
+      <when test="searchDTO.range == 2">
+        and STOCK_NUM_TRUE &gt; 10 and STOCK_NUM_TRUE &lt;= 15
+      </when>
+      <when test="searchDTO.range == 3">
+        and STOCK_NUM_TRUE &gt; 15 and STOCK_NUM_TRUE &lt;= 20
+      </when>
+    </choose>
+  </sql>
+
+  <select id="queryInventoryWarns" resultMap="BaseResultMap">
+    SELECT * FROM
+      (
+        SELECT T.*, ROWNUM AS rn FROM
+          (
+            SELECT * FROM HTD_HTY.HTY_FCT_INVENTORY_WARNS_ORG
+            <include refid="where"/>
+            ORDER BY ORG_CODE ASC
+          ) T
+      )
+    where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
+  </select>
+
+  <select id="queryInventoryWarnsCount" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM (SELECT
+    COUNT(1)
+    FROM
+    HTD_HTY.HTY_FCT_INVENTORY_WARNS_ORG
+    <include refid="where"/>
+    GROUP BY ORG_CODE)a
+  </select>
+
+  <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctInventoryWarnsDTO" >
+    insert into HTY_FCT_INVENTORY_WARNS_ORG (STAT_DAY, ORG_CODE, ORG_FNAME, 
+      PROD_CODE, PROD_FNAME, PL_CODE_LV1, 
+      PL_NAME_LV1, PL_CODE_LV2, PL_NAME_LV2, 
+      PL_CODE_LV3, PL_NAME_LV3, PP_CODE, 
+      PP_NAME, STOCK_NUM, STOCK_NUM_TRUE, 
+      SHELVES_FLAG, SALE_AMT_MON, SALE_QVT_MON, 
+      SALE_AMT_LMON, SALE_QVT_LMON, SALE_AVG
+      )
+    values (#{statDay,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, #{orgFname,jdbcType=VARCHAR}, 
+      #{prodCode,jdbcType=VARCHAR}, #{prodFname,jdbcType=VARCHAR}, #{plCodeLv1,jdbcType=VARCHAR}, 
+      #{plNameLv1,jdbcType=VARCHAR}, #{plCodeLv2,jdbcType=VARCHAR}, #{plNameLv2,jdbcType=VARCHAR}, 
+      #{plCodeLv3,jdbcType=VARCHAR}, #{plNameLv3,jdbcType=VARCHAR}, #{ppCode,jdbcType=VARCHAR}, 
+      #{ppName,jdbcType=VARCHAR}, #{stockNum,jdbcType=DECIMAL}, #{stockNumTrue,jdbcType=DECIMAL}, 
+      #{shelvesFlag,jdbcType=VARCHAR}, #{saleAmtMon,jdbcType=DECIMAL}, #{saleQvtMon,jdbcType=DECIMAL}, 
+      #{saleAmtLmon,jdbcType=DECIMAL}, #{saleQvtLmon,jdbcType=DECIMAL}, #{saleAvg,jdbcType=DECIMAL}
+      )
+  </insert>
+</mapper>

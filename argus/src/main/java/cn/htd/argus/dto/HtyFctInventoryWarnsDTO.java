@@ -2,54 +2,48 @@ package cn.htd.argus.dto;
 
 import java.math.BigDecimal;
 
-public class HtyFctProdDetailOrgDTO {
-
-    //排名
-    private String rn;
-    //时间
+public class HtyFctInventoryWarnsDTO {
     private String statDay;
-    //平台公司代码
+
     private String orgCode;
-    //平台公司名称
+
     private String orgFname;
-    //商品编码
+
     private String prodCode;
-    //商品名称
+
     private String prodFname;
-    //品牌代码
-    private String ppCode;
-    //品牌名称
-    private String ppName;
-    //商品一级类目代码
+
     private String plCodeLv1;
-    //商品一级类目名称
+
     private String plNameLv1;
-    //商品二级类目代码
+
     private String plCodeLv2;
-    //商品二级类目名称
+
     private String plNameLv2;
-    //商品三级类目代码
+
     private String plCodeLv3;
-    //商品三级类目名称
+
     private String plNameLv3;
-    //销售渠道
-    private String saleFlag;
-    //当年销售金额
-    private BigDecimal saleAmtYear;
-    //当年销售数量
-    private BigDecimal saleQvtYear;
-    //当年所有商品销售金额
-    private BigDecimal saleAmtAll;
-    //销售额占比
+
+    private String ppCode;
+
+    private String ppName;
+
+    private BigDecimal stockNum;
+
+    private BigDecimal stockNumTrue;
+
+    private String shelvesFlag;
+
+    private BigDecimal saleAmtMon;
+
+    private BigDecimal saleQvtMon;
+
+    private BigDecimal saleAmtLmon;
+
+    private BigDecimal saleQvtLmon;
+
     private BigDecimal saleAvg;
-
-    public String getRn() {
-        return rn;
-    }
-
-    public void setRn(String rn) {
-        this.rn = rn;
-    }
 
     public String getStatDay() {
         return statDay;
@@ -89,22 +83,6 @@ public class HtyFctProdDetailOrgDTO {
 
     public void setProdFname(String prodFname) {
         this.prodFname = prodFname == null ? null : prodFname.trim();
-    }
-
-    public String getPpCode() {
-        return ppCode;
-    }
-
-    public void setPpCode(String ppCode) {
-        this.ppCode = ppCode == null ? null : ppCode.trim();
-    }
-
-    public String getPpName() {
-        return ppName;
-    }
-
-    public void setPpName(String ppName) {
-        this.ppName = ppName == null ? null : ppName.trim();
     }
 
     public String getPlCodeLv1() {
@@ -155,36 +133,76 @@ public class HtyFctProdDetailOrgDTO {
         this.plNameLv3 = plNameLv3 == null ? null : plNameLv3.trim();
     }
 
-    public String getSaleFlag() {
-        return saleFlag;
+    public String getPpCode() {
+        return ppCode;
     }
 
-    public void setSaleFlag(String saleFlag) {
-        this.saleFlag = saleFlag == null ? null : saleFlag.trim();
+    public void setPpCode(String ppCode) {
+        this.ppCode = ppCode == null ? null : ppCode.trim();
     }
 
-    public BigDecimal getSaleAmtYear() {
-        return saleAmtYear;
+    public String getPpName() {
+        return ppName;
     }
 
-    public void setSaleAmtYear(BigDecimal saleAmtYear) {
-        this.saleAmtYear = saleAmtYear;
+    public void setPpName(String ppName) {
+        this.ppName = ppName == null ? null : ppName.trim();
     }
 
-    public BigDecimal getSaleQvtYear() {
-        return saleQvtYear;
+    public BigDecimal getStockNum() {
+        return stockNum;
     }
 
-    public void setSaleQvtYear(BigDecimal saleQvtYear) {
-        this.saleQvtYear = saleQvtYear;
+    public void setStockNum(BigDecimal stockNum) {
+        this.stockNum = stockNum;
     }
 
-    public BigDecimal getSaleAmtAll() {
-        return saleAmtAll;
+    public BigDecimal getStockNumTrue() {
+        return stockNumTrue;
     }
 
-    public void setSaleAmtAll(BigDecimal saleAmtAll) {
-        this.saleAmtAll = saleAmtAll;
+    public void setStockNumTrue(BigDecimal stockNumTrue) {
+        this.stockNumTrue = stockNumTrue;
+    }
+
+    public String getShelvesFlag() {
+        return shelvesFlag;
+    }
+
+    public void setShelvesFlag(String shelvesFlag) {
+        this.shelvesFlag = shelvesFlag == null ? null : shelvesFlag.trim();
+    }
+
+    public BigDecimal getSaleAmtMon() {
+        return saleAmtMon;
+    }
+
+    public void setSaleAmtMon(BigDecimal saleAmtMon) {
+        this.saleAmtMon = saleAmtMon;
+    }
+
+    public BigDecimal getSaleQvtMon() {
+        return saleQvtMon;
+    }
+
+    public void setSaleQvtMon(BigDecimal saleQvtMon) {
+        this.saleQvtMon = saleQvtMon;
+    }
+
+    public BigDecimal getSaleAmtLmon() {
+        return saleAmtLmon;
+    }
+
+    public void setSaleAmtLmon(BigDecimal saleAmtLmon) {
+        this.saleAmtLmon = saleAmtLmon;
+    }
+
+    public BigDecimal getSaleQvtLmon() {
+        return saleQvtLmon;
+    }
+
+    public void setSaleQvtLmon(BigDecimal saleQvtLmon) {
+        this.saleQvtLmon = saleQvtLmon;
     }
 
     public BigDecimal getSaleAvg() {
