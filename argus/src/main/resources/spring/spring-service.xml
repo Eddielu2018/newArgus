@@ -49,5 +49,7 @@
     <bean id="htyFctProdDetailOrgDTOService" class="cn.htd.argus.service.impl.HtyFctProdDetailOrgDTOServiceImpl"/>
     <bean id="htyFctSalePlAnalysisOrgDTOService" class="cn.htd.argus.service.impl.HtyFctSalePlAnalysisOrgDTOServiceImpl"/>
     <bean id="htyFctSalePpAnalysisOrgDTOService" class="cn.htd.argus.service.impl.HtyFctSalePpAnalysisOrgDTOServiceImpl"/>
-
+    
+    <!-- VMS首页数据 -->
+    <bean id="vmsIndexDataService" class="cn.htd.argus.service.impl.VmsIndexDataServiceImpl"/>
 </beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctHomePageOrgMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctHomePageOrg" >
+    <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
+    <result column="SALE_AMT" property="saleAmt" jdbcType="DECIMAL" />
+    <result column="SALE_AMT_MON" property="saleAmtMon" jdbcType="DECIMAL" />
+    <result column="STOCK_WAR_NUM" property="stockWarNum" jdbcType="DECIMAL" />
+    <result column="STOCK_UNS_NUM" property="stockUnsNum" jdbcType="DECIMAL" />
+    <result column="MEMBER_NUM" property="memberNum" jdbcType="DECIMAL" />
+    <result column="COMPANY_VALUATION" property="companyValuation" jdbcType="VARCHAR" />
+    <result column="FB_NUM" property="fbNum" jdbcType="DECIMAL" />
+    <result column="ZB_NUM" property="zbNum" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <select id="selectHtyFctHomePageByComCode" parameterType="String" resultMap="BaseResultMap">
+  	select * from hty_fct_home_page_org where org_code=#{companyCode} and stat_day=to_char(sysdate-1,'yyyymmdd')
+  	and rownum <![CDATA[<]]>2
+  </select>
+  
+</mapper>

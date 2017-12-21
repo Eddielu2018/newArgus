@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctHomePageLvlMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctHomePageLvl" >
+    <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
+    <result column="CUST_CODE" property="custCode" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT" property="purchaseAmt" jdbcType="DECIMAL" />
+    <result column="PURCHASE_AMT_MON" property="purchaseAmtMon" jdbcType="DECIMAL" />
+    <result column="PURCHASE_AMT_MON6" property="purchaseAmtMon6" jdbcType="DECIMAL" />
+    <result column="PURCHASE_AMT_YEAR" property="purchaseAmtYear" jdbcType="DECIMAL" />
+    <result column="PURCHASE_AMT_L" property="purchaseAmtL" jdbcType="DECIMAL" />
+    <result column="PURCHASE_AMT_LMON6" property="purchaseAmtLmon6" jdbcType="DECIMAL" />
+    <result column="PURCHASE_AMT_LMON" property="purchaseAmtLmon" jdbcType="DECIMAL" />
+    <result column="PURCHASE_AMT_LYEAR" property="purchaseAmtLyear" jdbcType="DECIMAL" />
+    <result column="SALE_AVG" property="saleAvg" jdbcType="DECIMAL" />
+    <result column="SALE_AVG_MON" property="saleAvgMon" jdbcType="DECIMAL" />
+    <result column="SALE_AVG_MON6" property="saleAvgMon6" jdbcType="DECIMAL" />
+    <result column="SALE_AVG_YEAR" property="saleAvgYear" jdbcType="DECIMAL" />
+    <result column="MANAGER_NAME" property="managerName" jdbcType="VARCHAR" />
+    <result column="CUST_PL_NUM" property="custPlNum" jdbcType="DECIMAL" />
+    <result column="ORG_PL_NUM" property="orgPlNum" jdbcType="DECIMAL" />
+  </resultMap>
+
+</mapper>

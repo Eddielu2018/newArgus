@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctHomePageCustMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctHomePageCust" >
+    <result column="PK_KEY" property="pkKey" jdbcType="VARCHAR" />
+    <result column="PK_KEY_TOWN" property="pkKeyTown" jdbcType="VARCHAR" />
+    <result column="CUST_CODE" property="custCode" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT_YEAR" property="purchaseAmtYear" jdbcType="DECIMAL" />
+    <result column="ORGADDRSS" property="orgaddrss" jdbcType="VARCHAR" />
+    <result column="ORGADDRESSLNG" property="orgaddresslng" jdbcType="DECIMAL" />
+    <result column="ORGADDRESSLAT" property="orgaddresslat" jdbcType="DECIMAL" />
+  </resultMap>
+ 
+</mapper>
