@@ -1,9 +1,12 @@
 package cn.htd.argus.mappers;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import cn.htd.argus.dto.HtyFctHomePageTown;
 
 public interface HtyFctHomePageTownMapper {
-    int insert(HtyFctHomePageTown record);
 
-    int insertSelective(HtyFctHomePageTown record);
+	List<HtyFctHomePageTown> selectHtyHomepageTownInfo(@Param("companyCode") String companyCode,@Param("cityCode") String cityCode);
 }

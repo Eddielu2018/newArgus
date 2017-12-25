@@ -16,5 +16,12 @@
     <result column="COVERAGE_RATE" property="coverageRate" jdbcType="DECIMAL" />
     <result column="PURCHASE_AMT" property="purchaseAmt" jdbcType="DECIMAL" />
   </resultMap>
+  
+  <select id="selectHtyHomepageTownInfo" resultMap="BaseResultMap">
+  select * from hty_fct_home_page_town where stat_day=to_char(sysdate-1,'yyyymmdd')
+	and org_code=#{companyCode}
+	and area_citycode=#{cityCode}
+	order by purchase_amt desc
+  </select>
  
 </mapper>

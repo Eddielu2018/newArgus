@@ -5,14 +5,22 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import cn.htd.argus.dto.HtyFctHomePageCust;
 import cn.htd.argus.dto.HtyFctHomePageOrg;
+import cn.htd.argus.dto.HtyFctHomePageTown;
 import cn.htd.argus.dto.HtyFctMemberStockOrg;
+import cn.htd.argus.dto.VmsConverMemberDetailDTO;
+import cn.htd.argus.dto.VmsConverMemberInfoDTO;
+import cn.htd.argus.mappers.HtyFctHomePageCustMapper;
 import cn.htd.argus.mappers.HtyFctHomePageOrgMapper;
+import cn.htd.argus.mappers.HtyFctHomePageTownMapper;
 import cn.htd.argus.mappers.HtyFctMemberStockOrgMapper;
 import cn.htd.argus.service.VmsIndexDataService;
 import cn.htd.common.Pager;
@@ -23,6 +31,10 @@ public class VmsIndexDataServiceImpl implements VmsIndexDataService{
 	private HtyFctMemberStockOrgMapper htyFctMemberStockOrgMapper;
 	@Resource
 	private HtyFctHomePageOrgMapper htyFctHomePageOrgMapper;
+	@Resource
+	private HtyFctHomePageTownMapper htyFctHomePageTownMapper;
+	@Resource
+	private HtyFctHomePageCustMapper htyFctHomePageCustMapper;
 	
 	private Logger logger = LoggerFactory.getLogger(VmsIndexDataServiceImpl.class);
 	 
@@ -54,6 +66,73 @@ public class VmsIndexDataServiceImpl implements VmsIndexDataService{
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error("VmsIndexDataServiceImpl::queryPagedHtyFctMemberStock:"+e);
+		}
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> queryAreaContributionData(String companyCode,String cityCode) {
+		Map<String, Object> resultMap=Maps.newHashMap();
+		try{
+			//查询
+			List<HtyFctHomePageTown> areaContriList=htyFctHomePageTownMapper.selectHtyHomepageTownInfo(companyCode, cityCode);
+			if(CollectionUtils.isNotEmpty(areaContriList)){
+				List<String> pkKeyTownList=Lists.newArrayList();
+				List<VmsConverMemberInfoDTO> vmsConverMemberInfoDTOList=Lists.newArrayList();
+				for(HtyFctHomePageTown htyFctHomePageTown:areaContriList){
+					//数据转换
+					VmsConverMemberInfoDTO tempVmsConverMemberInfoDTO=new VmsConverMemberInfoDTO();
+					if(htyFctHomePageTown.getPurchaseAmt()!=null){
+						tempVmsConverMemberInfoDTO.setContribution(htyFctHomePageTown.getPurchaseAmt()+"");
+					}
+					if(htyFctHomePageTown.getCoverageRate()!=null){
+						tempVmsConverMemberInfoDTO.setCoverageRate(htyFctHomePageTown.getCoverageRate()+"");
+					}
+					
+					tempVmsConverMemberInfoDTO.setName(htyFctHomePageTown.getAreaCountyname());
+					if(htyFctHomePageTown.getCustNum()!=null){
+						tempVmsConverMemberInfoDTO.setStoreNum(htyFctHomePageTown.getCustNum().intValue());
+					}
+					tempVmsConverMemberInfoDTO.setValue(0);
+					vmsConverMemberInfoDTOList.add(tempVmsConverMemberInfoDTO);
+					pkKeyTownList.add(htyFctHomePageTown.getPkKeyTown());
+				}
+				
+				resultMap.put("vmsConverMemberInfoDTOList", vmsConverMemberInfoDTOList);
+				
+				if(CollectionUtils.isNotEmpty(pkKeyTownList)){
+					 List<HtyFctHomePageCust> htyFctHomePageCustList=htyFctHomePageCustMapper.selectHtyFctHomePageCustByTownPK(pkKeyTownList);
+					 if(CollectionUtils.isNotEmpty(htyFctHomePageCustList)){
+						List<VmsConverMemberDetailDTO> vmsConverMemberDetailDTOList=Lists.newArrayList();
+						 for(HtyFctHomePageCust htyFctHomePageCust:htyFctHomePageCustList){
+							 VmsConverMemberDetailDTO vmsConverMemberDetailDTO=new VmsConverMemberDetailDTO();
+							 if(htyFctHomePageCust.getPurchaseAmtYear()!=null){
+								 vmsConverMemberDetailDTO.setContribution(htyFctHomePageCust.getPurchaseAmtYear()+"");
+							 }
+							 String[] position=new String[2];
+							 //会员店地址经度
+							 if(htyFctHomePageCust.getOrgaddresslat()!=null){
+								 position[0]=htyFctHomePageCust.getOrgaddresslat()+"";
+							 }
+							 //会员店地址纬度
+							 if(htyFctHomePageCust.getOrgaddresslng()!=null){
+								 position[1]=htyFctHomePageCust.getOrgaddresslng()+"";
+							 }
+							 
+							 vmsConverMemberDetailDTO.setPosition(position);
+							 vmsConverMemberDetailDTO.setCoverageRate("0");
+							 vmsConverMemberDetailDTO.setName(htyFctHomePageCust.getCustName());
+							 vmsConverMemberDetailDTO.setStoreNum(0);
+							 
+							 vmsConverMemberDetailDTOList.add(vmsConverMemberDetailDTO);
+						 }
+						 resultMap.put("vmsConverMemberDetailDTOList", vmsConverMemberDetailDTOList);
+					 }
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error("VmsIndexDataServiceImpl::queryAreaContributionData:"+e);
 		}
 		return resultMap;
 	}

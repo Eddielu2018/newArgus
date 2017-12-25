@@ -11,5 +11,12 @@
     <result column="ORGADDRESSLNG" property="orgaddresslng" jdbcType="DECIMAL" />
     <result column="ORGADDRESSLAT" property="orgaddresslat" jdbcType="DECIMAL" />
   </resultMap>
+  
+   <select id="selectHtyFctHomePageCustByTownPK" resultMap="BaseResultMap">
+  	select * from hty_fct_home_page_cust where pk_key_town in
+  	<foreach collection="list" item="item" open="(" close=")">
+  		#{item}
+  	</foreach>
+  </select>
  
 </mapper>
