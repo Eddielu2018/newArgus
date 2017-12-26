@@ -66,6 +66,7 @@ public class VmsIndexDataController {
 		resultMap.put("data", dataMap);
 		return resultMap;
 	}
+	
 	/**
 	 * 查询会员店采购上升排名数据
 	 * 
