@@ -40,4 +40,27 @@
 	    	and ORG_CODE=#{companyCode}
   </select>
   
+  <select id="queryMaxStockByHtyFctMemberStockOrg" resultType="Long">
+	select max(t.c) from (
+		select pl_code_lv3,count(1) as c from hty_fct_member_stock_org where org_code=#{companyCode}
+		and stat_day=to_char(sysdate-8,'yyyymmdd')
+		group by pl_code_lv3
+	) t
+  </select>
+  
+  <select id="queryTopHtyFctMemberStockOrg" resultType="cn.htd.argus.dto.HtyFctMemberStockOrgDTO">
+   select 
+   pl_name_lv3 as thirdLevelCatName,
+   pl_code_lv3 as thirdLevelCatCode,
+   c as storeNum
+   from   (
+		select t.* from (
+		select pl_name_lv3,pl_code_lv3,count(1) as c from hty_fct_member_stock_org where org_code=#{companyCode}
+		and stat_day=to_char(sysdate-8,'yyyymmdd')
+		group by pl_code_lv3,pl_name_lv3
+		) t
+		order by c desc)
+	where rownum <![CDATA[<]]> 7
+  </select>
+  
 </mapper>

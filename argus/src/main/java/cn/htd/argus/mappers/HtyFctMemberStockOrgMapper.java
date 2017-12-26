@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.htd.argus.dto.HtyFctMemberStockOrg;
+import cn.htd.argus.dto.HtyFctMemberStockOrgDTO;
 import cn.htd.common.Pager;
 
 public interface HtyFctMemberStockOrgMapper {
@@ -12,4 +13,8 @@ public interface HtyFctMemberStockOrgMapper {
 			@Param("pager") Pager page);
 
     Long queryTotalHtyFctMemberStockByCompanyCode(@Param("companyCode") String companyCode);
+    
+    Long queryMaxStockByHtyFctMemberStockOrg(@Param("companyCode") String companyCode);
+    
+    List<HtyFctMemberStockOrgDTO> queryTopHtyFctMemberStockOrg(@Param("companyCode") String companyCode);
 }

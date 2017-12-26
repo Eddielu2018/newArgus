@@ -23,5 +23,57 @@
     <result column="CUST_PL_NUM" property="custPlNum" jdbcType="DECIMAL" />
     <result column="ORG_PL_NUM" property="orgPlNum" jdbcType="DECIMAL" />
   </resultMap>
+  
+  <select id="selectHtyFctHomePageLvlByComCode" resultMap="BaseResultMap">
+  select 
+  		STAT_DAY,
+  		ORG_CODE,
+  		ORG_FNAME,
+  		CUST_CODE,
+  		CUST_NAME,
+  		PURCHASE_AMT,
+  		PURCHASE_AMT_MON,
+  		PURCHASE_AMT_MON6,
+  		PURCHASE_AMT_YEAR,
+  		PURCHASE_AMT_L,
+  		PURCHASE_AMT_LMON6,
+  		PURCHASE_AMT_LMON,
+  		PURCHASE_AMT_LYEAR,
+  		SALE_AVG,
+  		SALE_AVG_MON,
+  		SALE_AVG_MON6,
+  		SALE_AVG_YEAR,
+  		MANAGER_NAME,
+  		CUST_PL_NUM,
+  		ORG_PL_NUM
+  	 FROM(
+		  select t.*,rownum as rn from
+		  (select * 
+		   from hty_fct_home_page_lvl where org_code=#{companyCode}
+			and stat_day=to_char(sysdate-1,'yyyymmdd')
+			<!-- 按照月度同比率 -->
+			<if test="staticType == 1">
+				order by sale_avg_mon
+			</if>
+			<!-- 按照半年度同比率 -->
+			<if test="staticType == 2">
+				order by sale_avg_mon6
+			</if>
+			<!-- 按照年度同比率 -->
+			<if test="staticType == 3">
+				order by sale_avg_year
+			</if>
+			<!-- 降序 -->
+			<if test="orderType == 1 ">
+				DESC
+			</if>
+			<!-- 升序 -->
+			<if test="orderType == 2 ">
+				ASC
+			</if>
+			 
+			) t )
+			where rn <![CDATA[<]]> 9
+  </select>
 
 </mapper>

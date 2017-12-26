@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,12 +14,15 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import cn.htd.argus.dto.HtyFctHomePageCust;
+import cn.htd.argus.dto.HtyFctHomePageLvl;
 import cn.htd.argus.dto.HtyFctHomePageOrg;
 import cn.htd.argus.dto.HtyFctHomePageTown;
 import cn.htd.argus.dto.HtyFctMemberStockOrg;
+import cn.htd.argus.dto.HtyFctMemberStockOrgDTO;
 import cn.htd.argus.dto.VmsConverMemberDetailDTO;
 import cn.htd.argus.dto.VmsConverMemberInfoDTO;
 import cn.htd.argus.mappers.HtyFctHomePageCustMapper;
+import cn.htd.argus.mappers.HtyFctHomePageLvlMapper;
 import cn.htd.argus.mappers.HtyFctHomePageOrgMapper;
 import cn.htd.argus.mappers.HtyFctHomePageTownMapper;
 import cn.htd.argus.mappers.HtyFctMemberStockOrgMapper;
@@ -35,6 +39,8 @@ public class VmsIndexDataServiceImpl implements VmsIndexDataService{
 	private HtyFctHomePageTownMapper htyFctHomePageTownMapper;
 	@Resource
 	private HtyFctHomePageCustMapper htyFctHomePageCustMapper;
+	@Resource
+	private HtyFctHomePageLvlMapper htyFctHomePageLvlMapper;
 	
 	private Logger logger = LoggerFactory.getLogger(VmsIndexDataServiceImpl.class);
 	 
@@ -134,6 +140,101 @@ public class VmsIndexDataServiceImpl implements VmsIndexDataService{
 			e.printStackTrace();
 			logger.error("VmsIndexDataServiceImpl::queryAreaContributionData:"+e);
 		}
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> queryMemberPurchaseAmountData(
+			String companyCode, Integer staticType, Integer orderType) {
+		Map<String, Object> resultMap=Maps.newHashMap();
+		if(StringUtils.isEmpty(companyCode)||staticType==null||orderType==null){
+			return resultMap;
+		}
+		
+		List<HtyFctHomePageLvl> htyFctHomePageLvlList=htyFctHomePageLvlMapper.selectHtyFctHomePageLvlByComCode(companyCode, staticType, orderType);
+		
+		if(CollectionUtils.isEmpty(htyFctHomePageLvlList)){
+			return resultMap;
+		}
+		
+		//会员店名字列表
+		List<String> memberNameList=Lists.newArrayList();
+		//当前销售数据
+		List<String> currentStaticData=Lists.newArrayList();
+		//相对销售数据
+		List<String> relativeStaticData=Lists.newArrayList();
+		for(HtyFctHomePageLvl htyFctHomePageLvl:htyFctHomePageLvlList){
+			memberNameList.add(htyFctHomePageLvl.getCustName());
+			//按照月度同比率
+			if(1==staticType){
+				if(htyFctHomePageLvl.getPurchaseAmtMon()!=null){
+					currentStaticData.add(htyFctHomePageLvl.getPurchaseAmtMon().toString());
+				}
+				
+				if(htyFctHomePageLvl.getPurchaseAmtLmon()!=null){
+					relativeStaticData.add(htyFctHomePageLvl.getPurchaseAmtLmon().toString());
+				}
+				
+			}
+			//按照半年度同比率
+			if(2==staticType){
+				if(htyFctHomePageLvl.getPurchaseAmtMon6()!=null){
+					currentStaticData.add(htyFctHomePageLvl.getPurchaseAmtMon6().toString());
+				}
+				
+				if(htyFctHomePageLvl.getPurchaseAmtLmon6()!=null){
+					relativeStaticData.add(htyFctHomePageLvl.getPurchaseAmtLmon6().toString());
+				}
+			}
+			
+			if(3==staticType){
+				if(htyFctHomePageLvl.getPurchaseAmtYear()!=null){
+					currentStaticData.add(htyFctHomePageLvl.getPurchaseAmtYear().toString());
+				}
+				
+				if(htyFctHomePageLvl.getPurchaseAmtLyear()!=null){
+					relativeStaticData.add(htyFctHomePageLvl.getPurchaseAmtLyear().toString());
+				}
+			}
+			
+		}
+		resultMap.put("memberNameList", memberNameList);
+		resultMap.put("currentStaticData", currentStaticData);
+		resultMap.put("relativeStaticData", relativeStaticData);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> queryMemberStockAnalysisData(String companyCode) {
+		Map<String,Object> resultMap=Maps.newHashMap();
+		if(StringUtils.isEmpty(companyCode)){
+			return resultMap;
+		}
+		List<HtyFctMemberStockOrgDTO> htyFctMemberStockOrgDTOList=htyFctMemberStockOrgMapper.queryTopHtyFctMemberStockOrg(companyCode);
+		
+		if(CollectionUtils.isEmpty(htyFctMemberStockOrgDTOList)){
+			return resultMap;
+		}
+		
+		Long maxStock=htyFctMemberStockOrgMapper.queryMaxStockByHtyFctMemberStockOrg(companyCode);
+		
+		List<Map<String,Object>> memberStockList=Lists.newArrayList();
+		
+		List<Integer> catStockValueList=Lists.newArrayList();
+		
+		for(HtyFctMemberStockOrgDTO htyFctMemberStockOrgDTO:htyFctMemberStockOrgDTOList){
+			Map<String,Object> data=Maps.newHashMap();
+			data.put("text", htyFctMemberStockOrgDTO.getThirdLevelCatName());
+			data.put("max", maxStock);
+			
+			memberStockList.add(data);
+			
+			catStockValueList.add(htyFctMemberStockOrgDTO.getStoreNum());
+		}
+		
+		resultMap.put("memberStockList", memberStockList);
+		resultMap.put("catStockValueList", catStockValueList);
+		resultMap.put("topAllList", htyFctMemberStockOrgDTOList);
 		return resultMap;
 	}
 

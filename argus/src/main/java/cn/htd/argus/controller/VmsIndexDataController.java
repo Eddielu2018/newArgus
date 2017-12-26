@@ -63,7 +63,77 @@ public class VmsIndexDataController {
 			return resultMap;
 		}
 		resultMap.put("code", "1");
-		resultMap.put("msg", dataMap);
+		resultMap.put("data", dataMap);
+		return resultMap;
+	}
+	/**
+	 * 查询会员店采购上升排名数据
+	 * 
+	 * @param companyCode
+	 * @param staticType
+	 * @param orderType
+	 * @return
+	 */
+	@RequestMapping("queryMemberPurchaseAmountData")
+	public Map<String,Object> queryMemberPurchaseAmountData(@RequestParam("companyCode") String companyCode,
+			@RequestParam("staticType") Integer staticType,@RequestParam("orderType") Integer orderType){
+		Map<String,Object> resultMap=Maps.newHashMap();
+		if(StringUtils.isEmpty(companyCode)){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "companyCode为空");
+			return resultMap;
+		}
+		
+		if(staticType==null){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "staticType为空");
+			return resultMap;
+		}
+		
+		if(staticType<0||staticType>3){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "staticType不正确");
+			return resultMap;
+		}
+		
+		if(orderType==null){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "orderType为空");
+			return resultMap;
+		}
+		
+		Map<String,Object> dataMap=vmsIndexDataService.queryMemberPurchaseAmountData(companyCode, staticType,orderType);
+		
+		if(MapUtils.isEmpty(dataMap)){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "没有查到对应数据");
+			return resultMap;
+		}
+		resultMap.put("code", "1");
+		resultMap.put("data", dataMap);
+		return resultMap;
+	}
+	
+	/**
+	 * 查询会员店库存分析数据
+	 *  
+	 * @param companyCode
+	 * @return
+	 */
+	@RequestMapping("queryMemberStockAnalysisData")
+	public Map<String,Object> queryMemberStockAnalysisData(@RequestParam("companyCode") String companyCode){
+		Map<String,Object> resultMap=Maps.newHashMap();
+		if(StringUtils.isEmpty(companyCode)){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "companyCode为空");
+			return resultMap;
+		}
+		
+		Map<String,Object> dataMap=vmsIndexDataService.queryMemberStockAnalysisData(companyCode);
+		
+		resultMap.put("code", 1);
+		resultMap.put("data", dataMap);
+		
 		return resultMap;
 	}
 }
