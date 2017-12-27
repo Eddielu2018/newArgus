@@ -28,8 +28,54 @@ public class VmsIndexDataController {
 	 */
 	@RequestMapping("queryVMSIndexData")
 	public Map<String,Object> queryVMSIndexData(@RequestParam("companyCode") String companyCode){
-		vmsIndexDataService.queryVmsIndexData(companyCode);
-		return vmsIndexDataService.queryPagedHtyFctMemberStock(companyCode, 10, 1);
+		Map<String,Object> resultMap=Maps.newHashMap();
+		
+		if(StringUtils.isEmpty(companyCode)){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "companyCode为空");
+			return resultMap;
+		}
+		
+		Map<String,Object> dataMap=vmsIndexDataService.queryVmsIndexData(companyCode);
+		
+		if(MapUtils.isEmpty(dataMap)){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "没有查到数据");
+			return resultMap;
+		}
+		
+		resultMap.put("code", "1");
+		resultMap.put("data", dataMap);
+		return resultMap;
+	}
+	
+	@RequestMapping("queryPagedMemberStockData")
+	public Map<String,Object> queryPagedMemberStockData(@RequestParam("companyCode") String companyCode,
+			@RequestParam("pageNo")  Integer pageNo,
+			@RequestParam("pageSize") Integer pageSize,
+			@RequestParam("memberNameOrCode") String memberNameOrCode){
+		
+		Map<String,Object> resultMap=Maps.newHashMap();
+		
+		if(StringUtils.isEmpty(companyCode)){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "companyCode为空");
+			return resultMap;
+		}
+		
+		if(pageNo==null||pageNo<0){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "pageNo为空");
+			return resultMap;
+		}
+		
+		if(pageSize==null||pageSize<0){
+			resultMap.put("code", "0");
+			resultMap.put("msg", "pageSize为空");
+			return resultMap;
+		}
+		
+		return vmsIndexDataService.queryPagedHtyFctMemberStock(companyCode, pageSize,pageNo);
 	}
 	
 	/**
