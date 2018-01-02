@@ -75,7 +75,7 @@ public class VmsIndexDataController {
 			return resultMap;
 		}
 		
-		return vmsIndexDataService.queryPagedHtyFctMemberStock(companyCode, pageSize,pageNo);
+		return vmsIndexDataService.queryPagedHtyFctMemberStock(companyCode, pageSize,pageNo,memberNameOrCode);
 	}
 	
 	/**

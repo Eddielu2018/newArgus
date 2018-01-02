@@ -54,19 +54,19 @@ public class VmsIndexDataServiceImpl implements VmsIndexDataService{
 
 	@Override
 	public Map<String, Object> queryPagedHtyFctMemberStock(String companyCode,
-			Integer pageSize, Integer pageNo) {
+			Integer pageSize, Integer pageNo,String searchWord) {
 		logger.info("VmsIndexDataServiceImpl::queryPagedHtyFctMemberStock:enter...");
 		Map<String, Object> resultMap=Maps.newHashMap();
 		try{
 			Pager pager=new Pager();
 			pager.setRows(pageSize);
 			pager.setPageOffset((pageNo-1)*pageSize);
-			Long total=htyFctMemberStockOrgMapper.queryTotalHtyFctMemberStockByCompanyCode(companyCode);
+			Long total=htyFctMemberStockOrgMapper.queryTotalHtyFctMemberStockByCompanyCode(companyCode,searchWord);
 			if(total==null||total<=0){
 				resultMap.put("code", "0");
 				resultMap.put("msg", "没有查到数据");
 			}
-			List<HtyFctMemberStockOrg> resulltList=htyFctMemberStockOrgMapper.queryPagedHtyFctMemberStockByCompanyCode(companyCode,pager);
+			List<HtyFctMemberStockOrg> resulltList=htyFctMemberStockOrgMapper.queryPagedHtyFctMemberStockByCompanyCode(companyCode,pager,searchWord);
 			resultMap.put("code", "1");
 			resultMap.put("data", resulltList);
 		}catch(Exception e){

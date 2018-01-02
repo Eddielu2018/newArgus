@@ -29,21 +29,27 @@
   		STOCK_NUM
   	 FROM(
 		select t.*,rownum as rn from (
-	    	SELECT * from hty_fct_member_stock_org where stat_day=to_char(sysdate-3,'yyyymmdd')
+	    	SELECT * from hty_fct_member_stock_org where stat_day=to_char(sysdate-10,'yyyymmdd')
 	    	and ORG_CODE=#{companyCode}
+	    	<if test="searchWord !=null and searchWord != '' ">
+	    		and (CUST_CODE=#{searchWord} or CUST_NAME=#{searchWord})
+	    	</if>
 	    ) t )
      where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
   </select>
   
   <select id="queryTotalHtyFctMemberStockByCompanyCode" resultType="Long">
- 	 SELECT count(1) from hty_fct_member_stock_org where stat_day=to_char(sysdate-3,'yyyymmdd')
+ 	 SELECT count(1) from hty_fct_member_stock_org where stat_day=to_char(sysdate-10,'yyyymmdd')
 	    	and ORG_CODE=#{companyCode}
+	    	<if test="searchWord !=null and searchWord != '' ">
+	    		and (CUST_CODE=#{searchWord} or CUST_NAME=#{searchWord})
+	    	</if>
   </select>
   
   <select id="queryMaxStockByHtyFctMemberStockOrg" resultType="Long">
 	select max(t.c) from (
 		select pl_code_lv3,count(1) as c from hty_fct_member_stock_org where org_code=#{companyCode}
-		and stat_day=to_char(sysdate-8,'yyyymmdd')
+		and stat_day=to_char(sysdate-10,'yyyymmdd')
 		group by pl_code_lv3
 	) t
   </select>
@@ -56,7 +62,7 @@
    from   (
 		select t.* from (
 		select pl_name_lv3,pl_code_lv3,count(1) as c from hty_fct_member_stock_org where org_code=#{companyCode}
-		and stat_day=to_char(sysdate-8,'yyyymmdd')
+		and stat_day=to_char(sysdate-15,'yyyymmdd')
 		group by pl_code_lv3,pl_name_lv3
 		) t
 		order by c desc)

@@ -19,7 +19,7 @@ public interface VmsIndexDataService {
 	 * @param pageNo
 	 * @return
 	 */
-	Map<String,Object> queryPagedHtyFctMemberStock(String companyCode,Integer pageSize,Integer pageNo);
+	Map<String,Object> queryPagedHtyFctMemberStock(String companyCode,Integer pageSize,Integer pageNo,String searchWord);
 	
 	/**
 	 * 查询区域贡献度数据

@@ -10,9 +10,9 @@ import cn.htd.common.Pager;
 
 public interface HtyFctMemberStockOrgMapper {
 	List<HtyFctMemberStockOrg> queryPagedHtyFctMemberStockByCompanyCode(@Param("companyCode") String companyCode,
-			@Param("pager") Pager page);
+			@Param("pager") Pager page,@Param("searchWord")  String searchWord);
 
-    Long queryTotalHtyFctMemberStockByCompanyCode(@Param("companyCode") String companyCode);
+    Long queryTotalHtyFctMemberStockByCompanyCode(@Param("companyCode") String companyCode,@Param("searchWord")  String searchWord);
     
     Long queryMaxStockByHtyFctMemberStockOrg(@Param("companyCode") String companyCode);
     
