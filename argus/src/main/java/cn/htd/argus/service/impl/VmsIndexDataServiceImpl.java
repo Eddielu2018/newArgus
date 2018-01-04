@@ -60,6 +60,7 @@ public class VmsIndexDataServiceImpl implements VmsIndexDataService{
 		try{
 			Pager pager=new Pager();
 			pager.setRows(pageSize);
+			pager.setPage(pageNo);
 			pager.setPageOffset((pageNo-1)*pageSize);
 			Long total=htyFctMemberStockOrgMapper.queryTotalHtyFctMemberStockByCompanyCode(companyCode,searchWord);
 			if(total==null||total<=0){
@@ -68,6 +69,7 @@ public class VmsIndexDataServiceImpl implements VmsIndexDataService{
 			}
 			List<HtyFctMemberStockOrg> resulltList=htyFctMemberStockOrgMapper.queryPagedHtyFctMemberStockByCompanyCode(companyCode,pager,searchWord);
 			resultMap.put("code", "1");
+			resultMap.put("total", total+"");
 			resultMap.put("data", resulltList);
 		}catch(Exception e){
 			e.printStackTrace();

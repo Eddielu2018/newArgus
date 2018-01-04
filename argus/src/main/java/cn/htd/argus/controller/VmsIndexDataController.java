@@ -1,17 +1,21 @@
 package cn.htd.argus.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Maps;
 
+import cn.htd.argus.dto.QueryPagedMemStockDTO;
 import cn.htd.argus.service.VmsIndexDataService;
 
 @RestController
@@ -50,32 +54,29 @@ public class VmsIndexDataController {
 	}
 	
 	@RequestMapping("queryPagedMemberStockData")
-	public Map<String,Object> queryPagedMemberStockData(@RequestParam("companyCode") String companyCode,
-			@RequestParam("pageNo")  Integer pageNo,
-			@RequestParam("pageSize") Integer pageSize,
-			@RequestParam("memberNameOrCode") String memberNameOrCode){
+	public Map<String,Object> queryPagedMemberStockData(@RequestBody QueryPagedMemStockDTO queryPagedMemStockDTO){
 		
 		Map<String,Object> resultMap=Maps.newHashMap();
 		
-		if(StringUtils.isEmpty(companyCode)){
+		if(StringUtils.isEmpty(queryPagedMemStockDTO.getCompanyCode())){
 			resultMap.put("code", "0");
 			resultMap.put("msg", "companyCode为空");
 			return resultMap;
 		}
 		
-		if(pageNo==null||pageNo<0){
+		if(queryPagedMemStockDTO.getPageNo()==null||queryPagedMemStockDTO.getPageNo()<0){
 			resultMap.put("code", "0");
 			resultMap.put("msg", "pageNo为空");
 			return resultMap;
 		}
 		
-		if(pageSize==null||pageSize<0){
+		if(queryPagedMemStockDTO.getPageSize()==null||queryPagedMemStockDTO.getPageSize()<0){
 			resultMap.put("code", "0");
 			resultMap.put("msg", "pageSize为空");
 			return resultMap;
 		}
 		
-		return vmsIndexDataService.queryPagedHtyFctMemberStock(companyCode, pageSize,pageNo,memberNameOrCode);
+		return vmsIndexDataService.queryPagedHtyFctMemberStock(queryPagedMemStockDTO.getCompanyCode(), queryPagedMemStockDTO.getPageSize(),queryPagedMemStockDTO.getPageNo(),queryPagedMemStockDTO.getMemberNameOrCode());
 	}
 	
 	/**

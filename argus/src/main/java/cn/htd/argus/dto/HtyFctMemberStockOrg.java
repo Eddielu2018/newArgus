@@ -26,6 +26,8 @@ public class HtyFctMemberStockOrg {
     private String plNameLv3;
 
     private BigDecimal stockNum;
+    
+    private String id;
 
     public String getStatDay() {
         return statDay;
@@ -122,4 +124,13 @@ public class HtyFctMemberStockOrg {
     public void setStockNum(BigDecimal stockNum) {
         this.stockNum = stockNum;
     }
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+    
 }

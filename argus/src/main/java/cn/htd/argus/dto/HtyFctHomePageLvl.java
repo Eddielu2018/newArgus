@@ -1,6 +1,5 @@
 package cn.htd.argus.dto;
 
-import java.math.BigDecimal;
 
 public class HtyFctHomePageLvl {
     private String statDay;
@@ -13,35 +12,35 @@ public class HtyFctHomePageLvl {
 
     private String custName;
 
-    private BigDecimal purchaseAmt;
+    private String purchaseAmt;
 
-    private BigDecimal purchaseAmtMon;
+    private String purchaseAmtMon;
 
-    private BigDecimal purchaseAmtMon6;
+    private String purchaseAmtMon6;
 
-    private BigDecimal purchaseAmtYear;
+    private String purchaseAmtYear;
 
-    private BigDecimal purchaseAmtL;
+    private String purchaseAmtL;
 
-    private BigDecimal purchaseAmtLmon6;
+    private String purchaseAmtLmon6;
 
-    private BigDecimal purchaseAmtLmon;
+    private String purchaseAmtLmon;
 
-    private BigDecimal purchaseAmtLyear;
+    private String purchaseAmtLyear;
 
-    private BigDecimal saleAvg;
+    private String saleAvg;
 
-    private BigDecimal saleAvgMon;
+    private String saleAvgMon;
 
-    private BigDecimal saleAvgMon6;
+    private String saleAvgMon6;
 
-    private BigDecimal saleAvgYear;
+    private String saleAvgYear;
 
     private String managerName;
 
-    private BigDecimal custPlNum;
+    private String custPlNum;
 
-    private BigDecimal orgPlNum;
+    private String orgPlNum;
 
     public String getStatDay() {
         return statDay;
@@ -83,99 +82,99 @@ public class HtyFctHomePageLvl {
         this.custName = custName == null ? null : custName.trim();
     }
 
-    public BigDecimal getPurchaseAmt() {
+    public String getPurchaseAmt() {
         return purchaseAmt;
     }
 
-    public void setPurchaseAmt(BigDecimal purchaseAmt) {
+    public void setPurchaseAmt(String purchaseAmt) {
         this.purchaseAmt = purchaseAmt;
     }
 
-    public BigDecimal getPurchaseAmtMon() {
+    public String getPurchaseAmtMon() {
         return purchaseAmtMon;
     }
 
-    public void setPurchaseAmtMon(BigDecimal purchaseAmtMon) {
+    public void setPurchaseAmtMon(String purchaseAmtMon) {
         this.purchaseAmtMon = purchaseAmtMon;
     }
 
-    public BigDecimal getPurchaseAmtMon6() {
+    public String getPurchaseAmtMon6() {
         return purchaseAmtMon6;
     }
 
-    public void setPurchaseAmtMon6(BigDecimal purchaseAmtMon6) {
+    public void setPurchaseAmtMon6(String purchaseAmtMon6) {
         this.purchaseAmtMon6 = purchaseAmtMon6;
     }
 
-    public BigDecimal getPurchaseAmtYear() {
+    public String getPurchaseAmtYear() {
         return purchaseAmtYear;
     }
 
-    public void setPurchaseAmtYear(BigDecimal purchaseAmtYear) {
+    public void setPurchaseAmtYear(String purchaseAmtYear) {
         this.purchaseAmtYear = purchaseAmtYear;
     }
 
-    public BigDecimal getPurchaseAmtL() {
+    public String getPurchaseAmtL() {
         return purchaseAmtL;
     }
 
-    public void setPurchaseAmtL(BigDecimal purchaseAmtL) {
+    public void setPurchaseAmtL(String purchaseAmtL) {
         this.purchaseAmtL = purchaseAmtL;
     }
 
-    public BigDecimal getPurchaseAmtLmon6() {
+    public String getPurchaseAmtLmon6() {
         return purchaseAmtLmon6;
     }
 
-    public void setPurchaseAmtLmon6(BigDecimal purchaseAmtLmon6) {
+    public void setPurchaseAmtLmon6(String purchaseAmtLmon6) {
         this.purchaseAmtLmon6 = purchaseAmtLmon6;
     }
 
-    public BigDecimal getPurchaseAmtLmon() {
+    public String getPurchaseAmtLmon() {
         return purchaseAmtLmon;
     }
 
-    public void setPurchaseAmtLmon(BigDecimal purchaseAmtLmon) {
+    public void setPurchaseAmtLmon(String purchaseAmtLmon) {
         this.purchaseAmtLmon = purchaseAmtLmon;
     }
 
-    public BigDecimal getPurchaseAmtLyear() {
+    public String getPurchaseAmtLyear() {
         return purchaseAmtLyear;
     }
 
-    public void setPurchaseAmtLyear(BigDecimal purchaseAmtLyear) {
+    public void setPurchaseAmtLyear(String purchaseAmtLyear) {
         this.purchaseAmtLyear = purchaseAmtLyear;
     }
 
-    public BigDecimal getSaleAvg() {
+    public String getSaleAvg() {
         return saleAvg;
     }
 
-    public void setSaleAvg(BigDecimal saleAvg) {
+    public void setSaleAvg(String saleAvg) {
         this.saleAvg = saleAvg;
     }
 
-    public BigDecimal getSaleAvgMon() {
+    public String getSaleAvgMon() {
         return saleAvgMon;
     }
 
-    public void setSaleAvgMon(BigDecimal saleAvgMon) {
+    public void setSaleAvgMon(String saleAvgMon) {
         this.saleAvgMon = saleAvgMon;
     }
 
-    public BigDecimal getSaleAvgMon6() {
+    public String getSaleAvgMon6() {
         return saleAvgMon6;
     }
 
-    public void setSaleAvgMon6(BigDecimal saleAvgMon6) {
+    public void setSaleAvgMon6(String saleAvgMon6) {
         this.saleAvgMon6 = saleAvgMon6;
     }
 
-    public BigDecimal getSaleAvgYear() {
+    public String getSaleAvgYear() {
         return saleAvgYear;
     }
 
-    public void setSaleAvgYear(BigDecimal saleAvgYear) {
+    public void setSaleAvgYear(String saleAvgYear) {
         this.saleAvgYear = saleAvgYear;
     }
 
@@ -187,19 +186,19 @@ public class HtyFctHomePageLvl {
         this.managerName = managerName == null ? null : managerName.trim();
     }
 
-    public BigDecimal getCustPlNum() {
+    public String getCustPlNum() {
         return custPlNum;
     }
 
-    public void setCustPlNum(BigDecimal custPlNum) {
+    public void setCustPlNum(String custPlNum) {
         this.custPlNum = custPlNum;
     }
 
-    public BigDecimal getOrgPlNum() {
+    public String getOrgPlNum() {
         return orgPlNum;
     }
 
-    public void setOrgPlNum(BigDecimal orgPlNum) {
+    public void setOrgPlNum(String orgPlNum) {
         this.orgPlNum = orgPlNum;
     }
 }
