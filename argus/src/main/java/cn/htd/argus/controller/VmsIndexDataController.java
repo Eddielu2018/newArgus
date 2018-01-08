@@ -1,7 +1,5 @@
 package cn.htd.argus.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -53,6 +51,12 @@ public class VmsIndexDataController {
 		return resultMap;
 	}
 	
+	/**
+	 * 查询会员库存列表
+	 * 
+	 * @param queryPagedMemStockDTO
+	 * @return
+	 */
 	@RequestMapping("queryPagedMemberStockData")
 	public Map<String,Object> queryPagedMemberStockData(@RequestBody QueryPagedMemStockDTO queryPagedMemStockDTO){
 		
