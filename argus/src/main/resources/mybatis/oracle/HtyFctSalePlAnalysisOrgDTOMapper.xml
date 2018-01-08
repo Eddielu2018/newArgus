@@ -14,6 +14,39 @@
     <result column="IS_ENDFLAG" property="isEndflag" jdbcType="VARCHAR" />
     <result column="SALE_AVG" property="saleAvg" jdbcType="DECIMAL" />
   </resultMap>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and  STAT_DAY = #{searchDTO.endTime}
+      </if>
+    </where>
+  </sql>
+
+  <select id="querySalePlAnalysisOrg" resultMap="BaseResultMap">
+    SELECT T.*, ROWNUM AS rn FROM
+      (
+        SELECT
+          STAT_DAY,
+          ORG_CODE,
+          ORG_FNAME,
+          PL_CODE_LV3,
+          PL_NAME_LV3,
+          SALE_AMT_ALL,
+          SALE_QVT,
+          SALE_AMT_YEAR,
+          SALE_AMT_MON,
+          IS_ENDFLAG,
+          round(SALE_AVG,4)*100 as SALE_AVG
+        FROM HTD_HTY.HTY_FCT_SALE_PL_ANALYSIS_ORG
+        <include refid="where"/>
+        ORDER BY SALE_AVG
+      ) T
+  </select>
+
   <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctSalePlAnalysisOrgDTO" >
     insert into HTY_FCT_SALE_PL_ANALYSIS_ORG (STAT_DAY, ORG_CODE, ORG_FNAME, 
       PL_CODE_LV3, PL_NAME_LV3, SALE_AMT_ALL, 

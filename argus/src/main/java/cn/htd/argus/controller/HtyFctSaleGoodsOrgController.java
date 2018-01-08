@@ -4,12 +4,10 @@ import cn.htd.argus.bean.GoodsAllBottomDTO;
 import cn.htd.argus.bean.GoodsAllHeadDTO;
 import cn.htd.argus.bean.GoodsTurnsDTO;
 import cn.htd.argus.bean.GoodsWarningDTO;
-import cn.htd.argus.dto.HtyFctInventoryTurnsOrgDTO;
-import cn.htd.argus.dto.HtyFctInventoryWarnsDTO;
-import cn.htd.argus.dto.HtyFctProdAllOrgDTO;
-import cn.htd.argus.dto.HtyFctProdDetailOrgDTO;
+import cn.htd.argus.dto.*;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
+import cn.htd.argus.util.ArithUtil;
 import cn.htd.argus.util.RestResult;
 import cn.htd.common.Pager;
 import org.slf4j.Logger;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,7 +48,7 @@ public class HtyFctSaleGoodsOrgController {
      * @param endTime
      * @return
      */
-    @RequestMapping("/goods/All/head")
+    @RequestMapping("/goods/all/head")
     public RestResult goodsAllHead(@RequestParam(value = "userId", required = true) String userId,
                                    @RequestParam(value = "endTime", required = true) String endTime) {
         logger.info("调用(HtyFctSaleGoodsOrgController.goodsAllHead)商品销售分析入参,userId="+userId+",endTime="+endTime);
@@ -91,7 +90,7 @@ public class HtyFctSaleGoodsOrgController {
      * @param endTime
      * @return
      */
-    @RequestMapping("/goods/All/bottom")
+    @RequestMapping("/goods/all/bottom")
     public RestResult goodsAllBottom(@RequestParam(value = "userId", required = true) String userId,
                                      @RequestParam(value = "page", required = false) Integer page,
                                      @RequestParam(value = "rows", required = false) Integer rows,
@@ -205,7 +204,6 @@ public class HtyFctSaleGoodsOrgController {
                 pager.setPage(page);
             }
             Integer num = htyFctInventoryTurnsOrgDTOService.queryInventoryTurnsCount(userId, endTime, range);
-            List<HtyFctInventoryTurnsOrgDTO> list1 = htyFctInventoryTurnsOrgDTOService.queryInventoryTurns(userId, endTime, pager, range);
             if(num != null && num >0){
                 List<HtyFctInventoryTurnsOrgDTO> list = htyFctInventoryTurnsOrgDTOService.queryInventoryTurns(userId, endTime, pager, range);
                 if(list != null && list.size() >0 ){
@@ -230,5 +228,64 @@ public class HtyFctSaleGoodsOrgController {
             result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
         }
         return result;
+    }
+
+    /**
+     *
+     * @param userId
+     * @param endTime
+     * @return
+     */
+    @RequestMapping("/goods/sale/pl")
+    public RestResult goodsSalePl(@RequestParam(value = "userId", required = true) String userId,
+                                  @RequestParam(value = "endTime", required = true) String endTime) {
+        logger.info("调用(HtyFctSaleGoodsOrgController.goodsSalePl)商品销售分析入参,userId="+userId+",endTime="+endTime);
+        RestResult result = new RestResult();
+        try {
+            List<HtyFctSalePlAnalysisOrgDTO> restList = htyFctSalePlAnalysisOrgDTOService.querySalePlAnalysisOrg(userId,endTime);
+            //判断是否有其他项
+            if(restList.size() >5){
+                HtyFctSalePlAnalysisOrgDTO dto = new HtyFctSalePlAnalysisOrgDTO();
+                List<HtyFctSalePlAnalysisOrgDTO> list = new ArrayList<HtyFctSalePlAnalysisOrgDTO>();
+                List<List<HtyFctSalePlAnalysisOrgDTO>> lists = getSplitList(restList);
+                for(HtyFctSalePlAnalysisOrgDTO i:lists.get(1)){
+                    if(dto == null){
+                        dto = i ;
+                    }else{
+                        dto.setSaleQvt(ArithUtil.add(dto.getSaleQvt().doubleValue(),i.getSaleQvt().doubleValue()));
+                        dto.setSaleAmtYear(ArithUtil.add(dto.getSaleAmtYear().doubleValue(),i.getSaleAmtYear().doubleValue()));
+                        dto.setSaleAvg(ArithUtil.add(dto.getSaleAvg().doubleValue(),i.getSaleAvg().doubleValue()));
+                    }
+                }
+                dto.setPlNameLv3("其他");
+                list = lists.get(0);
+                list.add(dto);
+                result.setData(list);
+                result.setCode(ResultCodeEnum.SUCCESS.getCode());
+                result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+            }else{
+                result.setData(restList);
+                result.setCode(ResultCodeEnum.SUCCESS.getCode());
+                result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+            }
+        } catch (Exception e) {
+            logger.error("商品库存滞销分析" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
+        }
+        return result;
+    }
+
+    /**
+     * @param list 要拆分的集合
+     * @return
+     */
+    public static <T> List<List<T>> getSplitList(List<T> list)
+    {
+        List<List<T>> returnList = new ArrayList<List<T>>();
+        int size = list.size();
+        returnList.add(list.subList(0, 5));
+        returnList.add(list.subList(5, size));
+        return returnList;
     }
 }
