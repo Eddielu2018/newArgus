@@ -44,7 +44,7 @@ public class HtyFctInventoryWarnsDTO {
     //上月月销售数量
     private BigDecimal saleQvtLmon;
     //月环比
-    private BigDecimal saleAvg;
+    private String saleAvg;
 
     public String getStatDay() {
         return statDay;
@@ -206,11 +206,7 @@ public class HtyFctInventoryWarnsDTO {
         this.saleQvtLmon = saleQvtLmon;
     }
 
-    public BigDecimal getSaleAvg() {
-        return saleAvg;
-    }
+    public String getSaleAvg() {return saleAvg;}
 
-    public void setSaleAvg(BigDecimal saleAvg) {
-        this.saleAvg = saleAvg;
-    }
+    public void setSaleAvg(String saleAvg) {this.saleAvg = saleAvg;}
 }

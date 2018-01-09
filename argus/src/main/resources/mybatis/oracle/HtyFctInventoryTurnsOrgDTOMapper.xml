@@ -28,7 +28,7 @@
         and  ORG_CODE = #{searchDTO.userId}
       </if>
       <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
-        and  STAT_DAY = #{searchDTO.endTime}
+        and STAT_DAY like concat(#{searchDTO.endTime},'%')
       </if>
     </where>
     <choose>
@@ -64,12 +64,11 @@
   </select>
 
   <select id="queryInventoryTurnsCount" resultType="java.lang.Integer">
-    SELECT COUNT(1) FROM (SELECT
+    SELECT
     COUNT(1)
     FROM
     HTD_HTY.HTY_FCT_INVENTORY_TURNS_ORG
     <include refid="where"/>
-    GROUP BY ORG_CODE)a
   </select>
 
 </mapper>

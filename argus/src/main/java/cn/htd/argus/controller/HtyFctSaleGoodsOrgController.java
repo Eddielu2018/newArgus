@@ -8,6 +8,8 @@ import cn.htd.argus.dto.*;
 import cn.htd.argus.emuns.ResultCodeEnum;
 import cn.htd.argus.service.*;
 import cn.htd.argus.util.ArithUtil;
+import cn.htd.argus.util.DateTimeUtil;
+import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.RestResult;
 import cn.htd.common.Pager;
 import org.slf4j.Logger;
@@ -104,6 +106,9 @@ public class HtyFctSaleGoodsOrgController {
                 pager.setRows(rows);
                 pager.setPage(page);
             }
+            if(endTime == null || endTime == ""){
+                endTime = DateTimeUtil.getTodayMonth();
+            }
             Integer num = htyFctProdDetailOrgDTOService.queryAllBottomCount(userId, endTime);
             if(num != null && num >0){
                 List<HtyFctProdDetailOrgDTO> list = htyFctProdDetailOrgDTOService.queryAllBottom(userId,endTime,pager);
@@ -139,7 +144,7 @@ public class HtyFctSaleGoodsOrgController {
      */
     @RequestMapping("/goods/inventory/warning")
     public RestResult goodsInventoryWarning(@RequestParam(value = "userId", required = true) String userId,
-                                            @RequestParam(value = "endTime", required = true) String endTime,
+                                            @RequestParam(value = "endTime", required = false) String endTime,
                                             @RequestParam(value = "page", required = false) Integer page,
                                             @RequestParam(value = "rows", required = false) Integer rows,
                                             @RequestParam(value = "range", required = true) String range) {
@@ -151,6 +156,9 @@ public class HtyFctSaleGoodsOrgController {
             if(page != null && rows != null){
                 pager.setRows(rows);
                 pager.setPage(page);
+            }
+            if(endTime == null || endTime == ""){
+                endTime = DateUtil.getCurDateStr1("yyyyMM");
             }
             Integer num = htyFctInventoryWarnsDTOService.queryInventoryWarnsCount(userId, endTime, range);
             if(num != null && num >0){
@@ -190,7 +198,7 @@ public class HtyFctSaleGoodsOrgController {
      */
     @RequestMapping("/goods/inventory/turns")
     public RestResult goodsInventoryTurns(@RequestParam(value = "userId", required = true) String userId,
-                                            @RequestParam(value = "endTime", required = true) String endTime,
+                                            @RequestParam(value = "endTime", required = false) String endTime,
                                             @RequestParam(value = "page", required = false) Integer page,
                                             @RequestParam(value = "rows", required = false) Integer rows,
                                             @RequestParam(value = "range", required = true) String range) {
@@ -202,6 +210,9 @@ public class HtyFctSaleGoodsOrgController {
             if(page != null && rows != null){
                 pager.setRows(rows);
                 pager.setPage(page);
+            }
+            if(endTime == null || endTime == ""){
+                endTime = DateUtil.getCurDateStr1("yyyyMM");
             }
             Integer num = htyFctInventoryTurnsOrgDTOService.queryInventoryTurnsCount(userId, endTime, range);
             if(num != null && num >0){
@@ -231,7 +242,7 @@ public class HtyFctSaleGoodsOrgController {
     }
 
     /**
-     *
+     * TOP5品类销售情况
      * @param userId
      * @param endTime
      * @return
