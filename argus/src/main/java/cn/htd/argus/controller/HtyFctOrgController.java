@@ -700,17 +700,17 @@ public class HtyFctOrgController {
     	base.setNum(nowNum);
     	double difference = 0;
     	if(nowNum != null && lastNum != null && lastNum.doubleValue() != 0){
-	    	if(nowNum.compareTo(lastNum) == 1){
+    		if(nowNum.compareTo(lastNum) == 1){
 	    		base.setIndex(1);
-	    		difference = (nowNum.doubleValue()-lastNum.doubleValue());
-	    		base.setPair(String.valueOf(MathUtil.getPairToDouble(new BigDecimal(difference),lastNum)));
+	    		difference = Math.abs(nowNum.doubleValue()-lastNum.doubleValue());
+	    		base.setPair(String.valueOf(MathUtil.getPairToDouble(new BigDecimal(difference),new BigDecimal(Math.abs(lastNum.doubleValue())))));
 	    	}else if(nowNum.compareTo(lastNum) == 0){
 	    		base.setIndex(1);
 	    		base.setPair(new BigDecimal(0).toString());
 	    	}else{
 	    		base.setIndex(0);
 	    		difference = Math.abs(nowNum.doubleValue()-lastNum.doubleValue());
-	    		base.setPair(String.valueOf((MathUtil.getPairToDouble(new BigDecimal(difference),lastNum))));
+	    		base.setPair(String.valueOf((MathUtil.getPairToDouble(new BigDecimal(difference),new BigDecimal(Math.abs(lastNum.doubleValue()))))));
 	    	}
     	}else{
     		base.setIndex(1);
