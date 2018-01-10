@@ -14,7 +14,7 @@
   
    <select id="selectHtyFctHomePageCustByTownPK" resultMap="BaseResultMap">
   	select * from hty_fct_home_page_cust where pk_key_town in
-  	<foreach collection="list" item="item" open="(" close=")">
+  	<foreach collection="pkKeyTownList" item="item" open="(" close=")" separator=",">
   		#{item}
   	</foreach>
   </select>
