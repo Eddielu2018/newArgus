@@ -273,11 +273,11 @@ public class HtyFctOrgController {
         	List<String> wholeBottom = new ArrayList<String>();
         	List<String> wholeBottomPair = new ArrayList<String>();
 			List<String> wholeIncomeRatio = new ArrayList<String>();
-        	String yearWithDate = DateUtil.getCurDateStr1("yyyyMM");
+//        	String yearWithDate = DateUtil.getCurDateStr1("yyyyMM");
         	String yearDate = DateUtil.getCurDateStr1("yyyy");
-        	if("01".equals(yearWithDate.substring(yearWithDate.length()-2, yearWithDate.length()))){
-        		yearDate = String.valueOf((Integer.valueOf(yearDate)-1));
-        	}
+//        	if("01".equals(yearWithDate.substring(yearWithDate.length()-2, yearWithDate.length()))){
+//        		yearDate = String.valueOf((Integer.valueOf(yearDate)-1));
+//        	}
         	logger.info("==================================================yearDate="+yearDate);
         	List<HtyFctOrgCustIncomeSaleDTO> list = this.htyFctOrgCustIncomeSaleDTOService.selectMonth(yearMonth, userId);
         	if(type == 0){

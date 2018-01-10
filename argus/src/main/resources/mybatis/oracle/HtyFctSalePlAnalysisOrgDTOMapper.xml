@@ -21,7 +21,7 @@
         and  ORG_CODE = #{searchDTO.userId}
       </if>
       <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
-        and  STAT_DAY = #{searchDTO.endTime}
+        and STAT_DAY like concat(#{searchDTO.endTime},'%')
       </if>
     </where>
   </sql>
@@ -43,7 +43,7 @@
           round(SALE_AVG,4)*100 as SALE_AVG
         FROM HTD_HTY.HTY_FCT_SALE_PL_ANALYSIS_ORG
         <include refid="where"/>
-        ORDER BY SALE_AVG
+        ORDER BY SALE_AVG DESC
       ) T
   </select>
 
