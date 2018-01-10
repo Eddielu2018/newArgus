@@ -14,6 +14,7 @@ public class HtyFctSaleSearchDTO {
     private String ppCode;
     private String xsAmt;
     private String prodCode;
+    private String range;
 
     public String getUserId() {
         return userId;
@@ -77,5 +78,13 @@ public class HtyFctSaleSearchDTO {
 
     public void setProdCode(String prodCode) {
         this.prodCode = prodCode;
+    }
+
+    public String getRange() {
+        return range;
+    }
+
+    public void setRange(String range) {
+        this.range = range;
     }
 }

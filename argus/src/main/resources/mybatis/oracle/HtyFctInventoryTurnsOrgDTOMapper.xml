@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctInventoryTurnsOrgDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctInventoryTurnsOrgDTO" >
+    <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
+    <result column="PROD_CODE" property="prodCode" jdbcType="VARCHAR" />
+    <result column="PROD_FNAME" property="prodFname" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV1" property="plCodeLv1" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV1" property="plNameLv1" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV2" property="plCodeLv2" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV2" property="plNameLv2" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV3" property="plCodeLv3" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV3" property="plNameLv3" jdbcType="VARCHAR" />
+    <result column="PP_CODE" property="ppCode" jdbcType="VARCHAR" />
+    <result column="PP_NAME" property="ppName" jdbcType="VARCHAR" />
+    <result column="STOCK_NUM_TRUE" property="stockNumTrue" jdbcType="DECIMAL" />
+    <result column="STOCK_AMT" property="stockAmt" jdbcType="DECIMAL" />
+    <result column="LOSS_AMT" property="lossAmt" jdbcType="DECIMAL" />
+    <result column="SHELVES_DATE" property="shelvesDate" jdbcType="VARCHAR" />
+    <result column="TURN_DAYS" property="turnDays" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and STAT_DAY like concat(#{searchDTO.endTime},'%')
+      </if>
+    </where>
+    <choose>
+      <when test="searchDTO.range == 0">
+        and TURN_DAYS &gt; 0 and TURN_DAYS &lt;= 30
+      </when>
+      <when test="searchDTO.range == 1">
+        and TURN_DAYS &gt; 0 and TURN_DAYS &lt;= 60
+      </when>
+      <when test="searchDTO.range == 2">
+        and TURN_DAYS &gt; 0 and TURN_DAYS &lt;= 90
+      </when>
+      <when test="searchDTO.range == 3">
+        and TURN_DAYS &gt; 0 and TURN_DAYS &lt;= 180
+      </when>
+      <when test="searchDTO.range == 4">
+        and TURN_DAYS &gt; 180
+      </when>
+    </choose>
+  </sql>
+
+  <select id="queryInventoryTurns" resultMap="BaseResultMap">
+    SELECT * FROM
+      (
+        SELECT T.*, ROWNUM AS rn FROM
+          (
+            SELECT * FROM HTD_HTY.HTY_FCT_INVENTORY_TURNS_ORG
+            <include refid="where"/>
+            ORDER BY TURN_DAYS ASC
+          ) T
+      )
+    where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
+  </select>
+
+  <select id="queryInventoryTurnsCount" resultType="java.lang.Integer">
+    SELECT
+    COUNT(1)
+    FROM
+    HTD_HTY.HTY_FCT_INVENTORY_TURNS_ORG
+    <include refid="where"/>
+  </select>
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctHomePageLvlMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctHomePageLvl" >
+    <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
+    <result column="CUST_CODE" property="custCode" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT" property="purchaseAmt" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT_MON" property="purchaseAmtMon" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT_MON6" property="purchaseAmtMon6" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT_YEAR" property="purchaseAmtYear" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT_L" property="purchaseAmtL" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT_LMON6" property="purchaseAmtLmon6" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT_LMON" property="purchaseAmtLmon" jdbcType="VARCHAR" />
+    <result column="PURCHASE_AMT_LYEAR" property="purchaseAmtLyear" jdbcType="VARCHAR" />
+    <result column="SALE_AVG" property="saleAvg" jdbcType="VARCHAR" />
+    <result column="SALE_AVG_MON" property="saleAvgMon" jdbcType="VARCHAR" />
+    <result column="SALE_AVG_MON6" property="saleAvgMon6" jdbcType="VARCHAR" />
+    <result column="SALE_AVG_YEAR" property="saleAvgYear" jdbcType="VARCHAR" />
+    <result column="MANAGER_NAME" property="managerName" jdbcType="VARCHAR" />
+    <result column="CUST_PL_NUM" property="custPlNum" jdbcType="VARCHAR" />
+    <result column="ORG_PL_NUM" property="orgPlNum" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectHtyFctHomePageLvlByComCode" resultMap="BaseResultMap">
+  select 
+  		STAT_DAY,
+  		ORG_CODE,
+  		ORG_FNAME,
+  		CUST_CODE,
+  		CUST_NAME,
+  		PURCHASE_AMT,
+  		PURCHASE_AMT_MON,
+  		PURCHASE_AMT_MON6,
+  		PURCHASE_AMT_YEAR,
+  		PURCHASE_AMT_L,
+  		PURCHASE_AMT_LMON6,
+  		PURCHASE_AMT_LMON,
+  		PURCHASE_AMT_LYEAR,
+  		SALE_AVG,
+  		SALE_AVG_MON,
+  		SALE_AVG_MON6,
+  		SALE_AVG_YEAR,
+  		MANAGER_NAME,
+  		CUST_PL_NUM,
+  		ORG_PL_NUM
+  	 FROM(
+		  select t.*,rownum as rn from
+		  (select * 
+		   from hty_fct_home_page_lvl where org_code=#{companyCode}
+			and stat_day=to_char(sysdate-3,'yyyymmdd')
+			<!-- 按照月度同比率 -->
+			<if test="staticType == 1">
+				order by sale_avg_mon
+			</if>
+			<!-- 按照半年度同比率 -->
+			<if test="staticType == 2">
+				order by sale_avg_mon6
+			</if>
+			<!-- 按照年度同比率 -->
+			<if test="staticType == 3">
+				order by sale_avg_year
+			</if>
+			<!-- 降序 -->
+			<if test="orderType == 1 ">
+				DESC
+			</if>
+			<!-- 升序 -->
+			<if test="orderType == 2 ">
+				ASC
+			</if>
+			 
+			) t )
+			where rn <![CDATA[<]]> 9
+  </select>
+
+</mapper>

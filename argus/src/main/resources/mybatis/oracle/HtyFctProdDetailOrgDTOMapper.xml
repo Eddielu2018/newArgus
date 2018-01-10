@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctProdDetailOrgDTOMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctProdDetailOrgDTO" >
+    <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
+    <result column="PROD_CODE" property="prodCode" jdbcType="VARCHAR" />
+    <result column="PROD_FNAME" property="prodFname" jdbcType="VARCHAR" />
+    <result column="PP_CODE" property="ppCode" jdbcType="VARCHAR" />
+    <result column="PP_NAME" property="ppName" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV1" property="plCodeLv1" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV1" property="plNameLv1" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV2" property="plCodeLv2" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV2" property="plNameLv2" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV3" property="plCodeLv3" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV3" property="plNameLv3" jdbcType="VARCHAR" />
+    <result column="SALE_FLAG" property="saleFlag" jdbcType="VARCHAR" />
+    <result column="SALE_AMT_YEAR" property="saleAmtYear" jdbcType="DECIMAL" />
+    <result column="SALE_QVT_YEAR" property="saleQvtYear" jdbcType="DECIMAL" />
+    <result column="SALE_AMT_ALL" property="saleAmtAll" jdbcType="DECIMAL" />
+    <result column="SALE_AVG" property="saleAvg" jdbcType="DECIMAL" />
+    <result column="rn" property="rn" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and  STAT_DAY = #{searchDTO.endTime}
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryAllBottom" resultMap="BaseResultMap">
+    SELECT * FROM
+      (
+        SELECT T.*, ROWNUM AS rn FROM
+          (
+            SELECT
+              STAT_DAY,ORG_CODE,ORG_FNAME,PROD_CODE,PROD_FNAME,PP_CODE,PP_NAME,PL_CODE_LV1,PL_NAME_LV1,PL_CODE_LV2,PL_NAME_LV2,
+              PL_CODE_LV3,PL_NAME_LV3,SALE_FLAG,SALE_AMT_YEAR,SALE_QVT_YEAR,SALE_AMT_ALL,
+              round(SALE_AVG,4)*100 as SALE_AVG
+            FROM
+              HTD_HTY.HTY_FCT_PROD_DETAIL_ORG
+            <include refid="where"/>
+            ORDER BY SALE_AMT_YEAR
+          ) T
+      )
+    where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
+  </select>
+
+  <select id="queryAllBottomCount" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM (SELECT
+    COUNT(1)
+    FROM
+    HTD_HTY.HTY_FCT_PROD_DETAIL_ORG
+    <include refid="where"/>
+    GROUP BY
+    SALE_AMT_YEAR) a
+
+  </select>
+
+  <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctProdDetailOrgDTO" >
+    insert into HTY_FCT_PROD_DETAIL_ORG (STAT_DAY, ORG_CODE, ORG_FNAME, 
+      PROD_CODE, PROD_FNAME, PP_CODE, 
+      PP_NAME, PL_CODE_LV1, PL_NAME_LV1, 
+      PL_CODE_LV2, PL_NAME_LV2, PL_CODE_LV3, 
+      PL_NAME_LV3, SALE_FLAG, SALE_AMT_YEAR, 
+      SALE_QVT_YEAR, SALE_AMT_ALL, SALE_AVG
+      )
+    values (#{statDay,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, #{orgFname,jdbcType=VARCHAR}, 
+      #{prodCode,jdbcType=VARCHAR}, #{prodFname,jdbcType=VARCHAR}, #{ppCode,jdbcType=VARCHAR}, 
+      #{ppName,jdbcType=VARCHAR}, #{plCodeLv1,jdbcType=VARCHAR}, #{plNameLv1,jdbcType=VARCHAR}, 
+      #{plCodeLv2,jdbcType=VARCHAR}, #{plNameLv2,jdbcType=VARCHAR}, #{plCodeLv3,jdbcType=VARCHAR}, 
+      #{plNameLv3,jdbcType=VARCHAR}, #{saleFlag,jdbcType=VARCHAR}, #{saleAmtYear,jdbcType=DECIMAL}, 
+      #{saleQvtYear,jdbcType=DECIMAL}, #{saleAmtAll,jdbcType=DECIMAL}, #{saleAvg,jdbcType=DECIMAL}
+      )
+  </insert>
+
+</mapper>

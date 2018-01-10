@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctHomePageTownMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctHomePageTown" >
+    <result column="PK_KEY_TOWN" property="pkKeyTown" jdbcType="VARCHAR" />
+    <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
+    <result column="AREA_PROCODE" property="areaProcode" jdbcType="VARCHAR" />
+    <result column="AREA_PRONAME" property="areaProname" jdbcType="VARCHAR" />
+    <result column="AREA_CITYCODE" property="areaCitycode" jdbcType="VARCHAR" />
+    <result column="AREA_CITYNAME" property="areaCityname" jdbcType="VARCHAR" />
+    <result column="AREA_COUNTYCODE" property="areaCountycode" jdbcType="VARCHAR" />
+    <result column="AREA_COUNTYNAME" property="areaCountyname" jdbcType="VARCHAR" />
+    <result column="CUST_NUM" property="custNum" jdbcType="DECIMAL" />
+    <result column="COVERAGE_RATE" property="coverageRate" jdbcType="DECIMAL" />
+    <result column="PURCHASE_AMT" property="purchaseAmt" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <select id="selectHtyHomepageTownInfo" resultMap="BaseResultMap">
+  select * from hty_fct_home_page_town where stat_day=to_char(sysdate-1,'yyyymmdd')
+	and org_code=#{companyCode}
+	and area_citycode=#{cityCode}
+	order by purchase_amt desc
+  </select>
+ 
+</mapper>

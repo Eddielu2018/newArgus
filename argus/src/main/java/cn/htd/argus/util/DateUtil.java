@@ -21,6 +21,19 @@ public class DateUtil {
 	public static final String FORMAT_DD = "yyyy-MM-dd";
 
 	/**
+	 * 获取当前日期，如果当前日期是1号往前推一天
+	 * @return
+	 */
+	public static String getNowMonthWithOut01(){
+		String yearWithDate = DateUtil.getCurDateStr1("yyyyMMdd");
+		String yearDate = DateUtil.getCurDateStr1("yyyyMM");
+		if("01".equals(yearWithDate.substring(yearWithDate.length()-2, yearWithDate.length()))){
+			yearDate = DateUtil.getAfterDate(new Date(),-1,"yyyyMM");
+		}
+		return yearDate;
+	}
+
+	/**
 	 * 当前季度的开始时间
 	 *
 	 * @return

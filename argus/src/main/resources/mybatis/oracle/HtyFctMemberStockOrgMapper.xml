@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.htd.argus.mappers.HtyFctMemberStockOrgMapper" >
+  <resultMap id="BaseResultMap" type="cn.htd.argus.dto.HtyFctMemberStockOrg" >
+    <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
+    <result column="CUST_CODE" property="custCode" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV1" property="plCodeLv1" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV1" property="plNameLv1" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV2" property="plCodeLv2" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV2" property="plNameLv2" jdbcType="VARCHAR" />
+    <result column="PL_CODE_LV3" property="plCodeLv3" jdbcType="VARCHAR" />
+    <result column="PL_NAME_LV3" property="plNameLv3" jdbcType="VARCHAR" />
+    <result column="STOCK_NUM" property="stockNum" jdbcType="DECIMAL" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="queryPagedHtyFctMemberStockByCompanyCode" resultMap="BaseResultMap">
+  	select 
+  		CUST_CODE,
+  		CUST_NAME,
+  		PL_CODE_LV1,
+  		PL_NAME_LV1,
+  		PL_CODE_LV2,
+  		PL_NAME_LV2,
+  		PL_CODE_LV3,
+  		PL_NAME_LV3,
+  		STOCK_NUM,
+  		rn as id
+  	 FROM(
+		select t.*,rownum as rn from (
+	    	SELECT * from hty_fct_member_stock_org where stat_day=to_char(sysdate-17,'yyyymmdd')
+	    	and ORG_CODE=#{companyCode}
+	    	<if test="searchWord !=null and searchWord != '' ">
+	    		and (CUST_CODE like concat(#{searchWord},'%') or CUST_NAME like concat(#{searchWord},'%'))
+	    	</if>
+	    ) t )
+     where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
+  </select>
+  
+  <select id="queryTotalHtyFctMemberStockByCompanyCode" resultType="Long">
+ 	 SELECT count(1) from hty_fct_member_stock_org where stat_day=to_char(sysdate-17,'yyyymmdd')
+	    	and ORG_CODE=#{companyCode}
+	    	<if test="searchWord !=null and searchWord != '' ">
+	    		and (CUST_CODE like concat(#{searchWord},'%') or CUST_NAME like concat(#{searchWord},'%'))
+	    	</if>
+  </select>
+  
+  <select id="queryMaxStockByHtyFctMemberStockOrg" resultType="Long">
+	select max(t.c) from (
+		select pl_code_lv3,count(1) as c from hty_fct_member_stock_org where org_code=#{companyCode}
+		and stat_day=to_char(sysdate-10,'yyyymmdd')
+		group by pl_code_lv3
+	) t
+  </select>
+  
+  <select id="queryTopHtyFctMemberStockOrg" resultType="cn.htd.argus.dto.HtyFctMemberStockOrgDTO">
+   select 
+   pl_name_lv3 as thirdLevelCatName,
+   pl_code_lv3 as thirdLevelCatCode,
+   c as storeNum
+   from   (
+		select t.* from (
+		select pl_name_lv3,pl_code_lv3,count(1) as c from hty_fct_member_stock_org where org_code=#{companyCode}
+		and stat_day=to_char(sysdate-15,'yyyymmdd')
+		group by pl_code_lv3,pl_name_lv3
+		) t
+		order by c desc)
+	where rownum <![CDATA[<]]> 7
+  </select>
+  
+</mapper>
