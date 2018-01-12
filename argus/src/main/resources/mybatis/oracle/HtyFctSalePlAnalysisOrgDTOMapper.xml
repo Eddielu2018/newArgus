@@ -23,6 +23,17 @@
       <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
         and STAT_DAY like concat(#{searchDTO.endTime},'%')
       </if>
+      <if test="searchDTO.plCode != null and searchDTO.plCode != '' ">
+        and  PL_CODE_LV3 = #{searchDTO.plCode}
+      </if>
+      <choose>
+        <when test="searchDTO.isEndflag == 0">
+          and IS_ENDFLAG = 0
+        </when>
+        <when test="searchDTO.isEndflag == 1">
+          and IS_ENDFLAG = 1
+        </when>
+      </choose>
     </where>
   </sql>
 

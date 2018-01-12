@@ -14,6 +14,50 @@
     <result column="IS_ENDFLAG" property="isEndflag" jdbcType="VARCHAR" />
     <result column="SALE_AVG" property="saleAvg" jdbcType="DECIMAL" />
   </resultMap>
+
+  <sql id="where">
+    <where>
+      <if test="searchDTO.userId != null and searchDTO.userId != '' ">
+        and  ORG_CODE = #{searchDTO.userId}
+      </if>
+      <if test="searchDTO.endTime != null and searchDTO.endTime != '' ">
+        and STAT_DAY like concat(#{searchDTO.endTime},'%')
+      </if>
+      <if test="searchDTO.ppCode != null and searchDTO.ppCode != '' ">
+        and  PP_CODE = #{searchDTO.ppCode}
+      </if>
+      <choose>
+        <when test="searchDTO.isEndflag == 0">
+          and IS_ENDFLAG = 0
+        </when>
+        <when test="searchDTO.isEndflag == 1">
+          and IS_ENDFLAG = 1
+        </when>
+      </choose>
+    </where>
+  </sql>
+
+  <select id="querySalePpAnalysisOrg" resultMap="BaseResultMap">
+    SELECT T.*, ROWNUM AS rn FROM
+    (
+      SELECT
+        STAT_DAY,
+        ORG_CODE,
+        ORG_FNAME,
+        PP_CODE,
+        PP_NAME,
+        SALE_AMT_ALL,
+        SALE_QVT,
+        SALE_AMT_YEAR,
+        SALE_AMT_MON,
+        IS_ENDFLAG,
+        round(SALE_AVG,4)*100 as SALE_AVG
+      FROM HTD_HTY.HTY_FCT_SALE_PP_ANALYSIS_ORG
+      <include refid="where"/>
+      ORDER BY SALE_AVG DESC
+    ) T
+  </select>
+
   <insert id="insert" parameterType="cn.htd.argus.dto.HtyFctSalePpAnalysisOrgDTO" >
     insert into HTY_FCT_SALE_PP_ANALYSIS_ORG (STAT_DAY, ORG_CODE, ORG_FNAME, 
       PP_CODE, PP_NAME, SALE_AMT_ALL, 

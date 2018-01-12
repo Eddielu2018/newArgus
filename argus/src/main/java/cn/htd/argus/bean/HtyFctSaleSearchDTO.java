@@ -15,6 +15,7 @@ public class HtyFctSaleSearchDTO {
     private String xsAmt;
     private String prodCode;
     private String range;
+    private String isEndflag;
 
     public String getUserId() {
         return userId;
@@ -86,5 +87,13 @@ public class HtyFctSaleSearchDTO {
 
     public void setRange(String range) {
         this.range = range;
+    }
+
+    public String getIsEndflag() {
+        return isEndflag;
+    }
+
+    public void setIsEndflag(String isEndflag) {
+        this.isEndflag = isEndflag;
     }
 }

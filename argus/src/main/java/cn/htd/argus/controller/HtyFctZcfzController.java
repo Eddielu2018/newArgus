@@ -383,7 +383,7 @@ public class HtyFctZcfzController {
             financeDTO.setSingleCustXsRatio(edwFctL2OkrKpiFinanceDTO.getSingleCustXsRatio());
             financeDTO.setPdDiffRatio(edwFctL2OkrKpiFinanceDTO.getPdDiffRatio());
             financeDTO.setBxPbRatio(edwFctL2OkrKpiFinanceDTO.getBxPbRatio());
-            financeDTO.setPxDiffRatio(edwFctL2OkrKpiFinanceDTO.getPxDiffRatio());
+            financeDTO.setPxDiffRatio(edwFctL2OkrKpiFinanceDTO.getPxDiffRatio().abs());
 
             if(edwFctL2OkrKpiFinanceDTO.getXjYyRatio().compareTo(list.get(0).getcValue3()) == 0){
                 financeDTO.setXjYyRatioState("0");

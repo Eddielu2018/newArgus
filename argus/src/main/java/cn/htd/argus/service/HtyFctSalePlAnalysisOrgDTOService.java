@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface HtyFctSalePlAnalysisOrgDTOService {
 
-    List<HtyFctSalePlAnalysisOrgDTO> querySalePlAnalysisOrg(String userId, String endTime);
+    List<HtyFctSalePlAnalysisOrgDTO> querySalePlAnalysisOrg(String userId, String endTime, String isEndflag, String plCode);
 }

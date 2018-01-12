@@ -3,26 +3,27 @@ package cn.htd.argus.dto;
 import java.math.BigDecimal;
 
 public class HtyFctSalePlAnalysisOrgDTO {
+    //统计日期
     private String statDay;
-
+    //统计日期
     private String orgCode;
-
+    //平台公司名称
     private String orgFname;
-
+    //商品三级类目代码
     private String plCodeLv3;
-
+    //商品三级类目名称
     private String plNameLv3;
-
+    //当年平台公司总销售额
     private BigDecimal saleAmtAll;
-
+    //销量
     private BigDecimal saleQvt;
-
+    //当年累计销售额
     private BigDecimal saleAmtYear;
-
+    //当月累计销售额
     private BigDecimal saleAmtMon;
-
+    //月末标识
     private String isEndflag;
-
+    //占比
     private BigDecimal saleAvg;
 
     public String getStatDay() {

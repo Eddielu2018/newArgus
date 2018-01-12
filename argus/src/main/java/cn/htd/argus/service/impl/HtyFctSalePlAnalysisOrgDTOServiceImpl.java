@@ -20,7 +20,7 @@ public class HtyFctSalePlAnalysisOrgDTOServiceImpl implements HtyFctSalePlAnalys
     private HtyFctSalePlAnalysisOrgDTOMapper dao;
 
     @Override
-    public List<HtyFctSalePlAnalysisOrgDTO> querySalePlAnalysisOrg(String userId, String endTime) {
+    public List<HtyFctSalePlAnalysisOrgDTO> querySalePlAnalysisOrg(String userId, String endTime, String isEndflag, String plCode) {
         if (userId == null) {
             throw new IllegalArgumentException("parameter erpCategoryCode is userId");
         }
@@ -30,6 +30,10 @@ public class HtyFctSalePlAnalysisOrgDTOServiceImpl implements HtyFctSalePlAnalys
         HtyFctSaleSearchDTO searchDTO = new HtyFctSaleSearchDTO();
         searchDTO.setUserId(userId);
         searchDTO.setEndTime(endTime);
+        if(plCode != ""){
+            searchDTO.setPlCode(plCode);
+        }
+        searchDTO.setIsEndflag(isEndflag);
         List<HtyFctSalePlAnalysisOrgDTO> result = dao.querySalePlAnalysisOrg(searchDTO);
 
         if (result == null || result.isEmpty()) {
