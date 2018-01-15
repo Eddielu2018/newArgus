@@ -419,6 +419,68 @@ public class HtyFctSaleGoodsOrgController {
     }
 
     /**
+     * 品牌销售趋势分析
+     * @param userId
+     * @param endTime
+     * @param ppCode
+     * @return
+     */
+    @RequestMapping("/goods/sale/pp/ratio")
+    public RestResult goodsSalePpRatio(@RequestParam(value = "userId", required = true) String userId,
+                                       @RequestParam(value = "endTime", required = false) String endTime,
+                                       @RequestParam(value = "plCode", required = true) String ppCode) {
+        logger.info("调用(HtyFctSaleGoodsOrgController.goodsSalePlRatio)品类销售趋势分析入参,userId="+userId+",endTime="+endTime);
+        RestResult result = new RestResult();
+        try {
+            if(endTime == null || endTime == ""){
+                endTime = DateUtil.getCurDateStr1("yyyy"); //结束年份 2017
+            }
+            String startTime = DateUtil.dateFormatYear(endTime, 1); //开始年份 2016
+
+            List<String> plDate = new ArrayList<String>();
+            List<String> plEnd = new ArrayList<String>();
+            List<String> plStart = new ArrayList<String>();
+            SalePlGoosDTO dto = new SalePlGoosDTO();
+            int mon = 0 ;
+            List<HtyFctSalePpAnalysisOrgDTO> endList = htyFctSalePpAnalysisOrgDTOService.querySalePpAnalysisOrg(userId, endTime, "1", ppCode);
+            List<HtyFctSalePpAnalysisOrgDTO> startList = htyFctSalePpAnalysisOrgDTOService.querySalePpAnalysisOrg(userId, startTime, "1", ppCode);
+            if(CollectionUtils.isNotEmpty(startList)){
+                for(HtyFctSalePpAnalysisOrgDTO i:startList){
+                    mon = mon+1;
+                    plDate.add(String.valueOf(mon));
+                    plStart.add(i.getSaleAmtMon().toString());
+                }
+            }else{
+                for(int i = 1; i <13 ; i++){
+                    plDate.add(String.valueOf(i));
+                    plStart.add("0");
+                }
+            }
+            if(CollectionUtils.isNotEmpty(endList)){
+                for(HtyFctSalePpAnalysisOrgDTO j:startList){
+                    plEnd.add(j.getSaleAmtMon().toString());
+                }
+            }else {
+                for(int i = 1; i <13 ; i++){
+                    plEnd.add("0");
+                }
+            }
+            dto.setPlDate(plDate);
+            dto.setPlEnd(plEnd);
+            dto.setPlStart(plStart);
+            result.setData(dto);
+            result.setCode(ResultCodeEnum.SUCCESS.getCode());
+            result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
+
+        } catch (Exception e) {
+            logger.error("品类销售趋势分析" + e);
+            result.setCode(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getCode());
+            result.setMsg(ResultCodeEnum.ERROR_SERVER_EXCEPTION.getMsg());
+        }
+        return result;
+    }
+
+    /**
      * @param list 要拆分的集合
      * @return
      */
