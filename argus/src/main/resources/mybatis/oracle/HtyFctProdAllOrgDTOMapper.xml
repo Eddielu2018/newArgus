@@ -51,9 +51,9 @@
     PROD_NUM_SALE AS PROD_NUM_SALE, --有销售记录商品
     round(decode(PROD_NUM_SALE_WK,0,1,PROD_NUM_SALE/PROD_NUM_SALE_WK-1),4)*100 as PROD_NUM_SALE_WK, --有销售记录商品环比
     PROD_NUM_BX AS PROD_NUM_BX, --包厢上架数
-    round(decode(PROD_NUM_BX_WK,0,1,PROD_NUM_BX/PROD_NUM_BX_WK-1),4)*100 as PROD_NUM_SALE_WK, --包厢上架数环比
+    round(decode(PROD_NUM_BX_WK,0,1,PROD_NUM_BX/PROD_NUM_BX_WK-1),4)*100 as PROD_NUM_BX_WK, --包厢上架数环比
     PROD_NUM_QY AS PROD_NUM_QY, --区域上架数
-    round(decode(PROD_NUM_QY_WK,0,1,PROD_NUM_QY/PROD_NUM_QY_WK-1),4)*100 as PROD_NUM_SALE_WK --区域上架数环比
+    round(decode(PROD_NUM_QY_WK,0,1,PROD_NUM_QY/PROD_NUM_QY_WK-1),4)*100 as PROD_NUM_QY_WK --区域上架数环比
     FROM HTD_HTY.HTY_FCT_PROD_ALL_ORG
     <include refid="where"/>
   </select>

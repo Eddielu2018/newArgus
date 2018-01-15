@@ -10,6 +10,7 @@ import cn.htd.argus.util.DateUtil;
 import cn.htd.argus.util.RestResult;
 import cn.htd.common.Pager;
 import com.alibaba.dubbo.common.utils.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 商品数据分析
@@ -53,10 +51,13 @@ public class HtyFctSaleGoodsOrgController {
      */
     @RequestMapping("/goods/all/head")
     public RestResult goodsAllHead(@RequestParam(value = "userId", required = true) String userId,
-                                   @RequestParam(value = "endTime", required = true) String endTime) {
+                                   @RequestParam(value = "endTime", required = false) String endTime) {
         logger.info("调用(HtyFctSaleGoodsOrgController.goodsAllHead)商品销售分析入参,userId="+userId+",endTime="+endTime);
         RestResult result = new RestResult();
         try {
+            if(StringUtils.isEmpty(endTime)){
+                endTime = DateUtil.getNextDay(new Date());
+            }
             GoodsAllHeadDTO dto = new GoodsAllHeadDTO();
             HtyFctProdAllOrgDTO htyFctProdAllOrgDTO = htyFctProdAllOrgDTOService.queryAllHead(userId,endTime);
             if(htyFctProdAllOrgDTO != null){
@@ -74,7 +75,7 @@ public class HtyFctSaleGoodsOrgController {
                 result.setCode(ResultCodeEnum.SUCCESS.getCode());
                 result.setMsg(ResultCodeEnum.SUCCESS.getMsg());
             }else{
-                result.setCode(ResultCodeEnum.ERROR_IS_NOT_MENBER.getCode());
+                result.setCode(ResultCodeEnum.SUCCESS.getCode());
                 result.setMsg(ResultCodeEnum.ERROR_IS_NOT_MENBER.getMsg());
             }
         } catch (Exception e) {
@@ -97,7 +98,7 @@ public class HtyFctSaleGoodsOrgController {
     public RestResult goodsAllBottom(@RequestParam(value = "userId", required = true) String userId,
                                      @RequestParam(value = "page", required = false) Integer page,
                                      @RequestParam(value = "rows", required = false) Integer rows,
-                                     @RequestParam(value = "endTime", required = true) String endTime) {
+                                     @RequestParam(value = "endTime", required = false) String endTime) {
         logger.info("调用(HtyFctSaleGoodsOrgController.goodsAllBottom)商品销售分析入参,userId="+userId+",endTime="+endTime+",page="+page+",rows="+rows);
         RestResult result = new RestResult();
         try {
@@ -107,7 +108,9 @@ public class HtyFctSaleGoodsOrgController {
                 pager.setRows(rows);
                 pager.setPage(page);
             }
-            if(endTime == null || endTime == ""){
+            if(StringUtils.isEmpty(endTime)){
+                endTime = DateUtil.getNextDay(new Date());
+            }else{
                 endTime = DateTimeUtil.getTodayMonth();
             }
             Integer num = htyFctProdDetailOrgDTOService.queryAllBottomCount(userId, endTime);
