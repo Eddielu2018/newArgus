@@ -397,7 +397,7 @@ public class HtyFctSaleGoodsOrgController {
             if(CollectionUtils.isNotEmpty(endList)){
                 for(HtyFctSalePlAnalysisOrgDTO j:list){
                     for(HtyFctSalePlAnalysisOrgDTO i:endList){
-                        if(j.getStatDay() == i.getStatDay().substring(4,6)){
+                        if(j.getStatDay().equals(i.getStatDay().substring(4,6))){
                             j.setSaleAmtYear(i.getSaleAmtMon());
                         }
                     }
@@ -462,7 +462,7 @@ public class HtyFctSaleGoodsOrgController {
             if(CollectionUtils.isNotEmpty(endList)){
                 for(HtyFctSalePlAnalysisOrgDTO j:list){
                     for(HtyFctSalePpAnalysisOrgDTO i:endList){
-                        if(j.getStatDay() == i.getStatDay().substring(4,6)){
+                        if(j.getStatDay().equals(i.getStatDay().substring(4,6))){
                             j.setSaleAmtYear(i.getSaleAmtMon());
                         }
                     }
