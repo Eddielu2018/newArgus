@@ -382,29 +382,32 @@ public class HtyFctSaleGoodsOrgController {
             List<String> plEnd = new ArrayList<String>();
             List<String> plStart = new ArrayList<String>();
             SalePlGoosDTO dto = new SalePlGoosDTO();
-            int mon = 0 ;
+            List<HtyFctSalePlAnalysisOrgDTO> list = setList(); //拟定12个月数据
             List<HtyFctSalePlAnalysisOrgDTO> endList = htyFctSalePlAnalysisOrgDTOService.querySalePlAnalysisOrg(userId,endTime,"1",plCode);
             List<HtyFctSalePlAnalysisOrgDTO> startList = htyFctSalePlAnalysisOrgDTOService.querySalePlAnalysisOrg(userId,startTime,"1",plCode);
             if(CollectionUtils.isNotEmpty(startList)){
-                for(HtyFctSalePlAnalysisOrgDTO i:startList){
-                    mon = mon+1;
-                    plDate.add(String.valueOf(mon));
-                    plStart.add(i.getSaleAmtMon().toString());
-                }
-            }else{
-                for(int i = 1; i <13 ; i++){
-                    plDate.add(String.valueOf(i));
-                    plStart.add("0");
+                for(HtyFctSalePlAnalysisOrgDTO j:list){
+                    for(HtyFctSalePlAnalysisOrgDTO i:startList){
+                        if(j.getStatDay().equals(i.getStatDay().substring(4,6))){
+                            j.setSaleAmtMon(i.getSaleAmtMon());
+                        }
+                    }
                 }
             }
             if(CollectionUtils.isNotEmpty(endList)){
-                for(HtyFctSalePlAnalysisOrgDTO j:startList){
-                    plEnd.add(j.getSaleAmtMon().toString());
+                for(HtyFctSalePlAnalysisOrgDTO j:list){
+                    for(HtyFctSalePlAnalysisOrgDTO i:endList){
+                        if(j.getStatDay() == i.getStatDay().substring(4,6)){
+                            j.setSaleAmtYear(i.getSaleAmtMon());
+                        }
+                    }
                 }
-            }else {
-                for(int i = 1; i <13 ; i++){
-                    plEnd.add("0");
-                }
+
+            }
+            for(HtyFctSalePlAnalysisOrgDTO j:list){
+                plDate.add(j.getStatDay());
+                plEnd.add(j.getSaleAmtYear().toString());
+                plStart.add(j.getSaleAmtMon().toString());
             }
             dto.setPlDate(plDate);
             dto.setPlEnd(plEnd);
@@ -431,7 +434,7 @@ public class HtyFctSaleGoodsOrgController {
     @RequestMapping("/goods/sale/pp/ratio")
     public RestResult goodsSalePpRatio(@RequestParam(value = "userId", required = true) String userId,
                                        @RequestParam(value = "endTime", required = false) String endTime,
-                                       @RequestParam(value = "plCode", required = true) String ppCode) {
+                                       @RequestParam(value = "ppCode", required = true) String ppCode) {
         logger.info("调用(HtyFctSaleGoodsOrgController.goodsSalePlRatio)品类销售趋势分析入参,userId="+userId+",endTime="+endTime);
         RestResult result = new RestResult();
         try {
@@ -444,29 +447,32 @@ public class HtyFctSaleGoodsOrgController {
             List<String> plEnd = new ArrayList<String>();
             List<String> plStart = new ArrayList<String>();
             SalePlGoosDTO dto = new SalePlGoosDTO();
-            int mon = 0 ;
+            List<HtyFctSalePlAnalysisOrgDTO> list = setList(); //拟定12个月数据
             List<HtyFctSalePpAnalysisOrgDTO> endList = htyFctSalePpAnalysisOrgDTOService.querySalePpAnalysisOrg(userId, endTime, "1", ppCode);
             List<HtyFctSalePpAnalysisOrgDTO> startList = htyFctSalePpAnalysisOrgDTOService.querySalePpAnalysisOrg(userId, startTime, "1", ppCode);
             if(CollectionUtils.isNotEmpty(startList)){
-                for(HtyFctSalePpAnalysisOrgDTO i:startList){
-                    mon = mon+1;
-                    plDate.add(String.valueOf(mon));
-                    plStart.add(i.getSaleAmtMon().toString());
-                }
-            }else{
-                for(int i = 1; i <13 ; i++){
-                    plDate.add(String.valueOf(i));
-                    plStart.add("0");
+                for(HtyFctSalePlAnalysisOrgDTO j:list){
+                    for(HtyFctSalePpAnalysisOrgDTO i:startList){
+                        if(j.getStatDay().equals(i.getStatDay().substring(4,6))){
+                            j.setSaleAmtMon(i.getSaleAmtMon());
+                        }
+                    }
                 }
             }
             if(CollectionUtils.isNotEmpty(endList)){
-                for(HtyFctSalePpAnalysisOrgDTO j:startList){
-                    plEnd.add(j.getSaleAmtMon().toString());
+                for(HtyFctSalePlAnalysisOrgDTO j:list){
+                    for(HtyFctSalePpAnalysisOrgDTO i:endList){
+                        if(j.getStatDay() == i.getStatDay().substring(4,6)){
+                            j.setSaleAmtYear(i.getSaleAmtMon());
+                        }
+                    }
                 }
-            }else {
-                for(int i = 1; i <13 ; i++){
-                    plEnd.add("0");
-                }
+
+            }
+            for(HtyFctSalePlAnalysisOrgDTO j:list){
+                plDate.add(j.getStatDay());
+                plEnd.add(j.getSaleAmtYear().toString());
+                plStart.add(j.getSaleAmtMon().toString());
             }
             dto.setPlDate(plDate);
             dto.setPlEnd(plEnd);
@@ -494,5 +500,20 @@ public class HtyFctSaleGoodsOrgController {
         returnList.add(list.subList(0, 5));
         returnList.add(list.subList(5, size));
         return returnList;
+    }
+
+    private List<HtyFctSalePlAnalysisOrgDTO> setList(){
+        List<HtyFctSalePlAnalysisOrgDTO> list = new ArrayList<HtyFctSalePlAnalysisOrgDTO>();
+        BigDecimal zero = new BigDecimal(0);
+        for(int i= 0 ; i<12 ;i++){
+            HtyFctSalePlAnalysisOrgDTO dto = new HtyFctSalePlAnalysisOrgDTO();
+            dto.setStatDay(String.format("%02d", i + 1));
+            //开始时间
+            dto.setSaleAmtMon(zero);
+            //结束时间
+            dto.setSaleAmtYear(zero);
+            list.add(dto);
+        }
+        return list;
     }
 }
