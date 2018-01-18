@@ -37,12 +37,14 @@ public class ArgusLoginController {
     @RequestMapping(value = "/validate")
     public RestResult loginValidate (@RequestParam(value = "userId", required = false)  String userId,
                                @RequestParam(value = "ticket", required = false)  String ticket,
-                               @RequestParam(value = "accessChannel ", required = true)  String accessChannel ){
+                               @RequestParam(value = "accessChannel ", required = false)  String accessChannel ){
         RestResult result = new RestResult();
         Map<String,String> map1 = new HashMap<String,String>();
         if("1".equals(accessChannel)){
             map1.put("vmsUrl", propertyUtil.getNewVmsUrl());
         }else if("2".equals(accessChannel)){
+            map1.put("vmsUrl", propertyUtil.getVmsUrl());
+        }else{
             map1.put("vmsUrl", propertyUtil.getVmsUrl());
         }
         ExecuteResult<LoginResDTO> executeResult = userExportService.validTicket(ticket);
