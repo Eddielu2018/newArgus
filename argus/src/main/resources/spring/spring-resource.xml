@@ -17,6 +17,7 @@
     
     <bean id="propertyUtil" class="cn.htd.argus.util.PropertyUtil">
         <property name="vmsUrl" value="${vms.url.prefix}"/>
+        <property name="newVmsUrl" value="${newVms.url.prefix}"/>
     </bean>
 
 </beans>
