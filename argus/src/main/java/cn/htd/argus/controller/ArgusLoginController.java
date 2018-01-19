@@ -37,7 +37,7 @@ public class ArgusLoginController {
     @RequestMapping(value = "/validate")
     public RestResult loginValidate (@RequestParam(value = "userId", required = false)  String userId,
                                @RequestParam(value = "ticket", required = false)  String ticket,
-                               @RequestParam(value = "accessChannel ", required = false)  String accessChannel ){
+                               @RequestParam(value = "accessChannel", required = false)  String accessChannel ){
         RestResult result = new RestResult();
         Map<String,String> map1 = new HashMap<String,String>();
         if("1".equals(accessChannel)){
