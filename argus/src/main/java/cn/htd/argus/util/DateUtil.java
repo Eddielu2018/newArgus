@@ -221,6 +221,27 @@ public class DateUtil {
 		return sdf.format(date);
 	}
 
+	/***
+	 * 日期年份减年份
+	 * @param datetime
+	 * @param Year
+	 * @return
+	 */
+	public static String dateFormatYear(String datetime, Integer Year) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		Date date = null;
+		try {
+			date = sdf.parse(datetime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar cl = Calendar.getInstance();
+		cl.setTime(date);
+		cl.add(Calendar.YEAR, -Year);
+		date = cl.getTime();
+		return sdf.format(date);
+	}
+
 	/**
 	 * 把yyyy-MM-dd格式时间转换成yyyyMMdd、、
 	 *
