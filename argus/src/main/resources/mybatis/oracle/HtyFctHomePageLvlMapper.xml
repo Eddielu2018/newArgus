@@ -50,7 +50,7 @@
 		  select t.*,rownum as rn from
 		  (select * 
 		   from hty_fct_home_page_lvl where org_code=#{companyCode}
-			and stat_day=to_char(sysdate-3,'yyyymmdd')
+			and stat_day=to_char(sysdate-1,'yyyymmdd')
 			<!-- 按照月度同比率 -->
 			<if test="staticType == 1">
 				order by sale_avg_mon

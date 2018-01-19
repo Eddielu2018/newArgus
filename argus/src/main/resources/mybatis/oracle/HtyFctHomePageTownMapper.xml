@@ -18,7 +18,7 @@
   </resultMap>
   
   <select id="selectHtyHomepageTownInfo" resultMap="BaseResultMap">
-  select * from hty_fct_home_page_town where stat_day=to_char(sysdate-7,'yyyymmdd')
+  select * from hty_fct_home_page_town where stat_day=to_char(sysdate-1,'yyyymmdd')
 	and org_code=#{companyCode}
 	and area_citycode=#{cityCode}
 	order by purchase_amt desc
