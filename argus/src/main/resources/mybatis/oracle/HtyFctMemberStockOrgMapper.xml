@@ -36,6 +36,7 @@
 	    	<if test="searchWord !=null and searchWord != '' ">
 	    		and (CUST_CODE like concat(#{searchWord},'%') or CUST_NAME like concat(#{searchWord},'%'))
 	    	</if>
+	    	order by PL_CODE_LV1,PL_CODE_LV2 asc
 	    ) t )
      where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
   </select>
