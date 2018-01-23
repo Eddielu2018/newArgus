@@ -1,6 +1,5 @@
 package cn.htd.argus.dto;
 
-import java.math.BigDecimal;
 
 public class HtyFctHomePageOrg {
     private String statDay;
@@ -9,21 +8,21 @@ public class HtyFctHomePageOrg {
 
     private String orgFname;
 
-    private BigDecimal saleAmt;
+    private String saleAmt;
 
-    private BigDecimal saleAmtMon;
+    private String saleAmtMon;
 
-    private BigDecimal stockWarNum;
+    private String stockWarNum;
 
-    private BigDecimal stockUnsNum;
+    private String stockUnsNum;
 
-    private BigDecimal memberNum;
+    private String memberNum;
 
     private String companyValuation;
 
-    private BigDecimal fbNum;
+    private String fbNum;
 
-    private BigDecimal zbNum;
+    private String zbNum;
 
     public String getStatDay() {
         return statDay;
@@ -49,43 +48,43 @@ public class HtyFctHomePageOrg {
         this.orgFname = orgFname == null ? null : orgFname.trim();
     }
 
-    public BigDecimal getSaleAmt() {
+    public String getSaleAmt() {
         return saleAmt;
     }
 
-    public void setSaleAmt(BigDecimal saleAmt) {
+    public void setSaleAmt(String saleAmt) {
         this.saleAmt = saleAmt;
     }
 
-    public BigDecimal getSaleAmtMon() {
+    public String getSaleAmtMon() {
         return saleAmtMon;
     }
 
-    public void setSaleAmtMon(BigDecimal saleAmtMon) {
+    public void setSaleAmtMon(String saleAmtMon) {
         this.saleAmtMon = saleAmtMon;
     }
 
-    public BigDecimal getStockWarNum() {
+    public String getStockWarNum() {
         return stockWarNum;
     }
 
-    public void setStockWarNum(BigDecimal stockWarNum) {
+    public void setStockWarNum(String stockWarNum) {
         this.stockWarNum = stockWarNum;
     }
 
-    public BigDecimal getStockUnsNum() {
+    public String getStockUnsNum() {
         return stockUnsNum;
     }
 
-    public void setStockUnsNum(BigDecimal stockUnsNum) {
+    public void setStockUnsNum(String stockUnsNum) {
         this.stockUnsNum = stockUnsNum;
     }
 
-    public BigDecimal getMemberNum() {
+    public String getMemberNum() {
         return memberNum;
     }
 
-    public void setMemberNum(BigDecimal memberNum) {
+    public void setMemberNum(String memberNum) {
         this.memberNum = memberNum;
     }
 
@@ -97,19 +96,19 @@ public class HtyFctHomePageOrg {
         this.companyValuation = companyValuation == null ? null : companyValuation.trim();
     }
 
-    public BigDecimal getFbNum() {
+    public String getFbNum() {
         return fbNum;
     }
 
-    public void setFbNum(BigDecimal fbNum) {
+    public void setFbNum(String fbNum) {
         this.fbNum = fbNum;
     }
 
-    public BigDecimal getZbNum() {
+    public String getZbNum() {
         return zbNum;
     }
 
-    public void setZbNum(BigDecimal zbNum) {
+    public void setZbNum(String zbNum) {
         this.zbNum = zbNum;
     }
 }

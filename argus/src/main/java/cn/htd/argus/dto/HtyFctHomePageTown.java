@@ -1,7 +1,5 @@
 package cn.htd.argus.dto;
 
-import java.math.BigDecimal;
-
 public class HtyFctHomePageTown {
     private String pkKeyTown;
 
@@ -23,11 +21,11 @@ public class HtyFctHomePageTown {
 
     private String areaCountyname;
 
-    private BigDecimal custNum;
+    private String custNum;
 
-    private BigDecimal coverageRate;
+    private String coverageRate;
 
-    private BigDecimal purchaseAmt;
+    private String purchaseAmt;
 
     public String getPkKeyTown() {
         return pkKeyTown;
@@ -109,27 +107,27 @@ public class HtyFctHomePageTown {
         this.areaCountyname = areaCountyname == null ? null : areaCountyname.trim();
     }
 
-    public BigDecimal getCustNum() {
+    public String getCustNum() {
         return custNum;
     }
 
-    public void setCustNum(BigDecimal custNum) {
+    public void setCustNum(String custNum) {
         this.custNum = custNum;
     }
 
-    public BigDecimal getCoverageRate() {
+    public String getCoverageRate() {
         return coverageRate;
     }
 
-    public void setCoverageRate(BigDecimal coverageRate) {
+    public void setCoverageRate(String coverageRate) {
         this.coverageRate = coverageRate;
     }
 
-    public BigDecimal getPurchaseAmt() {
+    public String getPurchaseAmt() {
         return purchaseAmt;
     }
 
-    public void setPurchaseAmt(BigDecimal purchaseAmt) {
+    public void setPurchaseAmt(String purchaseAmt) {
         this.purchaseAmt = purchaseAmt;
     }
 }

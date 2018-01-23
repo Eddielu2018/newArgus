@@ -13,7 +13,16 @@
   </resultMap>
   
    <select id="selectHtyFctHomePageCustByTownPK" resultMap="BaseResultMap">
-  	select * from hty_fct_home_page_cust where pk_key_town in
+  	select 
+  	PK_KEY,
+  	PK_KEY_TOWN,
+  	CUST_CODE,
+  	CUST_NAME,
+  	replace(to_char(PURCHASE_AMT_YEAR, '999999990.99'),' ','') as PURCHASE_AMT_YEAR,
+  	ORGADDRSS,
+  	replace(to_char(ORGADDRESSLNG, '999999990.99'),' ','') as ORGADDRESSLNG,
+  	replace(to_char(ORGADDRESSLAT, '999999990.99'),' ','') as ORGADDRESSLAT
+  	 from hty_fct_home_page_cust where pk_key_town in
   	<foreach collection="pkKeyTownList" item="item" open="(" close=")" separator=",">
   		#{item}
   	</foreach>

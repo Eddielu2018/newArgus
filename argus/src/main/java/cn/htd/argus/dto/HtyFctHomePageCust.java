@@ -1,6 +1,5 @@
 package cn.htd.argus.dto;
 
-import java.math.BigDecimal;
 
 public class HtyFctHomePageCust {
     private String pkKey;
@@ -11,13 +10,13 @@ public class HtyFctHomePageCust {
 
     private String custName;
 
-    private BigDecimal purchaseAmtYear;
+    private String purchaseAmtYear;
 
     private String orgaddrss;
 
-    private BigDecimal orgaddresslng;
+    private String orgaddresslng;
 
-    private BigDecimal orgaddresslat;
+    private String orgaddresslat;
 
     public String getPkKey() {
         return pkKey;
@@ -51,11 +50,11 @@ public class HtyFctHomePageCust {
         this.custName = custName == null ? null : custName.trim();
     }
 
-    public BigDecimal getPurchaseAmtYear() {
+    public String getPurchaseAmtYear() {
         return purchaseAmtYear;
     }
 
-    public void setPurchaseAmtYear(BigDecimal purchaseAmtYear) {
+    public void setPurchaseAmtYear(String purchaseAmtYear) {
         this.purchaseAmtYear = purchaseAmtYear;
     }
 
@@ -67,19 +66,19 @@ public class HtyFctHomePageCust {
         this.orgaddrss = orgaddrss == null ? null : orgaddrss.trim();
     }
 
-    public BigDecimal getOrgaddresslng() {
+    public String getOrgaddresslng() {
         return orgaddresslng;
     }
 
-    public void setOrgaddresslng(BigDecimal orgaddresslng) {
+    public void setOrgaddresslng(String orgaddresslng) {
         this.orgaddresslng = orgaddresslng;
     }
 
-    public BigDecimal getOrgaddresslat() {
+    public String getOrgaddresslat() {
         return orgaddresslat;
     }
 
-    public void setOrgaddresslat(BigDecimal orgaddresslat) {
+    public void setOrgaddresslat(String orgaddresslat) {
         this.orgaddresslat = orgaddresslat;
     }
 }

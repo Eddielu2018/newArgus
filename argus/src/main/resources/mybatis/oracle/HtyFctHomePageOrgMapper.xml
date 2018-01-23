@@ -5,7 +5,7 @@
     <result column="STAT_DAY" property="statDay" jdbcType="VARCHAR" />
     <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
     <result column="ORG_FNAME" property="orgFname" jdbcType="VARCHAR" />
-    <result column="SALE_AMT" property="saleAmt" jdbcType="DECIMAL" />
+    <result column="SALE_AMT" property="saleAmt" jdbcType="NUMERIC" />
     <result column="SALE_AMT_MON" property="saleAmtMon" jdbcType="DECIMAL" />
     <result column="STOCK_WAR_NUM" property="stockWarNum" jdbcType="DECIMAL" />
     <result column="STOCK_UNS_NUM" property="stockUnsNum" jdbcType="DECIMAL" />
@@ -16,7 +16,19 @@
   </resultMap>
   
   <select id="selectHtyFctHomePageByComCode" parameterType="String" resultMap="BaseResultMap">
-  	select * from hty_fct_home_page_org where org_code=#{companyCode} and stat_day=to_char(sysdate-1,'yyyymmdd')
+  	select
+  	STAT_DAY,
+  	ORG_CODE,
+  	ORG_FNAME,
+  	replace(to_char(SALE_AMT／10000, '9999999999999990.99'),' ','') as SALE_AMT,
+  	replace(to_char(SALE_AMT_MON／10000, '9999999999999990.99'),' ','') as SALE_AMT_MON,
+  	STOCK_WAR_NUM,
+  	STOCK_UNS_NUM,
+  	MEMBER_NUM,
+  	COMPANY_VALUATION／10000 as COMPANY_VALUATION,
+  	FB_NUM,
+  	ZB_NUM
+  	 from hty_fct_home_page_org where org_code=#{companyCode} and stat_day=to_char(sysdate-1,'yyyymmdd')
   	and rownum <![CDATA[<]]>2
   </select>
   

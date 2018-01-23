@@ -98,8 +98,8 @@ public class VmsIndexDataServiceImpl implements VmsIndexDataService{
 					}
 					
 					tempVmsConverMemberInfoDTO.setName(htyFctHomePageTown.getAreaCountyname());
-					if(htyFctHomePageTown.getCustNum()!=null){
-						tempVmsConverMemberInfoDTO.setStoreNum(htyFctHomePageTown.getCustNum().intValue());
+					if(htyFctHomePageTown.getCustNum()!=null&&StringUtils.isNumeric(htyFctHomePageTown.getCustNum())){
+						tempVmsConverMemberInfoDTO.setStoreNum(Integer.parseInt(htyFctHomePageTown.getCustNum()));
 					}
 					tempVmsConverMemberInfoDTO.setValue(0);
 					vmsConverMemberInfoDTOList.add(tempVmsConverMemberInfoDTO);

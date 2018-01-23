@@ -18,7 +18,21 @@
   </resultMap>
   
   <select id="selectHtyHomepageTownInfo" resultMap="BaseResultMap">
-  select * from hty_fct_home_page_town where stat_day=to_char(sysdate-1,'yyyymmdd')
+  select 
+    PK_KEY_TOWN,
+	  STAT_DAY,
+	  ORG_CODE,
+	  ORG_FNAME,
+	  AREA_PROCODE,
+	  AREA_PRONAME,
+	  AREA_CITYCODE,
+	  AREA_CITYNAME,
+	  AREA_COUNTYCODE,
+	  AREA_COUNTYNAME,
+	  CUST_NUM,
+	  replace(to_char(COVERAGE_RATE, '99999990.99'),' ','') as COVERAGE_RATE,
+	  replace(to_char(PURCHASE_AMT, '99999999990.99'),' ','') as PURCHASE_AMT
+   from hty_fct_home_page_town where stat_day=to_char(sysdate-1,'yyyymmdd')
 	and org_code=#{companyCode}
 	and area_citycode=#{cityCode}
 	order by purchase_amt desc
