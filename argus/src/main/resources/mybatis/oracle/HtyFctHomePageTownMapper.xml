@@ -41,7 +41,7 @@
 	   hty_fct_home_page_town where stat_day=to_char(sysdate-1,'yyyymmdd')
 		and org_code=#{companyCode}
 		and area_citycode=#{cityCode}
-		order by COVERAGE_RATE desc
+		order by PURCHASE_AMT desc
    )
   </select>
  
