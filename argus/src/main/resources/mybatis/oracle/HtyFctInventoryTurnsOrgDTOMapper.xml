@@ -57,7 +57,7 @@
           (
             SELECT * FROM HTD_HTY.HTY_FCT_INVENTORY_TURNS_ORG
             <include refid="where"/>
-            ORDER BY TURN_DAYS ASC
+            ORDER BY LOSS_AMT DESC
           ) T
       )
     where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}
