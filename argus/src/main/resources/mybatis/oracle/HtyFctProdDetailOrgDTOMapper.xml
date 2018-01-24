@@ -46,7 +46,7 @@
             FROM
               HTD_HTY.HTY_FCT_PROD_DETAIL_ORG
             <include refid="where"/>
-            ORDER BY SALE_AMT_YEAR
+            ORDER BY SALE_AMT_YEAR DESC
           ) T
       )
     where rn between #{pager.pageOffset}+1 and #{pager.pageOffset}+#{pager.rows}

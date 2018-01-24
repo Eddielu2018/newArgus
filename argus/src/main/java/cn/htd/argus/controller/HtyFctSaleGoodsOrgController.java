@@ -262,90 +262,94 @@ public class HtyFctSaleGoodsOrgController {
             List<Map<String,String>> wholePp = new ArrayList<Map<String,String>>();
             BigDecimal amtAllPl = null;
             BigDecimal amtAllPp = null;
-            if(endTime == null || endTime == ""){
-                endTime = DateUtil.getCurDateStr1("yyyy");
+            if(StringUtils.isEmpty(endTime)){
+                endTime = DateUtil.getNextDay(new Date());
             }
             //1.品类
-            List<HtyFctSalePlAnalysisOrgDTO> restList = htyFctSalePlAnalysisOrgDTOService.querySalePlAnalysisOrg(userId,endTime,"0","");
+            List<HtyFctSalePlAnalysisOrgDTO> restList = htyFctSalePlAnalysisOrgDTOService.querySalePlAnalysisOrg(userId,endTime,"","");
             //判断是否有其他项
-            if(restList != null && restList.size() >5){
-                HtyFctSalePlAnalysisOrgDTO dto = null;
-                List<HtyFctSalePlAnalysisOrgDTO> list = new ArrayList<HtyFctSalePlAnalysisOrgDTO>();
-                List<List<HtyFctSalePlAnalysisOrgDTO>> lists = getSplitList(restList);
-                for(HtyFctSalePlAnalysisOrgDTO i:lists.get(1)){
-                    if(dto == null){
-                        dto = i ;
-                    }else{
-                        dto.setSaleQvt(ArithUtil.add(dto.getSaleQvt().doubleValue(),i.getSaleQvt().doubleValue()));
-                        dto.setSaleAmtYear(ArithUtil.add(dto.getSaleAmtYear().doubleValue(),i.getSaleAmtYear().doubleValue()));
-                        dto.setSaleAvg(ArithUtil.add(dto.getSaleAvg().doubleValue(),i.getSaleAvg().doubleValue()));
+            if(CollectionUtils.isNotEmpty(restList)){
+                if(restList.size() >5){
+                    HtyFctSalePlAnalysisOrgDTO dto = null;
+                    List<HtyFctSalePlAnalysisOrgDTO> list = new ArrayList<HtyFctSalePlAnalysisOrgDTO>();
+                    List<List<HtyFctSalePlAnalysisOrgDTO>> lists = getSplitList(restList);
+                    for(HtyFctSalePlAnalysisOrgDTO i:lists.get(1)){
+                        if(dto == null){
+                            dto = i ;
+                        }else{
+                            dto.setSaleQvt(ArithUtil.add(dto.getSaleQvt().doubleValue(),i.getSaleQvt().doubleValue()));
+                            dto.setSaleAmtYear(ArithUtil.add(dto.getSaleAmtYear().doubleValue(),i.getSaleAmtYear().doubleValue()));
+                            dto.setSaleAvg(ArithUtil.add(dto.getSaleAvg().doubleValue(),i.getSaleAvg().doubleValue()));
+                        }
                     }
+                    dto.setPlNameLv3("其他");
+                    list = lists.get(0);
+                    list.add(dto);
+                    for(HtyFctSalePlAnalysisOrgDTO j:list){
+                        j.setSaleAmtYear(ArithUtil.div(j.getSaleAmtYear().doubleValue(), new BigDecimal(10000).doubleValue(),2));
+                        Map<String,String> map1 = new HashMap<String,String>();
+                        map1.put("name", j.getPlNameLv3());
+                        map1.put("value", String.valueOf(j.getSaleAmtYear()));
+                        wholePl.add(map1);
+                    }
+                    restDto.setPlList(list);
+                    restDto.setWholePl(wholePl);
+                }else{
+                    for(HtyFctSalePlAnalysisOrgDTO j:restList){
+                        j.setSaleAmtYear(ArithUtil.div(j.getSaleAmtYear().doubleValue(), new BigDecimal(10000).doubleValue(),2));
+                        Map<String,String> map1 = new HashMap<String,String>();
+                        map1.put("name", j.getPlNameLv3());
+                        map1.put("value", String.valueOf(j.getSaleAmtYear()));
+                        wholePl.add(map1);
+                    }
+                    restDto.setPlList(restList);
+                    restDto.setWholePl(wholePl);
                 }
-                dto.setPlNameLv3("其他");
-                list = lists.get(0);
-                list.add(dto);
-                for(HtyFctSalePlAnalysisOrgDTO j:list){
-                    j.setSaleAmtYear(ArithUtil.div(j.getSaleAmtYear().doubleValue(), new BigDecimal(10000).doubleValue(),2));
-                    Map<String,String> map1 = new HashMap<String,String>();
-                    map1.put("name", j.getPlNameLv3());
-                    map1.put("value", String.valueOf(j.getSaleAmtYear()));
-                    wholePl.add(map1);
-                }
-                restDto.setPlList(list);
-                restDto.setWholePl(wholePl);
-            }else{
-                for(HtyFctSalePlAnalysisOrgDTO j:restList){
-                    j.setSaleAmtYear(ArithUtil.div(j.getSaleAmtYear().doubleValue(), new BigDecimal(10000).doubleValue(),2));
-                    Map<String,String> map1 = new HashMap<String,String>();
-                    map1.put("name", j.getPlNameLv3());
-                    map1.put("value", String.valueOf(j.getSaleAmtYear()));
-                    wholePl.add(map1);
-                }
-                restDto.setPlList(restList);
-                restDto.setWholePl(wholePl);
+                amtAllPl = ArithUtil.div(restList.get(0).getSaleAmtAll().doubleValue(),new BigDecimal(10000).doubleValue(),2);
             }
-            amtAllPl = ArithUtil.div(restList.get(0).getSaleAmtAll().doubleValue(),new BigDecimal(10000).doubleValue(),2);
             restDto.setAmtAllPl(amtAllPl);
             //2.品牌
-            List<HtyFctSalePpAnalysisOrgDTO> restListPp = htyFctSalePpAnalysisOrgDTOService.querySalePpAnalysisOrg(userId, endTime, "0", "");
+            List<HtyFctSalePpAnalysisOrgDTO> restListPp = htyFctSalePpAnalysisOrgDTOService.querySalePpAnalysisOrg(userId, endTime, "", "");
             //判断是否有其他项
-            if(restListPp != null && restListPp.size() >5){
-                HtyFctSalePpAnalysisOrgDTO dto = null;
-                List<HtyFctSalePpAnalysisOrgDTO> list = new ArrayList<HtyFctSalePpAnalysisOrgDTO>();
-                List<List<HtyFctSalePpAnalysisOrgDTO>> lists = getSplitList(restListPp);
-                for(HtyFctSalePpAnalysisOrgDTO i:lists.get(1)){
-                    if(dto == null){
-                        dto = i ;
-                    }else{
-                        dto.setSaleQvt(ArithUtil.add(dto.getSaleQvt().doubleValue(),i.getSaleQvt().doubleValue()));
-                        dto.setSaleAmtYear(ArithUtil.add(dto.getSaleAmtYear().doubleValue(),i.getSaleAmtYear().doubleValue()));
-                        dto.setSaleAvg(ArithUtil.add(dto.getSaleAvg().doubleValue(),i.getSaleAvg().doubleValue()));
+            if(CollectionUtils.isNotEmpty(restListPp)){
+                if(restListPp.size() >5){
+                    HtyFctSalePpAnalysisOrgDTO dto = null;
+                    List<HtyFctSalePpAnalysisOrgDTO> list = new ArrayList<HtyFctSalePpAnalysisOrgDTO>();
+                    List<List<HtyFctSalePpAnalysisOrgDTO>> lists = getSplitList(restListPp);
+                    for(HtyFctSalePpAnalysisOrgDTO i:lists.get(1)){
+                        if(dto == null){
+                            dto = i ;
+                        }else{
+                            dto.setSaleQvt(ArithUtil.add(dto.getSaleQvt().doubleValue(),i.getSaleQvt().doubleValue()));
+                            dto.setSaleAmtYear(ArithUtil.add(dto.getSaleAmtYear().doubleValue(),i.getSaleAmtYear().doubleValue()));
+                            dto.setSaleAvg(ArithUtil.add(dto.getSaleAvg().doubleValue(),i.getSaleAvg().doubleValue()));
+                        }
                     }
+                    dto.setPpName("其他");
+                    list = lists.get(0);
+                    list.add(dto);
+                    for(HtyFctSalePpAnalysisOrgDTO j:list){
+                        j.setSaleAmtYear(ArithUtil.div(j.getSaleAmtYear().doubleValue(), new BigDecimal(10000).doubleValue(),2));
+                        Map<String,String> map1 = new HashMap<String,String>();
+                        map1.put("name", j.getPpName());
+                        map1.put("value", String.valueOf(j.getSaleAmtYear()));
+                        wholePp.add(map1);
+                    }
+                    restDto.setPpList(list);
+                    restDto.setWholePp(wholePp);
+                }else{
+                    for(HtyFctSalePpAnalysisOrgDTO j:restListPp){
+                        j.setSaleAmtYear(ArithUtil.div(j.getSaleAmtYear().doubleValue(), new BigDecimal(10000).doubleValue(),2));
+                        Map<String,String> map1 = new HashMap<String,String>();
+                        map1.put("name", j.getPpName());
+                        map1.put("value", String.valueOf(j.getSaleAmtYear()));
+                        wholePp.add(map1);
+                    }
+                    restDto.setPpList(restListPp);
+                    restDto.setWholePp(wholePp);
                 }
-                dto.setPpName("其他");
-                list = lists.get(0);
-                list.add(dto);
-                for(HtyFctSalePpAnalysisOrgDTO j:list){
-                    j.setSaleAmtYear(ArithUtil.div(j.getSaleAmtYear().doubleValue(), new BigDecimal(10000).doubleValue(),2));
-                    Map<String,String> map1 = new HashMap<String,String>();
-                    map1.put("name", j.getPpName());
-                    map1.put("value", String.valueOf(j.getSaleAmtYear()));
-                    wholePp.add(map1);
-                }
-                restDto.setPpList(list);
-                restDto.setWholePp(wholePp);
-            }else{
-                for(HtyFctSalePpAnalysisOrgDTO j:restListPp){
-                    j.setSaleAmtYear(ArithUtil.div(j.getSaleAmtYear().doubleValue(), new BigDecimal(10000).doubleValue(),2));
-                    Map<String,String> map1 = new HashMap<String,String>();
-                    map1.put("name", j.getPpName());
-                    map1.put("value", String.valueOf(j.getSaleAmtYear()));
-                    wholePp.add(map1);
-                }
-                restDto.setPpList(restListPp);
-                restDto.setWholePp(wholePp);
+                amtAllPp = ArithUtil.div(restListPp.get(0).getSaleAmtAll().doubleValue(),new BigDecimal(10000).doubleValue(),2);
             }
-            amtAllPp = ArithUtil.div(restListPp.get(0).getSaleAmtAll().doubleValue(),new BigDecimal(10000).doubleValue(),2);
             restDto.setAmtAllPp(amtAllPp);
             result.setData(restDto);
             result.setCode(ResultCodeEnum.SUCCESS.getCode());
@@ -435,7 +439,7 @@ public class HtyFctSaleGoodsOrgController {
     public RestResult goodsSalePpRatio(@RequestParam(value = "userId", required = true) String userId,
                                        @RequestParam(value = "endTime", required = false) String endTime,
                                        @RequestParam(value = "ppCode", required = true) String ppCode) {
-        logger.info("调用(HtyFctSaleGoodsOrgController.goodsSalePlRatio)品类销售趋势分析入参,userId="+userId+",endTime="+endTime);
+        logger.info("调用(HtyFctSaleGoodsOrgController.goodsSalePlRatio)品类销售趋势分析入参,userId="+userId+",endTime="+endTime+"ppCode="+ppCode);
         RestResult result = new RestResult();
         try {
             if(endTime == null || endTime == ""){

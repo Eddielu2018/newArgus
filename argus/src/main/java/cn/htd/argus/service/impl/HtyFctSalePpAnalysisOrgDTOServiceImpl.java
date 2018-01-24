@@ -34,7 +34,9 @@ public class HtyFctSalePpAnalysisOrgDTOServiceImpl implements HtyFctSalePpAnalys
         if(ppCode != ""){
             searchDTO.setPpCode(ppCode);
         }
-        searchDTO.setIsEndflag(isEndflag);
+        if(isEndflag != ""){
+            searchDTO.setIsEndflag(isEndflag);
+        }
         List<HtyFctSalePpAnalysisOrgDTO> result = dao.querySalePpAnalysisOrg(searchDTO);
 
         if (result == null || result.isEmpty()) {
