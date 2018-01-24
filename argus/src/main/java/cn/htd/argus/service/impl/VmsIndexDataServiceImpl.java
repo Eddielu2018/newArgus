@@ -91,10 +91,10 @@ public class VmsIndexDataServiceImpl implements VmsIndexDataService{
 					//数据转换
 					VmsConverMemberInfoDTO tempVmsConverMemberInfoDTO=new VmsConverMemberInfoDTO();
 					if(htyFctHomePageTown.getPurchaseAmt()!=null){
-						tempVmsConverMemberInfoDTO.setContribution(htyFctHomePageTown.getPurchaseAmt()+"");
+						tempVmsConverMemberInfoDTO.setContribution(htyFctHomePageTown.getPurchaseAmt());
 					}
 					if(htyFctHomePageTown.getCoverageRate()!=null){
-						tempVmsConverMemberInfoDTO.setCoverageRate(htyFctHomePageTown.getCoverageRate()+"");
+						tempVmsConverMemberInfoDTO.setCoverageRate(htyFctHomePageTown.getCoverageRate());
 					}
 					
 					tempVmsConverMemberInfoDTO.setName(htyFctHomePageTown.getAreaCountyname());
